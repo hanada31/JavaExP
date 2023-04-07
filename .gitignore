@@ -1,6 +1,5 @@
 # Compiled class file
 *.class
-!M_framework/*.class
 
 # Log file
 *.log
@@ -39,12 +38,10 @@ replay_pid*
 
 # custom
 .settings/
-/CrashTracker/target/
+/ExceptionExtractor/target/
 target
 Files/
-!Files/crashInfo.json
-!Files/*.zip
-ETSResults/
 /result/
 /results/
 dependency-reduced-pom.xml
+/soot-dev/
