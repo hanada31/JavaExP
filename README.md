@@ -71,7 +71,6 @@ usage: java -jar ExceptionExtractor.jar [options] [-path] [-name] [-androidJar] 
  -time <arg>               -time [default:90]: Set the max running time (min).
  -outputDir <arg>          -outputDir: Set the output folder of the apk.
 
-```
 
 
 
@@ -80,10 +79,5 @@ usage: java -jar ExceptionExtractor.jar [options] [-path] [-name] [-androidJar] 
 In folder Files
 
 ![ETS](Figures/ETS.png)
-
-
-
-
-
 
 

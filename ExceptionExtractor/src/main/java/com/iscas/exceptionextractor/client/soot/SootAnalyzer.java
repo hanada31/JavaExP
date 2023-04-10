@@ -48,7 +48,7 @@ public class SootAnalyzer extends Analyzer {
 			Options.v().set_android_jars(MyConfig.getInstance().getAndroidJar());
 			MyConfig.getInstance().setSrc_prec(Options.src_prec_apk);
 		}else{
-			MyConfig.getInstance().setSrc_prec(Options.src_prec_only_class);
+			MyConfig.getInstance().setSrc_prec(Options.src_prec_class);
 
 		}
 		List<String> processDir = Lists.newArrayList();

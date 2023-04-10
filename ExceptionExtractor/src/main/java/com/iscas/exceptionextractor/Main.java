@@ -171,7 +171,7 @@ public class Main {
 		MyConfig.getInstance().setResultFolder(mCmd.getOptionValue("outputDir", "outputDir") + File.separator);
 
 		if(mCmd.getOptionValue("frameworkVersion")!=null) {
-			MyConfig.getInstance().setAndroidOSVersion(mCmd.getOptionValue("frameworkVersion"));
+			MyConfig.getInstance().setFileVersion(mCmd.getOptionValue("frameworkVersion"));
 			String androidFolder = "";
 			if(mCmd.getOptionValue("client").equals("ExceptionInfoClient")){
 				androidFolder = MyConfig.getInstance().getResultFolder() + File.separator + "android" + mCmd.getOptionValue("frameworkVersion") + File.separator;

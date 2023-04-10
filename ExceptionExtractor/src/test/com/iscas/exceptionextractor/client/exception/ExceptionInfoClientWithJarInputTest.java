@@ -13,8 +13,8 @@ import java.io.File;
  * @Version 1.0
  */
 @Slf4j
-public class ExceptionInfoClientTest {
-    String[] versions = {"2.3", "4.4", "5.0", "6.0", "7.0", "8.0", "9.0", "10.0", "11.0", "12.0"};
+public class ExceptionInfoClientWithJarInputTest {
+    String[] versions = {"2.1", "4.4", "5.0", "6.0", "7.0", "8.0", "9.0", "10.0", "11.0", "12.0"};
 
     @org.junit.Test
     public void testConfig() {
@@ -26,24 +26,22 @@ public class ExceptionInfoClientTest {
     }
 
     private void setArgs() {
-        String path, androidVersion;
-        path = "..\\M_framework\\";
-        path = "D:\\SoftwareData\\dataset\\android-framework\\classes\\";
-        MyConfig.getInstance().setFileVersion(versions[0]);
-        MyConfig.getInstance().setFileVersion("5.0");
+        String path, fileVersion;
         String client = "ExceptionInfoClient";
 
-        androidVersion = "android"+MyConfig.getInstance().getFileVersion();
-//        androidVersion = "jdk"+MyConfig.getInstance().getFileVersion();
-        MyConfig.getInstance().setAppName(androidVersion);
+        MyConfig.getInstance().setFileVersion("1.8");
+        path = "D:\\SoftwareData\\dataset\\android-framework\\jars";
         MyConfig.getInstance().setAppPath(path + File.separator);
+        fileVersion = "jdk"+MyConfig.getInstance().getFileVersion();
+        MyConfig.getInstance().setAppName(fileVersion+".jar");
+
         MyConfig.getInstance().setClient(client);
         MyConfig.getInstance().setResultFolder("..\\results" + File.separator);
         MyConfig.getInstance().setTimeLimit(100);
         MyConfig.getInstance().setAndroidJar("E:\\AndroidSDK\\android-sdk-windows-new\\platforms");
         MyConfig.getInstance().setSrc_prec(Options.src_prec_only_class);
         MyConfig.getInstance().setFileSuffixLength(0);
-        String androidFolder = MyConfig.getInstance().getResultFolder() +File.separator+androidVersion+File.separator;
+        String androidFolder = MyConfig.getInstance().getResultFolder() +File.separator+fileVersion+File.separator;
         MyConfig.getInstance().setExceptionFilePath(androidFolder+"exceptionInfo"+File.separator);
         MyConfig.getInstance().setPermissionFilePath(androidFolder+"Permission"+File.separator+"permission.txt");
         MyConfig.getInstance().setAndroidCGFilePath(androidFolder+"CallGraphInfo"+File.separator+"cg.txt");

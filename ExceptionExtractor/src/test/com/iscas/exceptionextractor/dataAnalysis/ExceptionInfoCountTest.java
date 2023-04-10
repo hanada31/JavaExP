@@ -1,9 +1,7 @@
 package com.iscas.exceptionextractor.dataAnalysis;
 
-import com.iscas.exceptionextractor.Main;
 import com.iscas.exceptionextractor.base.MyConfig;
 import lombok.extern.slf4j.Slf4j;
-import soot.options.Options;
 
 import java.io.File;
 
@@ -24,7 +22,7 @@ public class ExceptionInfoCountTest {
         log.info("ExceptionInfoCountTest Finish...\n");
         System.exit(0);
     }
-
+//    D:\SoftwareData\dataset\android-framework
 
     private void setArgs() {
         MyConfig.getInstance().setResultFolder("..\\results" + File.separator);

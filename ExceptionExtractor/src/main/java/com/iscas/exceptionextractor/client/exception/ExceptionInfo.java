@@ -442,8 +442,8 @@ public class ExceptionInfo {
 
     public boolean findExceptionType(SootClass sootClass) {
         boolean isException = false;
-        List<String> StandardChecked = FileUtils.getListFromFile("src/main/resources/checked_exceptions.txt");
-        List<String> StandardUnChecked_Runtime = FileUtils.getListFromFile("src/main/resources/unchecked_exceptions.txt");
+        List<String> StandardChecked = FileUtils.getListFromFile("D:\\ProjectData\\IdeaProjects\\ExceptionExtractor\\ExceptionExtractor\\src\\main\\resources\\unchecked_exceptions.txt");
+        List<String> StandardUnChecked_Runtime = FileUtils.getListFromFile("D:\\ProjectData\\IdeaProjects\\ExceptionExtractor\\ExceptionExtractor\\src\\main\\resources\\checked_exceptions.txt");
         //get exception type
         setExceptionType(ExceptionType.ThirdParty);
         if(StandardChecked.contains(sootClass.getName())){ //should be empty

@@ -33,7 +33,7 @@ public class MyConfig {
 	private String ExceptionFolderPath;
 	private String PermissionFilePath;
 	private String AndroidCGFilePath ;
-	private String AndroidOSVersion = null;
+	private String FileVersion = null;
 
 	private String Strategy="";
 
@@ -120,12 +120,12 @@ public class MyConfig {
 		return src_prec;
 	}
 
-	public String getAndroidOSVersion() {
-		return AndroidOSVersion;
+	public String getFileVersion() {
+		return FileVersion;
 	}
 
-	public void setAndroidOSVersion(String androidOSVersion) {
-		this.AndroidOSVersion = androidOSVersion;
+	public void setFileVersion(String fileVersion) {
+		this.FileVersion = fileVersion;
 	}
 
 	/**
