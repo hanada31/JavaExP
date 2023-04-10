@@ -11,7 +11,7 @@
 
     <packaging>pom</packaging>
     <modules>		
-		<module>soot-dev</module>
+		<module>soot-dev-ee</module>
         <module>ExceptionExtractor</module>
     </modules>
 
