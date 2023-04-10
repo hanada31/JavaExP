@@ -1,11 +1,11 @@
-package com.iscas.crashtracker.client.dataAnalysis;
+package com.iscas.exceptionextractor.dataAnalysis;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.iscas.crashtracker.base.MyConfig;
-import com.iscas.crashtracker.client.exception.RelatedCondType;
-import com.iscas.crashtracker.client.exception.RelatedVarType;
-import com.iscas.crashtracker.utils.FileUtils;
+import com.iscas.exceptionextractor.base.MyConfig;
+import com.iscas.exceptionextractor.client.exception.RelatedCondType;
+import com.iscas.exceptionextractor.client.exception.RelatedVarType;
+import com.iscas.exceptionextractor.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -20,7 +20,7 @@ import java.util.Set;
  * @Version 1.0
  */
 @Slf4j
-public class ExceptionInfoCount {
+public class ThrowExceptionInfoCount {
     String[] versions = {"2.3", "4.4", "5.0", "6.0", "7.0", "8.0", "9.0", "10.0", "11.0", "12.0"};
 
     public void analyze() {
@@ -37,15 +37,15 @@ public class ExceptionInfoCount {
         sb.append("version\t" + "exception\t" + "exceptionType\t" + "method\t");
         sb.append("msgWith_sS\t" + "msgWithout_sS\t" + "msgNotNull\t");
 
-        sb.append(RelatedVarType.Unknown.toString() + "\t");
-        sb.append(RelatedVarType.Empty.toString()  + "\t");
-        sb.append(RelatedVarType.Parameter.toString() + "\t");
-        sb.append(RelatedVarType.Field.toString()  + "\t");
-        sb.append(RelatedVarType.ParaAndField.toString()  + "\t");
+        sb.append(RelatedVarType.Unknown + "\t");
+        sb.append(RelatedVarType.Empty  + "\t");
+        sb.append(RelatedVarType.Parameter + "\t");
+        sb.append(RelatedVarType.Field  + "\t");
+        sb.append(RelatedVarType.ParaAndField  + "\t");
 
-        sb.append(RelatedCondType.Basic.toString() + "\t");
-        sb.append(RelatedCondType.NotReturn.toString()  + "\t");
-        sb.append( RelatedCondType.Empty.toString()  + "\t");
+        sb.append(RelatedCondType.Basic + "\t");
+        sb.append(RelatedCondType.NotReturn  + "\t");
+        sb.append(RelatedCondType.Empty  + "\t");
         sb.append("ConditionLengthSum"  + "\t");
 
         sb.append("hasBackwardParamCaller"  + "\t");
