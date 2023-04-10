@@ -44,5 +44,5 @@ Files/
 /result/
 /results/
 dependency-reduced-pom.xml
-/soot-dev/
 /ExceptionExtractor/sootOutput/
+/soot-dev-ee/
