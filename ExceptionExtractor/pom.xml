@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-	
+
     <groupId>com.iscas</groupId>
-    <artifactId>crashtracker</artifactId>
+    <artifactId>exceptionextractor</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -97,12 +97,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-		
-	<!-- https://mvnrepository.com/artifact/org.soot-oss/soot -->
+
+        <!-- https://mvnrepository.com/artifact/org.soot-oss/soot -->
         <dependency>
             <groupId>org.soot-oss</groupId>
             <artifactId>soot</artifactId>
-            <version>4.4.0-SNAPSHOT-ICCBot</version>
+            <version>4.5.0-SNAPSHOT-ICCBot</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.smali</groupId>
@@ -130,44 +130,44 @@
                 </exclusion>
             </exclusions>
         </dependency>
-	<!-- https://mvnrepository.com/artifact/org.soot-oss/soot -->
-	<!-- https://mvnrepository.com/artifact/io.github.nkbai/soot -->
-		<!--<dependency>
-			 <groupId>io.github.nkbai</groupId>
-			<artifactId>soot</artifactId>
-			<version>4.3.1</version>
-			<groupId>org.soot-oss</groupId>
-			<artifactId>soot</artifactId>
-			<version>4.4.0-SNAPSHOT</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.smali</groupId>
-					<artifactId>dexlib2</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>commons-io</groupId>
-					<artifactId>commons-io</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.google.guava</groupId>
-					<artifactId>guava</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.xml.bind</groupId>
-					<artifactId>jaxb-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.google.errorprone</groupId>
-					<artifactId>error_prone_annotations</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.soot-oss/soot -->
+        <!-- https://mvnrepository.com/artifact/io.github.nkbai/soot -->
+        <!--<dependency>
+             <groupId>io.github.nkbai</groupId>
+            <artifactId>soot</artifactId>
+            <version>4.3.1</version>
+            <groupId>org.soot-oss</groupId>
+            <artifactId>soot</artifactId>
+            <version>4.4.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.smali</groupId>
+                    <artifactId>dexlib2</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.errorprone</groupId>
+                    <artifactId>error_prone_annotations</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>-->
 
-	  
+
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -269,6 +269,7 @@
             <artifactId>logback-classic</artifactId>
             <version>1.2.11</version>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -277,8 +278,8 @@
         </dependency>
     </dependencies>
 
-	
-		<repositories>
+
+    <repositories>
         <repository>
             <id>sonatype-snapshot</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -292,7 +293,7 @@
         <repository>
             <id>itemis-mbeddr</id>
             <url>https://projects.itemis.de/nexus/content/repositories/mbeddr/</url>
-			<layout>default</layout>
+            <layout>default</layout>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -300,7 +301,7 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-	</repositories>
+    </repositories>
 
     <build>
         <plugins>
@@ -310,14 +311,14 @@
                 <artifactId>lombok-maven-plugin</artifactId>
                 <version>1.18.20.0</version>
             </plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.1</version>
-				<configuration>
-					<skipTests>true</skipTests>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.1</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
