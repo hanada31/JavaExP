@@ -54,12 +54,12 @@ public class ExceptionInfoCount {
         log.info("write to "+ MyConfig.getInstance().getResultFolder() +exceptionNumberCountFile);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("\nversion\t" +"tag\t"+ "declaredNumber\t" + "thrownNumber\t" + "caughtNumber\t");
+        sb.append("tag\t"+ "\nversion\t" +"declaredNumber\t" + "thrownNumber\t" + "caughtNumber\t");
         sb.append("declaredNumber\t" + "thrownTypeNumber\t" + "caughtTypeNumber\n");
 
         for (String version : versions) {
             String str = getExceptionCount(version);
-            sb.append("V"+version +"\t" +"overallNum\t");
+            sb.append("overallNum\t" +"V"+version +"\t");
             sb.append(str);
         }
         FileUtils.writeText2File(MyConfig.getInstance().getResultFolder() +exceptionNumberCountFile, sb.toString(), true);
@@ -76,7 +76,7 @@ public class ExceptionInfoCount {
         for (String version : versions) {
             boolean repeat = false;
             String str = getExceptionTypeCountSummary(version,repeat);
-            sb.append("V"+version +"\t" +"typeNum\t");
+            sb.append("typeNum\t" +"V"+version +"\t");
             sb.append(str);
         }
 
@@ -87,7 +87,7 @@ public class ExceptionInfoCount {
         for (String version : versions) {
             boolean repeat = true;
             String str = getExceptionTypeCountSummary(version,repeat);
-            sb.append("V"+version +"\t" +"unitNum\t");
+            sb.append("unitNum\t" + "V"+version +"\t" );
             sb.append(str);
         }
         FileUtils.writeText2File(MyConfig.getInstance().getResultFolder() +exceptionNumberCountFile, sb.toString(), true);

@@ -186,8 +186,8 @@ public class Main {
 			}
 		}
 
-		MyConfig.getInstance().setStrategy(mCmd.getOptionValue("strategy", ""));
-		log.info("###The strategy is #" + MyConfig.getInstance().getStrategy()+"#");
+//		MyConfig.getInstance().setStrategy(mCmd.getOptionValue("strategy", ""));
+//		log.info("###The strategy is #" + MyConfig.getInstance().getStrategy()+"#");
 
 		int timeLimit = Integer.valueOf(mCmd.getOptionValue("time", "90"));
 		MyConfig.getInstance().setTimeLimit(timeLimit);
