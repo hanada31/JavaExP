@@ -63,11 +63,12 @@ public class SootAnalyzer extends Analyzer {
 			Options.v().set_output_format(Options.output_format_shimple);
 		String out = MyConfig.getInstance().getResultFolder() + Global.v().getAppModel().getAppName() + File.separator
 				+ ConstantUtils.SOOTOUTPUT;
-//		Options.v().set_output_dir(out);
+		Options.v().set_output_dir(out);
 		Options.v().set_src_prec(MyConfig.getInstance().getSrc_prec());
 		Options.v().allow_phantom_refs();
-		Options.v().set_whole_program(true);
+		Options.v().set_whole_program(false);
 		setExcludePackage();
+
 	}
 
 
@@ -105,9 +106,9 @@ public class SootAnalyzer extends Analyzer {
 //		excludeList.add("kotlin.*");
 		excludeList.add("soot.*");
 		excludeList.add("junit.*");
-		excludeList.add("java.*");
-		excludeList.add("javax.*");
-		excludeList.add("sun.*");
+//		excludeList.add("java.*");
+//		excludeList.add("javax.*");
+//		excludeList.add("sun.*");
 		Options.v().set_exclude(excludeList);
 	}
 }

@@ -18,23 +18,25 @@ public class ExceptionInfoClientTest {
 
     @org.junit.Test
     public void testConfig() {
-        log.info("ExceptionInfoClientTest start...\n");
+        log.info("ExceptionInfoClientTest start...");
         setArgs();
         Main.startAnalyze();
-        log.info("ExceptionInfoClientTest Finish...\n");
+        log.info("ExceptionInfoClientTest Finish...");
         System.exit(0);
     }
 
     private void setArgs() {
         String path, androidVersion;
         path = "..\\M_framework\\";
-        path = "D:\\SoftwareData\\dataset\\android-framework\\classes\\";
+//        path = "D:\\SoftwareData\\dataset\\android-framework\\classes\\";
         MyConfig.getInstance().setFileVersion(versions[0]);
-        MyConfig.getInstance().setFileVersion("5.0");
+        MyConfig.getInstance().setFileVersion("0.1");
         String client = "ExceptionInfoClient";
 
         androidVersion = "android"+MyConfig.getInstance().getFileVersion();
-//        androidVersion = "jdk"+MyConfig.getInstance().getFileVersion();
+//        androidVersion = "jdk1.8\\tools"+MyConfig.getInstance().getFileVersion();
+//        androidVersion = "jdk1.8\\nashorn"+MyConfig.getInstance().getFileVersion();
+        androidVersion = "hand"+MyConfig.getInstance().getFileVersion();
         MyConfig.getInstance().setAppName(androidVersion);
         MyConfig.getInstance().setAppPath(path + File.separator);
         MyConfig.getInstance().setClient(client);
@@ -47,5 +49,6 @@ public class ExceptionInfoClientTest {
         MyConfig.getInstance().setExceptionFilePath(androidFolder+"exceptionInfo"+File.separator);
         MyConfig.getInstance().setPermissionFilePath(androidFolder+"Permission"+File.separator+"permission.txt");
         MyConfig.getInstance().setAndroidCGFilePath(androidFolder+"CallGraphInfo"+File.separator+"cg.txt");
+        MyConfig.getInstance().setJimple(false);
     }
 }

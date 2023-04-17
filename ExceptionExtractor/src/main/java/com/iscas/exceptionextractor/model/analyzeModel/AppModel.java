@@ -9,6 +9,7 @@ import soot.SootClass;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
+import soot.dava.toolkits.base.AST.structuredAnalysis.DavaFlowSet;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import soot.toolkits.scalar.Pair;
 import soot.toolkits.scalar.UnitValueBoxPair;
@@ -21,6 +22,8 @@ public class AppModel implements Serializable {
 	// app info
 	private final String appName;
 	private final String appPath;
+    public DavaFlowSet<String> methodsToBeProcessed;
+	public Map<String, ConditionWithValueSet> unit2RFCondition;
 	private String mainActivity;
 	private String manifestString;
 	private String packageName;

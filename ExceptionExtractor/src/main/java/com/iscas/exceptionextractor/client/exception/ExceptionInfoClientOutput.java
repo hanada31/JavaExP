@@ -129,12 +129,6 @@ public class ExceptionInfoClientOutput {
                     jsonObject.put("methodNumber",1);
                     map.put(info.getExceptionName(),jsonObject);
                 }
-//                addBasic1(jsonObject, info);
-//                addBasic2(jsonObject, info);
-//                addConditions(jsonObject, info);
-//                addRelatedValues(jsonObject, info);
-//                addRelatedMethodNum(jsonObject, info);
-//                addBackwardParamCallerNum(jsonObject, info);
             }
         }
     }
@@ -151,7 +145,7 @@ public class ExceptionInfoClientOutput {
                 JSONObject jsonObject = new JSONObject(true);
                 exceptionListElement.add(jsonObject);
                 addBasic1(jsonObject, info);
-                addBasic2(jsonObject, info);
+//                addBasic2(jsonObject, info);
                 addConditions(jsonObject, info);
                 addRelatedValues(jsonObject, info);
                 addRelatedMethodNum(jsonObject, info);
@@ -188,37 +182,38 @@ public class ExceptionInfoClientOutput {
     }
 
     public static void addBasic1(JSONObject jsonObject, ExceptionInfo info) {
+        jsonObject.put("method", info.getSootMethod().getSignature());
         jsonObject.put("ExceptionName", info.getExceptionName());
         jsonObject.put("ExceptionType", info.getExceptionType());
-        jsonObject.put("method", info.getSootMethod().getSignature());
         jsonObject.put("message", info.getExceptionMsg());
     }
 
     public static void addBasic2(JSONObject jsonObject, ExceptionInfo info) {
-        jsonObject.put("relatedCondType", info.getRelatedCondType());
         jsonObject.put("modifier", info.getModifier());
-        jsonObject.put("osVersionRelated", info.isOsVersionRelated());
-        jsonObject.put("resourceRelated", info.isResourceRelated());
-        jsonObject.put("assessRelated", info.isAssessRelated());
-        jsonObject.put("hardwareRelated", info.isHardwareRelated());
-        jsonObject.put("manifestRelated", info.isManifestRelated());
+//        jsonObject.put("osVersionRelated", info.isOsVersionRelated());
+//        jsonObject.put("resourceRelated", info.isResourceRelated());
+//        jsonObject.put("assessRelated", info.isAssessRelated());
+//        jsonObject.put("hardwareRelated", info.isHardwareRelated());
+//        jsonObject.put("manifestRelated", info.isManifestRelated());
     }
 
     public static void addConditions(JSONObject jsonObject, ExceptionInfo info) {
+//        jsonObject.put("relatedCondType", info.getRelatedCondType());
         if(info.getConditions().size()>0)
             jsonObject.put("conditions", PrintUtils.printList(info.getConditions()));
     }
 
     public static void addRelatedValues(JSONObject jsonObject, ExceptionInfo info) {
+        jsonObject.put("relatedVarType", info.getRelatedVarType());
         if(info.getRelatedParamValues().size()>0)
             jsonObject.put("paramValues", PrintUtils.printList(info.getRelatedParamValues()));
         if(info.getRelatedFieldValues().size()>0)
             jsonObject.put("fieldValues", PrintUtils.printList(info.getRelatedFieldValues()));
-        if(info.getCaughtedValues().size()>0)
-            jsonObject.put("caughtValues", PrintUtils.printList(info.getCaughtedValues()));
-        if(info.getRelatedParamValues().size() + info.getRelatedFieldValues().size() + info.getCaughtedValues().size()>0)
+        if(info.getCaughtValues().size()>0)
+            jsonObject.put("caughtValues", PrintUtils.printList(info.getCaughtValues()));
+        if(info.getRelatedParamValues().size() + info.getRelatedFieldValues().size() + info.getCaughtValues().size()>0)
             jsonObject.put("relatedValues", PrintUtils.printList(info.getRelatedParamValues())+"; "
-                    +PrintUtils.printList(info.getRelatedFieldValues()) +"; "+ PrintUtils.printList(info.getCaughtedValues()));
+                    +PrintUtils.printList(info.getRelatedFieldValues()) +"; "+ PrintUtils.printList(info.getCaughtValues()));
     }
 
     private static void addBackwardParamCallerNum(JSONObject jsonObject, ExceptionInfo exceptionInfo) {
@@ -268,7 +263,7 @@ public class ExceptionInfoClientOutput {
                 callerOfSingnlar2SourceVar.put(mtd, vals);
             }
         }
-        jsonObject.put("callerOfSingnlar2SourceVar" , callerOfSingnlar2SourceVar);
+        jsonObject.put("callerOfSignaler2SourceVar" , callerOfSingnlar2SourceVar);
     }
 
 }

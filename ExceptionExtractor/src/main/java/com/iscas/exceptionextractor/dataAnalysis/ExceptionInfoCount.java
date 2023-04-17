@@ -19,7 +19,8 @@ import java.util.Map;
  */
 @Slf4j
 public class ExceptionInfoCount {
-    String[] versions = {"2.3", "4.4", "5.0", "6.0", "7.0", "8.0", "9.0", "10.0", "11.0", "12.0"};
+//    String[] jars = {"android2.3", "android4.4", "android5.0", "android6.0", "android7.0", "android8.0", "android9.0", "android10.0", "android11.0", "android12.0"};
+    String[] jars = {"jdk1.8\\nashorn1.8", "jdk1.8\\rt1.8", "jdk1.8\\tools1.8"};
     JSONObject declaredExceptions;
     JSONObject thrownExceptions;
     JSONObject caughtExceptions;
@@ -29,13 +30,18 @@ public class ExceptionInfoCount {
         getExceptionNumberCountSummary();
         getExceptionTypeCountSummary();
         getEachExceptionTypeCount();
+        try {
+            rewriteExceptionNumberCount();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         log.info("getExceptionOfCrashInfo Finish...");
 
     }
 
 
-    private void readFiles(String version) {
-        MyConfig.getInstance().setExceptionFilePath(MyConfig.getInstance().getResultFolder()+"android" + version +File.separator+ "exceptionInfo" +File.separator);
+    private void readFiles(String name) {
+        MyConfig.getInstance().setExceptionFilePath(MyConfig.getInstance().getResultFolder()+ name +File.separator+ "exceptionInfo" +File.separator);
         String declaredExceptionFile = MyConfig.getInstance().getExceptionFilePath() + "summary" + File.separator + "declaredException.json";
         String declaredExceptionFileJson = FileUtils.readJsonFile(declaredExceptionFile);
         declaredExceptions = (JSONObject) JSONObject.parse(declaredExceptionFileJson);
@@ -54,40 +60,40 @@ public class ExceptionInfoCount {
         log.info("write to "+ MyConfig.getInstance().getResultFolder() +exceptionNumberCountFile);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("tag\t"+ "\nversion\t" +"declaredNumber\t" + "thrownNumber\t" + "caughtNumber\t");
+        sb.append("tag\t"+ "name\t" +"declaredNumber\t" + "thrownNumber\t" + "caughtNumber\t");
         sb.append("declaredNumber\t" + "thrownTypeNumber\t" + "caughtTypeNumber\n");
 
-        for (String version : versions) {
-            String str = getExceptionCount(version);
-            sb.append("overallNum\t" +"V"+version +"\t");
+        for (String jar : jars) {
+            String str = getExceptionCount(jar);
+            sb.append("overallNum\t" +jar +"\t");
             sb.append(str);
         }
         FileUtils.writeText2File(MyConfig.getInstance().getResultFolder() +exceptionNumberCountFile, sb.toString(), true);
-        rewriteExceptionNumberCount();
     }
 
     private void getExceptionTypeCountSummary() {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("\nversion\t" +"tag\t"+ "declaredCustomChecked\t" + "declaredCustomUnChecked_Runtime\t");
+        sb.append("\ntag\t"+ "name\t"+ "declaredCustomChecked\t" + "declaredCustomUnChecked_Runtime\t");
         sb.append("thrownStandardChecked\t" + "thrownStandardUnChecked_Runtime\t" + "thrownCustomChecked\t" + "thrownCustomUnChecked_Runtime\t"+ "thrownThirdParty\t");
         sb.append("caughtStandardChecked\t" + "caughtStandardUnChecked_Runtime\t" + "caughtCustomChecked\t" + "caughtCustomUnChecked_Runtime\t"+ "caughtThirdParty\n");
 
-        for (String version : versions) {
+        for (String jar : jars) {
             boolean repeat = false;
-            String str = getExceptionTypeCountSummary(version,repeat);
-            sb.append("typeNum\t" +"V"+version +"\t");
+            String str = getExceptionTypeCountSummary(jar,repeat);
+            sb.append("typeNum\t" +jar +"\t");
             sb.append(str);
         }
 
-        sb.append("\nversion\t" + "tag\t"+"declaredCustomChecked\t" + "declaredCustomUnChecked_Runtime\t");
+        sb.append("\ntag\t"+ "name\t"+"declaredCustomChecked\t" + "declaredCustomUnChecked_Runtime\t");
         sb.append("thrownStandardChecked\t" + "thrownStandardUnChecked_Runtime\t" + "thrownCustomChecked\t" + "thrownCustomUnChecked_Runtime\t"+ "thrownThirdParty\t");
         sb.append("caughtStandardChecked\t" + "caughtStandardUnChecked_Runtime\t" + "caughtCustomChecked\t" + "caughtCustomUnChecked_Runtime\t"+ "caughtThirdParty\n");
 
-        for (String version : versions) {
+        for (String jar : jars) {
             boolean repeat = true;
-            String str = getExceptionTypeCountSummary(version,repeat);
-            sb.append("unitNum\t" + "V"+version +"\t" );
+            String str = getExceptionTypeCountSummary(jar,repeat);
+            sb.append("unitNum\t" + "V"+jar
+                    +"\t" );
             sb.append(str);
         }
         FileUtils.writeText2File(MyConfig.getInstance().getResultFolder() +exceptionNumberCountFile, sb.toString(), true);
@@ -97,8 +103,8 @@ public class ExceptionInfoCount {
      * getExceptionOfCrashInfo from exception.json
      * @return
      */
-    private String getExceptionCount(String version) {
-        readFiles(version);
+    private String getExceptionCount(String name) {
+        readFiles(name);
         int declaredNumber = 0;
         int thrownNumber = 0;
         int thrownTypeNumber = 0;
@@ -132,8 +138,8 @@ public class ExceptionInfoCount {
         return  sb+"\n";
     }
 
-    private String getExceptionTypeCountSummary(String version, boolean repeat) {
-        readFiles(version);
+    private String getExceptionTypeCountSummary(String name, boolean repeat) {
+        readFiles(name);
         int declaredNumber = 0;
         int declaredCustomChecked = 0;
         int declaredCustomUnChecked_Runtime = 0;
@@ -210,26 +216,26 @@ public class ExceptionInfoCount {
         log.info("write to "+ MyConfig.getInstance().getExceptionFilePath() +eachExceptionTypeCountFile);
 
         StringBuilder sb = new StringBuilder();
-        for (String version : versions) {
-            sb.append("\ntag\tversion\texceptionName\tcount\n");
-            readFiles(version);
+        for (String jar : jars) {
+            sb.append("\ntag\tname\texceptionName\tcount\n");
+            readFiles(jar);
             if(thrownExceptions!=null) {
                 JSONArray thrown = thrownExceptions.getJSONArray("thrownException");//构建JSONArray数组
                 for(Object object:thrown){
                     JSONObject jsonObject = (JSONObject) object;
-                    sb.append("throwNum\tV"+version+"\t" + jsonObject.getString("ExceptionName") +"\t" + jsonObject.getInteger("methodNumber")+"\n");
+                    sb.append("throwNum\t"+jar+"\t" + jsonObject.getString("ExceptionName") +"\t" + jsonObject.getInteger("methodNumber")+"\n");
                 }
             }
         }
 
-        for (String version : versions) {
-            sb.append("\ntag\tversion\texceptionName\tcount\n");
-            readFiles(version);
+        for (String jar : jars) {
+            sb.append("\ntag\tname\texceptionName\tcount\n");
+            readFiles(jar);
             if(caughtExceptions!=null) {
                 JSONArray caught = caughtExceptions.getJSONArray("caughtException");//构建JSONArray数组
                 for(Object object:caught){
                     JSONObject jsonObject = (JSONObject) object;
-                    sb.append("catchNum\tV"+version+"\t" + jsonObject.getString("ExceptionName") +"\t" + jsonObject.getInteger("methodNumber")+"\n");
+                    sb.append("catchNum\t"+jar+"\t" + jsonObject.getString("ExceptionName") +"\t" + jsonObject.getInteger("methodNumber")+"\n");
                 }
             }
         }
@@ -237,21 +243,26 @@ public class ExceptionInfoCount {
     }
 
 
-    public static void rewriteExceptionNumberCount() {
+    public static void rewriteExceptionNumberCount() throws InterruptedException {
         String inputFilePath = MyConfig.getInstance().getResultFolder() +eachExceptionTypeCountFile;
         String outputFilePath = MyConfig.getInstance().getResultFolder() +"merged_"+eachExceptionTypeCountFile;
-
+        File f= new File(inputFilePath);
+        int id= 1;
+        while (!f.exists()) {
+            Thread.currentThread().sleep(1000 * id++);
+            if(f.exists() || id>100) break;
+        }
         try {
             BufferedReader reader = new BufferedReader(new FileReader(inputFilePath));
             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilePath));
-
+            if(reader==null) return;
             String line;
             String[] fields;
             String currentTag = "";
             String firstLine = "";
             Map<String, ArrayList< String>> tagMap = new LinkedHashMap<>();
             while ((line = reader.readLine()) != null) {
-                if(line.contains("tag\tversion\texceptionName\tcount")) {
+                if(line.contains("tag\tname\texceptionName\tcount")) {
                     firstLine += line.strip() + "\t\t";
                 }else{
                     fields = line.split("\t");

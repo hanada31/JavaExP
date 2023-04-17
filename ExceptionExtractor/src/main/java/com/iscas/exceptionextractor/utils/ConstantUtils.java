@@ -141,5 +141,7 @@ public class ConstantUtils {
 			"SensorManager", "SlidingDrawer", "StorageManager", "Surface", "SurfaceHolder", "TagTechnology",
 			"TokenWatcher", "UsbManager", "VelocityTracker", "WebIconDatabase", "WifiManager$MulticastLock", "WifiManager$WifiLock", "WifiManager"};
 	//strategies
-
+	public static final String[] compared_methods = { "contains", "equals", "contentEquals", "equalsIgnoreCase",
+			"startsWith", "endsWith", "!= null", "== null", "isEmpty", "valueOf", "copyValueOf", "==", "!="};
+	public static final String FLAGATTRI = "attributes";
 }

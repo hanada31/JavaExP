@@ -1,5 +1,6 @@
 package com.iscas.exceptionextractor.client.exception;
 
+import com.iscas.exceptionextractor.model.analyzeModel.ConditionWithValueSet;
 import com.iscas.exceptionextractor.utils.FileUtils;
 import soot.*;
 import soot.jimple.StringConstant;
@@ -22,13 +23,14 @@ public class ExceptionInfo {
     private final List<SootField> relatedFieldValues;
     private final List<String> relatedFieldValuesInStr;
 
-    private List<Value> caughtedValues;
+    private List<Value> caughtValues;
     private List<RelatedMethod> relatedMethodsInSameClass;
     private List<RelatedMethod> relatedMethodsInDiffClass;
     private List<String> relatedMethods;
     private final Map<Integer, ArrayList<RelatedMethod>> relatedMethodsInSameClassMap;
     private final Map<Integer, ArrayList<RelatedMethod>> relatedMethodsInDiffClassMap;
     private final List<Value> conditions;
+    private final Map<Unit, ConditionWithValueSet> refinedConditions;
     private List<Unit> conditionUnits;
     private String modifier;
     private List<Unit> tracedUnits;
@@ -38,23 +40,18 @@ public class ExceptionInfo {
     private Trap trap;
     private RelatedVarType relatedVarType;
     private RelatedCondType relatedCondType;
-    private boolean isOsVersionRelated;
-    private boolean isAssessRelated;
-    private boolean isManifestRelated;
-    private boolean isResourceRelated;
-    private boolean isHardwareRelated;
     private Map<String, List<Integer>> callerOfSingnlar2SourceVar;
     public int keyAPISameClassNum;
     public int keyAPIDiffClassNum;
-
     public ExceptionInfo() {
         this.relatedParamValues = new ArrayList<>();
         this.relatedFieldValues = new ArrayList<>();
-        this.caughtedValues = new ArrayList<>();
+        this.caughtValues = new ArrayList<>();
         this.relatedMethodsInSameClass = new ArrayList<>();
         this.relatedMethodsInDiffClass = new ArrayList<>();
         this.relatedMethods = new ArrayList<>();
         this.conditions = new ArrayList<>();
+        this.refinedConditions = new HashMap<>();
         this.conditionUnits = new ArrayList<>();
         this.tracedUnits = new ArrayList<>();
         this.relatedParamValuesInStr = new ArrayList<>();
@@ -109,14 +106,28 @@ public class ExceptionInfo {
         this.relatedCondType = relatedCondType;
     }
 
-    public void setRelatedVarType(RelatedVarType relatedVarType) {
-        this.relatedVarType = relatedVarType;
+    public RelatedVarType getRelatedVarType() {
+        if (isParameterOnly()) return RelatedVarType.Parameter;
+        if (isFieldOnly()) return RelatedVarType.Field;
+        if (isParaAndField()) return RelatedVarType.ParaAndField;
+        if (isEmpty()) return RelatedVarType.Empty;
+        return relatedVarType;
     }
-
     public boolean isEmpty() {
-        return getRelatedMethods().size() == 0 && getConditions().size() == 0 && caughtedValues.isEmpty();
+        return getRelatedMethods().size() == 0 && getConditions().size() == 0 && caughtValues.isEmpty();
     }
 
+    public boolean isParameterOnly() {
+        return getRelatedParamValues().size() > 0 && getRelatedFieldValues().size() == 0;
+    }
+
+    public boolean isFieldOnly() {
+        return getRelatedParamValues().size() == 0 && getRelatedFieldValues().size() > 0;
+    }
+
+    public boolean isParaAndField() {
+        return getRelatedParamValues().size() > 0 && getRelatedFieldValues().size() > 0;
+    }
     public String getModifier() {
         return modifier;
     }
@@ -218,6 +229,19 @@ public class ExceptionInfo {
             conditions.add(condition);
     }
 
+    public Map<Unit, ConditionWithValueSet> getRefinedConditions() {
+        return refinedConditions;
+    }
+
+    public ConditionWithValueSet getRefinedConditionWithKey(Unit unit) {
+        return refinedConditions.get(unit);
+    }
+
+    public void addRefinedConditions(ConditionWithValueSet conditionWithValueSet) {
+        if(!refinedConditions.keySet().contains(conditionWithValueSet.getConditionUnit()))
+            refinedConditions.put(conditionWithValueSet.getConditionUnit(), conditionWithValueSet);
+    }
+
     public List<SootField> getRelatedFieldValues() {
         return relatedFieldValues;
     }
@@ -234,12 +258,12 @@ public class ExceptionInfo {
             relatedParamValues.add(v);
     }
 
-    public List<Value> getCaughtedValues() {
-        return caughtedValues;
+    public List<Value> getCaughtValues() {
+        return caughtValues;
     }
     public void addCaughtedValues(Value v) {
-        if(!caughtedValues.contains(v))
-            caughtedValues.add(v);
+        if(!caughtValues.contains(v))
+            caughtValues.add(v);
     }
 
     public List<String> getRelatedMethods() {
@@ -286,8 +310,8 @@ public class ExceptionInfo {
         }
     }
 
-    public void setCaughtedValues(List<Value> caughtedValues) {
-        this.caughtedValues = caughtedValues;
+    public void setCaughtValues(List<Value> caughtValues) {
+        this.caughtValues = caughtValues;
     }
 
     public void setRelatedMethodsInSameClass(List<RelatedMethod> relatedMethodsInSameClass) {
@@ -326,7 +350,7 @@ public class ExceptionInfo {
                 ", exceptionMsg='" + exceptionMsg + '\'' +
                 ", relatedParamValues=" + relatedParamValues +
                 ", relatedFieldValues=" + relatedFieldValues +
-                ", caughtedValues=" + caughtedValues +
+                ", caughtedValues=" + caughtValues +
                 ", relatedMethodsInSameClass=" + relatedMethodsInSameClass +
                 ", relatedMethodsInDiffClass=" + relatedMethodsInDiffClass +
                 ", relatedMethods=" + relatedMethods +
@@ -353,47 +377,6 @@ public class ExceptionInfo {
 
     public Set<Integer> getRelatedValueIndex() {
         return relatedValueIndex;
-    }
-
-
-    public boolean isOsVersionRelated() {
-        return isOsVersionRelated;
-    }
-
-    public void setOsVersionRelated(boolean osVersionRelated) {
-        isOsVersionRelated = osVersionRelated;
-    }
-
-    public boolean isAssessRelated() {
-        return isAssessRelated;
-    }
-
-    public void setAssessRelated(boolean assessRelated) {
-        isAssessRelated = assessRelated;
-    }
-
-    public boolean isManifestRelated() {
-        return isManifestRelated;
-    }
-
-    public void setManifestRelated(boolean manifestRelated) {
-        isManifestRelated = manifestRelated;
-    }
-
-    public boolean isResourceRelated() {
-        return isResourceRelated;
-    }
-
-    public void setResourceRelated(boolean resourceRelated) {
-        isResourceRelated = resourceRelated;
-    }
-
-    public boolean isHardwareRelated() {
-        return isHardwareRelated;
-    }
-
-    public void setHardwareRelated(boolean hardwareRelated) {
-        isHardwareRelated = hardwareRelated;
     }
 
     public List<Unit> getConditionUnits() {
@@ -442,8 +425,8 @@ public class ExceptionInfo {
 
     public boolean findExceptionType(SootClass sootClass) {
         boolean isException = false;
-        List<String> StandardChecked = FileUtils.getListFromFile("D:\\ProjectData\\IdeaProjects\\ExceptionExtractor\\ExceptionExtractor\\src\\main\\resources\\unchecked_exceptions.txt");
-        List<String> StandardUnChecked_Runtime = FileUtils.getListFromFile("D:\\ProjectData\\IdeaProjects\\ExceptionExtractor\\ExceptionExtractor\\src\\main\\resources\\checked_exceptions.txt");
+        List<String> StandardChecked = FileUtils.getListFromFile("D:\\ProjectData\\IdeaProjects\\ExceptionExtractor\\ExceptionExtractor\\src\\main\\resources\\checked_exceptions.txt");
+        List<String> StandardUnChecked_Runtime = FileUtils.getListFromFile("D:\\ProjectData\\IdeaProjects\\ExceptionExtractor\\ExceptionExtractor\\src\\main\\resources\\unchecked_exceptions.txt");
         //get exception type
         setExceptionType(ExceptionType.ThirdParty);
         if(StandardChecked.contains(sootClass.getName())){ //should be empty
@@ -467,5 +450,6 @@ public class ExceptionInfo {
         }
         return isException;
     }
+
 }
 

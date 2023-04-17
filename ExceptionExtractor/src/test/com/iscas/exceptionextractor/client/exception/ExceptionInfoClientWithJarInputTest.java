@@ -14,14 +14,13 @@ import java.io.File;
  */
 @Slf4j
 public class ExceptionInfoClientWithJarInputTest {
-    String[] versions = {"2.1", "4.4", "5.0", "6.0", "7.0", "8.0", "9.0", "10.0", "11.0", "12.0"};
 
     @org.junit.Test
     public void testConfig() {
-        log.info("ExceptionInfoClientTest start...\n");
+        log.info("ExceptionInfoClientTest start...");
         setArgs();
         Main.startAnalyze();
-        log.info("ExceptionInfoClientTest Finish...\n");
+        log.info("ExceptionInfoClientTest Finish...");
         System.exit(0);
     }
 
@@ -30,9 +29,10 @@ public class ExceptionInfoClientWithJarInputTest {
         String client = "ExceptionInfoClient";
 
         MyConfig.getInstance().setFileVersion("1.8");
-        path = "D:\\SoftwareData\\dataset\\android-framework\\jars";
+        path = "..\\M_framework\\";
+//        path = "D:\\SoftwareData\\dataset\\android-framework\\jars";
         MyConfig.getInstance().setAppPath(path + File.separator);
-        fileVersion = "jdk"+MyConfig.getInstance().getFileVersion();
+        fileVersion = "commons-io-2.6";
         MyConfig.getInstance().setAppName(fileVersion+".jar");
 
         MyConfig.getInstance().setClient(client);
@@ -45,5 +45,7 @@ public class ExceptionInfoClientWithJarInputTest {
         MyConfig.getInstance().setExceptionFilePath(androidFolder+"exceptionInfo"+File.separator);
         MyConfig.getInstance().setPermissionFilePath(androidFolder+"Permission"+File.separator+"permission.txt");
         MyConfig.getInstance().setAndroidCGFilePath(androidFolder+"CallGraphInfo"+File.separator+"cg.txt");
+        MyConfig.getInstance().setJimple(false);
+
     }
 }

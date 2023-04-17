@@ -1,5 +1,7 @@
 package com.iscas.exceptionextractor.utils;
 
+import com.iscas.exceptionextractor.model.analyzeModel.ConditionWithValueSet;
+
 import java.util.*;
 
 public class CollectionUtils {
@@ -21,5 +23,12 @@ public class CollectionUtils {
 			}
 		});
 		return treeMapList;
+	}
+	public static void add_rfcondition_to_map(String key, ConditionWithValueSet attr, Map<String, ConditionWithValueSet> map) {
+		if (map == null || key == null)
+			return;
+		if (!map.containsKey(key)) {
+			map.put(key, attr);
+		}
 	}
 }

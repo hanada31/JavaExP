@@ -111,6 +111,7 @@ public class Main {
 		options.addOption("name", true, "-name: Set the name of the apk under analysis.");
 		options.addOption("path", true, "-path: Set the path to the apk under analysis.");
 		options.addOption("androidJar", true, "-androidJar: Set the path of android.jar.");
+		options.addOption("isJimple", true, "-isJimple: Use Jimple for true, Shimple for false.");
 		options.addOption("crashPath", true, "-crashPath: crash information file.");
 		options.addOption("frameworkVersion", true, "-frameworkVersion: The version of framework under analysis");
 		options.addOption("strategy", true, "-strategy: effectiveness of strategy m");
@@ -161,7 +162,7 @@ public class Main {
 		}
 
 		/** run config **/
-		MyConfig.getInstance().setJimple(true);
+		MyConfig.getInstance().setJimple(Boolean.parseBoolean((mCmd.getOptionValue("isJimple", "true"))));
 		MyConfig.getInstance().setAppName(mCmd.getOptionValue("name", ""));
 		MyConfig.getInstance().setAppPath(mCmd.getOptionValue("path", System.getProperty("user.dir")) + File.separator);
 		MyConfig.getInstance().setAndroidJar(mCmd.getOptionValue("androidJar", "lib"+File.separator+"platforms") + File.separator);

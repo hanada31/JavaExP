@@ -2,6 +2,7 @@ package com.iscas.exceptionextractor.utils;
 
 import com.iscas.exceptionextractor.base.Global;
 import com.iscas.exceptionextractor.base.MyConfig;
+import com.iscas.exceptionextractor.model.analyzeModel.AppModel;
 import com.iscas.exceptionextractor.model.analyzeModel.StaticFiledInfo;
 import com.iscas.exceptionextractor.model.sootAnalysisModel.Context;
 import com.iscas.exceptionextractor.model.sootAnalysisModel.Counter;
@@ -30,6 +31,37 @@ import java.util.*;
  *
  */
 public class SootUtils {
+
+	public static List<Body> getBodys(String target, SootMethod sm, AppModel appModel) {
+		List<Body> bodys = new ArrayList<Body>();
+		if(sm.hasActiveBody()){
+			bodys.add(sm.getActiveBody());
+			appModel.methodsToBeProcessed.add(target+" " +sm.getSignature());
+//			System.out.println("util "+target+" " +sm.getSignature());
+		}else if(sm.isAbstract()){
+			appModel.methodsToBeProcessed.add(target+" " +sm.getSignature());
+//			System.out.println("util "+target+" " +sm.getSignature());
+			Set<SootClass> subClasses = new HashSet<>();
+			if(Scene.v().hasFastHierarchy()){
+				if(sm.getDeclaringClass().isInterface()){
+					subClasses = Scene.v().getFastHierarchy().getAllImplementersOfInterface(sm.getDeclaringClass());
+				}else{
+					subClasses = (Set<SootClass>) Scene.v().getFastHierarchy().getSubclassesOf(sm.getDeclaringClass());
+				}
+			}
+			for(SootClass sc : subClasses){
+				try{
+					SootMethod sm2 = sc.getMethodByName(sm.getName());
+					if(sm2 !=null && sm2.hasActiveBody()){
+						bodys.add(sm2.getActiveBody());
+						appModel.methodsToBeProcessed.add(target+" " +sm2.getSignature());
+//						System.out.println("util "+ target+" " +sm2.getSignature());
+					}
+				}catch(Exception e){}
+			}
+		}
+		return bodys;
+	}
 
 	/**
 	 * get the real name of the component of current dummyMain method instead of
@@ -1583,12 +1615,21 @@ public class SootUtils {
 		return rightValues;
 	}
 
-	public static boolean isHardwardRelated(String name) {
-		for (int i = 0; i < ConstantUtils.hardwares.length; i++) {
-			if (name.contains(ConstantUtils.hardwares[i])) {
-				return true;
-			}
+    public static String getActualOp(Value op) {
+		if(op instanceof  EqExpr){
+			return  "is not";
+		}else if(op instanceof  NeExpr){
+			return  "is";
+		}else if(op instanceof  LeExpr){
+			return  "larger than";
+		}else if(op instanceof  GeExpr){
+			return  "smaller than";
+		}else if(op instanceof LtExpr){
+			return  "smaller or equal";
+		}else if(op instanceof  GtExpr){
+			return  "smaller or equal";
+		}else{
+			return "no operator";
 		}
-		return false;
-	}
+    }
 }

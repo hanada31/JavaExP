@@ -15,11 +15,11 @@ public class ExceptionInfoCountTest {
     @org.junit.Test
     public void testConfig() {
         setArgs();
-        log.info("ExceptionInfoCountTest start...\n");
+        log.info("ExceptionInfoCountTest start...");
         setArgs();
         ExceptionInfoCount a = new ExceptionInfoCount();
         a.analyze();
-        log.info("ExceptionInfoCountTest Finish...\n");
+        log.info("ExceptionInfoCountTest Finish...");
         System.exit(0);
     }
 //    D:\SoftwareData\dataset\android-framework

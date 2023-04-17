@@ -5,10 +5,12 @@ import com.google.common.collect.Lists;
 import com.iscas.exceptionextractor.base.Analyzer;
 import com.iscas.exceptionextractor.base.Global;
 import com.iscas.exceptionextractor.base.MyConfig;
-import com.iscas.exceptionextractor.model.sootAnalysisModel.Context;
-import com.iscas.exceptionextractor.model.sootAnalysisModel.Counter;
-import com.iscas.exceptionextractor.model.sootAnalysisModel.NestableObj;
-import com.iscas.exceptionextractor.utils.*;
+import com.iscas.exceptionextractor.model.analyzeModel.ConditionWithValueSet;
+import com.iscas.exceptionextractor.model.analyzeModel.RefinedCondition;
+import com.iscas.exceptionextractor.utils.ConstantUtils;
+import com.iscas.exceptionextractor.utils.FileUtils;
+import com.iscas.exceptionextractor.utils.SootUtils;
+import com.iscas.exceptionextractor.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import soot.*;
 import soot.jimple.*;
@@ -20,7 +22,6 @@ import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.toolkits.scalar.UnitValueBoxPair;
 import soot.toolkits.scalar.ValueUnitPair;
 
-import java.io.File;
 import java.util.*;
 
 /**
@@ -45,16 +46,32 @@ public class ExceptionAnalyzer extends Analyzer {
      * @param sootMethod
      * @return
      */
-    //<android.app.ContextImpl: android.content.Intent registerReceiver(android.content.BroadcastReceiver
     private boolean filterMethod(SootMethod sootMethod) {
         List<String> mtds = new ArrayList<>();
-        mtds.add("missingDialog");
+        mtds.add("throw_with_outVar_condition(");
         for(String tag: mtds){
             if (sootMethod.getSignature().contains(tag)) {
                 return false;
             }
         }
         return true;
+    }
+
+    private void outputExceptionConditions(SootMethod sootMethod, ExceptionInfo exceptionInfo) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(sootMethod.getSignature()+"\n");
+        sb.append(exceptionInfo.getExceptionName()+"\n");
+        int size = sb.length();
+        for(ConditionWithValueSet conditionWithValueSet :exceptionInfo.getRefinedConditions().values() ){
+            if(conditionWithValueSet.toString().length()>0)
+                sb.append(conditionWithValueSet+"\n");
+        }
+        if(exceptionInfo.getRelatedVarType() == RelatedVarType.Empty){
+            sb.append("RefinedCondition: no condition\n");
+        }
+        if(size < sb.length())
+            FileUtils.writeText2File(MyConfig.getInstance().getResultFolder()+"out.txt", sb.toString()+"\n",true);
+
     }
 
     @Override
@@ -68,6 +85,7 @@ public class ExceptionAnalyzer extends Analyzer {
      * analyze the information of declared exceptions
      */
     private void getDeclaredExceptionList() {
+        log.info("getDeclaredExceptionList start...");
         declaredExceptionInfoList = new ArrayList<>();
         for (SootClass sootClass : getApplicationClasses()) {
             ExceptionInfo exceptionInfo = new ExceptionInfo();
@@ -78,12 +96,14 @@ public class ExceptionAnalyzer extends Analyzer {
         JSONArray exceptionListElement  = new JSONArray(new ArrayList<>());
         ExceptionInfoClientOutput.getSummaryJsonArrayOfDeclaredException(declaredExceptionInfoList, exceptionListElement);
         ExceptionInfoClientOutput.writeExceptionSummaryInJson(exceptionListElement,"declaredException");
+        log.info("getDeclaredExceptionList end...");
     }
 
     /**
      * analyze the information of caught exceptions
      */
     private void getCaughtExceptionList() {
+        log.info("getCaughtExceptionList start...");
         caughtExceptionInfoList = new ArrayList<>();
         for (SootClass sootClass : getApplicationClasses()) {
             for (SootMethod sootMethod : sootClass.getMethods()) {
@@ -101,40 +121,34 @@ public class ExceptionAnalyzer extends Analyzer {
         JSONArray exceptionListElement  = new JSONArray(new ArrayList<>());
         ExceptionInfoClientOutput.getSummaryJsonArrayOfCaughtException(caughtExceptionInfoList, exceptionListElement);
         ExceptionInfoClientOutput.writeExceptionSummaryInJson(exceptionListElement,"caughtException");
+        log.info("getCaughtExceptionList end...");
     }
 
     /**
      * analyze the information of thrown exceptions
      */
     private void getThrownExceptionList() {
-//        FileUtils.writeText2File(MyConfig.getInstance().getResultFolder() +File.separator+"android"+ MyConfig.getInstance().getAndroidOSVersion()+File.separator
-//                +"throwUnits.txt", "", false);
-
+        log.info("getThrownExceptionList start...");
         thrownExceptionInfoList = new ArrayList<>();
         for (SootClass sootClass : getApplicationClasses()) {
             for (SootMethod sootMethod : sootClass.getMethods()) {
                 if(openFilter && filterMethod(sootMethod)) continue;
                 if (sootMethod.hasActiveBody()) {
-                    try {
-                        Map<SootMethod, Map<Unit, Local>> method2unit2Value = getThrowUnitWithValue(sootMethod,new  HashSet<>());
-                        for(Map.Entry<SootMethod, Map<Unit,Local>> entryOuter: method2unit2Value.entrySet()) {
-                            SootMethod sm =entryOuter.getKey();
-                            Map<Unit,Local> unit2Value = entryOuter.getValue();
-                            Map<Unit, SootClass> unit2Type = new HashMap<>();
-                            for (Map.Entry<Unit, Local> entryInner : unit2Value.entrySet()) {
-                                getThrowUnitWithType(unit2Type, sm, entryInner.getKey(), entryInner.getValue());
-                            }
-                            for (Map.Entry<Unit, SootClass> entryInner : unit2Type.entrySet()) {
-                                createNewExceptionInfo(sootMethod, sm, entryInner.getKey(), entryInner.getValue());
-                            }
+                    Map<SootMethod, Map<Unit, Local>> method2unit2Value = getThrowUnitWithValue(sootMethod,new  HashSet<>());
+                    for(Map.Entry<SootMethod, Map<Unit,Local>> entryOuter: method2unit2Value.entrySet()) {
+                        SootMethod sm =entryOuter.getKey();
+                        Map<Unit,Local> unit2Value = entryOuter.getValue();
+                        Map<Unit, SootClass> unit2Type = new HashMap<>();
+                        for (Map.Entry<Unit, Local> entryInner : unit2Value.entrySet()) {
+                            getThrowUnitWithType(unit2Type, sm, entryInner.getKey(), entryInner.getValue());
                         }
-                    } catch (Exception |  Error e) {
-                        log.info("Exception |  Error:::" + sootMethod.getSignature());
-                        e.printStackTrace();
+                        for (Map.Entry<Unit, SootClass> entryInner : unit2Type.entrySet()) {
+                            createNewExceptionInfo(sootMethod, sm, entryInner.getKey(), entryInner.getValue());
+                        }
                     }
                 }
             }
-//            ExceptionInfoClientOutput.writeThrownExceptionInJsonForCurrentClass(sootClass, thrownExceptionInfoList);
+            ExceptionInfoClientOutput.writeThrownExceptionInJsonForCurrentClass(sootClass, thrownExceptionInfoList);
         }
         JSONArray exceptionListElement  = new JSONArray(new ArrayList<>());
         ExceptionInfoClientOutput.getSummaryJsonArrayOfThrownException(thrownExceptionInfoList, exceptionListElement);
@@ -143,31 +157,7 @@ public class ExceptionAnalyzer extends Analyzer {
         ExceptionInfoClientOutput.getSummaryJsonArrayOfThrownException2(thrownExceptionInfoList, exceptionListElement);
         ExceptionInfoClientOutput.writeExceptionSummaryInJson(exceptionListElement,"thrownException2");
 
-//        FileUtils.writeText2File(MyConfig.getInstance().getResultFolder() +File.separator+"android"+MyConfig.getInstance().getAndroidOSVersion()+File.separator
-//                +"throwUnits.txt", PrintUtils.printSet(nonThrowUnits,"\n"), true);
-    }
-
-    private void getPermissionSet() {
-        for (SootClass sootClass : getApplicationClasses()) {
-            if (!sootClass.getPackageName().startsWith(ConstantUtils.CGANALYSISPREFIX)) continue;
-            for (SootMethod sootMethod : sootClass.getMethods()) {
-                if (sootMethod.hasActiveBody()) {
-                    for(Unit u: sootMethod.getActiveBody().getUnits()){
-                        if(u.toString().contains("android.permission.")){
-                            String str = u.toString().substring(u.toString().indexOf("android.permission."));
-                            if(str.indexOf('"')>0) {
-                                str = str.substring(0, str.indexOf('"'));
-                                permissionSet.add(str);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        String folder = MyConfig.getInstance().getResultFolder() +File.separator+ MyConfig.getInstance().getAppName()+File.separator+"Permission"+File.separator;
-        FileUtils.createFolder(folder);
-        FileUtils.writeList2File(folder,"permission.txt", permissionSet,false);
-        log.info("permissionSet:::" + permissionSet.size());
+        log.info("getThrownExceptionList end...");
     }
 
     /**
@@ -403,19 +393,6 @@ public class ExceptionAnalyzer extends Analyzer {
         }
         int e = exceptionInfo.getConditions().size();
         getConditionType(exceptionInfo, e-b);
-
-        if(containPermissionString(exceptionInfo.getExceptionMsg())){
-            exceptionInfo.setManifestRelated(true);
-        }
-        String name = sootMethod.getSignature();
-        if(SootUtils.isHardwardRelated(name)){
-            exceptionInfo.setHardwareRelated(true);
-        }
-        for(String field: exceptionInfo.getRelatedFieldValuesInStr()){
-            if(field.contains("android.app.Activity: android.content.pm.ActivityInfo mActivityInfo")){
-                exceptionInfo.setManifestRelated(true);
-            }
-        }
         thrownExceptionInfoList.add(exceptionInfo);
     }
 
@@ -446,6 +423,12 @@ public class ExceptionAnalyzer extends Analyzer {
         trace.add(sootMethod.getSignature());
 
         getExceptionCondition(sootMethod, unit, exceptionInfo, new HashSet<>(), fromThrow, null);
+        for(ConditionWithValueSet conditionWithValueSet :exceptionInfo.getRefinedConditions().values() ) {
+            conditionWithValueSet.optimizeCondition();
+        }
+
+        outputExceptionConditions(sootMethod, exceptionInfo);
+
         if(exceptionInfo.getRelatedParamValues().size()>0 && exceptionInfo.getRelatedFieldValues().size() ==0) {
             List<String> newTrace = new ArrayList<>(trace);
             RelatedMethod addMethod = new RelatedMethod(sootMethod.getSignature(), RelatedMethodSource.CALLER, 0, newTrace);
@@ -467,6 +450,8 @@ public class ExceptionAnalyzer extends Analyzer {
                     RelatedMethodSource.CALLER, exceptionInfo.getRelatedValueIndex(), newTrace2);
         }
     }
+
+
 
     /**
      * getExceptionCaller
@@ -597,52 +582,6 @@ public class ExceptionAnalyzer extends Analyzer {
     }
 
     /**
-     * conditionCheck
-     *
-     * @param exceptionInfo
-     * @param sootMethod
-     * @param field
-     * @return
-     */
-    private boolean conditionCheck(ExceptionInfo exceptionInfo, SootMethod sootMethod, SootField field) {
-        List<String> assigns = new ArrayList<>();
-        for(Unit u: sootMethod.getActiveBody().getUnits()){
-            if(u instanceof  JAssignStmt){
-                JAssignStmt jAssignStmt = (JAssignStmt) u;
-                if(jAssignStmt.getLeftOp() instanceof  FieldRef){
-                    if (field ==  jAssignStmt.getFieldRef().getField()) {
-                        ValueObtainer vo = new ValueObtainer(sootMethod.getSignature(), "", new Context(), new Counter());
-                        NestableObj nestableObj = vo.getValueofVar(jAssignStmt.getRightOp(), u, 0);
-                        for (String res : nestableObj.getValues()) {
-                            assigns.add(res);
-                        }
-                    }
-                }
-            }
-        }
-        for(String val : assigns) {
-            ValueObtainer vo = new ValueObtainer(exceptionInfo.getSootMethod().getSignature(), "", new Context(), new Counter());
-            Value condition = exceptionInfo.getConditions().get(0);
-            Unit conditionUnit = exceptionInfo.getConditionUnits().get(0);
-            List<String> conditionRightValues = vo.getValueofVar(((BinopExpr) condition).getOp2(),conditionUnit, 0).getValues();
-            if (condition instanceof JNeExpr) {
-                if(!conditionRightValues.contains(val))
-                    return false;
-            }else if (condition instanceof JEqExpr) {
-                if(conditionRightValues.contains(val))
-                    return false;
-            }
-//            else if (condition instanceof JGeExpr) {
-//            }else if (condition instanceof JGtExpr) {
-//            }else if (condition instanceof JLeExpr) {
-//            }else if (condition instanceof JLtExpr) {
-//            }
-        }
-        return true;
-    }
-
-
-    /**
      * get the latest condition info for an ExceptionInfo
      * only analyze one level if condition, forward
      */
@@ -653,8 +592,10 @@ public class ExceptionAnalyzer extends Analyzer {
         getCondHistory.add(unit);
         Body body = sootMethod.getActiveBody();
         ExceptionalUnitGraph unitGraph = new ExceptionalUnitGraph(body);
-        List<Unit> allPreds = new ArrayList<>();
-        SootUtils.getAllPredsofUnit(sootMethod, unit,allPreds);
+        List<Unit> allPredsOfCurrentUnit = new ArrayList<>();
+        SootUtils.getAllPredsofUnit(sootMethod, unit,allPredsOfCurrentUnit);
+        List<Unit> allPredsOfThrowUnit = new ArrayList<>();
+        SootUtils.getAllPredsofUnit(sootMethod, exceptionInfo.getUnit(),allPredsOfThrowUnit);
         List<Unit> gotoTargets = getGotoTargets(body);
         List<Unit> predsOf = unitGraph.getPredsOf(unit);
         for (Unit predUnit : predsOf) {
@@ -669,17 +610,34 @@ public class ExceptionAnalyzer extends Analyzer {
                     if (exceptionInfo.getConditionUnits().size() > 0 && lastGoto != null)
                         continue;
                 }
+
                 exceptionInfo.getTracedUnits().add(predUnit);
                 IfStmt ifStmt = (IfStmt) predUnit;
                 lastGoto = ifStmt.getTarget();
+                //it is not a dominating condition
+                if (allPredsOfThrowUnit.contains(ifStmt.getTarget()))
+                    continue;
                 Value cond = ifStmt.getCondition();
                 exceptionInfo.addRelatedCondition(cond);
                 exceptionInfo.getConditionUnits().add(ifStmt);
+
                 if(cond instanceof ConditionExpr){
-                    Value value = ((ConditionExpr)cond).getOp1();
-                    extendRelatedValues(sootMethod, allPreds, exceptionInfo, predUnit, value, new ArrayList<>(),getCondHistory, fromThrow);
-                    Value value2 = ((ConditionExpr)cond).getOp2();
-                    extendRelatedValues(sootMethod, allPreds, exceptionInfo, predUnit, value2, new ArrayList<>(),getCondHistory, fromThrow);
+                    ConditionExpr conditionExpr = (ConditionExpr) cond;
+                    ConditionWithValueSet conditionWithValueSet = new ConditionWithValueSet(sootMethod, ifStmt);
+                    exceptionInfo.addRefinedConditions(conditionWithValueSet);
+                    // add the direct condition
+
+                    RefinedCondition rf = new RefinedCondition(conditionWithValueSet, conditionExpr.getOp1(),
+                            SootUtils.getActualOp(conditionExpr), conditionExpr.getOp2(), predUnit);
+                    conditionWithValueSet.addRefinedCondition(rf);
+
+                    // trace from the direct condition
+                    extendRelatedValues(conditionWithValueSet, sootMethod, allPredsOfCurrentUnit, exceptionInfo, predUnit, conditionExpr.getOp1(),
+                            new ArrayList<>(),getCondHistory, fromThrow, "left");
+
+                    extendRelatedValues(conditionWithValueSet, sootMethod, allPredsOfCurrentUnit, exceptionInfo, predUnit, conditionExpr.getOp2(),
+                            new ArrayList<>(),getCondHistory, fromThrow, "right");
+
                 }
             }else if (predUnit instanceof SwitchStmt) {
                 exceptionInfo.getTracedUnits().add(predUnit);
@@ -687,7 +645,9 @@ public class ExceptionAnalyzer extends Analyzer {
                 Value key = swStmt.getKey();
                 exceptionInfo.addRelatedCondition(key);
                 exceptionInfo.getConditionUnits().add(swStmt);
-                extendRelatedValues(sootMethod, allPreds, exceptionInfo, predUnit, key, new ArrayList<>(), getCondHistory, fromThrow);
+                //TODO
+                ConditionWithValueSet conditionWithValueSet = new ConditionWithValueSet( sootMethod,predUnit);
+                extendRelatedValues(conditionWithValueSet, sootMethod, allPredsOfCurrentUnit, exceptionInfo, predUnit, key, new ArrayList<>(), getCondHistory, fromThrow, "right");
             }else if (predUnit instanceof JIdentityStmt ) {
                 JIdentityStmt stmt = (JIdentityStmt) predUnit;
                 if(stmt.getRightOp() instanceof CaughtExceptionRef){
@@ -710,26 +670,19 @@ public class ExceptionAnalyzer extends Analyzer {
     /**
      * tracing the values relates to the one used in if condition
      */
-    private String extendRelatedValues(SootMethod sootMethod, List<Unit> allPreds, ExceptionInfo exceptionInfo, Unit unit, Value value,
-                                     List<Value> valueHistory, Set<Unit> getCondHistory , boolean fromThrow) {
+    private String extendRelatedValues(ConditionWithValueSet conditionWithValueSet, SootMethod sootMethod, List<Unit> allPreds, ExceptionInfo exceptionInfo, Unit unit, Value value,
+                                     List<Value> valueHistory, Set<Unit> getCondHistory , boolean fromThrow, String location) {
         if(valueHistory.contains(value) || !allPreds.contains(unit)) return "";// if defUnit is not a pred of unit
         valueHistory.add(value);
+
         if(value instanceof  Local) {
             String methodSig = exceptionInfo.getSootMethod().getSignature();
             for(Unit defUnit: SootUtils.getDefOfLocal(methodSig,value, unit)) {
-                //if the define unit is under a check
-                if(defUnit.toString().contains("android.content.pm.ApplicationInfo: int targetSdkVersion")){
-                    exceptionInfo.setOsVersionRelated(true);
-                }else if(defUnit.toString().contains("android.content.res.AssetManager")){
-                  exceptionInfo.setAssessRelated(true);
-                }else if(defUnit.toString().contains("android.content.res.Resources")){
-                    exceptionInfo.setResourceRelated(true);
-                }
                 if (defUnit instanceof JIdentityStmt) {
                     JIdentityStmt identityStmt = (JIdentityStmt) defUnit;
-                    identityStmt.getRightOp();
+                    //add refinedCondition
+                    addRefinedConditionIntoSet(conditionWithValueSet,value, "denote", identityStmt.getRightOp(), defUnit, location);
                     if (identityStmt.getRightOp() instanceof ParameterRef) {//from parameter
-                        //TODO add parameter in the caller
                         exceptionInfo.addRelatedParamValue(identityStmt.getRightOp());
                         int id = ((ParameterRef) identityStmt.getRightOp()).getIndex();
                         exceptionInfo.getRelatedValueIndex().add(id);
@@ -740,60 +693,91 @@ public class ExceptionAnalyzer extends Analyzer {
                         exceptionInfo.addCaughtedValues(identityStmt.getRightOp());
                         return "CaughtExceptionRef";
                     }else if(identityStmt.getRightOp() instanceof ThisRef){
+                        //add refinedCondition
                        return "ThisRef";
                     }
                 } else if (defUnit instanceof JAssignStmt) {
-                    Value rightOp = ((JAssignStmt) defUnit).getRightOp();
+                    JAssignStmt assignStmt = (JAssignStmt) defUnit;
+                    //add refinedCondition
+                    Value rightOp = assignStmt.getRightOp();
                     if (rightOp instanceof Local) {
-                        extendRelatedValues(sootMethod, allPreds, exceptionInfo, defUnit, rightOp, valueHistory, getCondHistory, fromThrow);
+                        extendRelatedValues(conditionWithValueSet, sootMethod, allPreds, exceptionInfo,
+                                defUnit, rightOp, valueHistory, getCondHistory, fromThrow, location);
+                        addRefinedConditionIntoSet(conditionWithValueSet,value, "equals", rightOp, assignStmt, location);
                     } else if (rightOp instanceof AbstractInstanceFieldRef) {
                         //if com.iscas.crashtracker.base is from parameter, field is omitted, if com.iscas.crashtracker.base is this, parameter is recorded
                         Value base = ((AbstractInstanceFieldRef) rightOp).getBase();
-                        String defType = extendRelatedValues(sootMethod, allPreds, exceptionInfo, defUnit, base, valueHistory, getCondHistory, fromThrow);
+                        String defType = extendRelatedValues(conditionWithValueSet, sootMethod, allPreds, exceptionInfo,
+                                defUnit, base, valueHistory, getCondHistory, fromThrow, location);
                         //if the this variable is assigned from parameter, it is not field related.
                         if(defType.equals("ThisRef")){
                             SootField field = ((AbstractInstanceFieldRef) rightOp).getField();
                             Value baseF = ((AbstractInstanceFieldRef) rightOp).getBase();
                             List<Value> rightValues = SootUtils.getFiledValueAssigns(baseF, field, allPreds);
                             for(Value rv: rightValues){
-                                extendRelatedValues(sootMethod, allPreds, exceptionInfo, defUnit, rv, valueHistory, getCondHistory, fromThrow);
+                                extendRelatedValues(conditionWithValueSet, sootMethod, allPreds, exceptionInfo, defUnit,
+                                        rv, valueHistory, getCondHistory, fromThrow, location);
                             }
                             exceptionInfo.addRelatedFieldValues(field);
-
+                            addRefinedConditionIntoSet(conditionWithValueSet,value, "denote", rightOp, assignStmt, location);
                         }
                     } else if (rightOp instanceof Expr) {
                         if (rightOp instanceof InvokeExpr) {
                             InvokeExpr invokeExpr = SootUtils.getInvokeExp(defUnit);
                             for (Value val : invokeExpr.getArgs())
-                                extendRelatedValues(sootMethod, allPreds, exceptionInfo, defUnit, val, valueHistory, getCondHistory, fromThrow);
+                                extendRelatedValues(conditionWithValueSet, sootMethod, allPreds, exceptionInfo, defUnit,
+                                        val, valueHistory, getCondHistory, fromThrow, location);
                             if (rightOp instanceof InstanceInvokeExpr) {
-                                extendRelatedValues(sootMethod, allPreds, exceptionInfo, defUnit, ((InstanceInvokeExpr) rightOp).getBase(), valueHistory, getCondHistory, fromThrow);
+                                extendRelatedValues(conditionWithValueSet, sootMethod, allPreds, exceptionInfo, defUnit,
+                                        ((InstanceInvokeExpr) rightOp).getBase(),
+                                        valueHistory, getCondHistory, fromThrow, location);
+                                addRefinedConditionIntoSet(conditionWithValueSet,assignStmt.getLeftOp(), "is invoke", rightOp, assignStmt, location);
+                            }else{
+                                addRefinedConditionIntoSet(conditionWithValueSet,value, "equals", rightOp, assignStmt, location);
                             }
-                        } else if (rightOp instanceof AbstractInstanceOfExpr || rightOp instanceof AbstractCastExpr
-                                || rightOp instanceof AbstractBinopExpr || rightOp instanceof AbstractUnopExpr) {
-                            for (ValueBox vb : rightOp.getUseBoxes()) {
-                                extendRelatedValues(sootMethod, allPreds, exceptionInfo, defUnit, vb.getValue(), valueHistory, getCondHistory, fromThrow);
-                            }
-                        } else if (rightOp instanceof NewExpr) {
-                            List<UnitValueBoxPair> usesOfOps = SootUtils.getUseOfLocal(exceptionInfo.getSootMethod().getSignature(), defUnit);
-                            for (UnitValueBoxPair use : usesOfOps) {
-                                for (ValueBox vb : use.getUnit().getUseBoxes())
-                                    extendRelatedValues(sootMethod, allPreds, exceptionInfo, use.getUnit(), vb.getValue(), valueHistory, getCondHistory, fromThrow);
+                        }else if(rightOp instanceof PhiExpr){
+                            PhiExpr phiExpr = (PhiExpr) rightOp;
+                            for(Value phiValue : phiExpr.getValues()) {
+                                extendRelatedValues(conditionWithValueSet, sootMethod, allPreds, exceptionInfo, defUnit,
+                                        phiValue, valueHistory, getCondHistory, fromThrow, location);
+                                addRefinedConditionIntoSet(conditionWithValueSet, value, "phi replace", phiValue, assignStmt, location);
                             }
                         } else {
-                            getExceptionCondition(exceptionInfo.getSootMethod(), defUnit, exceptionInfo, getCondHistory, fromThrow, null);
+                            if (rightOp instanceof AbstractInstanceOfExpr || rightOp instanceof AbstractCastExpr
+                                    || rightOp instanceof AbstractBinopExpr || rightOp instanceof AbstractUnopExpr) {
+                                for (ValueBox vb : rightOp.getUseBoxes()) {
+                                    extendRelatedValues(conditionWithValueSet, sootMethod, allPreds, exceptionInfo, defUnit,
+                                            vb.getValue(), valueHistory, getCondHistory, fromThrow, location);
+                                }
+                            } else if (rightOp instanceof NewExpr) {
+                                List<UnitValueBoxPair> usesOfOps = SootUtils.getUseOfLocal(exceptionInfo.getSootMethod().getSignature(), defUnit);
+                                for (UnitValueBoxPair use : usesOfOps) {
+                                    for (ValueBox vb : use.getUnit().getUseBoxes())
+                                        extendRelatedValues(conditionWithValueSet, sootMethod, allPreds, exceptionInfo, use.getUnit(), vb.getValue(),
+                                                valueHistory, getCondHistory, fromThrow, location);
+                                }
+                            } else {
+                                getExceptionCondition(exceptionInfo.getSootMethod(), defUnit, exceptionInfo, getCondHistory, fromThrow, null);
+                            }
+                            addRefinedConditionIntoSet(conditionWithValueSet,value, "equals", rightOp, assignStmt, location);
                         }
                     } else if (rightOp instanceof StaticFieldRef) {
                         //from static field value
                         exceptionInfo.addRelatedFieldValues(((StaticFieldRef) rightOp).getField());
+                        addRefinedConditionIntoSet(conditionWithValueSet,value, "denote", rightOp, assignStmt, location);
                     }else if (rightOp instanceof JArrayRef) {
                         JArrayRef jArrayRef = (JArrayRef) rightOp;
-                        extendRelatedValues(sootMethod, allPreds, exceptionInfo, defUnit, jArrayRef.getBase(), valueHistory, getCondHistory, fromThrow);
+                        extendRelatedValues(conditionWithValueSet, sootMethod, allPreds, exceptionInfo, defUnit,
+                                jArrayRef.getBase(), valueHistory, getCondHistory, fromThrow, location);
+                        addRefinedConditionIntoSet(conditionWithValueSet,value, "equals", rightOp, assignStmt, location);
                     }else if (rightOp instanceof JInstanceFieldRef) {
                         JInstanceFieldRef jInstanceFieldRef = (JInstanceFieldRef) rightOp;
-                        extendRelatedValues(sootMethod, allPreds, exceptionInfo, defUnit, jInstanceFieldRef.getBase(), valueHistory, getCondHistory, fromThrow);
+                        extendRelatedValues(conditionWithValueSet, sootMethod, allPreds, exceptionInfo, defUnit,
+                                jInstanceFieldRef.getBase(), valueHistory, getCondHistory, fromThrow, location);
+                        addRefinedConditionIntoSet(conditionWithValueSet,value, "denote", rightOp, assignStmt, location);
                     }else {
                         getExceptionCondition(exceptionInfo.getSootMethod(), defUnit, exceptionInfo, getCondHistory, fromThrow, null);
+                        addRefinedConditionIntoSet(conditionWithValueSet,value, "equals", rightOp, assignStmt, location);
                     }
                 } else {
                     log.info(defUnit.getClass().getName() + "::" + defUnit);
@@ -801,6 +785,12 @@ public class ExceptionAnalyzer extends Analyzer {
             }
         }
         return "";
+    }
+
+    private void addRefinedConditionIntoSet(ConditionWithValueSet conditionWithValueSet, Value value, String operator, Value rightOp, Unit unit, String location) {
+//        if(location.equals("right")) return;
+        RefinedCondition refinedCondition = new RefinedCondition(conditionWithValueSet,value, operator, rightOp, unit);
+        conditionWithValueSet.addRefinedCondition(refinedCondition);
     }
 
     private void traceCallerOfParamValue(SootMethod sootMethod,ExceptionInfo exceptionInfo, int id, int depth) {
@@ -997,7 +987,7 @@ public class ExceptionAnalyzer extends Analyzer {
 //                        List<Unit> allPreds = new ArrayList<>();
 //                        SootUtils.getAllPredsofUnit(sootMethod, defOfLocal,allPreds);
 //                        allPreds.add(defOfLocal);
-//                        extendRelatedValues(sootMethod, allPreds, exceptionInfo, defOfLocal, argConstant, new ArrayList<>(), new HashSet<>(), true);
+//                        extendRelatedValues(conditionWithValueSet, sootMethod, allPreds, exceptionInfo, defOfLocal, argConstant, new ArrayList<>(), new HashSet<>(), true);
                     }
                     message.set(0, s);
 
@@ -1047,7 +1037,7 @@ public class ExceptionAnalyzer extends Analyzer {
 //                        List<Unit> allPreds = new ArrayList<>();
 //                        SootUtils.getAllPredsofUnit(sootMethod, succs,allPreds);
 //                        allPreds.add(succs);
-//                        extendRelatedValues(sootMethod, allPreds, exceptionInfo, succs, argConstant, new ArrayList<>(), new HashSet<>(), true);
+//                        extendRelatedValues(conditionWithValueSet, sootMethod, allPreds, exceptionInfo, succs, argConstant, new ArrayList<>(), new HashSet<>(), true);
                     }
                     message.set(0, s);
                 }
