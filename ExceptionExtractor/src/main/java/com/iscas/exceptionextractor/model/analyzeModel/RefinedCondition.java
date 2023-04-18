@@ -42,6 +42,7 @@ public class RefinedCondition implements Cloneable {
         refinedCondition.setLeftStr(leftStr);
         refinedCondition.setRightStr(rightStr);
         refinedCondition.setUnit(unit);
+        refinedCondition.setConditionWithValueSet(conditionWithValueSet);
         return refinedCondition;
     }
 
@@ -98,7 +99,10 @@ public class RefinedCondition implements Cloneable {
             leftStr = "parameter" + ((ParameterRef)leftVar).getIndex();
         if(rightValue instanceof ParameterRef)
             rightStr = "parameter" + ((ParameterRef)rightValue).getIndex();
-        return "RefinedCondition: " + leftStr  +" "+ operator  +" "+ rightStr;
+        String str = "RefinedCondition: " + leftStr  +" "+ operator  +" "+ rightStr +", which is " +conditionWithValueSet.getIsSatisfy();
+        str = str.replace("is not null, which is false", "is null, which is true");
+        str = str.replace("is null, which is false", "is not null, which is true");
+        return str;
     }
 
     public Unit getUnit() {

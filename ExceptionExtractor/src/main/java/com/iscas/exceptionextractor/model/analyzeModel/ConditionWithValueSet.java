@@ -20,14 +20,14 @@ import java.util.List;
 import java.util.Set;
 
 public class ConditionWithValueSet implements  Cloneable {
-	private int isSatisfy = 1;
+	private boolean isSatisfy = true;
 	private Unit conditionUnit;
 	private List<RefinedCondition> refinedConditions = new ArrayList<>();
 	private SootMethod sootMethod;
 
 	@Override
 	public ConditionWithValueSet clone() throws CloneNotSupportedException {
-		ConditionWithValueSet conditionWithValueSetClone = new ConditionWithValueSet(sootMethod, conditionUnit);
+		ConditionWithValueSet conditionWithValueSetClone = new ConditionWithValueSet(sootMethod, conditionUnit, isSatisfy);
 		for(RefinedCondition refinedCondition: refinedConditions) {
 			RefinedCondition refinedConditionClone = refinedCondition.clone();
 			refinedConditionClone.setConditionWithValueSet(conditionWithValueSetClone);
@@ -37,17 +37,18 @@ public class ConditionWithValueSet implements  Cloneable {
 		return conditionWithValueSetClone;
 	}
 
-	public ConditionWithValueSet(SootMethod sootMethod, Unit conditionUnit){
+	public ConditionWithValueSet(SootMethod sootMethod, Unit conditionUnit, boolean isSatisfy){
 		this.sootMethod = sootMethod;
 		this.conditionUnit = conditionUnit;
+		this.isSatisfy = isSatisfy;
 	}
 
 
-	public int getIsSatisfy() {
+	public boolean getIsSatisfy() {
 		return isSatisfy;
 	}
 
-	public void setIsSatisfy(int isSatisfy) {
+	public void setIsSatisfy(boolean isSatisfy) {
 		this.isSatisfy = isSatisfy;
 	}
 

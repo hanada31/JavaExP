@@ -6,6 +6,7 @@ import com.iscas.exceptionextractor.client.BaseClient;
 import com.iscas.exceptionextractor.client.soot.SootAnalyzer;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.DocumentException;
+import soot.PackManager;
 
 import java.io.IOException;
 
@@ -44,7 +45,7 @@ public class ExceptionInfoClient extends BaseClient {
 
     @Override
     public void clientOutput() throws IOException, DocumentException {
-//        PackManager.v().writeOutput();
+        PackManager.v().writeOutput();
 //        String summary_app_dir = MyConfig.getInstance().getResultFolder() + Global.v().getAppModel().getAppName()
 //                + File.separator;
 //        FileUtils.createFolder(summary_app_dir);

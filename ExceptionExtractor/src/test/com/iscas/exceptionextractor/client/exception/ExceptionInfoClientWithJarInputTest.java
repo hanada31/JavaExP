@@ -25,26 +25,25 @@ public class ExceptionInfoClientWithJarInputTest {
     }
 
     private void setArgs() {
-        String path, fileVersion;
         String client = "ExceptionInfoClient";
+        String path;
 
-        MyConfig.getInstance().setFileVersion("1.8");
         path = "..\\M_framework\\";
-//        path = "D:\\SoftwareData\\dataset\\android-framework\\jars";
-        MyConfig.getInstance().setAppPath(path + File.separator);
-        fileVersion = "commons-io-2.6";
-        MyConfig.getInstance().setAppName(fileVersion+".jar");
+//        path = "D:\\SoftwareData\\dataset\\android-framework\\classes\\";
+        String autName = "commons-io-2.6";
 
+        MyConfig.getInstance().setAppName(autName+".jar");
+        MyConfig.getInstance().setAppPath(path + File.separator);
         MyConfig.getInstance().setClient(client);
         MyConfig.getInstance().setResultFolder("..\\results" + File.separator);
         MyConfig.getInstance().setTimeLimit(100);
-        MyConfig.getInstance().setAndroidJar("E:\\AndroidSDK\\android-sdk-windows-new\\platforms");
+//        MyConfig.getInstance().setAndroidJar("E:\\AndroidSDK\\android-sdk-windows-new\\platforms");
         MyConfig.getInstance().setSrc_prec(Options.src_prec_only_class);
         MyConfig.getInstance().setFileSuffixLength(0);
-        String androidFolder = MyConfig.getInstance().getResultFolder() +File.separator+fileVersion+File.separator;
-        MyConfig.getInstance().setExceptionFilePath(androidFolder+"exceptionInfo"+File.separator);
-        MyConfig.getInstance().setPermissionFilePath(androidFolder+"Permission"+File.separator+"permission.txt");
-        MyConfig.getInstance().setAndroidCGFilePath(androidFolder+"CallGraphInfo"+File.separator+"cg.txt");
+        String autFolder = MyConfig.getInstance().getResultFolder() +File.separator+autName+File.separator;
+        MyConfig.getInstance().setExceptionFilePath(autFolder+"exceptionInfo"+File.separator);
+        MyConfig.getInstance().setPermissionFilePath(autFolder+"Permission"+File.separator+"permission.txt");
+        MyConfig.getInstance().setAndroidCGFilePath(autFolder+"CallGraphInfo"+File.separator+"cg.txt");
         MyConfig.getInstance().setJimple(false);
 
     }

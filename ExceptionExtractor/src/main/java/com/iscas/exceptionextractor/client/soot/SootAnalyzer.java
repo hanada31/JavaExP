@@ -15,6 +15,7 @@ import soot.options.Options;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 @Slf4j
 public class SootAnalyzer extends Analyzer {
 	public SootAnalyzer() {
@@ -57,6 +58,7 @@ public class SootAnalyzer extends Analyzer {
 		Options.v().set_process_dir(processDir);
 		Options.v().set_no_bodies_for_excluded(true);
 		Options.v().set_process_multiple_dex(true);
+		Options.v().set_keep_line_number(true);
 		if (MyConfig.getInstance().isJimple())
 			Options.v().set_output_format(Options.output_format_jimple);
 		else
@@ -111,4 +113,6 @@ public class SootAnalyzer extends Analyzer {
 //		excludeList.add("sun.*");
 		Options.v().set_exclude(excludeList);
 	}
+
+
 }

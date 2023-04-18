@@ -28,15 +28,19 @@ public class ConditionAnalyzer  extends Analyzer {
     ConditionTrackerInfo conditionTrackerInfo;
     SootMethod mSootMethod;
     Unit mUnit;
+    List<Unit> mPath;
+    List<DominateUnit> dominatePaths ;
 
     public ConditionTrackerInfo getConditionTrackerInfo() {
         return conditionTrackerInfo;
     }
 
-    public ConditionAnalyzer(SootMethod sootMethod, Unit unit) {
+    public ConditionAnalyzer(SootMethod sootMethod, Unit unit, List<Unit> path) {
         mSootMethod = sootMethod;
         mUnit = unit;
         conditionTrackerInfo = new ConditionTrackerInfo(sootMethod,unit);
+        mPath = path;
+        dominatePaths = ConditionAnalyzer.getAllDominate(mSootMethod, mUnit, mPath);
     }
 
     @Override
@@ -55,7 +59,7 @@ public class ConditionAnalyzer  extends Analyzer {
         List<String> trace = new ArrayList<>();
         trace.add(sootMethod.getSignature());
 
-        getExceptionCondition(sootMethod, exceptionUnit, new HashSet<>(), null);
+        getExceptionCondition(sootMethod, exceptionUnit, new HashSet<>());
 
         for(ConditionWithValueSet conditionWithValueSet :conditionTrackerInfo.getRefinedConditions().values() ) {
             conditionWithValueSet.optimizeCondition();
@@ -89,65 +93,93 @@ public class ConditionAnalyzer  extends Analyzer {
      * get the latest condition info for an conditionTrackerInfo
      * only analyze one level if condition, forward
      */
-    void getExceptionCondition(SootMethod sootMethod, Unit unit,  Set<Unit> getCondHistory, Unit lastGoto) {
-        AppModel.ConditionTracker conditionTracker = AppModel.ConditionTracker.All;
+    void getExceptionCondition(SootMethod sootMethod, Unit unit,  Set<Unit> getCondHistory) {
         if(getCondHistory.contains(unit) || getCondHistory.size()> ConstantUtils.CONDITIONHISTORYSIZE) return;// if defUnit is not a pred of unit
         getCondHistory.add(unit);
-        Body body = sootMethod.getActiveBody();
-        ExceptionalUnitGraph unitGraph = new ExceptionalUnitGraph(body);
-        List<Unit> allPredsOfCurrentUnit = new ArrayList<>();
-        SootUtils.getAllPredsofUnit(sootMethod, unit,allPredsOfCurrentUnit);
+
+
+
+        for (DominateUnit dominateUnit : dominatePaths) {
+            Unit predUnit = dominateUnit.unit;
+            boolean isSatisfy = dominateUnit.isSatisfy;
+            conditionTrackerInfo.getTracedUnits().add(predUnit);
+            IfStmt ifStmt = (IfStmt) predUnit;
+
+            Value cond = ifStmt.getCondition();
+            conditionTrackerInfo.addRelatedCondition(cond);
+            conditionTrackerInfo.getConditionUnits().add(ifStmt);
+
+            if(cond instanceof ConditionExpr){
+                ConditionExpr conditionExpr = (ConditionExpr) cond;
+                ConditionWithValueSet conditionWithValueSet = new ConditionWithValueSet(sootMethod, ifStmt, isSatisfy);
+                conditionTrackerInfo.addRefinedConditions(conditionWithValueSet);
+                // add the direct condition
+
+                RefinedCondition rf = new RefinedCondition(conditionWithValueSet, conditionExpr.getOp1(),
+                        SootUtils.getActualOp(conditionExpr), conditionExpr.getOp2(), predUnit);
+                conditionWithValueSet.addRefinedCondition(rf);
+
+                // trace from the direct condition
+                extendRelatedValues(conditionWithValueSet, sootMethod, mPath, predUnit, conditionExpr.getOp1(),
+                        new ArrayList<>(),getCondHistory,  "left");
+
+                extendRelatedValues(conditionWithValueSet, sootMethod, mPath, predUnit,conditionExpr.getOp2(),
+                        new ArrayList<>(),getCondHistory,  "right");
+            }
+        }
+    }
+
+    static List<DominateUnit> getAllDominate(SootMethod sootMethod, Unit mUnit, List<Unit> mPath) {
         List<Unit> allPredsOfThrowUnit = new ArrayList<>();
         SootUtils.getAllPredsofUnit(sootMethod, mUnit,allPredsOfThrowUnit);
-        List<Unit> gotoTargets = getGotoTargets(body);
-        List<Unit> predsOf = unitGraph.getPredsOf(unit);
-        for (Unit predUnit : predsOf) {
-            if (predUnit instanceof IfStmt) {
-                conditionTrackerInfo.getTracedUnits().add(predUnit);
-                IfStmt ifStmt = (IfStmt) predUnit;
-                lastGoto = ifStmt.getTarget();
-                //it is not a dominating condition
-                if (allPredsOfThrowUnit.contains(ifStmt.getTarget()))
-                    continue;
-                Value cond = ifStmt.getCondition();
-                conditionTrackerInfo.addRelatedCondition(cond);
-                conditionTrackerInfo.getConditionUnits().add(ifStmt);
 
-                if(cond instanceof ConditionExpr){
-                    ConditionExpr conditionExpr = (ConditionExpr) cond;
-                    ConditionWithValueSet conditionWithValueSet = new ConditionWithValueSet(sootMethod, ifStmt);
-                    conditionTrackerInfo.addRefinedConditions(conditionWithValueSet);
-                    // add the direct condition
-
-                    RefinedCondition rf = new RefinedCondition(conditionWithValueSet, conditionExpr.getOp1(),
-                            SootUtils.getActualOp(conditionExpr), conditionExpr.getOp2(), predUnit);
-                    conditionWithValueSet.addRefinedCondition(rf);
-
-                    // trace from the direct condition
-                    extendRelatedValues(conditionWithValueSet, sootMethod, allPredsOfCurrentUnit, predUnit, conditionExpr.getOp1(),
-                            new ArrayList<>(),getCondHistory,  "left");
-
-                    extendRelatedValues(conditionWithValueSet, sootMethod, allPredsOfCurrentUnit, predUnit,conditionExpr.getOp2(),
-                            new ArrayList<>(),getCondHistory,  "right");
-
+        List<DominateUnit> dominatePaths = new ArrayList<>();
+        int size = -1;
+        boolean satisfied = true;
+        while (size !=  dominatePaths.size()) {
+            size = dominatePaths.size();
+            for (Unit predUnit : sootMethod.getActiveBody().getUnits()) {
+                boolean newFind = true;
+                for(DominateUnit temp: dominatePaths){
+                    if(temp.unit == predUnit)  newFind = false;
                 }
-            }else if (predUnit instanceof SwitchStmt) {
-                conditionTrackerInfo.getTracedUnits().add(predUnit);
-                SwitchStmt swStmt = (SwitchStmt) predUnit;
-                Value key = swStmt.getKey();
-                conditionTrackerInfo.addRelatedCondition(key);
-                conditionTrackerInfo.getConditionUnits().add(swStmt);
-                ConditionWithValueSet conditionWithValueSet = new ConditionWithValueSet( sootMethod,predUnit);
-                extendRelatedValues(conditionWithValueSet, sootMethod, allPredsOfCurrentUnit, predUnit, key, new ArrayList<>(), getCondHistory, "right");
-            }else if (predUnit instanceof JIdentityStmt) {
-                JIdentityStmt stmt = (JIdentityStmt) predUnit;
-                if(stmt.getRightOp() instanceof CaughtExceptionRef){
-                    conditionTrackerInfo.addCaughtedValues(stmt.getRightOp());
-                    //analyzed try-catch contents
+                if (predUnit instanceof IfStmt && newFind) {
+                    IfStmt ifStmt = (IfStmt) predUnit;
+                    //it is not a dominating condition
+                    boolean isDominate = getIsDominate(sootMethod, ifStmt, allPredsOfThrowUnit, dominatePaths);
+                    if (isDominate == true) {
+                        dominatePaths.add(new DominateUnit(ifStmt, satisfied));
+                    }
                 }
             }
-            getExceptionCondition(sootMethod, predUnit ,getCondHistory, lastGoto);
+            satisfied = false;
         }
+        //for shortcut paths
+        List<DominateUnit> dominatePathCopy = new ArrayList<>(dominatePaths);
+        for(DominateUnit dominateUnit : dominatePathCopy){
+            if(!mPath.contains(dominateUnit.unit))
+                dominatePaths.remove(dominateUnit);
+        }
+        return dominatePaths;
+    }
+
+    static boolean getIsDominate(SootMethod sootMethod, IfStmt ifStmt, List<Unit> allPredsOfThrowUnit, List<DominateUnit> dominatePaths) {
+        boolean isDominate = false;
+        if (!allPredsOfThrowUnit.contains(ifStmt.getTarget())) {
+            isDominate = true;
+        }
+        for(DominateUnit dominateOne: dominatePaths){
+            if(dominateOne.unit.getJavaSourceStartLineNumber() == ifStmt.getJavaSourceStartLineNumber())
+                isDominate =true;
+            List<Unit> allDirectPredsOfThrowUnit = new ArrayList<>();
+            SootUtils.getDirectPredsofUnit(sootMethod, dominateOne.unit,allDirectPredsOfThrowUnit);
+            List<Unit> allDirectSuccsOfThrowUnit = new ArrayList<>();
+            SootUtils.getDirectSuccsofUnit(sootMethod, dominateOne.unit,allDirectSuccsOfThrowUnit);
+            if(allDirectPredsOfThrowUnit.contains(ifStmt) || allDirectSuccsOfThrowUnit.contains(ifStmt))
+                isDominate = true;
+        }
+
+        return isDominate;
     }
 
 
@@ -342,7 +374,7 @@ public class ConditionAnalyzer  extends Analyzer {
                                                 valueHistory, getCondHistory, location);
                                 }
                             } else {
-                                getExceptionCondition(mSootMethod, defUnit, getCondHistory, null);
+                                getExceptionCondition(mSootMethod, defUnit, getCondHistory);
                             }
                             addRefinedConditionIntoSet(conditionWithValueSet,value, "equals", rightOp, assignStmt, location);
                         }
@@ -361,7 +393,7 @@ public class ConditionAnalyzer  extends Analyzer {
                                 jInstanceFieldRef.getBase(), valueHistory, getCondHistory,  location);
                         addRefinedConditionIntoSet(conditionWithValueSet,value, "denote", rightOp, assignStmt, location);
                     }else {
-                        getExceptionCondition(mSootMethod, defUnit, getCondHistory,  null);
+                        getExceptionCondition(mSootMethod, defUnit, getCondHistory);
                         addRefinedConditionIntoSet(conditionWithValueSet,value, "equals", rightOp, assignStmt, location);
                     }
                 } else {

@@ -2,17 +2,14 @@ package com.iscas.exceptionextractor.client.exception;
 
 import com.alibaba.fastjson.JSONArray;
 import com.iscas.exceptionextractor.base.Analyzer;
+import com.iscas.exceptionextractor.client.soot.CFGTraverse;
 import com.iscas.exceptionextractor.model.analyzeModel.ConditionTrackerInfo;
 import com.iscas.exceptionextractor.model.analyzeModel.ExceptionInfo;
-import com.iscas.exceptionextractor.utils.ConstantUtils;
 import com.iscas.exceptionextractor.utils.SootUtils;
 import lombok.extern.slf4j.Slf4j;
 import soot.*;
 import soot.jimple.*;
-import soot.jimple.internal.AbstractDefinitionStmt;
-import soot.jimple.internal.AbstractInstanceInvokeExpr;
 import soot.jimple.internal.JCastExpr;
-import soot.jimple.internal.JNewExpr;
 import soot.shimple.PhiExpr;
 import soot.toolkits.scalar.ValueUnitPair;
 
@@ -28,8 +25,7 @@ public class ExceptionAnalyzer extends Analyzer {
     List<ExceptionInfo> declaredExceptionInfoList;
     List<ExceptionInfo> caughtExceptionInfoList;
     List<ExceptionInfo> thrownExceptionInfoList;
-    Set<String> nonThrowUnits = new HashSet<>();
-
+    Set<List<DominateUnit>> dominatePathSet = new HashSet<>();
     public ExceptionAnalyzer() {
         super();
     }
@@ -52,7 +48,7 @@ public class ExceptionAnalyzer extends Analyzer {
      */
     private boolean filterMethod(SootMethod sootMethod) {
         List<String> mtds = new ArrayList<>();
-        mtds.add("throw_with_outVar_condition(");
+        mtds.add("throw_with_modified_value_condition2");
         for(String tag: mtds){
             if (sootMethod.getSignature().contains(tag)) {
                 return false;
@@ -138,17 +134,14 @@ public class ExceptionAnalyzer extends Analyzer {
             for (SootMethod sootMethod : sootClass.getMethods()) {
                 if(openFilter && filterMethod(sootMethod)) continue;
                 if (sootMethod.hasActiveBody()) {
-                    Map<SootMethod, Map<Unit, Local>> method2unit2Value = getThrowUnitWithValue(sootMethod,new  HashSet<>());
-                    for(Map.Entry<SootMethod, Map<Unit,Local>> entryOuter: method2unit2Value.entrySet()) {
-                        Map<Unit,Local> unit2Value = entryOuter.getValue();
-                        Map<Unit, SootClass> unit2Type = new HashMap<>();
-                        for (Map.Entry<Unit, Local> entryInner : unit2Value.entrySet()) {
-                            getThrowUnitWithType(unit2Type, sootMethod, entryInner.getKey(), entryInner.getValue());
-                        }
-                        for (Map.Entry<Unit, SootClass> entryInner : unit2Type.entrySet()) {
-                            extractExceptionInfoFromUnit(sootMethod, entryInner.getKey(), entryInner.getValue());
+                    List<ThrowStmt> throwList = new ArrayList<>();
+                    for (Unit unit: sootMethod.getActiveBody().getUnits()) {
+                        if (unit instanceof ThrowStmt) {
+                            throwList.add((ThrowStmt) unit);
                         }
                     }
+                    if(throwList.size()>0)
+                        extractExceptionInfoOfAll(sootMethod, throwList);
                 }
             }
             ExceptionInfoClientOutput.writeThrownExceptionInJsonForCurrentClass(sootClass, thrownExceptionInfoList);
@@ -163,6 +156,59 @@ public class ExceptionAnalyzer extends Analyzer {
         log.info("getThrownExceptionList end...");
     }
 
+    private void extractExceptionInfoOfAll(SootMethod sootMethod, List<ThrowStmt> throwList) {
+        List<List<Unit>> allPaths = getThrowEndPaths(sootMethod);
+//        removeRepeat(allPaths);
+        for (ThrowStmt throwStmt: throwList) {
+            Value throwValue = throwStmt.getOp();
+            if (! (throwValue instanceof  Local)){
+                System.err.println(throwStmt);
+                continue;
+            }else{
+                SootClass exceptionClass = getThrowUnitWithType( sootMethod, (Unit) throwStmt, (Local) throwValue);
+                for(List<Unit> path: allPaths) {
+                    if(path.contains(throwStmt))
+                        extractExceptionInfoFromUnit(sootMethod, throwStmt, exceptionClass, path);
+                }
+            }
+        }
+    }
+
+
+    /**
+     * remove repeated paths when only if stmts are reserved
+     * @param sootMethod
+     * @return
+     */
+    private List<List<Unit>> getThrowEndPaths(SootMethod sootMethod) {
+        CFGTraverse cfgTraverse = new CFGTraverse(sootMethod);
+        cfgTraverse.traverseAllPaths();
+        List<List<Unit>> allPaths = cfgTraverse.getAllPaths();
+        List<List<Unit>> newAllPaths = new ArrayList<>();
+        for(List<Unit> path : allPaths){
+           if (path.get(path.size()-1) instanceof  ThrowStmt)
+               newAllPaths.add(path);
+        }
+        return  newAllPaths;
+    }
+
+
+    private void removeRepeat(List<List<Unit>> allPaths) {
+        Set<List<Unit>> toBeDel = new HashSet<>();
+        for(int i=0; i< allPaths.size(); i++){
+            for(int j=i+1; j< allPaths.size(); j++){
+                List<Unit> pathi  = allPaths.get(i);
+                List<Unit> pathj  = allPaths.get(j);
+                if(pathi.containsAll(pathj))
+                    toBeDel.add(pathj);
+                else if(pathj.containsAll(pathi)){
+                    toBeDel.add(pathi);
+                }
+            }
+        }
+        allPaths.removeAll(toBeDel);
+
+    }
 
     /**
      * get throw units with value from a method
@@ -180,66 +226,9 @@ public class ExceptionAnalyzer extends Analyzer {
                 if (throwValue instanceof Local) {
                     addThrowPoint(method2unit2Value, sootMethod, unit, throwValue);
                 }
-            }else {
-                getOtherNonThrowUnits(method2unit2Value, sootMethod, unit, history);
             }
         }
         return  method2unit2Value;
-    }
-
-
-    /**
-     * except throwUnit, find out more methods that operate an exception
-     * @param method2unit2Value
-     * @param sootMethod
-     * @param unit
-     * @param history
-     */
-    private void getOtherNonThrowUnits(Map<SootMethod, Map<Unit, Local>> method2unit2Value, SootMethod sootMethod, Unit unit, Set<SootMethod> history) {
-        boolean find = false;
-        //parameter is throwable, inline the callee
-        InvokeExpr invoke = SootUtils.getInvokeExp(unit);
-        if(invoke==null || ((InvokeExpr) invoke).getMethod() == null ) return;
-        if(invoke.getMethod().getName().contains("access$") || invoke.getMethod().getName().contains("<init>")) return;
-        if(!invoke.getMethod().getDeclaringClass().getPackageName().startsWith(ConstantUtils.CGANALYSISPREFIX)) return;
-        for(Value arg : invoke.getArgs()) {
-            if (arg.getType().toString().endsWith("Throwable") || arg.getType().toString().endsWith("Exception")) {
-                Value throwValue = arg;
-                if (throwValue instanceof Local) {
-                    List<Unit> defsOfOps = SootUtils.getDefOfLocal(sootMethod.getSignature(),throwValue, unit);
-                    if(defsOfOps.size()>0) {
-                        Unit defOfLocal = defsOfOps.get(0);
-                        if (((AbstractDefinitionStmt) defOfLocal).getRightOp() instanceof JNewExpr) {
-                            addThrowPoint(method2unit2Value, sootMethod, unit, throwValue);
-                            //                    method2unit2Value.putAll(getThrowUnitWithValue(invoke.getMethod(), history));
-                            nonThrowUnits.add("parameter (rethrow or log)\t" + invoke.getMethod().getSignature());
-                            find = true;
-                        }
-                    }
-                }
-            }
-        }
-        //base is throwable, inline the callee, exception.rethrow
-        //all of them are caught exception, but no new exception
-        //can be removed
-        if(!find & invoke instanceof AbstractInstanceInvokeExpr) {
-            Value base = ((AbstractInstanceInvokeExpr) invoke).getBase();
-            if(base.getType().toString().endsWith("Throwable") || base.getType().toString().endsWith("Exception")){
-                List<Unit> defsOfOps = SootUtils.getDefOfLocal(sootMethod.getSignature(),base, unit);
-                Unit defOfLocal = defsOfOps.get(0);
-                if(defOfLocal instanceof  JNewExpr) {
-                    for (Unit temp : SootUtils.getUnitListFromMethod(invoke.getMethod())) {
-                        if (temp instanceof ThrowStmt) {
-                            addThrowPoint(method2unit2Value, sootMethod, unit, base);
-//                        method2unit2Value.putAll(getThrowUnitWithValue(invoke.getMethod(), history));
-                            nonThrowUnits.add("base (rethrow or log)\t" + invoke.getMethod().getSignature());
-                            find = true;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
     }
 
 
@@ -252,41 +241,41 @@ public class ExceptionAnalyzer extends Analyzer {
     /**
      * get throw units with message from a method
      */
-    public void getThrowUnitWithType(Map<Unit, SootClass> unit2Message, SootMethod sootMethod, Unit unit, Local localTemp){
+    public SootClass getThrowUnitWithType(SootMethod sootMethod, Unit unit, Local localTemp){
         List<Unit> defsOfOps = SootUtils.getDefOfLocal(sootMethod.getSignature(),localTemp, unit);
-        if (defsOfOps.size() == 0) return;
+        if (defsOfOps.size() == 0) return null;
         Unit defOfLocal = defsOfOps.get(0);
-        if (defOfLocal.equals(unit)) return;
+        if (defOfLocal.equals(unit)) return null;
 
         if (defOfLocal instanceof DefinitionStmt) {
             Value rightValue = ((DefinitionStmt)defOfLocal).getRightOp();
             if (rightValue instanceof NewExpr) {
                 NewExpr newRightValue = (NewExpr) rightValue;
-                unit2Message.put(unit,newRightValue.getBaseType().getSootClass());
+                return newRightValue.getBaseType().getSootClass();
             } else if (rightValue instanceof NewArrayExpr) {
                 NewArrayExpr rightValue1 = (NewArrayExpr) rightValue;
                 String s = rightValue1.getBaseType().toString();
                 if (s.endsWith("Exception") || s.equals("java.lang.Throwable")) {
-                    unit2Message.put(unit,Scene.v().getSootClass(s));
+                    return Scene.v().getSootClass(s);
                 }
             } else if (rightValue instanceof Local) {
-                getThrowUnitWithType(unit2Message, sootMethod, unit, (Local) rightValue);
+                return getThrowUnitWithType(sootMethod, unit, (Local) rightValue);
             } else if (rightValue instanceof JCastExpr) {
                 JCastExpr castExpr = (JCastExpr) rightValue;
                 String s = castExpr.getType().toString();
                 if (s.endsWith("Exception") || s.equals("java.lang.Throwable")) {
-                    unit2Message.put(unit,Scene.v().getSootClass(s));
+                    return Scene.v().getSootClass(s);
                 } else {
                     Value value = castExpr.getOpBox().getValue();
                     if (value instanceof Local) {
-                        getThrowUnitWithType(unit2Message, sootMethod, unit, (Local) value);
+                        return getThrowUnitWithType( sootMethod, unit, (Local) value);
                     }
                 }
             } else if (rightValue instanceof InvokeExpr) {
                 InvokeExpr invokeExpr = (InvokeExpr) rightValue;
                 Type returnType = invokeExpr.getMethod().getReturnType();
                 if (returnType.toString().endsWith("Exception") || returnType.toString().equals("java.lang.Throwable")) {
-                    unit2Message.put(unit,Scene.v().getSootClass(returnType.toString()));
+                    return Scene.v().getSootClass(returnType.toString());
                 }
 
             } else if (rightValue instanceof CaughtExceptionRef) {
@@ -297,48 +286,54 @@ public class ExceptionAnalyzer extends Analyzer {
                 PhiExpr phiExpr = (PhiExpr) rightValue;
                 for (ValueUnitPair arg : phiExpr.getArgs()) {
                     if (arg.getValue() instanceof Local) {
-                        getThrowUnitWithType(unit2Message, sootMethod, unit, (Local) arg.getValue());
+                        return getThrowUnitWithType(sootMethod, unit, (Local) arg.getValue());
                     }
                 }
             } if (rightValue instanceof FieldRef) {
                 FieldRef rightValue1 = (FieldRef) rightValue;
                 String s = rightValue1.getField().getType().toString();
                 if (s.endsWith("Exception") || s.equals("java.lang.Throwable")) {
-                    unit2Message.put(unit,Scene.v().getSootClass(s));
+                    return Scene.v().getSootClass(s);
                 }
             } else if (rightValue instanceof ParameterRef) {
                 ParameterRef rightValue1 = (ParameterRef) rightValue;
                 String s = rightValue1.getType().toString();
                 if (s.endsWith("Exception") || s.equals("java.lang.Throwable")) {
-                    unit2Message.put(unit,Scene.v().getSootClass(s));
+                    return Scene.v().getSootClass(s);
                 }
             }  else if (rightValue instanceof ArrayRef) {
                 ArrayRef rightValue1 = (ArrayRef) rightValue;
                 Value value = rightValue1.getBaseBox().getValue();
                 if (value instanceof Local) {
-                    getThrowUnitWithType(unit2Message, sootMethod, unit, (Local) value);
+                    return getThrowUnitWithType(sootMethod, unit, (Local) value);
                 }
             }
         }
+        return null;
     }
 
 
     /**
      * create a New ExceptionInfo object and add content
      */
-    private void extractExceptionInfoFromUnit(SootMethod sootMethod, Unit throwUnit, SootClass exceptionName) {
-        if(exceptionName.getName().equals("java.lang.Throwable")) return;
-        ExceptionInfo exceptionInfo =  new ExceptionInfo(sootMethod, throwUnit, exceptionName.getName());
+    private void extractExceptionInfoFromUnit(SootMethod sootMethod, ThrowStmt throwUnit, SootClass exceptionClass, List<Unit> path) {
+        //if dominatePaths is the same, only reserve one
+        List<DominateUnit> dominatePaths = ConditionAnalyzer.getAllDominate(sootMethod, throwUnit, path);
+        if(dominatePathSet.contains(dominatePaths)) return;
+        dominatePathSet.add(dominatePaths);
+
+        if(exceptionClass.getName().equals("java.lang.Throwable")) return;
+        ExceptionInfo exceptionInfo =  new ExceptionInfo(sootMethod, throwUnit, exceptionClass.getName());
         thrownExceptionInfoList.add(exceptionInfo);
 
         //get type of exception
-        exceptionInfo.findExceptionType(exceptionName);
+        exceptionInfo.findExceptionType(exceptionClass);
 
         // get message of exception
         getMsgOfThrowUnit(exceptionInfo);
 
         //get condition of exception
-        getConditionOfUnit(exceptionInfo);
+        getConditionOfUnit(exceptionInfo, path);
 
         //print condition information
         ExceptionInfoClientOutput.outputExceptionConditions(exceptionInfo);
@@ -358,9 +353,10 @@ public class ExceptionAnalyzer extends Analyzer {
     /**
      * getConditionOfUnit
      * @param exceptionInfo
+     * @param path
      */
-    private void getConditionOfUnit( ExceptionInfo exceptionInfo) {
-        ConditionAnalyzer conditionAnalyzer = new ConditionAnalyzer(exceptionInfo.getSootMethod(),exceptionInfo.getUnit());
+    private void getConditionOfUnit(ExceptionInfo exceptionInfo, List<Unit> path) {
+        ConditionAnalyzer conditionAnalyzer = new ConditionAnalyzer(exceptionInfo.getSootMethod(),exceptionInfo.getUnit(), path);
         conditionAnalyzer.analyze();
         ConditionTrackerInfo conditionTrackerInfo = conditionAnalyzer.getConditionTrackerInfo();
         exceptionInfo.setConditionTrackerInfo(conditionTrackerInfo);

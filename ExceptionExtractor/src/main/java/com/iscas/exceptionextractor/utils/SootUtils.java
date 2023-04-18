@@ -1405,6 +1405,19 @@ public class SootUtils {
 		return units;
 	}
 
+	public static void getDirectPredsofUnit(SootMethod sootMethod, Unit unit, List<Unit> res) {
+		BriefUnitGraph unitGraph = new BriefUnitGraph(sootMethod.getActiveBody());
+		List<Unit> predsOf = unitGraph.getPredsOf(unit);
+		if(predsOf.size()==1) {
+			for (Unit predUnit : predsOf) {
+				if (!res.contains(predUnit)) {
+					res.add(predUnit);
+					getDirectPredsofUnit(sootMethod, predUnit, res);
+				}
+			}
+		}
+	}
+
 	public static void getAllPredsofUnit(SootMethod sootMethod, Unit unit, List<Unit> res) {
 		BriefUnitGraph unitGraph = new BriefUnitGraph(sootMethod.getActiveBody());
 		List<Unit> predsOf = unitGraph.getPredsOf(unit);
@@ -1415,19 +1428,53 @@ public class SootUtils {
 			}
 		}
 	}
-
+	public static void getDirectSuccsofUnit(SootMethod sootMethod, Unit unit, List<Unit> res) {
+		BriefUnitGraph unitGraph = new BriefUnitGraph(sootMethod.getActiveBody());
+		List<Unit> succesOf = unitGraph.getSuccsOf(unit);
+		if(succesOf.size()==1) {
+			for (Unit predUnit : succesOf) {
+				if (!res.contains(predUnit)) {
+					res.add(predUnit);
+					getDirectSuccsofUnit(sootMethod, predUnit, res);
+				}
+			}
+		}
+	}
 	public static void getAllSuccsofUnit(SootMethod sootMethod, Unit unit, List<Unit> res) {
 		BriefUnitGraph unitGraph = new BriefUnitGraph(sootMethod.getActiveBody());
-		List<Unit> succesOf = unitGraph.getPredsOf(unit);
+		List<Unit> succesOf = unitGraph.getSuccsOf(unit);
 		for (Unit succ : succesOf) {
 			if(!res.contains(succ)) {
 				res.add(succ);
 				getAllSuccsofUnit(sootMethod, succ, res);
 			}
-
 		}
 	}
+	public static void getAllSuccsofUnitWithEnd(SootMethod sootMethod, Unit unit, Unit target, List<Unit> res) {
+		BriefUnitGraph unitGraph = new BriefUnitGraph(sootMethod.getActiveBody());
+		List<Unit> succesOf = unitGraph.getSuccsOf(unit);
+		for (Unit succ : succesOf) {
+			if(succ == target) continue;
+			if(!res.contains(succ)) {
+				res.add(succ);
+				getAllSuccsofUnitWithEnd(sootMethod, succ, target, res);
+			}
+		}
+	}
+	public static boolean ifGoOutOfMethodBeforeTargetUnit(SootMethod sootMethod, IfStmt current) {
+		List<Unit> betweenCurAndTar = new ArrayList<>();
+		getAllSuccsofUnitWithEnd(sootMethod, current, current.getTarget(),betweenCurAndTar);
 
+		for (Unit succ : betweenCurAndTar) {
+			if(succ instanceof ReturnStmt){
+				return true;
+			}
+			if(succ instanceof ReturnVoidStmt){
+				return true;
+			}
+		}
+		return false;
+	}
 	/**
 	 * getMethodSimpleNameFromSignature
 	 * @param str
@@ -1643,5 +1690,6 @@ public class SootUtils {
 		}
 		return  applicationClasses;
 	}
+
 
 }
