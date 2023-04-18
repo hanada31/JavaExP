@@ -3,8 +3,8 @@ package com.iscas.exceptionextractor.dataAnalysis;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.iscas.exceptionextractor.base.MyConfig;
-import com.iscas.exceptionextractor.client.exception.RelatedCondType;
-import com.iscas.exceptionextractor.client.exception.RelatedVarType;
+import com.iscas.exceptionextractor.model.analyzeModel.RelatedCondType;
+import com.iscas.exceptionextractor.model.analyzeModel.RelatedVarType;
 import com.iscas.exceptionextractor.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 

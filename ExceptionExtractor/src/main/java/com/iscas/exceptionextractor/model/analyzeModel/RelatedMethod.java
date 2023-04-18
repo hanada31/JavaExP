@@ -1,5 +1,6 @@
-package com.iscas.exceptionextractor.client.exception;
+package com.iscas.exceptionextractor.model.analyzeModel;
 
+import com.iscas.exceptionextractor.model.analyzeModel.RelatedMethodSource;
 import com.iscas.exceptionextractor.utils.PrintUtils;
 
 import java.util.ArrayList;

@@ -1632,4 +1632,16 @@ public class SootUtils {
 			return "no operator";
 		}
     }
+
+
+	public static HashSet<SootClass> getApplicationClasses() {
+		HashSet<SootClass> applicationClasses = new HashSet<>();
+		for (SootClass sootClass : Scene.v().getApplicationClasses()) {
+			if(!sootClass.isConcrete()) continue;
+//            if (!sootClass.getPackageName().startsWith(ConstantUtils.CGANALYSISPREFIX)) continue;
+			applicationClasses.add(sootClass);
+		}
+		return  applicationClasses;
+	}
+
 }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.iscas.exceptionextractor.base.MyConfig;
+import com.iscas.exceptionextractor.model.analyzeModel.*;
 import com.iscas.exceptionextractor.utils.FileUtils;
 import com.iscas.exceptionextractor.utils.PrintUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -199,42 +200,47 @@ public class ExceptionInfoClientOutput {
 
     public static void addConditions(JSONObject jsonObject, ExceptionInfo info) {
 //        jsonObject.put("relatedCondType", info.getRelatedCondType());
-        if(info.getConditions().size()>0)
-            jsonObject.put("conditions", PrintUtils.printList(info.getConditions()));
+        ConditionTrackerInfo conditionTrackerInfo = info.getConditionTrackerInfo();
+        if(conditionTrackerInfo.getConditions().size()>0)
+            jsonObject.put("conditions", PrintUtils.printList(conditionTrackerInfo.getConditions()));
     }
 
     public static void addRelatedValues(JSONObject jsonObject, ExceptionInfo info) {
-        jsonObject.put("relatedVarType", info.getRelatedVarType());
-        if(info.getRelatedParamValues().size()>0)
-            jsonObject.put("paramValues", PrintUtils.printList(info.getRelatedParamValues()));
-        if(info.getRelatedFieldValues().size()>0)
-            jsonObject.put("fieldValues", PrintUtils.printList(info.getRelatedFieldValues()));
-        if(info.getCaughtValues().size()>0)
-            jsonObject.put("caughtValues", PrintUtils.printList(info.getCaughtValues()));
-        if(info.getRelatedParamValues().size() + info.getRelatedFieldValues().size() + info.getCaughtValues().size()>0)
-            jsonObject.put("relatedValues", PrintUtils.printList(info.getRelatedParamValues())+"; "
-                    +PrintUtils.printList(info.getRelatedFieldValues()) +"; "+ PrintUtils.printList(info.getCaughtValues()));
+        ConditionTrackerInfo conditionTrackerInfo = info.getConditionTrackerInfo();
+        jsonObject.put("relatedVarType", conditionTrackerInfo.getRelatedVarType());
+        if(conditionTrackerInfo.getRelatedParamValues().size()>0)
+            jsonObject.put("paramValues", PrintUtils.printList(conditionTrackerInfo.getRelatedParamValues()));
+        if(conditionTrackerInfo.getRelatedFieldValues().size()>0)
+            jsonObject.put("fieldValues", PrintUtils.printList(conditionTrackerInfo.getRelatedFieldValues()));
+        if(conditionTrackerInfo.getCaughtValues().size()>0)
+            jsonObject.put("caughtValues", PrintUtils.printList(conditionTrackerInfo.getCaughtValues()));
+        if(conditionTrackerInfo.getRelatedParamValues().size() + conditionTrackerInfo.getRelatedFieldValues().size() + conditionTrackerInfo.getCaughtValues().size()>0)
+            jsonObject.put("relatedValues", PrintUtils.printList(conditionTrackerInfo.getRelatedParamValues())+"; "
+                    +PrintUtils.printList(conditionTrackerInfo.getRelatedFieldValues()) +"; "+ PrintUtils.printList(conditionTrackerInfo.getCaughtValues()));
     }
 
     private static void addBackwardParamCallerNum(JSONObject jsonObject, ExceptionInfo exceptionInfo) {
         if(exceptionInfo==null) return;
-        jsonObject.put("backwardParamCallerNum", exceptionInfo.getCallerOfSingnlar2SourceVar().size());
+        ConditionTrackerInfo conditionTrackerInfo = exceptionInfo.getConditionTrackerInfo();
+        jsonObject.put("backwardParamCallerNum", conditionTrackerInfo.getCallerOfSingnlar2SourceVar().size());
     }
 
     public static void addRelatedMethodNum(JSONObject jsonObject, ExceptionInfo exceptionInfo) {
         if(exceptionInfo==null) return;
-        jsonObject.put("keyAPISameClassNum", exceptionInfo.keyAPISameClassNum);
-        jsonObject.put("keyAPIDiffClassNum", exceptionInfo.keyAPIDiffClassNum);
+        ConditionTrackerInfo conditionTrackerInfo = exceptionInfo.getConditionTrackerInfo();
+        jsonObject.put("keyAPISameClassNum", conditionTrackerInfo.keyAPISameClassNum);
+        jsonObject.put("keyAPIDiffClassNum", conditionTrackerInfo.keyAPIDiffClassNum);
     }
 
     public static void addRelatedMethods(JSONObject jsonObject, ExceptionInfo exceptionInfo) {
         if(exceptionInfo==null) return;
-        jsonObject.put("keyAPISameClassNum", exceptionInfo.keyAPISameClassNum);
-        jsonObject.put("keyAPIDiffClassNum", exceptionInfo.keyAPIDiffClassNum);
+        ConditionTrackerInfo conditionTrackerInfo = exceptionInfo.getConditionTrackerInfo();
+        jsonObject.put("keyAPISameClassNum", conditionTrackerInfo.keyAPISameClassNum);
+        jsonObject.put("keyAPIDiffClassNum", conditionTrackerInfo.keyAPIDiffClassNum);
 
         JSONArray relatedMethodsSameArray = new JSONArray();
-        if (exceptionInfo.getRelatedMethodsInSameClass(true).size() > 0) {
-            for (RelatedMethod mtd : exceptionInfo.getRelatedMethodsInSameClass(false)) {
+        if (conditionTrackerInfo.getRelatedMethodsInSameClass(true).size() > 0) {
+            for (RelatedMethod mtd : conditionTrackerInfo.getRelatedMethodsInSameClass(false)) {
                 String mtdString = toJSONString(mtd, SerializerFeature.PrettyFormat,
                         SerializerFeature.SortField);
                 JSONObject mtdObject = JSONObject.parseObject(mtdString);  // 转换为json对象
@@ -244,8 +250,8 @@ public class ExceptionInfoClientOutput {
         jsonObject.put("keyAPISameClass" , relatedMethodsSameArray);
 
         JSONArray relatedMethodsDiffArray = new JSONArray();
-        if (exceptionInfo.getRelatedMethodsInDiffClass(true).size() > 0) {
-            for (RelatedMethod mtd : exceptionInfo.getRelatedMethodsInDiffClass(false)) {
+        if (conditionTrackerInfo.getRelatedMethodsInDiffClass(true).size() > 0) {
+            for (RelatedMethod mtd : conditionTrackerInfo.getRelatedMethodsInDiffClass(false)) {
                 String mtdString = toJSONString(mtd, SerializerFeature.PrettyFormat,
                         SerializerFeature.SortField);
                 JSONObject mtdObject = JSONObject.parseObject(mtdString);  // 转换为json对象
@@ -256,14 +262,34 @@ public class ExceptionInfoClientOutput {
     }
 
     private static void addCallerOfParam(JSONObject jsonObject, ExceptionInfo exceptionInfo) {
+        ConditionTrackerInfo conditionTrackerInfo = exceptionInfo.getConditionTrackerInfo();
         JSONObject callerOfSingnlar2SourceVar = new JSONObject(true);
-        if (exceptionInfo.getCallerOfSingnlar2SourceVar().size() > 0) {
-            for (String mtd : exceptionInfo.getCallerOfSingnlar2SourceVar().keySet()) {
-                String vals = PrintUtils.printList(exceptionInfo.getCallerOfSingnlar2SourceVar().get(mtd));
+        if (conditionTrackerInfo.getCallerOfSingnlar2SourceVar().size() > 0) {
+            for (String mtd : conditionTrackerInfo.getCallerOfSingnlar2SourceVar().keySet()) {
+                String vals = PrintUtils.printList(conditionTrackerInfo.getCallerOfSingnlar2SourceVar().get(mtd));
                 callerOfSingnlar2SourceVar.put(mtd, vals);
             }
         }
         jsonObject.put("callerOfSignaler2SourceVar" , callerOfSingnlar2SourceVar);
     }
 
+    /**
+     * outputExceptionConditions
+     * @param exceptionInfo
+     */
+    static void outputExceptionConditions(ExceptionInfo exceptionInfo) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(exceptionInfo.getSootMethod().getSignature() + "\n");
+        sb.append(exceptionInfo.getExceptionName() + "\n");
+        int size = sb.length();
+        for (ConditionWithValueSet conditionWithValueSet : exceptionInfo.getConditionTrackerInfo().getRefinedConditions().values()) {
+            if (conditionWithValueSet.toString().length() > 0)
+                sb.append(conditionWithValueSet + "\n");
+        }
+        if (exceptionInfo.getConditionTrackerInfo().getRelatedVarType() == RelatedVarType.Empty) {
+            sb.append("RefinedCondition: no condition\n");
+        }
+        if (size < sb.length())
+            FileUtils.writeText2File(MyConfig.getInstance().getExceptionFilePath() + "out.txt", sb.toString() + "\n", true);
+    }
 }

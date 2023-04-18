@@ -3,7 +3,7 @@ package com.iscas.exceptionextractor.dataAnalysis;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.iscas.exceptionextractor.base.MyConfig;
-import com.iscas.exceptionextractor.client.exception.ExceptionType;
+import com.iscas.exceptionextractor.model.analyzeModel.AppModel;
 import com.iscas.exceptionextractor.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -161,9 +161,9 @@ public class ExceptionInfoCount {
             for(Object object:declared){
                 JSONObject jsonObject = (JSONObject) object;
                 int number = 1;
-                if(jsonObject.getString("ExceptionType").equals(ExceptionType.CustomChecked.toString()))
+                if(jsonObject.getString("ExceptionType").equals(AppModel.ExceptionType.CustomChecked.toString()))
                     declaredCustomChecked += number;
-                else if(jsonObject.getString("ExceptionType").equals(ExceptionType.CustomUnChecked_Runtime.toString()))
+                else if(jsonObject.getString("ExceptionType").equals(AppModel.ExceptionType.CustomUnChecked_Runtime.toString()))
                     declaredCustomUnChecked_Runtime += number;
             }
             declaredNumber = declaredCustomChecked + declaredCustomUnChecked_Runtime;
@@ -173,15 +173,15 @@ public class ExceptionInfoCount {
             for(Object object:thrown){
                 JSONObject jsonObject = (JSONObject) object;
                 int number = repeat? jsonObject.getInteger("methodNumber"):1;
-                if(jsonObject.getString("ExceptionType").equals(ExceptionType.StandardChecked.toString()))
+                if(jsonObject.getString("ExceptionType").equals(AppModel.ExceptionType.StandardChecked.toString()))
                     thrownStandardChecked += number;
-                else if(jsonObject.getString("ExceptionType").equals(ExceptionType.StandardUnChecked_Runtime.toString()))
+                else if(jsonObject.getString("ExceptionType").equals(AppModel.ExceptionType.StandardUnChecked_Runtime.toString()))
                     thrownStandardUnChecked_Runtime += number;
-                else if(jsonObject.getString("ExceptionType").equals(ExceptionType.CustomChecked.toString()))
+                else if(jsonObject.getString("ExceptionType").equals(AppModel.ExceptionType.CustomChecked.toString()))
                     thrownCustomChecked += number;
-                else if(jsonObject.getString("ExceptionType").equals(ExceptionType.CustomUnChecked_Runtime.toString()))
+                else if(jsonObject.getString("ExceptionType").equals(AppModel.ExceptionType.CustomUnChecked_Runtime.toString()))
                     thrownCustomUnChecked_Runtime += number;
-                else if(jsonObject.getString("ExceptionType").equals(ExceptionType.ThirdParty.toString()))
+                else if(jsonObject.getString("ExceptionType").equals(AppModel.ExceptionType.ThirdParty.toString()))
                     thrownCustomUnChecked_Runtime += number;
             }
             thrownNumber = thrownStandardChecked + thrownStandardUnChecked_Runtime + thrownCustomChecked + thrownCustomUnChecked_Runtime + thrownThirdParty;
@@ -191,15 +191,15 @@ public class ExceptionInfoCount {
             for(Object object:caught){
                 JSONObject jsonObject = (JSONObject) object;
                 int number = repeat? jsonObject.getInteger("methodNumber"):1;
-                if(jsonObject.getString("ExceptionType").equals(ExceptionType.StandardChecked.toString()))
+                if(jsonObject.getString("ExceptionType").equals(AppModel.ExceptionType.StandardChecked.toString()))
                     caughtStandardChecked += number;
-                else if(jsonObject.getString("ExceptionType").equals(ExceptionType.StandardUnChecked_Runtime.toString()))
+                else if(jsonObject.getString("ExceptionType").equals(AppModel.ExceptionType.StandardUnChecked_Runtime.toString()))
                     caughtStandardUnChecked_Runtime += number;
-                else if(jsonObject.getString("ExceptionType").equals(ExceptionType.CustomChecked.toString()))
+                else if(jsonObject.getString("ExceptionType").equals(AppModel.ExceptionType.CustomChecked.toString()))
                     caughtCustomChecked += number;
-                else if(jsonObject.getString("ExceptionType").equals(ExceptionType.CustomUnChecked_Runtime.toString()))
+                else if(jsonObject.getString("ExceptionType").equals(AppModel.ExceptionType.CustomUnChecked_Runtime.toString()))
                     caughtCustomUnChecked_Runtime += number;
-                else if(jsonObject.getString("ExceptionType").equals(ExceptionType.ThirdParty.toString()))
+                else if(jsonObject.getString("ExceptionType").equals(AppModel.ExceptionType.ThirdParty.toString()))
                     caughtThirdParty += number;
             }
             caughtNumber = caughtStandardChecked + caughtStandardUnChecked_Runtime + caughtCustomChecked + caughtCustomUnChecked_Runtime + caughtThirdParty;

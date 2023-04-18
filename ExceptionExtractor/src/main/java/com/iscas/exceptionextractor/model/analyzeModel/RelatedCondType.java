@@ -1,4 +1,4 @@
-package com.iscas.exceptionextractor.client.exception;
+package com.iscas.exceptionextractor.model.analyzeModel;
 
 /**
  * @Author hanada

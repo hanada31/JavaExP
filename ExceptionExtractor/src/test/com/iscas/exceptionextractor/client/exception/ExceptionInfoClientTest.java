@@ -28,7 +28,7 @@ public class ExceptionInfoClientTest {
     private void setArgs() {
         String path, androidVersion;
         path = "..\\M_framework\\";
-//        path = "D:\\SoftwareData\\dataset\\android-framework\\classes\\";
+        path = "D:\\SoftwareData\\dataset\\android-framework\\classes\\";
         MyConfig.getInstance().setFileVersion(versions[0]);
         MyConfig.getInstance().setFileVersion("0.1");
         String client = "ExceptionInfoClient";

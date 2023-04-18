@@ -50,6 +50,6 @@ public class ExceptionInfoClient extends BaseClient {
 //        FileUtils.createFolder(summary_app_dir);
 //
 //        ExceptionInfoClientOutput.writeToJson(summary_app_dir+Global.v().getAppModel().getAppName()+".json", Global.v().getAppModel().getExceptionInfoList());
-//
+
     }
 }
