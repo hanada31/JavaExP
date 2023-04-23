@@ -1650,10 +1650,12 @@ public class SootUtils {
 	}
 
 
-	public static List<Value> getFiledValueAssigns(Value base, SootField f, List<Unit> allPreds) {
+	public static List<Value> getFiledValueAssigns(SootMethod sootMethod, Unit unit, Value base, SootField f) {
 		List<Value> rightValues = new ArrayList<>();
 		String name = f.getName();
-		for (Unit predUnit : allPreds) {
+		List<Unit> list = new ArrayList();
+		SootUtils.getAllPredsofUnit(sootMethod, unit, list);
+		for (Unit predUnit : list) {
 			if(predUnit instanceof  AssignStmt){
 				Value left =  ((AssignStmt) predUnit).getLeftOp();
 				if(left instanceof AbstractInstanceFieldRef){
