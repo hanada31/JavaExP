@@ -32,7 +32,6 @@ public class Main {
 		/** start**/
 		startAnalyze();
 
-
 		System.exit(0);
 	}
 
@@ -112,33 +111,28 @@ public class Main {
 		options.addOption("path", true, "-path: Set the path to the apk under analysis.");
 		options.addOption("androidJar", true, "-androidJar: Set the path of android.jar.");
 		options.addOption("isJimple", true, "-isJimple: Use Jimple for true, Shimple for false.");
-		options.addOption("crashPath", true, "-crashPath: crash information file.");
 		options.addOption("frameworkVersion", true, "-frameworkVersion: The version of framework under analysis");
 		options.addOption("strategy", true, "-strategy: effectiveness of strategy m");
 
 		options.addOption("exceptionPath", true, "-exceptionPath: exception file folder [optional].");
-		options.addOption("androidCGPath", true, "-androidCGPath: Android CallGraph file [optional.");
-		options.addOption("permissionPath", true, "-permissionPath: Android permissionPath file [optional.");
+		options.addOption("CGPath", true, "-CGPath: Android CallGraph file [optional.");
 
 
 		/** analysis config **/
 		options.addOption("client", true, "-client "
-				+ "ExceptionInfoClient: Extract exception information from Android framework.\n"
-				+ "CrashAnalysisClient: Analysis the crash information for an apk.\n"
-				+ "JarCrashAnalysisClient: Analysis the crash information for an third party SDK.\n"
+				+ "ExceptionInfoClient: Extract exception information from class or jar files.\n"
 				+ "CallGraphClient: Output call graph files.\n"
 				+ "ManifestClient: Output manifest.xml file.\n"
 				+ "IROutputClient: Output soot IR files.\n"
 			);
+
 		/** analysis config **/
 		options.addOption("time", true, "-time [default:90]: Set the max running time (min).");
 		options.addOption("callgraphAlgorithm", true, "-callgraphAlgorithm [default:SPARK]: Set algorithm for CG, CHA or SPARK.");
 		/** output **/
 		options.addOption("outputDir", true, "-outputDir: Set the output folder of the apk.");
 		options.addOption("sootOutput", false, "-sootOutput: Output the sootOutput");
-		options.addOption("crashInput", true, "-crashInput: crashInfo.json file path");
 		options.addOption("exceptionInput", true, "-exceptionInput: exception file folder");
-//		options.addOption("callgraphAlgorithm", false, "-callgraphAlgorithm: callgraphAlgorithm");
 
 		return options;
 	}
@@ -162,33 +156,23 @@ public class Main {
 		}
 
 		/** run config **/
-		MyConfig.getInstance().setJimple(Boolean.parseBoolean((mCmd.getOptionValue("isJimple", "true"))));
+		MyConfig.getInstance().setJimple(Boolean.parseBoolean((mCmd.getOptionValue("isJimple", "false"))));
 		MyConfig.getInstance().setAppName(mCmd.getOptionValue("name", ""));
 		MyConfig.getInstance().setAppPath(mCmd.getOptionValue("path", System.getProperty("user.dir")) + File.separator);
 		MyConfig.getInstance().setAndroidJar(mCmd.getOptionValue("androidJar", "lib"+File.separator+"platforms") + File.separator);
-		MyConfig.getInstance().setCrashInfoFilePath(mCmd.getOptionValue("crashInput","Files"+File.separator+"crashInfo.json"));
-		MyConfig.getInstance().setExceptionFolderPath(mCmd.getOptionValue("exceptionInput","Files"));
-
 		MyConfig.getInstance().setResultFolder(mCmd.getOptionValue("outputDir", "outputDir") + File.separator);
+		String resFolder = mCmd.getOptionValue("outputDir", "results"+File.separator+"outputDir")+File.separator;
+		if(resFolder.contains(File.separator)){
+			resFolder = resFolder.substring(0,resFolder.lastIndexOf(File.separator));
+			MyConfig.getInstance().setResultFolder(resFolder+ File.separator);
+			MyConfig.getInstance().setExceptionFilePath(MyConfig.getInstance().getResultFolder() +MyConfig.getInstance().getAppName() + File.separator+ "exceptionInfo"+ File.separator);
 
-		if(mCmd.getOptionValue("frameworkVersion")!=null) {
-			MyConfig.getInstance().setFileVersion(mCmd.getOptionValue("frameworkVersion"));
-			String androidFolder = "";
-			if(mCmd.getOptionValue("client").equals("ExceptionInfoClient")){
-				androidFolder = MyConfig.getInstance().getResultFolder() + File.separator + "android" + mCmd.getOptionValue("frameworkVersion") + File.separator;
-				MyConfig.getInstance().setPermissionFilePath(androidFolder + "Permission" + File.separator + "permission.txt");
-				MyConfig.getInstance().setExceptionFilePath(androidFolder + "exceptionInfo" + File.separator);
-				MyConfig.getInstance().setAndroidCGFilePath(androidFolder + "CallGraphInfo" + File.separator + "cg.txt");
-			}else {
-				androidFolder = MyConfig.getInstance().getExceptionFolderPath() + File.separator + "android" + mCmd.getOptionValue("frameworkVersion") + File.separator;
-				MyConfig.getInstance().setPermissionFilePath(mCmd.getOptionValue("permissionPath", androidFolder + "Permission" + File.separator + "permission.txt"));
-				MyConfig.getInstance().setExceptionFilePath(mCmd.getOptionValue("exceptionPath", androidFolder + "exceptionInfo" + File.separator));
-				MyConfig.getInstance().setAndroidCGFilePath(mCmd.getOptionValue("androidCGPath", androidFolder + "CallGraphInfo" + File.separator + "cg.txt"));
-			}
+		}else if(resFolder.contains("//")){
+			resFolder = resFolder.substring(0,resFolder.lastIndexOf("//"));
+			MyConfig.getInstance().setResultFolder(resFolder+ "//");
+			MyConfig.getInstance().setExceptionFilePath(MyConfig.getInstance().getResultFolder() +MyConfig.getInstance().getAppName() + File.separator+ "exceptionInfo"+ File.separator);
 		}
 
-//		MyConfig.getInstance().setStrategy(mCmd.getOptionValue("strategy", ""));
-//		log.info("###The strategy is #" + MyConfig.getInstance().getStrategy()+"#");
 
 		int timeLimit = Integer.valueOf(mCmd.getOptionValue("time", "90"));
 		MyConfig.getInstance().setTimeLimit(timeLimit);
@@ -197,14 +181,7 @@ public class Main {
 		String client = mCmd.getOptionValue("client", "MainClient");
 		MyConfig.getInstance().setClient(mCmd.getOptionValue("client", client));
 
-		String resFolder = mCmd.getOptionValue("outputDir", "results"+File.separator+"outputDir");
-		if(resFolder.contains(File.separator)){
-			resFolder = resFolder.substring(0,resFolder.lastIndexOf(File.separator));
-			MyConfig.getInstance().setResultFolder(resFolder+ File.separator);
-		}else if(resFolder.contains("//")){
-			resFolder = resFolder.substring(0,resFolder.lastIndexOf("//"));
-			MyConfig.getInstance().setResultFolder(resFolder+ "//");
-		}
+
 		
 		if (!mCmd.hasOption("name")) {
 			printHelp("Please input the apk name use -name.");

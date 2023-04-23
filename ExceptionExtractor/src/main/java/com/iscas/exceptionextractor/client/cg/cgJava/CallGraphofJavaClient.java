@@ -2,6 +2,7 @@ package com.iscas.exceptionextractor.client.cg.cgJava;
 
 import com.iscas.exceptionextractor.base.Global;
 import com.iscas.exceptionextractor.client.BaseClient;
+import com.iscas.exceptionextractor.client.cg.CgModify;
 import lombok.extern.slf4j.Slf4j;
 import soot.jimple.toolkits.callgraph.CallGraph;
 import com.iscas.exceptionextractor.base.MyConfig;
@@ -24,6 +25,8 @@ public class CallGraphofJavaClient extends BaseClient {
 	protected void clientAnalyze() {
 		log.info("Start analyze with CallGraphClient.");
 		CallGraph cg = CallGraphBuilder.getCallGraph();
+		CgModify cgModify = new CgModify();
+		cgModify.analyze();
 		Global.v().getAppModel().setCg(cg);
 		log.info("Call Graph has " + cg.size() + " edges.");
 		log.info("Successfully analyze with CallGraphClient.");

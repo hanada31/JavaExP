@@ -79,8 +79,8 @@ public class CgConstructor extends Analyzer {
 	 */
 	private void constructDummyMainMethods() throws XmlPullParserException, IOException {
 		setupApplication.getConfig().getCallbackConfig().setCallbackAnalysisTimeout(120);
-		setupApplication.getConfig().setCallgraphAlgorithm(CallgraphAlgorithm.AutomaticSelection);
-//		setupApplication.getConfig().setCallgraphAlgorithm(CallgraphAlgorithm.CHA);
+//		setupApplication.getConfig().setCallgraphAlgorithm(CallgraphAlgorithm.AutomaticSelection);
+		setupApplication.getConfig().setCallgraphAlgorithm(CallgraphAlgorithm.CHA);
 		setupApplication.getConfig().setMergeDexFiles(true);
 		setupApplication.runInfoflow();
 		FileUtils.delFolder("sootOutput");

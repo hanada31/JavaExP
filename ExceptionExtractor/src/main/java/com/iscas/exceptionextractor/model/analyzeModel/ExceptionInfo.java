@@ -3,14 +3,14 @@ package com.iscas.exceptionextractor.model.analyzeModel;
 import com.iscas.exceptionextractor.utils.FileUtils;
 import soot.*;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * @Author hanada
  * @Date 2022/3/15 10:47
  * @Version 1.0
  */
-public class ExceptionInfo {
+public class ExceptionInfo implements  Cloneable {
     private AppModel.ExceptionType exceptionType;
     private String exceptionName;
     private String exceptionMsg;
@@ -30,12 +30,14 @@ public class ExceptionInfo {
         initModifier();
         this.unit = unit;
         this.exceptionName = exceptionName;
+        this.conditionTrackerInfo = new ConditionTrackerInfo(sootMethod,unit);
     }
     public ExceptionInfo(SootMethod sootMethod, Trap trap, String exceptionName) {
         this.sootMethod = sootMethod;
         initModifier();
         this.trap = trap;
         this.exceptionName = exceptionName;
+        this.conditionTrackerInfo = new ConditionTrackerInfo(sootMethod,unit);
 
     }
 
@@ -146,5 +148,17 @@ public class ExceptionInfo {
         return isException;
     }
 
+//    @Override
+//    protected Object clone() throws CloneNotSupportedException {
+//        ExceptionInfo exceptionInfo = new ExceptionInfo();
+//        exceptionInfo.setExceptionMsg(exceptionMsg);
+//        exceptionInfo.setExceptionType(exceptionType);
+//        exceptionInfo.setExceptionName(exceptionName);
+//        exceptionInfo.setSootMethod(sootMethod);
+//        exceptionInfo.setSootMethodName(sootMethodName);
+//        exceptionInfo.setModifier(modifier);
+//        exceptionInfo.setConditionTrackerInfo((ConditionTrackerInfo) conditionTrackerInfo.clone());
+//        return exceptionInfo;
+//    }
 }
 

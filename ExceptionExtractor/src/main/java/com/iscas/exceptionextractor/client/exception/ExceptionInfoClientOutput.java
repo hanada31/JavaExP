@@ -3,12 +3,15 @@ package com.iscas.exceptionextractor.client.exception;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.iscas.exceptionextractor.base.Global;
 import com.iscas.exceptionextractor.base.MyConfig;
 import com.iscas.exceptionextractor.model.analyzeModel.*;
 import com.iscas.exceptionextractor.utils.FileUtils;
 import com.iscas.exceptionextractor.utils.PrintUtils;
+import com.iscas.exceptionextractor.utils.SootUtils;
 import lombok.extern.slf4j.Slf4j;
 import soot.SootClass;
+import soot.SootMethod;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -274,22 +277,34 @@ public class ExceptionInfoClientOutput {
     }
 
     /**
-     * outputExceptionConditions
-     * @param exceptionInfo
+     * printExceptionInfoList
      */
-    static void outputExceptionConditions(ExceptionInfo exceptionInfo) {
+    public static void printExceptionInfoList() {
         StringBuilder sb = new StringBuilder();
-        sb.append(exceptionInfo.getSootMethod().getSignature() + "\n");
-        sb.append(exceptionInfo.getExceptionName() + "\n");
-        int size = sb.length();
-        for (ConditionWithValueSet conditionWithValueSet : exceptionInfo.getConditionTrackerInfo().getRefinedConditions().values()) {
-            if (conditionWithValueSet.toString().length() > 0)
-                sb.append(conditionWithValueSet + "\n");
+        Map<String, List<ExceptionInfo>> map = Global.v().getAppModel().getMethod2ExceptionList();
+        for (SootClass sootClass : SootUtils.getApplicationClasses()) {
+            for (SootMethod sootMethod : sootClass.getMethods()) {
+                if(!map.containsKey(sootMethod.getSignature())) continue;
+                for (ExceptionInfo exceptionInfo: map.get(sootMethod.getSignature())) {
+                    //print condition information
+                    sb.append(sootMethod.getSignature() + "\n");
+                    sb.append(exceptionInfo.getExceptionName() + "\n");
+                    StringBuilder subStr = new StringBuilder();
+                    for (ConditionWithValueSet conditionWithValueSet : exceptionInfo.getConditionTrackerInfo().getRefinedConditions().values()) {
+                        if (conditionWithValueSet.toString().length() > 0)
+                            subStr.append(conditionWithValueSet + "\n");
+                    }
+                    if (subStr.length() ==0 && exceptionInfo.getConditionTrackerInfo().getRelatedVarType() == RelatedVarType.Empty) {
+                        subStr.append("RefinedCondition: no condition\n");
+                    }
+                    if (subStr.length() >0){
+                        sb.append(subStr+ "\n");
+                    }
+                }
+            }
         }
-        if (exceptionInfo.getConditionTrackerInfo().getRelatedVarType() == RelatedVarType.Empty) {
-            sb.append("RefinedCondition: no condition\n");
-        }
-        if (size < sb.length())
-            FileUtils.writeText2File(MyConfig.getInstance().getExceptionFilePath() + "out.txt", sb.toString() + "\n", true);
+        FileUtils.writeText2File(MyConfig.getInstance().getExceptionFilePath() + "exceptionConditions.txt", sb.toString(), false);
+
+
     }
 }

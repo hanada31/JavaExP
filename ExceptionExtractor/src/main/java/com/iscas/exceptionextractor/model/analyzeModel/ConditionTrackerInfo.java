@@ -1,6 +1,5 @@
 package com.iscas.exceptionextractor.model.analyzeModel;
 
-import com.iscas.exceptionextractor.base.Analyzer;
 import soot.SootField;
 import soot.SootMethod;
 import soot.Unit;
@@ -14,7 +13,7 @@ import java.util.*;
  * @Date 2023/4/18 10:33
  * @Version 1.0
  */
-public class ConditionTrackerInfo {
+public class ConditionTrackerInfo implements Cloneable{
     private SootMethod sootMethod;
     private Unit unit;
 
@@ -35,8 +34,8 @@ public class ConditionTrackerInfo {
     private final Map<Integer, ArrayList<RelatedMethod>> relatedMethodsInDiffClassMap;
 
     private List<Unit> conditionUnits;
-
     private List<Unit> tracedUnits;
+
 
     private RelatedVarType relatedVarType;
     private RelatedCondType relatedCondType;
@@ -45,12 +44,11 @@ public class ConditionTrackerInfo {
     public int keyAPIDiffClassNum;
 
 
-
     public ConditionTrackerInfo(SootMethod sootMethod, Unit unit) {
         this.sootMethod = sootMethod;
         this.unit = unit;
         this.conditions = new ArrayList<>();
-        this.refinedConditions = new HashMap<>();
+        this.refinedConditions = new LinkedHashMap<>();
 
         this.relatedParamValues = new ArrayList<>();
         this.relatedFieldValues = new ArrayList<>();
@@ -192,11 +190,6 @@ public class ConditionTrackerInfo {
         return relatedMethods;
     }
 
-
-
-
-
-
     public void setCaughtValues(List<Value> caughtValues) {
         this.caughtValues = caughtValues;
     }
@@ -293,7 +286,6 @@ public class ConditionTrackerInfo {
     public Set<Integer> getRelatedValueIndex() {
         return relatedValueIndex;
     }
-
     public List<String> getRelatedParamValuesInStr() {
         return relatedParamValuesInStr;
     }
@@ -316,7 +308,6 @@ public class ConditionTrackerInfo {
         }
     }
 
-
     public void setRelatedFieldValuesInStr(String relatedFieldValues) {
         if(relatedFieldValues == null) return;
         relatedFieldValues= relatedFieldValues.replace("<","");
@@ -335,5 +326,10 @@ public class ConditionTrackerInfo {
             relatedParamValues.add(v);
     }
 
-
+//    @Override
+//    protected Object clone() throws CloneNotSupportedException {
+//        ConditionTrackerInfo conditionTrackerInfo = new ConditionTrackerInfo();
+//
+//        return conditionTrackerInfo;
+//    }
 }

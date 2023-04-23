@@ -64,7 +64,10 @@ public class AppModel implements Serializable {
 	private Map<Pair<Value, Unit>, List<Unit>> unit2defMap;
 	private Map<SootMethod, SootClass> entryMethod2Component;
 	private Map<Pair<SootMethod, Unit>, Set<SootMethod>> entryMethod2MethodAddThisCallBack;
+
+
 	private Map<Unit, List<ParameterSource>> unit2ParameterSource;
+	private Map<String, List<ExceptionInfo>> method2ExceptionList;
 
 	
 	public AppModel() {
@@ -109,6 +112,7 @@ public class AppModel implements Serializable {
 		entryMethod2MethodAddThisCallBack = new HashMap<Pair<SootMethod, Unit>, Set<SootMethod>>();
 		unit2ParameterSource = new HashMap<Unit, List<ParameterSource>>();
 		setExtendedPakgs(new HashSet<String>());
+		method2ExceptionList = new HashMap<>();
 	}
 
 	@Override
@@ -335,6 +339,9 @@ public class AppModel implements Serializable {
 	}
 
 
+	public Map<Unit, List<ParameterSource>> getUnit2ParameterSource() {
+		return unit2ParameterSource;
+	}
 
 	public void addUnit2ParameterSource(Unit unit, ParameterSource ps) {
 		if (!unit2ParameterSource.containsKey(unit))
@@ -383,8 +390,24 @@ public class AppModel implements Serializable {
 		return entryMethods;
 	}
 
+	public Map<String, List<ExceptionInfo>> getMethod2ExceptionList() {
+		return method2ExceptionList;
+	}
 
-    public enum ExceptionType {
+	public void setMethod2ExceptionList(Map<String, List<ExceptionInfo>> method2ExceptionList) {
+		this.method2ExceptionList = method2ExceptionList;
+	}
+
+	public void addMethod2ExceptionListForOne(String sootMethod, ExceptionInfo exceptionInfo ) {
+		if(method2ExceptionList.get(sootMethod) == null)
+			method2ExceptionList.put(sootMethod,new ArrayList<>());
+		this.method2ExceptionList.get(sootMethod).add(exceptionInfo);
+	}
+	public void addMethod2ExceptionList(String sootMethod, List<ExceptionInfo> exceptionInfoList ) {
+		method2ExceptionList.put(sootMethod,exceptionInfoList);
+	}
+
+	public enum ExceptionType {
         StandardChecked,StandardUnChecked_Runtime, CustomChecked,CustomUnChecked_Runtime, ThirdParty }
 
 	/**

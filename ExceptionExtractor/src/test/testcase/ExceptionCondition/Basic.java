@@ -7,9 +7,9 @@ package testcase.ExceptionCondition;
  */
 public class Basic {
     /**
-     * @wit @wit "simplifiedPathConjunction": "true",
+     * @wit "simplifiedPathConjunction": "true", @wit-correct
      *
-     * @our RefinedCondition: no condition
+     * @our RefinedCondition: no condition  @our-correct
      */
     public void throw_without_condition(int x){
         System.out.println(x);
@@ -17,9 +17,9 @@ public class Basic {
     }
 
     /**
-     * @wit "simplifiedPathConjunction": "null == x",
+     * @wit "simplifiedPathConjunction": "null == x", @wit-correct
      *
-     * @our RefinedCondition: parameter0 is null
+     * @our RefinedCondition: parameter0 is null  @our-correct
      */
     public void throw_with_null_condition(String x){
         if(x==null)
@@ -27,9 +27,9 @@ public class Basic {
     }
 
     /**
-     * @wit "simplifiedPathConjunction": "x.equals(\"value\")",
+     * @wit "simplifiedPathConjunction": "x.equals(\"value\")", @wit-correct
      *
-     * @our RefinedCondition: parameter0 equals "value"
+     * @our RefinedCondition: parameter0 equals "value"  @our-correct
      */
     public void throw_with_value_condition(String x){
         if(x.equals("value"))
@@ -37,9 +37,21 @@ public class Basic {
     }
 
     /**
-     * @wit "simplifiedPathConjunction": "x.equals(\"value\")",
+     * @wit "simplifiedPathConjunction": "!x.equals(\"value\")", @wit-correct
+     * "z3Inputs": "[z0 = False]\n",    @wit-wrongInput
      *
-     * @our RefinedCondition: parameter0 equals "value"
+     * @our RefinedCondition: parameter0 not equals "value"  @our-correct
+     */
+    public void throw_with_value_condition_not_equal(String x){
+        boolean z= x.equals("value");
+        if(!z)
+            throw new RuntimeException("throw_with_value_condition");
+    }
+
+    /**
+     * @wit "simplifiedPathConjunction": "x.equals(\"value\")", @wit-correct @wit-badInput
+     *
+     * @our RefinedCondition: parameter0 equals "value"  @our-correct
      *
      */
     public void throw_with_modified_var_condition(String x){
@@ -51,8 +63,9 @@ public class Basic {
 
     /**
      * @wit "backwardsPathConjunction": "(x.equals(\"value123\".substring(0, 5)))",
+     * @wit-correct @wit-badCond @wit-wrongInput
      *
-     * @our RefinedCondition: parameter0 equals "value"
+     * @our RefinedCondition: parameter0 equals "value"  @our-correct
      *
      */
     public void throw_with_modified_value_condition(String x){
@@ -62,23 +75,38 @@ public class Basic {
     }
 
     /**
-     * @wit "simplifiedPathConjunction": "x.equals(y) && y.length() <= 2",
-     * @wit "simplifiedPathConjunction": "x.equals(y) && y.length() > 2",
+     * @wit "backwardsPathConjunction": "(x.equals(\"value123\".substring(0, 5)))",
+     * @wit-correct @wit-badCond @wit-wrongInput
      *
-     * @our RefinedCondition: parameter0 equals parameter1
-     * @our RefinedCondition: parameter0 equals virtualinvoke @parameter1: java.lang.String.<java.lang.String: java.lang.String substring(int,int)>(0, 5)
+     * @our RefinedCondition: parameter0 equals "value"  @our-correct
+     *
      */
-    public void throw_with_modified_value_condition2(String x, String y){
-        if(y.length()>2)
-            y = y.substring(0,5);
-        if(x.equals(y))
+    public void throw_with_modified_value_condition2(String x){
+        String y = "value123";
+        String z = x;
+        if(z.equals(y.substring(0,5)))
             throw new RuntimeException("throw_with_modified_value_condition2");
     }
 
-    /**
-     * @wit "simplifiedPathConjunction": "null == y && null != x",
+    /**wongInpu
+     * @wit "simplifiedPathConjunction": "x.equals(y) && y.length() <= 2",
+     * @wit "simplifiedPathConjunction": "x.equals(y) && y.length() > 2",
+     * @wit-wrongCond
      *
-     * @our RefinedCondition: parameter1 is null
+     * @our RefinedCondition: parameter0 equals "value", which is true
+     * @our-wrongCond
+     */
+    public void throw_with_modified_value_condition3(String x, String y){
+        if(y.length()>2)
+            y = y.substring(0,5);
+        if(x.equals(y))
+            throw new RuntimeException("throw_with_modified_value_condition3");
+    }
+
+    /**
+     * @wit "simplifiedPathConjunction": "null == y && null != x",  @wit-correct
+     *
+     * @our RefinedCondition: parameter1 is null  @our-correct
      * @our RefinedCondition: parameter0 is not null
      */
     public void throw_with_combined_condition(String x, String y){
@@ -87,10 +115,12 @@ public class Basic {
     }
 
     /**
-     * @wit "simplifiedPathConjunction": "null == y || null != x",
+     * @wit "simplifiedPathConjunction": "null == y || null != x", @wit-correct
      *
-     * @our RefinedCondition: parameter0 is null
-     * @our RefinedCondition: parameter1 is null
+     * @our RefinedCondition: parameter0 is null  @our-correct
+     * @our RefinedCondition: parameter1 is not null
+     *
+     * @our RefinedCondition: parameter0 is not null
      */
     public void throw_with_combined_condition2(String x, String y){
         if(x!=null || y != null)
@@ -98,10 +128,16 @@ public class Basic {
     }
 
     /**
-     * @wit "simplifiedPathConjunction": "null == y || null != x",
+     * @wit "simplifiedPathConjunction": "x==null || y == null || z == null", @wit-correct
+     *
+     * @our RefinedCondition: parameter0 is not null  @our-correct
+     * @our RefinedCondition: parameter1 is not null
+     * @our RefinedCondition: parameter2 is null
+     *
+     * @our RefinedCondition: parameter0 is not null
+     * @our RefinedCondition: parameter1 is null
      *
      * @our RefinedCondition: parameter0 is null
-     * @our RefinedCondition: parameter1 is null
      */
     public void throw_with_combined_condition3(String x, String y, String z){
         if(x==null || y == null || z == null)
@@ -109,7 +145,9 @@ public class Basic {
     }
 
     /**
-     * @our RefinedCondition: parameter1 is null
+     * @wit "simplifiedPathConjunction": "null == y && null != x", @wit-correct
+     *
+     * @our RefinedCondition: parameter1 is null  @our-correct
      * @our RefinedCondition: parameter0 is not null
      */
     public void throw_with_combined_condition4(String x, String y){
@@ -120,8 +158,10 @@ public class Basic {
 
 
     /**
-     * @our RefinedCondition: parameter0 is not null
-     * @our RefinedCondition: parameter1 is null
+     * @wit "simplifiedPathConjunction": "null == x && null != y", @wit-correct
+     *
+     * @our RefinedCondition: parameter0 is null  @our-correct
+     * @our RefinedCondition: parameter1 is not null
      */
     public void throw_with_combined_condition5(String x, String y){
         if(x==null) {
@@ -129,6 +169,27 @@ public class Basic {
                 System.out.println();
             else
                 throw new RuntimeException("throw_with_combined_condition4");
+        }
+    }
+
+    /**
+     * @wit "simplifiedPathConjunction": "null == x && null == y && z > 0", @wit-correct
+     * @wit "simplifiedPathConjunction": "null == x && null == y && z <= 0"
+     *
+     * @our RefinedCondition: parameter0 is null  @our-wrongCond
+     * @our RefinedCondition: parameter1 is null
+     * @our RefinedCondition: parameter2 larger than 0, which is true
+     *
+     * @our RefinedCondition: parameter0 is null  @our-wrongCond
+     * @our RefinedCondition: parameter1 is null
+     * @our RefinedCondition: parameter2 smaller 0, which is true
+     */
+    public void throw_with_combined_condition6(String x, String y,int z){
+        if(x==null) {
+            if(z>0)
+                System.out.println(z);
+            if (y == null)
+                throw new RuntimeException("throw_with_combined_condition6");
         }
     }
 

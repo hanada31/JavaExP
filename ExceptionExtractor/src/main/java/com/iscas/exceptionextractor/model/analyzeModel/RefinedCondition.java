@@ -17,14 +17,17 @@ public class RefinedCondition implements Cloneable {
     private String rightStr;
     private ConditionWithValueSet conditionWithValueSet;
     private Unit unit;
+    private String refinedConditionInCaller;
 
 
+    private boolean satisfied;
 
     public RefinedCondition() {
     }
 
     public RefinedCondition(ConditionWithValueSet conditionWithValueSet, Value leftVar, String operator, Value rightValue, Unit unit) {
         this.conditionWithValueSet = conditionWithValueSet;
+        this.satisfied = conditionWithValueSet.getIsSatisfy();
         this.leftVar = leftVar;
         this.leftStr = leftVar == null?"":leftVar.toString();
         this.operator = operator;
@@ -33,8 +36,18 @@ public class RefinedCondition implements Cloneable {
         this.unit = unit;
     }
 
+    public RefinedCondition(String refinedConditionInCaller) {
+        this.refinedConditionInCaller = refinedConditionInCaller;
+    }
+    public void changeSatisfied(){
+        if(satisfied) satisfied = false;
+        else  satisfied = true;
+    }
+    public boolean isSatisfied() {
+        return satisfied;
+    }
     @Override
-    protected RefinedCondition clone() throws CloneNotSupportedException {
+    public RefinedCondition clone() throws CloneNotSupportedException {
         RefinedCondition refinedCondition = new RefinedCondition();
         refinedCondition.setLeftVar(leftVar);
         refinedCondition.setRightValue(rightValue);
@@ -53,6 +66,9 @@ public class RefinedCondition implements Cloneable {
     public void setLeftVar(Value leftVar) {
         this.leftVar = leftVar;
         this.leftStr = leftVar == null?"":leftVar.toString();
+
+        if(leftVar instanceof ParameterRef)
+            leftStr = "parameter" + ((ParameterRef)leftVar).getIndex();
     }
 
     public String getOperator() {
@@ -70,6 +86,8 @@ public class RefinedCondition implements Cloneable {
     public void setRightValue(Value rightValue) {
         this.rightValue = rightValue;
         this.rightStr= rightValue == null?"":rightValue.toString();
+        if(rightValue instanceof ParameterRef)
+            rightStr = "parameter" + ((ParameterRef)rightValue).getIndex();
     }
     public void setUnit(Unit unit) {
         this.unit = unit;
@@ -95,14 +113,28 @@ public class RefinedCondition implements Cloneable {
 
     @Override
     public String toString() {
-        if(leftVar instanceof ParameterRef)
-            leftStr = "parameter" + ((ParameterRef)leftVar).getIndex();
-        if(rightValue instanceof ParameterRef)
-            rightStr = "parameter" + ((ParameterRef)rightValue).getIndex();
-        String str = "RefinedCondition: " + leftStr  +" "+ operator  +" "+ rightStr +", which is " +conditionWithValueSet.getIsSatisfy();
-        str = str.replace("is not null, which is false", "is null, which is true");
-        str = str.replace("is null, which is false", "is not null, which is true");
-        return str;
+        if(refinedConditionInCaller!= null) return refinedConditionInCaller;
+        String str = "RefinedCondition: " + leftStr  +" "+ operator  +" "+ rightStr ;
+        boolean satisfied2 = satisfied;
+        if(satisfied == false) {
+            if(str.contains("is not")) {
+                str = str.replace("is not", "is");
+                satisfied2 = true;
+            }else if(str.contains("is null")) {
+                str = str.replace("is null", "is not null");
+                satisfied2 = true;
+            }else if(str.contains("larger or equal")) {
+                str = str.replace("larger or equal", "smaller than");
+                satisfied2 = true;
+            }else if(str.contains("smaller or equal")) {
+                str = str.replace("smaller or equal", "larger than");
+                satisfied2 = true;
+            }else if(str.contains("smaller or equal")) {
+                str = str.replace("smaller or equal", "larger than");
+                satisfied2 = true;
+            }
+        }
+        return str+", which is " +satisfied2;
     }
 
     public Unit getUnit() {

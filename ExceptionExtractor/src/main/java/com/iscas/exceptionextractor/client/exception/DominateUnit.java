@@ -15,4 +15,12 @@ public class DominateUnit {
         this.unit = unit;
         this.isSatisfy = satisfied;
     }
+
+    @Override
+    public String toString() {
+        return "DominateUnit{" +
+                "unit=" + unit +
+                ", isSatisfy=" + isSatisfy +
+                '}';
+    }
 }

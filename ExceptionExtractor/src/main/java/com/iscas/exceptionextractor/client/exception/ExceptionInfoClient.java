@@ -3,7 +3,9 @@ package com.iscas.exceptionextractor.client.exception;
 import com.iscas.exceptionextractor.base.Analyzer;
 import com.iscas.exceptionextractor.base.MyConfig;
 import com.iscas.exceptionextractor.client.BaseClient;
+import com.iscas.exceptionextractor.client.cg.cgJava.CallGraphofJavaClient;
 import com.iscas.exceptionextractor.client.soot.SootAnalyzer;
+import com.iscas.exceptionextractor.utils.ConstantUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.DocumentException;
 import soot.PackManager;
@@ -30,12 +32,12 @@ public class ExceptionInfoClient extends BaseClient {
             SootAnalyzer sootAnalyzer = new SootAnalyzer();
             sootAnalyzer.analyze();
         }
-//        if (!MyConfig.getInstance().isCallGraphAnalyzeFinish()) {
-//            log.info("CallGraphofJavaClient start...");
-//            ConstantUtils.CGANALYSISPREFIX = ConstantUtils.FRAMEWORKPREFIX;
-//            new CallGraphofJavaClient().start();
-//            MyConfig.getInstance().setCallGraphAnalyzeFinish(true);
-//        }
+        if (!MyConfig.getInstance().isCallGraphAnalyzeFinish()) {
+            log.info("CallGraphofJavaClient start...");
+            ConstantUtils.CGANALYSISPREFIX = ConstantUtils.FRAMEWORKPREFIX;
+            new CallGraphofJavaClient().start();
+            MyConfig.getInstance().setCallGraphAnalyzeFinish(true);
+        }
 
         log.info("ExceptionAnalyzer start...");
         Analyzer analyzer = new ExceptionAnalyzer();

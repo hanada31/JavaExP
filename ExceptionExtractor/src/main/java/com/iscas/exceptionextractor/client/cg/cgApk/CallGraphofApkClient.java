@@ -4,6 +4,7 @@ import com.iscas.exceptionextractor.base.Global;
 import com.iscas.exceptionextractor.base.MyConfig;
 import com.iscas.exceptionextractor.client.BaseClient;
 import com.iscas.exceptionextractor.client.cg.CgClientOutput;
+import com.iscas.exceptionextractor.client.cg.CgModify;
 import com.iscas.exceptionextractor.client.manifest.ManifestClient;
 import com.iscas.exceptionextractor.utils.ConstantUtils;
 import com.iscas.exceptionextractor.utils.FileUtils;

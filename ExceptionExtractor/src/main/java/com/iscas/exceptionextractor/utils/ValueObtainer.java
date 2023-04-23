@@ -42,6 +42,10 @@ public class ValueObtainer {
 		this.counter = counter;
 	}
 
+	public ValueObtainer(String signature) {
+		this(signature, "", new Context(), new Counter());
+	}
+
 	/**
 	 * get value of strVal in unit u
 	 * @param strVal Value

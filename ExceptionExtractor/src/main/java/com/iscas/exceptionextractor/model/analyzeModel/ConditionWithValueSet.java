@@ -1,7 +1,5 @@
 package com.iscas.exceptionextractor.model.analyzeModel;
 
-import com.iscas.exceptionextractor.model.sootAnalysisModel.Context;
-import com.iscas.exceptionextractor.model.sootAnalysisModel.Counter;
 import com.iscas.exceptionextractor.model.sootAnalysisModel.NestableObj;
 import com.iscas.exceptionextractor.utils.PrintUtils;
 import com.iscas.exceptionextractor.utils.ValueObtainer;
@@ -139,6 +137,10 @@ public class ConditionWithValueSet implements  Cloneable {
 		}
 	}
 
+	/**
+	 * set satisfactory for value condition, not path condition!
+	 * @param list
+	 */
 	private void optimizeInvocation(@NotNull List<RefinedCondition> list) {
 		Set<RefinedCondition> toBeDel = new HashSet<>();
 		for(RefinedCondition refinedCondition: list) {
@@ -164,13 +166,11 @@ public class ConditionWithValueSet implements  Cloneable {
 					}
 				}
 				if (!find) continue;
-				RefinedCondition refinedCondition2 = null;
+				RefinedCondition refinedCondition2;
 				String expression = refinedCondition.getRightStr();
 				InstanceInvokeExpr exp = (InstanceInvokeExpr) refinedCondition.getRightValue();
-				String operator = expressionIsTrue ? "" : "not ";
-
 				if(exp.getArgs().size()>0) {
-					ValueObtainer vo = new ValueObtainer(sootMethod.getSignature(), "", new Context(), new Counter());
+					ValueObtainer vo = new ValueObtainer(sootMethod.getSignature());
 					NestableObj obj = vo.getValueofVar(exp.getArg(0), refinedCondition.getUnit(), 0);
 					List<Value> rightValues = new ArrayList<>();
 					if (obj.getValues().size() > 0) {
@@ -182,37 +182,41 @@ public class ConditionWithValueSet implements  Cloneable {
 					else{
 						rightValues.add(exp.getArg(0));
 					}
-
 					if (expression.contains("equals") || expression.contains("contentEquals") || expression.contains("equalsIgnoreCase")) {
 						for(Value rightValue : rightValues) {
-							refinedCondition2 = new RefinedCondition(this, exp.getBase(), operator + "equals", rightValue, refinedCondition.getUnit());
+							refinedCondition2 = new RefinedCondition(this, exp.getBase(),  "equals", rightValue, refinedCondition.getUnit());
+							if(!expressionIsTrue) refinedCondition2.changeSatisfied();
 							addRefinedCondition(refinedCondition2);
 						}
 					} else if (expression.contains("contains")) {
 						for(Value rightValue : rightValues){
-							refinedCondition2 = new RefinedCondition(this, exp.getBase(), operator + "contains", rightValue, refinedCondition.getUnit());
+							refinedCondition2 = new RefinedCondition(this, exp.getBase(),  "contains", rightValue, refinedCondition.getUnit());
+							if(!expressionIsTrue) refinedCondition2.changeSatisfied();
 							addRefinedCondition(refinedCondition2);
 						}
 					} else if (expression.contains("startsWith")) {
 						for(Value rightValue : rightValues){
-							refinedCondition2 = new RefinedCondition(this, exp.getBase(), operator + "startsWith", rightValue, refinedCondition.getUnit());
+							refinedCondition2 = new RefinedCondition(this, exp.getBase(),  "startsWith", rightValue, refinedCondition.getUnit());
+							if(!expressionIsTrue) refinedCondition2.changeSatisfied();
 							addRefinedCondition(refinedCondition2);
 						}
 					} else if (expression.contains("endsWith")) {
 						for(Value rightValue : rightValues){
-							refinedCondition2 = new RefinedCondition(this, exp.getBase(), operator + "endsWith", rightValue, refinedCondition.getUnit());
+							refinedCondition2 = new RefinedCondition(this, exp.getBase(),  "endsWith", rightValue, refinedCondition.getUnit());
+							if(!expressionIsTrue) refinedCondition2.changeSatisfied();
 							addRefinedCondition(refinedCondition2);
 						}
 					} else if (expression.contains("contains")) {
 						for(Value rightValue : rightValues){
-							refinedCondition2 = new RefinedCondition(this, exp.getBase(), operator + "contains", rightValue, refinedCondition.getUnit());
+							refinedCondition2 = new RefinedCondition(this, exp.getBase(),  "contains", rightValue, refinedCondition.getUnit());
+							if(!expressionIsTrue) refinedCondition2.changeSatisfied();
 							addRefinedCondition(refinedCondition2);
 						}
 					}
 				}
 				if (expression.contains("isEmpty")) {
-					operator = expressionIsTrue ? "" : " not";
-					refinedCondition2 = new RefinedCondition(this, exp.getBase(), "equals" + operator, StringConstant.v(""), refinedCondition.getUnit());
+					refinedCondition2 = new RefinedCondition(this, exp.getBase(), "equals", StringConstant.v(""), refinedCondition.getUnit());
+					if(!expressionIsTrue) refinedCondition2.changeSatisfied();
 					addRefinedCondition(refinedCondition2);
 				}
 				toBeDel.add(refinedCondition);

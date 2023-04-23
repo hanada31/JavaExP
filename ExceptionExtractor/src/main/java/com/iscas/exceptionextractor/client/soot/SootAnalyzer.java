@@ -50,7 +50,6 @@ public class SootAnalyzer extends Analyzer {
 			MyConfig.getInstance().setSrc_prec(Options.src_prec_apk);
 		}else{
 			MyConfig.getInstance().setSrc_prec(Options.src_prec_class);
-
 		}
 		List<String> processDir = Lists.newArrayList();
 		processDir.add( Global.v().getAppModel().getAppPath());
@@ -68,11 +67,9 @@ public class SootAnalyzer extends Analyzer {
 		Options.v().set_output_dir(out);
 		Options.v().set_src_prec(MyConfig.getInstance().getSrc_prec());
 		Options.v().allow_phantom_refs();
-		Options.v().set_whole_program(false);
+		Options.v().set_whole_program(true);
 		setExcludePackage();
-
 	}
-
 
 	/**
 	 * add transforms for analyzing
@@ -85,7 +82,6 @@ public class SootAnalyzer extends Analyzer {
 		ActiveBodyTransformer abTran = new ActiveBodyTransformer();
 		Transform t1 = new Transform(pack + ".bt", abTran);
 		PackManager.v().getPack(pack).add(t1);
-
 	}
 
 	/**
@@ -113,6 +109,4 @@ public class SootAnalyzer extends Analyzer {
 //		excludeList.add("sun.*");
 		Options.v().set_exclude(excludeList);
 	}
-
-
 }

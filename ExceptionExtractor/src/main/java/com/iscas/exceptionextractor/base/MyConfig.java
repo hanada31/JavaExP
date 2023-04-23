@@ -11,7 +11,7 @@ import soot.options.Options;
  */
 public class MyConfig {
 
-	private boolean isJimple = true;
+	private boolean isJimple = false;
 	private String resultFolder;
 	private String resultWarpperFolder;
 	private String appName;

@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class MultiplePath {
     /**
-     * @wit  not generate
+     * @wit  not generate  @wit-wrongCond
      *
-     * @our RefinedCondition{leftVar='parameter0', operator='startsWith', rightValue='"123"'}
+     * @our RefinedCondition: parameter0 startsWith "123"  @our-correct
      */
     public void throw_with_multiple_paths(String x, int n, List<String> list){
         for(String s :list) {
@@ -23,11 +23,11 @@ public class MultiplePath {
     }
 
     /**
-     * @wit "simplifiedPathConjunction": "x.startsWith(\"123\") && n <= 2",
+     * @wit "simplifiedPathConjunction": "x.startsWith(\"123\") && n <= 2",  @wit-wrongCond
      * @wit "simplifiedPathConjunction": "list.get(0)_equals && x.startsWith(\"123\") && n > 2",
      * @wit "simplifiedPathConjunction": "x.startsWith(\"123\") && !list.get(0).equals(\"bc\") && n > 2",
      *
-     * @our RefinedCondition{leftVar='parameter0', operator='startsWith', rightValue='"123"'}
+     * @our RefinedCondition: parameter0 startsWith "123"  @our-correct
      *
      */
     public void throw_with_multiple_paths1(String x, int n, List<String> list){
@@ -44,11 +44,11 @@ public class MultiplePath {
 
     /**
 
-     * @wit "simplifiedPathConjunction": "list.get(0).equals(\"a\") && x.startsWith(\"123\") && !list.isEmpty() && n > 2 && list != null",
+     * @wit "simplifiedPathConjunction": "list.get(0).equals(\"a\") && x.startsWith(\"123\") && !list.isEmpty() && n > 2 && list != null", @wit-wrongCond
      * @wit "simplifiedPathConjunction": "x.startsWith(\"123\") && !list.get(0).equals(\"b\") && !list.isEmpty() && n > 2 && list != null",
      * @wit "simplifiedPathConjunction": "x.startsWith(\"123\") && (list.isEmpty() || list == null || n <= 2)",
      *
-     * @our RefinedCondition{leftVar='parameter0', operator='startsWith', rightValue='"123"'}
+     * @our RefinedCondition: parameter0 startsWith "123"  @our-correct
      */
     public void throw_with_multiple_paths2(String x, int n, List<String> list){
         if (n>2 && list!=null && !list.isEmpty()){
@@ -60,9 +60,9 @@ public class MultiplePath {
 
 
     /**
-     * @wit  not generate
+     * @wit  not generate @wit-wrongCond
      *
-     * @our RefinedCondition{leftVar='parameter0', operator='startsWith', rightValue='"123"'}
+     * @our RefinedCondition: parameter0 startsWith "123"  @our-correct
      */
     public void throw_with_multiple_paths3(String x, int n, List<String> list){
         if (n>2){

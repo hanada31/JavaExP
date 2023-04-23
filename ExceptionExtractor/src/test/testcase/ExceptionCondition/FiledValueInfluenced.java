@@ -6,11 +6,12 @@ package testcase.ExceptionCondition;
  * @Version 1.0
  */
 public class FiledValueInfluenced {
-       /**
-     * @wit "simplifiedPathConjunction": "outVar == 0",
+    /**
+     * @wit "simplifiedPathConjunction": "outVar == 0", @wit-badCond
      * @wit "z3Inputs": "[outVar0 = 0]\n",
      *
-     * @our RefinedCondition: @this: testcase.ExceptionCondition.FiledValueInfluenced.<testcase.ExceptionCondition.FiledValueInfluenced: int outVar> is 0
+     * @our RefinedCondition: @this: testcase.ExceptionCondition.FiledValueInfluenced.
+     * @our <testcase.ExceptionCondition.FiledValueInfluenced: int outVar> is 0 @our-correct
      */
     int outVar = 1;
     public void throw_with_outVar_condition(String x){

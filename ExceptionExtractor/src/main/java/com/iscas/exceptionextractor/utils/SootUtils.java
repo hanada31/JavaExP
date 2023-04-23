@@ -3,9 +3,8 @@ package com.iscas.exceptionextractor.utils;
 import com.iscas.exceptionextractor.base.Global;
 import com.iscas.exceptionextractor.base.MyConfig;
 import com.iscas.exceptionextractor.model.analyzeModel.AppModel;
+import com.iscas.exceptionextractor.model.analyzeModel.ParameterSource;
 import com.iscas.exceptionextractor.model.analyzeModel.StaticFiledInfo;
-import com.iscas.exceptionextractor.model.sootAnalysisModel.Context;
-import com.iscas.exceptionextractor.model.sootAnalysisModel.Counter;
 import soot.*;
 import soot.jimple.*;
 import soot.jimple.internal.*;
@@ -833,7 +832,7 @@ public class SootUtils {
 					if (inv == null)
 						continue;
 					if (inv.getMethod().getSignature().equals("<java.lang.Thread: void <init>(java.lang.Runnable)>")) {
-						ValueObtainer vo = new ValueObtainer(sm.getSignature(), "", new Context(), new Counter());
+						ValueObtainer vo = new ValueObtainer(sm.getSignature());
 						Set<String> resSet = new HashSet<>(vo.getValueofVar(inv.getArg(0), useUnit, 0).getValues());
 						if (resSet != null && resSet.size() > 0)
 							type = new ArrayList<String>(resSet).get(0).replace("new ", "");
@@ -1409,12 +1408,12 @@ public class SootUtils {
 		BriefUnitGraph unitGraph = new BriefUnitGraph(sootMethod.getActiveBody());
 		List<Unit> predsOf = unitGraph.getPredsOf(unit);
 		if(predsOf.size()==1) {
-			for (Unit predUnit : predsOf) {
-				if (!res.contains(predUnit)) {
-					res.add(predUnit);
-					getDirectPredsofUnit(sootMethod, predUnit, res);
-				}
+			Unit predUnit = predsOf.get(0);
+			if (!res.contains(predUnit)) {
+				res.add(predUnit);
+				getDirectPredsofUnit(sootMethod, predUnit, res);
 			}
+
 		}
 	}
 
@@ -1428,15 +1427,23 @@ public class SootUtils {
 			}
 		}
 	}
+	public static Unit getNotTargetOfIfUnit(SootMethod sootMethod, IfStmt ifStmt) {
+		BriefUnitGraph unitGraph = new BriefUnitGraph(sootMethod.getActiveBody());
+		List<Unit> succesOf = unitGraph.getSuccsOf(ifStmt);
+		for(Unit temp: succesOf){
+			if(temp != ifStmt.getTarget()) return temp;
+		}
+		return succesOf.get(0);
+	}
+
 	public static void getDirectSuccsofUnit(SootMethod sootMethod, Unit unit, List<Unit> res) {
 		BriefUnitGraph unitGraph = new BriefUnitGraph(sootMethod.getActiveBody());
 		List<Unit> succesOf = unitGraph.getSuccsOf(unit);
-		if(succesOf.size()==1) {
-			for (Unit predUnit : succesOf) {
-				if (!res.contains(predUnit)) {
-					res.add(predUnit);
-					getDirectSuccsofUnit(sootMethod, predUnit, res);
-				}
+		if(succesOf.size()==1 || (res.size()==0 && succesOf.size()>0)) {
+			Unit succUnit = succesOf.get(0);
+			if (!res.contains(succUnit)) {
+				res.add(succUnit);
+				getDirectSuccsofUnit(sootMethod, succUnit, res);
 			}
 		}
 	}
@@ -1662,7 +1669,7 @@ public class SootUtils {
 		return rightValues;
 	}
 
-    public static String getActualOp(Value op) {
+    public static String getReserveOp(Value op) {
 		if(op instanceof  EqExpr){
 			return  "is not";
 		}else if(op instanceof  NeExpr){
@@ -1672,13 +1679,30 @@ public class SootUtils {
 		}else if(op instanceof  GeExpr){
 			return  "smaller than";
 		}else if(op instanceof LtExpr){
-			return  "smaller or equal";
+			return  "larger or equal";
 		}else if(op instanceof  GtExpr){
 			return  "smaller or equal";
 		}else{
 			return "no operator";
 		}
     }
+	public static String getActualOp(Value op) {
+		if(op instanceof  EqExpr){
+			return  "is";
+		}else if(op instanceof  NeExpr){
+			return  "is not";
+		}else if(op instanceof  LeExpr){
+			return  "smaller or equal";
+		}else if(op instanceof  GeExpr){
+			return  "larger or equal";
+		}else if(op instanceof LtExpr){
+			return  "smaller than";
+		}else if(op instanceof  GtExpr){
+			return  "larger than";
+		}else{
+			return "no operator";
+		}
+	}
 
 
 	public static HashSet<SootClass> getApplicationClasses() {
@@ -1689,6 +1713,24 @@ public class SootUtils {
 			applicationClasses.add(sootClass);
 		}
 		return  applicationClasses;
+	}
+
+	public static Map<Integer, Integer> getFormalPara2ActualPara(SootMethod sootMethod, Unit unit) {
+		Map<Integer, Integer> formalPara2ActualPara = new HashMap();
+		InvokeExpr invokeExpr = SootUtils.getInvokeExp(unit);
+		if(invokeExpr ==null) return formalPara2ActualPara;
+
+		ValueObtainer valueObtainer = new ValueObtainer(sootMethod.getSignature());
+		for(Value arg: invokeExpr.getArgs())
+			valueObtainer.getValueofVar(arg, unit,0);
+
+		List<ParameterSource> parameterSourceList = Global.v().getAppModel().getUnit2ParameterSource().get(unit);
+		if (parameterSourceList != null) {
+			for (ParameterSource parameterSource : parameterSourceList) {
+				formalPara2ActualPara.put(parameterSource.getUseLocationId(), parameterSource.getContextLocationId());
+			}
+		}
+		return formalPara2ActualPara;
 	}
 
 

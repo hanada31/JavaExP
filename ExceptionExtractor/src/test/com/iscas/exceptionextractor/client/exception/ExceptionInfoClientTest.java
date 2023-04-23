@@ -30,9 +30,9 @@ public class ExceptionInfoClientTest {
 
         path = "..\\M_framework\\";
 //        path = "D:\\SoftwareData\\dataset\\android-framework\\classes\\";
-        String autName = "testcase1.0";
+        String targetName = "testcase1.0";
 
-        MyConfig.getInstance().setAppName(autName);
+        MyConfig.getInstance().setAppName(targetName);
         MyConfig.getInstance().setAppPath(path + File.separator);
         MyConfig.getInstance().setClient(client);
         MyConfig.getInstance().setResultFolder("..\\results" + File.separator);
@@ -40,10 +40,8 @@ public class ExceptionInfoClientTest {
 //        MyConfig.getInstance().setAndroidJar("E:\\AndroidSDK\\android-sdk-windows-new\\platforms");
         MyConfig.getInstance().setSrc_prec(Options.src_prec_only_class);
         MyConfig.getInstance().setFileSuffixLength(0);
-        String autFolder = MyConfig.getInstance().getResultFolder() +File.separator+autName+File.separator;
-        MyConfig.getInstance().setExceptionFilePath(autFolder+"exceptionInfo"+File.separator);
-        MyConfig.getInstance().setPermissionFilePath(autFolder+"Permission"+File.separator+"permission.txt");
-        MyConfig.getInstance().setAndroidCGFilePath(autFolder+"CallGraphInfo"+File.separator+"cg.txt");
+        String targetFolder = MyConfig.getInstance().getResultFolder() +File.separator+targetName+File.separator;
+        MyConfig.getInstance().setExceptionFilePath(targetFolder+"exceptionInfo"+File.separator);
         MyConfig.getInstance().setJimple(false);
     }
 }

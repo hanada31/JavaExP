@@ -3,6 +3,7 @@ package com.iscas.exceptionextractor.client.exception;
 import com.iscas.exceptionextractor.base.Analyzer;
 import com.iscas.exceptionextractor.base.Global;
 import com.iscas.exceptionextractor.model.analyzeModel.*;
+import com.iscas.exceptionextractor.utils.CollectionUtils;
 import com.iscas.exceptionextractor.utils.ConstantUtils;
 import com.iscas.exceptionextractor.utils.SootUtils;
 import com.iscas.exceptionextractor.utils.StringUtils;
@@ -47,6 +48,11 @@ public class ConditionAnalyzer  extends Analyzer {
     public void analyze() {
         getConditionAndValueFromUnit(mSootMethod, mUnit);
         getReturnConditions();
+        try {
+            addOtherNotThrowConditions(mSootMethod, mUnit);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -87,7 +93,24 @@ public class ConditionAnalyzer  extends Analyzer {
         }
     }
 
+    private void addOtherNotThrowConditions(SootMethod sootMethod, Unit unit) throws CloneNotSupportedException {
+        List<RefinedCondition> refinedConditionList = new ArrayList<>();
+        Map<String, List<ExceptionInfo>> map = Global.v().getAppModel().getMethod2ExceptionList();
+        for(ExceptionInfo exceptionInfo: map.get(sootMethod.getSignature())){
+            if(exceptionInfo.getUnit() != unit){
+                for(ConditionWithValueSet temp:exceptionInfo.getConditionTrackerInfo().getRefinedConditions().values())
+                    refinedConditionList.addAll(temp.getRefinedConditions());
+            }
+        }
+        for(RefinedCondition temp: refinedConditionList) {
+            RefinedCondition newTemp = temp.clone();
+            newTemp.changeSatisfied();
+            ConditionWithValueSet conditionWithValueSet = new ConditionWithValueSet(sootMethod, newTemp.getUnit(), newTemp.isSatisfied());
+            conditionTrackerInfo.addRefinedConditions(conditionWithValueSet);
+            conditionWithValueSet.addRefinedCondition(newTemp);
+        }
 
+    }
 
     /**
      * get the latest condition info for an conditionTrackerInfo
@@ -96,9 +119,6 @@ public class ConditionAnalyzer  extends Analyzer {
     void getExceptionCondition(SootMethod sootMethod, Unit unit,  Set<Unit> getCondHistory) {
         if(getCondHistory.contains(unit) || getCondHistory.size()> ConstantUtils.CONDITIONHISTORYSIZE) return;// if defUnit is not a pred of unit
         getCondHistory.add(unit);
-
-
-
         for (DominateUnit dominateUnit : dominatePaths) {
             Unit predUnit = dominateUnit.unit;
             boolean isSatisfy = dominateUnit.isSatisfy;
@@ -135,7 +155,6 @@ public class ConditionAnalyzer  extends Analyzer {
 
         List<DominateUnit> dominatePaths = new ArrayList<>();
         int size = -1;
-        boolean satisfied = true;
         while (size !=  dominatePaths.size()) {
             size = dominatePaths.size();
             for (Unit predUnit : sootMethod.getActiveBody().getUnits()) {
@@ -148,11 +167,14 @@ public class ConditionAnalyzer  extends Analyzer {
                     //it is not a dominating condition
                     boolean isDominate = getIsDominate(sootMethod, ifStmt, allPredsOfThrowUnit, dominatePaths);
                     if (isDominate == true) {
+                        //judge the if statement is satisfied by where it goes to in mPath
+                        Unit ifTarget = ifStmt.getTarget();
+                        Unit ifNext = mPath.get(mPath.indexOf(ifStmt)+1);
+                        boolean satisfied = (ifTarget == ifNext)?true:false;
                         dominatePaths.add(new DominateUnit(ifStmt, satisfied));
                     }
                 }
             }
-            satisfied = false;
         }
         //for shortcut paths
         List<DominateUnit> dominatePathCopy = new ArrayList<>(dominatePaths);
@@ -164,22 +186,35 @@ public class ConditionAnalyzer  extends Analyzer {
     }
 
     static boolean getIsDominate(SootMethod sootMethod, IfStmt ifStmt, List<Unit> allPredsOfThrowUnit, List<DominateUnit> dominatePaths) {
-        boolean isDominate = false;
         if (!allPredsOfThrowUnit.contains(ifStmt.getTarget())) {
-            isDominate = true;
+            return true;
         }
-        for(DominateUnit dominateOne: dominatePaths){
-            if(dominateOne.unit.getJavaSourceStartLineNumber() == ifStmt.getJavaSourceStartLineNumber())
-                isDominate =true;
-            List<Unit> allDirectPredsOfThrowUnit = new ArrayList<>();
-            SootUtils.getDirectPredsofUnit(sootMethod, dominateOne.unit,allDirectPredsOfThrowUnit);
-            List<Unit> allDirectSuccsOfThrowUnit = new ArrayList<>();
-            SootUtils.getDirectSuccsofUnit(sootMethod, dominateOne.unit,allDirectSuccsOfThrowUnit);
-            if(allDirectPredsOfThrowUnit.contains(ifStmt) || allDirectSuccsOfThrowUnit.contains(ifStmt))
-                isDominate = true;
+        //data-flow analysis!!! whether an ifUnit can jump out throw unit before two branch merge.
+        //if the first common item in allpredsofthrowunit
+        List<Unit> list1 = new ArrayList<>();
+        list1.add(ifStmt.getTarget());
+        SootUtils.getAllSuccsofUnit(sootMethod, ifStmt.getTarget(),list1);
+        List<Unit> list2 = new ArrayList<>();
+        list2.add(SootUtils.getNotTargetOfIfUnit(sootMethod, ifStmt));
+        SootUtils.getAllSuccsofUnit(sootMethod, SootUtils.getNotTargetOfIfUnit(sootMethod, ifStmt),list2);
+        Unit common = CollectionUtils.getCommonElement(list1,list2);
+        if (common != null && !allPredsOfThrowUnit.contains(common)) {
+            return true;
+        }
+        if (common == null && !allPredsOfThrowUnit.contains(CollectionUtils.getLastItemInList(list1))) {
+            return true;
+        }
+        if (common == null && !allPredsOfThrowUnit.contains(CollectionUtils.getLastItemInList(list2))) {
+            return true;
         }
 
-        return isDominate;
+        // in same line with existing
+        for(DominateUnit dominateOne: dominatePaths){
+            if(dominateOne.unit.getJavaSourceStartLineNumber() == ifStmt.getJavaSourceStartLineNumber()) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

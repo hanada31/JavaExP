@@ -1,4 +1,4 @@
-package com.iscas.exceptionextractor.client.cg.cgApk;
+package com.iscas.exceptionextractor.client.cg;
 
 import com.iscas.exceptionextractor.base.Analyzer;
 import com.iscas.exceptionextractor.utils.SootUtils;
@@ -19,40 +19,36 @@ public class CgModify extends Analyzer {
 
 	@Override
 	public void analyze() {
-		boolean lightMode = false;
-		if(lightMode){
-			addTopoForSupplySingle();
-		}else{
-			addEdgesByOurAnalyze(appModel.getCg());
-//			removeExlibEdge(appModel.getCg());
-//			removeNotActiveEdge(appModel.getCg());
-			removeSameEdge(appModel.getCg());
-			removeSelfEdge(appModel.getCg());
+		addEdgesByOurAnalyze(appModel.getCg());
+//		removeExlibEdge(appModel.getCg());
+//		removeNotActiveEdge(appModel.getCg());
+		removeSameEdge(appModel.getCg());
+		removeSelfEdge(appModel.getCg());
 
-			/** multiple topo queue **/
-//			List<CallGraph> cgs = new ArrayList<CallGraph>();
-//			List<Set<SootMethod>> methodSets = new ArrayList<Set<SootMethod>>();
-//			seperateCG2multiple(appModel.getCg(), methodSets, cgs);
-//			// log.info("seperateCG2multiple"+cgs.size());
-//			for (int i = 0; i < cgs.size(); i++) {
-//				CallGraph cg = cgs.get(i);
-//				Set<SootMethod> methodSet = methodSets.get(i);
-//				Map<SootMethod, Integer> inDegreeMap = constructInDregreeMap(cg, methodSet);
-//				removeCirclefromCG(inDegreeMap, cg);
-//				Map<SootMethod, Integer> outDegreeMap = constructOutDregreeMap(cg, methodSet);
-//				sortCG(outDegreeMap, cg);
-//				// log.info("sortCG");
-//			}
-//			addTopoForSupplyMulti();
+//		/** multiple topo queue **/
+//		List<CallGraph> cgs = new ArrayList<CallGraph>();
+//		List<Set<SootMethod>> methodSets = new ArrayList<Set<SootMethod>>();
+//		seperateCG2multiple(appModel.getCg(), methodSets, cgs);
+//		// log.info("seperateCG2multiple"+cgs.size());
+//		for (int i = 0; i < cgs.size(); i++) {
+//			CallGraph cg = cgs.get(i);
+//			Set<SootMethod> methodSet = methodSets.get(i);
+//			Map<SootMethod, Integer> inDegreeMap = constructInDregreeMap(cg, methodSet);
+//			removeCirclefromCG(inDegreeMap, cg);
+//			Map<SootMethod, Integer> outDegreeMap = constructOutDregreeMap(cg, methodSet);
+//			sortCG(outDegreeMap, cg);
+//			// log.info("sortCG");
+//		}
+//		addTopoForSupplyMulti();
 
-//			/** single topo queue **/
-			Map<SootMethod, Integer> inDegreeMap = constructInDregreeMap(appModel.getCg());
-			removeCirclefromCG(inDegreeMap, appModel.getCg());
-			Map<SootMethod, Integer> outDegreeMap = constructOutDregreeMap(appModel.getCg());
-			sortCG(outDegreeMap, appModel.getCg());
-			addTopoForSupplySingle();
+		/** single topo queue **/
+		Map<SootMethod, Integer> inDegreeMap = constructInDregreeMap (appModel.getCg());
+		removeCirclefromCG (inDegreeMap, appModel.getCg());
+		Map<SootMethod, Integer> outDegreeMap = constructOutDregreeMap (appModel.getCg());
 
-		}
+		sortCG (outDegreeMap, appModel.getCg());
+		addTopoForSupplySingle();
+
 		log.info("Call Graph has " + appModel.getCg().size() + " edges.");
 	}
 
@@ -438,16 +434,17 @@ public class CgModify extends Analyzer {
 		Map<SootMethod, Integer> outDegreeMap = new HashMap<SootMethod, Integer>();// get
 		// outDegreeMap
 		for (SootClass sc : Scene.v().getApplicationClasses()) {
-			for (SootMethod m : sc.getMethods()) {
-				if (SootUtils.hasSootActiveBody(m) == false)
+			for (SootMethod sm : sc.getMethods()) {
+				if (SootUtils.hasSootActiveBody(sm) == false)
 					continue;
-				outDegreeMap.put(m, 0); // initial outDegreeMap
+				outDegreeMap.put(sm, 0); // initial outDegreeMap
 			}
 		}
 		Iterator<Edge> it = callGraph.iterator();
 		while (it.hasNext()) {
 			Edge edge = it.next();
-			if (SootUtils.hasSootActiveBody(edge.getTgt().method()) == false)
+			//not java library method
+			if (SootUtils.hasSootActiveBody(edge.getTgt().method()) == false || edge.getTgt().method().isJavaLibraryMethod())
 				continue;
 			if (outDegreeMap.containsKey(edge.getSrc().method()))
 				outDegreeMap.put(edge.getSrc().method(), outDegreeMap.get(edge.getSrc()) + 1);
@@ -466,10 +463,10 @@ public class CgModify extends Analyzer {
 		Map<SootMethod, Integer> inDegreeMap = new HashMap<SootMethod, Integer>();// get
 		// outDegreeMap
 		for (SootClass sc : Scene.v().getApplicationClasses()) {
-			for (SootMethod m : sc.getMethods()) {
-				if (SootUtils.hasSootActiveBody(m) == false)
+			for (SootMethod sm : sc.getMethods()) {
+				if (SootUtils.hasSootActiveBody(sm) == false)
 					continue;
-				inDegreeMap.put(m, 0); // initial outDegreeMap
+				inDegreeMap.put(sm, 0); // initial outDegreeMap
 			}
 		}
 		Iterator<Edge> it = callGraph.iterator();
