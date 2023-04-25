@@ -1,3 +1,6 @@
 [submodule "soot-dev-ee"]
 	path = soot-dev-ee
 	url = https://github.com/LightningRS/soot-dev-iccbot.git
+[submodule "soot-dev"]
+	path = soot-dev
+	url = https://github.com/LightningRS/soot-dev-iccbot/
