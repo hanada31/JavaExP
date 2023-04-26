@@ -13,7 +13,6 @@ public class MyConfig {
 
 	private boolean isJimple = false;
 	private String resultFolder;
-	private String resultWarpperFolder;
 	private String appName;
 	private String appPath;
 	private String client;
@@ -21,6 +20,7 @@ public class MyConfig {
 	private int timeLimit;
 	private String androidJar;
 	private boolean stopFlag = false;
+	private String tag ;
 
 	private boolean isSootAnalyzeFinish;
 	private boolean isManifestClientFinish;
@@ -57,14 +57,14 @@ public class MyConfig {
 		return SingletonInstance.INSTANCE;
 	}
 
-
-	public String getStrategy() {
-		return Strategy;
+	public String getTag() {
+		return tag;
 	}
 
-	public void setStrategy(String strategy) {
-		Strategy = strategy;
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
+
 	public boolean isJimple() {
 		return isJimple;
 	}
@@ -118,14 +118,6 @@ public class MyConfig {
 	}
 	public int getSrc_prec() {
 		return src_prec;
-	}
-
-	public String getFileVersion() {
-		return FileVersion;
-	}
-
-	public void setFileVersion(String fileVersion) {
-		this.FileVersion = fileVersion;
 	}
 
 	/**

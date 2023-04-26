@@ -2,8 +2,9 @@ package com.iscas.exceptionextractor.client.exception;
 
 import com.alibaba.fastjson.JSONArray;
 import com.iscas.exceptionextractor.base.Global;
-import com.iscas.exceptionextractor.client.soot.CFGTraverse;
+import com.iscas.exceptionextractor.base.MyConfig;
 import com.iscas.exceptionextractor.model.analyzeModel.*;
+import com.iscas.exceptionextractor.utils.CFGTraverse;
 import com.iscas.exceptionextractor.utils.PDGUtils;
 import com.iscas.exceptionextractor.utils.PrintUtils;
 import com.iscas.exceptionextractor.utils.SootUtils;
@@ -15,7 +16,10 @@ import soot.shimple.PhiExpr;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.toolkits.scalar.ValueUnitPair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author hanada
@@ -42,11 +46,26 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
      */
     private void getThrownExceptionList() {
         thrownExceptionInfoList = new ArrayList<>();
+        int totalCnt = Global.v().getAppModel().getTopoMethodQueue().size();
+        log.info("There are totally {} methods in TopoMethodQueue", totalCnt);
+        int cnt = 0;
+        long totalTime = 0;
         for (SootMethod sootMethod : Global.v().getAppModel().getTopoMethodQueue()) {
+            cnt++;
+            if (cnt % 200 == 0)
+                log.info(String.format("This is the method #%d/%d, avg time per method: %.2fms",
+                        cnt, totalCnt, (totalTime / ((double) cnt))));
+            long startMS = System.currentTimeMillis();
+
             if(openFilter && filterMethod(sootMethod)) continue;
+
             if (!sootMethod.hasActiveBody()) continue;
-            getCalleeExceptionOfAll(sootMethod);
+            if(isInterProcedure)
+                getCalleeExceptionOfAll(sootMethod);
             extractExceptionInfoOfMethod(sootMethod);
+
+            if (MyConfig.getInstance().isStopFlag()) return;
+            totalTime += (System.currentTimeMillis() - startMS);
         }
     }
 
@@ -58,6 +77,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             //for the callee
             if(invokeExpr !=null){
                 SootMethod callee = invokeExpr.getMethod();
+                if(callee==sootMethod) continue;
                 if(callee.isJavaLibraryMethod()) continue;
                 List<ExceptionInfo>  exceptionInfoList = Global.v().getAppModel().getMethod2ExceptionList().get(callee.getSignature());
                 if(exceptionInfoList==null) continue;
@@ -77,11 +97,15 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
                             try {
                                 ConditionWithValueSet newOne = refinedConditionEntry.getValue().clone();
                                 for (Map.Entry idEntry : formalPara2ActualPara.entrySet()) {
+                                    List<String> toBeAdd = new ArrayList<>();
                                     for (RefinedCondition refinedCondition : newOne.getRefinedConditions()) {
                                         if (refinedCondition.toString().contains("parameter" + idEntry.getKey())) {
                                             String newCondition = refinedCondition.toString().replace("parameter" + idEntry.getKey(), "parameter" + idEntry.getValue());
-                                            newOne.addRefinedCondition(new RefinedCondition(newCondition));
+                                            toBeAdd.add(newCondition);
                                         }
+                                    }
+                                    for(String newCondition: toBeAdd){
+                                        newOne.addRefinedCondition(new RefinedCondition(newCondition));
                                     }
                                 }
                                 exceptionInfoCopy.getConditionTrackerInfo().addRefinedConditions(newOne);
@@ -131,7 +155,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
      */
     private void extractExceptionInfoOfUnit(SootMethod sootMethod, ThrowStmt throwUnit, List<ControlDependOnUnit> controlPath) {
         SootClass exceptionClass = getThrowUnitWithType(sootMethod, throwUnit, (Local) throwUnit.getOp());
-        if(exceptionClass.getName().equals("java.lang.Throwable")) return;
+        if(exceptionClass==null || exceptionClass.getName().equals("java.lang.Throwable")) return;
 
         ExceptionInfo exceptionInfo =  new ExceptionInfo(sootMethod, throwUnit, exceptionClass.getName());
         thrownExceptionInfoList.add(exceptionInfo);
@@ -253,14 +277,8 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
      */
     private List<List<Unit>> getThrowEndPaths(SootMethod sootMethod) {
         CFGTraverse cfgTraverse = new CFGTraverse(sootMethod);
-        cfgTraverse.traverseAllPaths();
-        List<List<Unit>> allPaths = cfgTraverse.getAllPaths();
-        List<List<Unit>> newAllPaths = new ArrayList<>();
-        for(List<Unit> path : allPaths){
-            if (path.get(path.size()-1) instanceof  ThrowStmt)
-                newAllPaths.add(path);
-        }
-        return  newAllPaths;
+        cfgTraverse.traverseAllPathsEndWithThrow();
+        return  cfgTraverse.getAllPaths();
     }
 
 

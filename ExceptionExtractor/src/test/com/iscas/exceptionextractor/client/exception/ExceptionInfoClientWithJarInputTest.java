@@ -28,16 +28,16 @@ public class ExceptionInfoClientWithJarInputTest {
         String client = "ExceptionInfoClient";
         String path;
 
-        path = "..\\M_framework\\";
+        path = "..\\M_framework\\apk\\";
 //        path = "D:\\SoftwareData\\dataset\\android-framework\\classes\\";
-        String autName = "commons-io-2.6";
+        String autName = "iflyrectj-6.0.3682-30010009";
 
-        MyConfig.getInstance().setAppName(autName+".jar");
+        MyConfig.getInstance().setAppName(autName+".apk");
         MyConfig.getInstance().setAppPath(path + File.separator);
         MyConfig.getInstance().setClient(client);
         MyConfig.getInstance().setResultFolder("..\\results" + File.separator);
         MyConfig.getInstance().setTimeLimit(100);
-//        MyConfig.getInstance().setAndroidJar("E:\\AndroidSDK\\android-sdk-windows-new\\platforms");
+        MyConfig.getInstance().setAndroidJar("E:\\AndroidSDK\\android-sdk-windows-new\\platforms");
         MyConfig.getInstance().setSrc_prec(Options.src_prec_only_class);
         MyConfig.getInstance().setFileSuffixLength(0);
         String autFolder = MyConfig.getInstance().getResultFolder() +File.separator+autName+File.separator;
@@ -45,6 +45,6 @@ public class ExceptionInfoClientWithJarInputTest {
         MyConfig.getInstance().setPermissionFilePath(autFolder+"Permission"+File.separator+"permission.txt");
         MyConfig.getInstance().setAndroidCGFilePath(autFolder+"CallGraphInfo"+File.separator+"cg.txt");
         MyConfig.getInstance().setJimple(false);
-
+        MyConfig.getInstance().setTag("com.ifly");
     }
 }

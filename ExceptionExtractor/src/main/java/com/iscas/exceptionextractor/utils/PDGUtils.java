@@ -145,8 +145,10 @@ public class PDGUtils extends HashMutablePDG {
     private void addIntoCDSMap(Unit key, Unit newKey) {
         if(CDMap.containsKey(newKey)){
             for(Unit val: CDMap.get(newKey)) {
-                CDSMap.get(key).add(val);
-                addIntoCDSMap(key, val);
+                if(!CDSMap.get(key).contains(val)) {
+                    CDSMap.get(key).add(val);
+                    addIntoCDSMap(key, val);
+                }
             }
         }
     }

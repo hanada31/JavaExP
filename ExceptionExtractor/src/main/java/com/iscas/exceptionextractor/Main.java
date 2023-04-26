@@ -111,11 +111,10 @@ public class Main {
 		options.addOption("path", true, "-path: Set the path to the apk under analysis.");
 		options.addOption("androidJar", true, "-androidJar: Set the path of android.jar.");
 		options.addOption("isJimple", true, "-isJimple: Use Jimple for true, Shimple for false.");
-		options.addOption("frameworkVersion", true, "-frameworkVersion: The version of framework under analysis");
-		options.addOption("strategy", true, "-strategy: effectiveness of strategy m");
 
 		options.addOption("exceptionPath", true, "-exceptionPath: exception file folder [optional].");
 		options.addOption("CGPath", true, "-CGPath: Android CallGraph file [optional.");
+		options.addOption("tag", true, "-tag: use that tag to filter unnecessary analysis.");
 
 
 		/** analysis config **/
@@ -156,6 +155,7 @@ public class Main {
 		}
 
 		/** run config **/
+		MyConfig.getInstance().setTag(mCmd.getOptionValue("tag", null));
 		MyConfig.getInstance().setJimple(Boolean.parseBoolean((mCmd.getOptionValue("isJimple", "false"))));
 		MyConfig.getInstance().setAppName(mCmd.getOptionValue("name", ""));
 		MyConfig.getInstance().setAppPath(mCmd.getOptionValue("path", System.getProperty("user.dir")) + File.separator);

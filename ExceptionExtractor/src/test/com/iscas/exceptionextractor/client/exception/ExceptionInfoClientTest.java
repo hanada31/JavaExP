@@ -37,7 +37,7 @@ public class ExceptionInfoClientTest {
         MyConfig.getInstance().setClient(client);
         MyConfig.getInstance().setResultFolder("..\\results" + File.separator);
         MyConfig.getInstance().setTimeLimit(100);
-//        MyConfig.getInstance().setAndroidJar("E:\\AndroidSDK\\android-sdk-windows-new\\platforms");
+        MyConfig.getInstance().setAndroidJar("E:\\AndroidSDK\\android-sdk-windows-new\\platforms");
         MyConfig.getInstance().setSrc_prec(Options.src_prec_only_class);
         MyConfig.getInstance().setFileSuffixLength(0);
         String targetFolder = MyConfig.getInstance().getResultFolder() +File.separator+targetName+File.separator;

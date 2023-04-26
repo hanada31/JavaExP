@@ -71,9 +71,11 @@ public class ConstantUtils {
 	public static final String onOptionsItemSelected = "boolean onOptionsItemSelected(android.view.MenuItem)";
     public static final int LARGECALLERSET = 10 ;
     public static final int SIGNLARCALLERDEPTH = 5;
+    public static final int CFGPATHNUMBER = 100;
+	public static final int CFGPATHNODELEN = 50;
 
 
-    public static String CGANALYSISPREFIX = "android";
+	public static String CGANALYSISPREFIX = "android";
     public static String FRAMEWORKPREFIX = "android";
 
 	public static final int MANIFESTTIMEOUT =2 ;
