@@ -42,12 +42,12 @@ public class ConditionAnalyzer  extends Analyzer {
     @Override
     public void analyze() {
         getConditionAndValueFromUnit(mSootMethod, mUnit);
-        getReturnConditions();
-        try {
-            addOtherNotThrowConditions(mSootMethod, mUnit);
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+//        getReturnConditions();
+//        try {
+//            addOtherNotThrowConditions(mSootMethod, mUnit);
+//        } catch (CloneNotSupportedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -98,7 +98,7 @@ public class ConditionAnalyzer  extends Analyzer {
         }
     }
 
-    private void addOtherNotThrowConditions(SootMethod sootMethod, Unit unit) throws CloneNotSupportedException {
+    private void addIntoMethod2ExceptionList(SootMethod sootMethod, Unit unit) throws CloneNotSupportedException {
         List<RefinedCondition> refinedConditionList = new ArrayList<>();
         Map<String, List<ExceptionInfo>> map = Global.v().getAppModel().getMethod2ExceptionList();
         for(ExceptionInfo exceptionInfo: map.get(sootMethod.getSignature())){

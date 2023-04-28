@@ -109,6 +109,10 @@ public class ConditionTrackerInfo implements Cloneable{
     }
 
     public RelatedCondType getRelatedCondType() {
+        if(getRefinedConditions().size()==0)
+            relatedCondType = RelatedCondType.Empty;
+        else
+            relatedCondType = RelatedCondType.Basic;
         return relatedCondType;
     }
 

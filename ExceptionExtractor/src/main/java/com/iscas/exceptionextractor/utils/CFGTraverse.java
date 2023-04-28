@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import soot.Body;
 import soot.SootMethod;
 import soot.Unit;
+import soot.jimple.ThrowStmt;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.toolkits.graph.UnitGraph;
 
@@ -63,7 +64,7 @@ public class CFGTraverse {
             Unit u = node.getCurrentUnit();
 
             if (cfg.getSuccsOf(u).isEmpty()) {
-//                if (u instanceof ThrowStmt) // 仅保存end at throw 的
+                if (u instanceof ThrowStmt) // 仅保存end at throw 的
                     allPaths.add(node.getPath()); // 找到一条路径
             } else {
                 for (Unit succ : cfg.getSuccsOf(u)) {
@@ -85,7 +86,6 @@ public class CFGTraverse {
         }
 
         while (!stack.isEmpty()) {
-//            System.out.println(PrintUtils.printList(stack));
             if(allPaths.size()> ConstantUtils.CFGPATHNUMBER) return allPaths;
             PathNode node = stack.pop();
             Unit u = node.getCurrentUnit();

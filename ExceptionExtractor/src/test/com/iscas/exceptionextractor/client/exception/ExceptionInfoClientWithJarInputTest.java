@@ -45,6 +45,6 @@ public class ExceptionInfoClientWithJarInputTest {
         MyConfig.getInstance().setPermissionFilePath(autFolder+"Permission"+File.separator+"permission.txt");
         MyConfig.getInstance().setAndroidCGFilePath(autFolder+"CallGraphInfo"+File.separator+"cg.txt");
         MyConfig.getInstance().setJimple(false);
-        MyConfig.getInstance().setTag("com.ifly");
+//        MyConfig.getInstance().setTag("com.ifly");
     }
 }

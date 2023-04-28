@@ -72,7 +72,7 @@ public class ConstantUtils {
     public static final int LARGECALLERSET = 10 ;
     public static final int SIGNLARCALLERDEPTH = 5;
     public static final int CFGPATHNUMBER = 100;
-	public static final int CFGPATHNODELEN = 50;
+	public static final int CFGPATHNODELEN = 200;
 
 
 	public static String CGANALYSISPREFIX = "android";

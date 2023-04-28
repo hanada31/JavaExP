@@ -22,7 +22,7 @@ public class MultipleThrow {
      */
     public void throw_two(String x){
         if(x==null)
-        throw new RuntimeException("throw_two");
+            throw new RuntimeException("throw_two");
 
         if(x.startsWith("123"))
             throw new NullPointerException("throw_two");

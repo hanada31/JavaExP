@@ -1,6 +1,5 @@
 package com.iscas.exceptionextractor.client.exception;
 
-import com.alibaba.fastjson.JSONArray;
 import com.iscas.exceptionextractor.base.Global;
 import com.iscas.exceptionextractor.base.MyConfig;
 import com.iscas.exceptionextractor.model.analyzeModel.*;
@@ -58,7 +57,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             long startMS = System.currentTimeMillis();
 
             if(openFilter && filterMethod(sootMethod)) continue;
-
+            System.out.println(sootMethod.getSignature());
             if (!sootMethod.hasActiveBody()) continue;
             if(isInterProcedure)
                 getCalleeExceptionOfAll(sootMethod);
@@ -83,7 +82,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
                 if(exceptionInfoList==null) continue;
 
                 for(ExceptionInfo exceptionInfo: exceptionInfoList){
-                    if(exceptionInfo.getConditionTrackerInfo().getRelatedCondType() == RelatedCondType.Empty){
+                    if(exceptionInfo.getConditionTrackerInfo().getRefinedConditions().size()==0){
                         //no parameter analysis
                         ExceptionInfo exceptionInfoCopy = new ExceptionInfo(sootMethod, unit, exceptionInfo.getExceptionName());
                         Global.v().getAppModel().addMethod2ExceptionListForOne(sootMethod.getSignature(), exceptionInfoCopy);
@@ -283,12 +282,12 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
 
 
     private void outputThrowExceptionInfo() {
-        JSONArray exceptionListElement  = new JSONArray(new ArrayList<>());
-        ExceptionInfoClientOutput.getSummaryJsonArrayOfThrownException(thrownExceptionInfoList, exceptionListElement);
-        ExceptionInfoClientOutput.writeExceptionSummaryInJson(exceptionListElement,"thrownException");
-        exceptionListElement.clear();
-        ExceptionInfoClientOutput.getSummaryJsonArrayOfThrownException2(thrownExceptionInfoList, exceptionListElement);
-        ExceptionInfoClientOutput.writeExceptionSummaryInJson(exceptionListElement,"thrownException2");
+//        JSONArray exceptionListElement  = new JSONArray(new ArrayList<>());
+//        ExceptionInfoClientOutput.getSummaryJsonArrayOfThrownException(thrownExceptionInfoList, exceptionListElement);
+//        ExceptionInfoClientOutput.writeExceptionSummaryInJson(exceptionListElement,"thrownException");
+//        exceptionListElement.clear();
+//        ExceptionInfoClientOutput.getSummaryJsonArrayOfThrownException2(thrownExceptionInfoList, exceptionListElement);
+//        ExceptionInfoClientOutput.writeExceptionSummaryInJson(exceptionListElement,"thrownException2");
         ExceptionInfoClientOutput.printExceptionInfoList();
     }
 }

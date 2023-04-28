@@ -5,12 +5,6 @@ import com.iscas.exceptionextractor.client.BaseClient;
 import com.iscas.exceptionextractor.client.cg.CgModify;
 import lombok.extern.slf4j.Slf4j;
 import soot.jimple.toolkits.callgraph.CallGraph;
-import com.iscas.exceptionextractor.base.MyConfig;
-import com.iscas.exceptionextractor.client.cg.CgClientOutput;
-import com.iscas.exceptionextractor.utils.ConstantUtils;
-import com.iscas.exceptionextractor.utils.FileUtils;
-
-import java.io.File;
 
 /**
  * Analyzer Class
@@ -36,11 +30,11 @@ public class CallGraphofJavaClient extends BaseClient {
 	@Override
 	public void clientOutput() {
 		/** call graph, if needed, open output**/
-		String summary_app_dir = MyConfig.getInstance().getResultFolder() + Global.v().getAppModel().getAppName()
-				+ File.separator;
-		FileUtils.createFolder(summary_app_dir + ConstantUtils.CGFOLDETR);
-		CgClientOutput.writeCG(summary_app_dir + ConstantUtils.CGFOLDETR,
-				Global.v().getAppModel().getAppName()+"_cg.txt", Global.v().getAppModel().getCg());
+//		String summary_app_dir = MyConfig.getInstance().getResultFolder() + Global.v().getAppModel().getAppName()
+//				+ File.separator;
+//		FileUtils.createFolder(summary_app_dir + ConstantUtils.CGFOLDETR);
+//		CgClientOutput.writeCG(summary_app_dir + ConstantUtils.CGFOLDETR,
+//				Global.v().getAppModel().getAppName()+"_cg.txt", Global.v().getAppModel().getCg());
 
 	}
 

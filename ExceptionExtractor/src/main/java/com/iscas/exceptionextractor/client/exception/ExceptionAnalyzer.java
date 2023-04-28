@@ -27,7 +27,8 @@ public class ExceptionAnalyzer extends Analyzer {
 
     boolean filterMethod(SootMethod sootMethod) {
         List<String> mtds = new ArrayList<>();
-//        mtds.add("com.arialyy.aria.core.event.EventMsgUtil$1: void run()");
+        mtds.add("MultipleCall");
+
         if(MyConfig.getInstance().getTag()!=null){
             mtds.add(MyConfig.getInstance().getTag());
         }
@@ -42,11 +43,11 @@ public class ExceptionAnalyzer extends Analyzer {
 
     @Override
     public void analyze() {
-        DeclaredExceptionAnalyzer declaredExceptionAnalyzer = new DeclaredExceptionAnalyzer();
-        declaredExceptionAnalyzer.analyze();
-
-        CaughtExceptionAnalyzer caughtExceptionAnalyzer = new CaughtExceptionAnalyzer();
-        caughtExceptionAnalyzer.analyze();
+//        DeclaredExceptionAnalyzer declaredExceptionAnalyzer = new DeclaredExceptionAnalyzer();
+//        declaredExceptionAnalyzer.analyze();
+//
+//        CaughtExceptionAnalyzer caughtExceptionAnalyzer = new CaughtExceptionAnalyzer();
+//        caughtExceptionAnalyzer.analyze();
 
         ThrownExceptionAnalyzer thrownExceptionAnalyzer = new ThrownExceptionAnalyzer();
         thrownExceptionAnalyzer.analyze();
