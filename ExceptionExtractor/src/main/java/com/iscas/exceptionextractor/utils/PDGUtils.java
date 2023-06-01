@@ -142,6 +142,39 @@ public class PDGUtils extends HashMutablePDG {
         }
     }
 
+    public void analyzeThrowAndInvokeControlDependency(){
+        /* first step: get direct control dependency information */
+        HashMutablePDG pdg = new HashMutablePDG(cfg);
+        for(Iterator<PDGNode> it = pdg.iterator(); it.hasNext();){
+            PDGNode controlNode = it.next();
+            if(controlNode.getType() == PDGNode.Type.CFGNODE){
+                //if it's CFGNODE, cast this pdg node to a block
+                Block bk = (Block) controlNode.getNode();
+                Unit tail = bk.getTail();
+                //check whether the tail unit of the block contains controlling expression: ifStmt and SwitchStmt
+                if(tail instanceof IfStmt || tail instanceof TableSwitchStmt || tail instanceof LookupSwitchStmt){
+                    for(Iterator<PDGNode> it2 = pdg.iterator(); it2.hasNext();){
+                        PDGNode node = it2.next();
+                        //check whether node is control dependent of controlNode
+                        if(pdg.dependentOn(node, controlNode)){
+                            IRegion region = (IRegion) node.getNode();
+                            //all the units in this region are control dependent of tail
+                            for(Unit u: region.getUnits()){
+                                CDMap.put(u, tail);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /* second step: calculate both indirect and direct control dependency maintained by CDSMap */
+        for(Unit key: CDMap.keySet()){
+            if(!(key instanceof ThrowStmt) && SootUtils.getInvokeExp(key)==null) continue; // only throw units are concerned
+            CDSMap.put(key, new HashSet<Unit>());
+            addIntoCDSMap(key, key);
+        }
+    }
     private void addIntoCDSMap(Unit key, Unit newKey) {
         if(CDMap.containsKey(newKey)){
             for(Unit val: CDMap.get(newKey)) {

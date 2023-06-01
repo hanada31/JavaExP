@@ -52,6 +52,35 @@ public class CFGTraverse {
         }
 
     }
+
+    public List<List<Unit>> traverseAllPathsEndWithThrowAndInvoke(Set invokeSet) {
+        Stack<PathNode> stack = new Stack<>(); // 用于存储路径节点的栈
+        for (Unit u : cfg.getHeads()) {
+            stack.push(new PathNode(u)); // 初始化根节点
+        }
+
+        while (!stack.isEmpty()) {
+            if(allPaths.size()> ConstantUtils.CFGPATHNUMBER) return allPaths;
+            PathNode node = stack.pop();
+            Unit u = node.getCurrentUnit();
+            if(invokeSet.contains(u)){
+                allPaths.add(new ArrayList<>(node.getPath())); // 找到一条路径
+            }
+            if (cfg.getSuccsOf(u).isEmpty()) {
+                if (u instanceof ThrowStmt) // 仅保存end at throw 的
+                    allPaths.add(node.getPath()); // 找到一条路径
+            } else {
+                for (Unit succ : cfg.getSuccsOf(u)) {
+                    if(node.getPath().size()>ConstantUtils.CFGPATHNODELEN) break;
+                    if(node.getPath().contains(succ)) break;
+                    PathNode newNode = new PathNode(succ, node.getPath());
+                    stack.push(newNode); // 添加后继节点到栈中
+                }
+            }
+        }
+        return allPaths;
+    }
+
     private List<List<Unit>> traverseWithThrow(UnitGraph cfg) {
         Stack<PathNode> stack = new Stack<>(); // 用于存储路径节点的栈
         for (Unit u : cfg.getHeads()) {
@@ -103,6 +132,8 @@ public class CFGTraverse {
         }
         return allPaths;
     }
+
+
 }
 
 class PathNode {

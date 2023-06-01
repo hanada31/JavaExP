@@ -144,6 +144,7 @@ public class ConditionAnalyzer  extends Analyzer {
                         SootUtils.getActualOp(conditionExpr), conditionExpr.getOp2(), predUnit);
                 conditionWithValueSet.addRefinedCondition(rf);
 
+
                 // trace from the direct condition
                 extendRelatedValues(conditionWithValueSet, sootMethod,  predUnit, conditionExpr.getOp1(),
                         new ArrayList<>(),getCondHistory,  "left");
@@ -415,6 +416,15 @@ public class ConditionAnalyzer  extends Analyzer {
                                         phiValue, valueHistory, getCondHistory,  location);
                                 addRefinedConditionIntoSet(conditionWithValueSet, value, "phi replace", phiValue, assignStmt, location);
                             }
+                        }else if(rightOp instanceof JCastExpr){
+                            JCastExpr castExpr = (JCastExpr) rightOp;
+                            extendRelatedValues(conditionWithValueSet, sootMethod,
+                                    defUnit, rightOp, valueHistory, getCondHistory, location);
+                            if(castExpr.getOp() instanceof  Constant)
+                                addRefinedConditionIntoSet(conditionWithValueSet,value, "denote", castExpr.getOp(), assignStmt, location);
+                            else
+                                addRefinedConditionIntoSet(conditionWithValueSet,value, "equals", castExpr.getOp(), assignStmt, location);
+
                         } else {
                             if (rightOp instanceof AbstractInstanceOfExpr || rightOp instanceof AbstractCastExpr
                                     || rightOp instanceof AbstractBinopExpr || rightOp instanceof AbstractUnopExpr) {

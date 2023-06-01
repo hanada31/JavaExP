@@ -46,6 +46,10 @@ public class RefinedCondition implements Cloneable {
     public boolean isSatisfied() {
         return satisfied;
     }
+    public void setSatisfied(boolean flag) {
+        satisfied = flag;
+    }
+
     @Override
     public RefinedCondition clone() throws CloneNotSupportedException {
         RefinedCondition refinedCondition = new RefinedCondition();
@@ -56,6 +60,7 @@ public class RefinedCondition implements Cloneable {
         refinedCondition.setRightStr(rightStr);
         refinedCondition.setUnit(unit);
         refinedCondition.setConditionWithValueSet(conditionWithValueSet);
+        refinedCondition.setSatisfied(satisfied);
         return refinedCondition;
     }
 

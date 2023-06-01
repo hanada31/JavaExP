@@ -10,68 +10,64 @@ import java.util.List;
  */
 public class Motivation {
 
-    /**
-     * The motivating example
-     * @param first
-     * @param second
-     * @param key
-     * @throws RuntimeException if param first is null and param second startsWith "Error"
-     * @throws IllegalArgumentException if param first is null and param key < 0
-     */
-    private final String ERRORSTR = "Error String";
-    public void motivatingExample(String first, String second, int key){
-        String errStr = "NoError";
-        if(first==null) {
-            if(key<0)
-                detectInvalidKey(key);
-            else {
-                for (String value: getValuesWithKey()){
-                    System.out.println(value);
-                }
-            }
-            errStr = second;
-            if (errStr.startsWith(ERRORSTR.substring(0,5)))
-                throw new RuntimeException("bug!");
-        }
-        System.out.println(errStr);
-    }
 
-    private void detectInvalidKey(int key) {
-        if(key<0)
-            throw new IllegalArgumentException("invalid key");
-    }
-
-    public void motivatingExample2(String first, String second, int key){
-        String errStr = "NoError";
-        if(first==null) {
-            if(key<0)
-                detectInvalidKey(key);
-            else {
-                for (int i =0; i< getValuesWithKey().size(); i++){
-                    System.out.println(getValuesWithKey().get(i));
-                }
+private final String ERRORSTR = "Error String";
+/**
+ * caller
+ * @throws RuntimeException if param input first is null and param errStr input startsWith "Error"
+ */
+public void caller(String errStr, String input,int num) {
+    callee(input, errStr, num);
+}
+/**
+ * callee
+ * @throws RuntimeException if param first is null and param second startsWith "Error"
+ */
+public void callee(String first, String second, int key){
+    String errStr = "NoError";
+    if(first==null) {
+        if(key < 0)
+            System.out.println("invalid key");
+        else {
+            for (String value: getValuesWithKey()){
+                System.out.println(value);
             }
-            errStr = second;
-            if (errStr.startsWith(ERRORSTR.substring(0,5)))
-                throw new RuntimeException("bug!");
         }
-        System.out.println(errStr);
+        errStr = second;
+        if (errStr.startsWith(ERRORSTR.substring(0,5)))
+            throw new RuntimeException("bug!");
     }
+    System.out.println(errStr);
+}
 
-    public void motivatingExample3(String first, String second, int key){
-        String errStr = "NoError";
-        if(first==null) {
-            if(key<0)
-                detectInvalidKey(key);
-            else {
-                System.out.println(getValuesWithKey().get(0));
-            }
-            errStr = second;
-            if (errStr.startsWith(ERRORSTR.substring(0,5)))
-                throw new RuntimeException("bug!");
-        }
-        System.out.println(errStr);
+    public void caller2(String errStr, String input,int num) {
+        callee2(input, errStr, num);
     }
+/**
+ * callee
+ * @throws RuntimeException if param first is null and param second startsWith "Error"
+ */
+public void callee2(String first, String second, int key){
+    String errStr = "NoError";
+    if(first==null) {
+        if(key < 0)
+            System.out.println("invalid key");
+        else {
+            for (int i =0; i< getValuesWithKey().size(); i++){
+                System.out.println(getValuesWithKey().get(i));
+            }
+        }
+        errStr = second;
+        if (errStr.startsWith(ERRORSTR.substring(0,5)))
+            throw new RuntimeException("bug!");
+    }
+    System.out.println(errStr);
+}
+
+private void detectInvalidKey(int key) {
+    if(key > -100)
+        throw new IllegalArgumentException();
+}
 
     private List<String> getValuesWithKey() {
         List<String> values = new ArrayList<>();
@@ -79,12 +75,6 @@ public class Motivation {
         values.add("22");
         values.add("333");
         return values;
-    }
-
-    public void example1(String a, String b, int c){
-        if ((a==null || b==null) && c>0)
-            throw new RuntimeException("bug1!");
-        System.out.println(ERRORSTR);
     }
 
 }
