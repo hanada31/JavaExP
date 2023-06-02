@@ -7,10 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
-import soot.jimple.InstanceFieldRef;
-import soot.jimple.InstanceInvokeExpr;
-import soot.jimple.InvokeExpr;
-import soot.jimple.StringConstant;
+import soot.jimple.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -63,7 +60,10 @@ public class ConditionWithValueSet implements  Cloneable {
 	}
 
 	public void addRefinedCondition(RefinedCondition refinedCondition) {
-		if(refinedCondition!=null) {
+		if(refinedCondition!=null && refinedCondition.toString().length()>0) {
+			String op = refinedCondition.getOperator();
+			if(op!=null &&(op.equals("denote") || op.equals("is invoke") || op.equals("phi replace")))
+				refinedCondition.setSatisfied(true);
 			this.refinedConditions.add(refinedCondition);
 		}
 	}
@@ -76,7 +76,7 @@ public class ConditionWithValueSet implements  Cloneable {
 	public void optimizeCondition() {
 		List<RefinedCondition> list;
 
-		//optimize, transport denoted variables to each use point
+//		optimize, transport denoted variables to each use point
 		list = new ArrayList(refinedConditions);
 		optimizePhiVariable(list);
 
@@ -87,18 +87,26 @@ public class ConditionWithValueSet implements  Cloneable {
 		//optimize, transport denoted variables to each use point
 		list = new ArrayList(refinedConditions);
 		optimizeDenotedVariable(list);
-
+//
 		//optimize, transport denoted variables to each use point
 		list = new ArrayList(refinedConditions);
 		optimizeDenotedVariable2(list);
 
 		//optimize, transport is invoke variables to each use point
 		list = new ArrayList(refinedConditions);
-		optimizeInInvokeVariable(list);
+		optimizeIsInvokeVariable(list);
+
+		//optimize, transport is variables to each use point
+		list = new ArrayList(refinedConditions);
+		optimizeIsVariable(list);
 
 		//optimize, transport redundant variables to each use point
 		list = new ArrayList(refinedConditions);
 		optimizeRedundant(list);
+
+		//optimize, transport redundant variables to each use point
+		list = new ArrayList(refinedConditions);
+		optimizePrintFormat(list);
 
 		//optimize, remove variable not this and not parameter constraints
 		list = new ArrayList(refinedConditions);
@@ -160,7 +168,7 @@ public class ConditionWithValueSet implements  Cloneable {
 							expressionIsTrue = false;
 						else if (temp.getOperator().equals("is") && temp.getRightStr().equals("0"))
 							expressionIsTrue = false;
-						toBeDel.add(temp);
+//						toBeDel.add(temp);
 						find = true;
 						break;
 					}
@@ -188,38 +196,44 @@ public class ConditionWithValueSet implements  Cloneable {
 							if(!expressionIsTrue) refinedCondition2.changeSatisfied();
 							addRefinedCondition(refinedCondition2);
 						}
+						toBeDel.add(refinedCondition);
 					} else if (expression.contains("contains")) {
 						for(Value rightValue : rightValues){
 							refinedCondition2 = new RefinedCondition(this, exp.getBase(),  "contains", rightValue, refinedCondition.getUnit());
 							if(!expressionIsTrue) refinedCondition2.changeSatisfied();
 							addRefinedCondition(refinedCondition2);
 						}
+						toBeDel.add(refinedCondition);
 					} else if (expression.contains("startsWith")) {
 						for(Value rightValue : rightValues){
 							refinedCondition2 = new RefinedCondition(this, exp.getBase(),  "startsWith", rightValue, refinedCondition.getUnit());
 							if(!expressionIsTrue) refinedCondition2.changeSatisfied();
 							addRefinedCondition(refinedCondition2);
 						}
+						toBeDel.add(refinedCondition);
 					} else if (expression.contains("endsWith")) {
 						for(Value rightValue : rightValues){
 							refinedCondition2 = new RefinedCondition(this, exp.getBase(),  "endsWith", rightValue, refinedCondition.getUnit());
 							if(!expressionIsTrue) refinedCondition2.changeSatisfied();
 							addRefinedCondition(refinedCondition2);
 						}
+						toBeDel.add(refinedCondition);
 					} else if (expression.contains("contains")) {
 						for(Value rightValue : rightValues){
 							refinedCondition2 = new RefinedCondition(this, exp.getBase(),  "contains", rightValue, refinedCondition.getUnit());
 							if(!expressionIsTrue) refinedCondition2.changeSatisfied();
 							addRefinedCondition(refinedCondition2);
 						}
+						toBeDel.add(refinedCondition);
 					}
 				}
 				if (expression.contains("isEmpty")) {
 					refinedCondition2 = new RefinedCondition(this, exp.getBase(), "equals", StringConstant.v(""), refinedCondition.getUnit());
 					if(!expressionIsTrue) refinedCondition2.changeSatisfied();
 					addRefinedCondition(refinedCondition2);
+					toBeDel.add(refinedCondition);
 				}
-				toBeDel.add(refinedCondition);
+
 			}
 		}
 		for(RefinedCondition refinedCondition: toBeDel){
@@ -238,6 +252,9 @@ public class ConditionWithValueSet implements  Cloneable {
 					}
 					if (temp.getRightStr().equals(refinedCondition.getLeftStr())) {
 						temp.setRightValue(refinedCondition.getRightValue());
+					}
+					if (temp.getRightStr().equals("lengthof "+refinedCondition.getLeftStr())) {
+						temp.setRightStr(refinedCondition.getRightStr()+".length");
 					}
 				}
 			}
@@ -286,9 +303,7 @@ public class ConditionWithValueSet implements  Cloneable {
 		}
 	}
 
-
-
-	private void optimizeInInvokeVariable(List<RefinedCondition> list) {
+	private void optimizeIsInvokeVariable(List<RefinedCondition> list) {
 		Set<RefinedCondition> toBeDel = new HashSet<>();
 		for(RefinedCondition refinedCondition: list) {
 			if (refinedCondition.getOperator().equals("is invoke")) {
@@ -298,6 +313,10 @@ public class ConditionWithValueSet implements  Cloneable {
 						temp.setRightStr(refinedCondition.getRightStr());
 						toBeDel.add(refinedCondition);
 					}
+					else if (temp.getLeftStr().equals(refinedCondition.getLeftStr())) {
+						temp.setLeftStr(refinedCondition.getRightStr());
+						toBeDel.add(refinedCondition);
+					}
 				}
 			}
 		}
@@ -305,18 +324,65 @@ public class ConditionWithValueSet implements  Cloneable {
 			refinedConditions.remove(refinedCondition);
 		}
 	}
+
+	private void optimizeIsVariable(List<RefinedCondition> list) {
+		Set<RefinedCondition> toBeDel = new HashSet<>();
+		for(RefinedCondition refinedCondition: list) {
+			if (refinedCondition.getOperator().equals("is") && refinedCondition.getLeftStr().startsWith("$")) {
+				for (RefinedCondition temp : list) {
+					if (temp == refinedCondition) continue;
+					if (temp.getRightStr().equals(refinedCondition.getLeftStr())) {
+						temp.setRightStr(refinedCondition.getRightStr());
+						toBeDel.add(refinedCondition);
+					}
+					else if (temp.getLeftStr().equals(refinedCondition.getLeftStr())) {
+						temp.setLeftStr(refinedCondition.getRightStr());
+						toBeDel.add(refinedCondition);
+					}
+				}
+			}
+		}
+		for(RefinedCondition refinedCondition: toBeDel){
+			refinedConditions.remove(refinedCondition);
+		}
+	}
+
 	private void optimizeRedundant(List<RefinedCondition> list) {
 		Set<RefinedCondition> toBeDel = new HashSet<>();
 		for(RefinedCondition refinedCondition: list) {
 			if (refinedCondition.getOperator()!=null && refinedCondition.getOperator().equals("denote")) {
 				toBeDel.add(refinedCondition);
 			}
-			if (refinedCondition.getOperator()!=null && refinedCondition.getOperator().equals("phi replace")) {
+			else if (refinedCondition.getOperator()!=null && refinedCondition.getOperator().equals("phi replace")) {
 				toBeDel.add(refinedCondition);
 			}
 		}
 		for(RefinedCondition refinedCondition: toBeDel){
 			refinedConditions.remove(refinedCondition);
+		}
+	}
+	private void optimizePrintFormat(List<RefinedCondition> list) {
+		for(RefinedCondition refinedCondition: list) {
+			if(refinedCondition.getOperator().equals("is invoke")) continue;
+			if (refinedCondition.getRightStr().contains("parameter") && !refinedCondition.getLeftStr().contains("parameter")) {
+				String temp = refinedCondition.getRightStr();
+				refinedCondition.setRightStr(refinedCondition.getLeftStr());
+				refinedCondition.setLeftStr(temp);
+			}
+		}
+		for(RefinedCondition refinedCondition: list) {
+			String str = refinedCondition.getRightStr();
+			if(str.contains("virtualinvoke") || str.contains("specialinvoke")|| str.contains("staticinvoke")
+					|| str.contains("dynamicinvoke")|| str.contains("instanceinvoke")) {
+				String[] ss = str.split(" ");
+				refinedCondition.setRightStr(str.replace(ss[0]+" ", ""));
+			}
+			str = refinedCondition.getLeftStr();
+			if(str.contains("virtualinvoke") || str.contains("specialinvoke")|| str.contains("staticinvoke")
+					|| str.contains("dynamicinvoke")|| str.contains("instanceinvoke")) {
+				String[] ss = str.split(" ");
+				refinedCondition.setLeftStr(str.replace(ss[0]+" ", ""));
+			}
 		}
 	}
 

@@ -348,7 +348,9 @@ public class ConditionAnalyzer  extends Analyzer {
                                        List<Value> valueHistory, Set<Unit> getCondHistory, String location) {
         if(valueHistory.contains(value)) return "";// if defUnit is not a pred of unit
         valueHistory.add(value);
-
+        if(value.toString().contains("lengthof")){
+            System.out.println();
+        }
         if(value instanceof Local) {
             String methodSig = mSootMethod.getSignature();
             for(Unit defUnit: SootUtils.getDefOfLocal(methodSig,value, unit)) {

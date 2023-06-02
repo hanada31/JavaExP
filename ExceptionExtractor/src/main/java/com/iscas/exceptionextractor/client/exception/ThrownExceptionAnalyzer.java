@@ -71,7 +71,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
 
     private Map<Unit, List<ExceptionInfo>> getCalleeExceptionOfAll(SootMethod sootMethod) {
         Map<Unit, List<ExceptionInfo>> InvokeStmtSetToCalleeWithException = new HashMap();
-        List<ConditionWithValueSet> conditionWithValueSetList = new ArrayList<>();
+
         for(Unit unit : sootMethod.getActiveBody().getUnits()){
             InvokeExpr invokeExpr = SootUtils.getInvokeExp(unit);
             //for the callee

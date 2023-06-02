@@ -31,6 +31,7 @@ public class ExceptionInfoClientTest {
         path = "..\\M_framework\\";
 //        path = "D:\\SoftwareData\\dataset\\android-framework\\classes\\";
         String targetName = "testcase1.0";
+        targetName = "commons-io-2.6-jar";
 
         MyConfig.getInstance().setAppName(targetName);
         MyConfig.getInstance().setAppPath(path + File.separator);

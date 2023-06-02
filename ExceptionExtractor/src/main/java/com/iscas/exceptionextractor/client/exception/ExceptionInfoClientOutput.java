@@ -287,24 +287,25 @@ public class ExceptionInfoClientOutput {
                 if(!map.containsKey(sootMethod.getSignature())) continue;
                 for (ExceptionInfo exceptionInfo: map.get(sootMethod.getSignature())) {
                     //print condition information
-                    sb.append(sootMethod.getSignature() + "\n");
-                    sb.append(exceptionInfo.getExceptionName() + "\n");
+                    sb.append("\n"+sootMethod.getSignature() + "\n");
+                    sb.append("Type:"+ exceptionInfo.getExceptionName() + "\n");
+                    if(exceptionInfo.getExceptionMsg().length()>0)
+                        sb.append("Message:"+ exceptionInfo.getExceptionMsg() + "\n");
                     StringBuilder subStr = new StringBuilder();
                     for (ConditionWithValueSet conditionWithValueSet : exceptionInfo.getConditionTrackerInfo().getRefinedConditions().values()) {
                         if (conditionWithValueSet.toString().length() > 0)
                             subStr.append(conditionWithValueSet + "\n");
                     }
                     if (subStr.length() ==0 && exceptionInfo.getConditionTrackerInfo().getRelatedVarType() == RelatedVarType.Empty) {
-                        subStr.append("RefinedCondition: no condition\n");
+                        subStr.append("no condition\n");//RefinedCondition:
                     }
                     if (subStr.length() >0){
-                        sb.append(subStr+ "\n");
+                        sb.append("RefinedCondition:\n"+subStr);
                     }
                 }
             }
         }
-        FileUtils.writeText2File(MyConfig.getInstance().getExceptionFilePath() + "exceptionConditions.txt", sb.toString(), false);
-
-
+        if(sb!=null && sb.length()>0)
+            FileUtils.writeText2File(MyConfig.getInstance().getExceptionFilePath() + "exceptionConditions.txt", sb.toString(), false);
     }
 }

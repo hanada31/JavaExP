@@ -13,7 +13,7 @@ import java.util.List;
 public class ExceptionInfo implements  Cloneable {
     private AppModel.ExceptionType exceptionType;
     private String exceptionName;
-    private String exceptionMsg;
+    private String exceptionMsg="";
 
     private String modifier;
     private SootMethod sootMethod;

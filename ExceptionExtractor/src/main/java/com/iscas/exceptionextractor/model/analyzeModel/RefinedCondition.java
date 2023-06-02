@@ -91,8 +91,6 @@ public class RefinedCondition implements Cloneable {
     public void setRightValue(Value rightValue) {
         this.rightValue = rightValue;
         this.rightStr= rightValue == null?"":rightValue.toString();
-        if(rightValue instanceof ParameterRef)
-            rightStr = "parameter" + ((ParameterRef)rightValue).getIndex();
     }
     public void setUnit(Unit unit) {
         this.unit = unit;
@@ -108,6 +106,8 @@ public class RefinedCondition implements Cloneable {
     }
 
     public String getRightStr() {
+        if(rightValue instanceof ParameterRef)
+            this.rightStr = "parameter" + ((ParameterRef)rightValue).getIndex();
         return rightStr;
     }
 
@@ -119,27 +119,52 @@ public class RefinedCondition implements Cloneable {
     @Override
     public String toString() {
         if(refinedConditionInCaller!= null) return refinedConditionInCaller;
-        String str = "RefinedCondition: " + leftStr  +" "+ operator  +" "+ rightStr ;
+        if(operator==null) return "";
         boolean satisfied2 = satisfied;
         if(satisfied == false) {
-            if(str.contains("is not")) {
-                str = str.replace("is not", "is");
+            if(operator.equals("is")) {
+                operator ="is not";
                 satisfied2 = true;
-            }else if(str.contains("is null")) {
-                str = str.replace("is null", "is not null");
+            }else if(operator.equals("is not")) {
+                operator ="is";
                 satisfied2 = true;
-            }else if(str.contains("larger or equal")) {
-                str = str.replace("larger or equal", "smaller than");
+            }else if(operator.equals("is null")) {
+                operator ="is not null";
                 satisfied2 = true;
-            }else if(str.contains("smaller or equal")) {
-                str = str.replace("smaller or equal", "larger than");
+            }else if(operator.equals("larger or equal")) {
+                operator ="smaller than";
                 satisfied2 = true;
-            }else if(str.contains("smaller or equal")) {
-                str = str.replace("smaller or equal", "larger than");
+            }else if(operator.equals("smaller or equal")) {
+                operator ="larger than";
+                satisfied2 = true;
+            }else if(operator.equals("smaller than")) {
+                operator ="larger or equal";
+                satisfied2 = true;
+            }else if(operator.equals("larger than")) {
+                operator ="smaller or equal";
+                satisfied2 = true;
+            }else if(operator.equals("equals") ) {
+                operator ="not equals";
+                satisfied2 = true;
+            }else if(operator.equals("not equals")) {
+                operator ="equals";
+                satisfied2 = true;
+            }else if(operator.equals("startsWith")) {
+                operator ="not startsWith";
+                satisfied2 = true;
+            }else if(operator.equals("endsWith")) {
+                operator ="not endsWith";
+                satisfied2 = true;
+            }else if(operator.equals("not startsWith")) {
+                operator ="startsWith";
+                satisfied2 = true;
+            }else if(operator.equals("not endsWith")) {
+                operator ="endsWith";
                 satisfied2 = true;
             }
         }
-        return str+", which is " +satisfied2;
+        String str = leftStr  +" "+ operator  +" "+ rightStr ;
+        return satisfied2==false? (str+", which is false"): str;
     }
 
     public Unit getUnit() {

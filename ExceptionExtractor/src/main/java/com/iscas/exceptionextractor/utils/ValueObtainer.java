@@ -214,11 +214,11 @@ public class ValueObtainer {
 									resList = contextsValue.getObjs().get(pr.getIndex() + 1);
 								} else {
 									// only primary or string can be analyzed
-									if (isValidType(pr.getType())) {
+//									if (isValidType(pr.getType())) {
 										ParameterSource value = new ParameterSource(method_name, u, pr.getIndex() + 1,
 												useLocationId);
 										Global.v().getAppModel().addUnit2ParameterSource(u, value);
-									}
+//									}
 								}
 							}
 						} else if (jid.getRightOp() instanceof ThisRef) {
