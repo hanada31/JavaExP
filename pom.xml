@@ -10,9 +10,9 @@
 
 
     <packaging>pom</packaging>
-    <modules>		
-		<module>soot-dev</module>
+    <modules>
         <module>ExceptionExtractor</module>
+        <module>soot-dev</module>
     </modules>
 
     <properties>
@@ -99,7 +99,6 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
-					<appendAssemblyId>false</appendAssemblyId>
                 </configuration>
             </plugin>
         </plugins>

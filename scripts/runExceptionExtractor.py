@@ -8,13 +8,13 @@ def executeCmd(cmd):
     os.system(cmd)
 
 if __name__ == '__main__' :
-    jarFile = "target/ExceptionExtractor.jar"
+    jarFile = "ExceptionExtractor.jar"
    
-    os.system("mvn -f pom.xml package  -DskipTests")
-    if os.path.exists("target"+ os.sep +"ExceptionExtractor.jar"):
-        print("Successfully build! generate jar-with-dependencies in folder target/")
-    else:
-        print("Fail to build! Please run \"mvn -f pom.xml package\" to see the detail info.")
+    # os.system("mvn -f pom.xml package  -DskipTests")
+    # if os.path.exists("target"+ os.sep +"ExceptionExtractor.jar"):
+        # print("Successfully build! generate jar-with-dependencies in folder target/")
+    # else:
+        # print("Fail to build! Please run \"mvn -f pom.xml package\" to see the detail info.")
     
     path = sys.argv[1]
     name = sys.argv[2] 
