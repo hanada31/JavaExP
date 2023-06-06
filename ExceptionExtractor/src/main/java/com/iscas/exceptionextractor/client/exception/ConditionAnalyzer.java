@@ -124,6 +124,8 @@ public class ConditionAnalyzer  extends Analyzer {
     void getConditionFromUnit(SootMethod sootMethod, Unit unit, Set<Unit> getCondHistory) {
         if(getCondHistory.contains(unit) || getCondHistory.size()> ConstantUtils.CONDITIONHISTORYSIZE) return;// if defUnit is not a pred of unit
         getCondHistory.add(unit);
+        if(sootMethod.getSignature().contains("<org.apache.commons.io.FilenameUtils: void failIfNullBytePresent(java.lang.String)>"))
+            System.out.println("failIfNullBytePresent "+ controlDependOnPath.size());
         for (ControlDependOnUnit controlDependOnUnit : controlDependOnPath) {
             Unit predUnit = controlDependOnUnit.getUnit();
             boolean satisfied = controlDependOnUnit.isSatisfy();
@@ -135,6 +137,8 @@ public class ConditionAnalyzer  extends Analyzer {
             conditionTrackerInfo.getConditionUnits().add(ifStmt);
 
             if(cond instanceof ConditionExpr){
+                System.out.println("failIfNullBytePresent "+ cond.toString());
+
                 ConditionExpr conditionExpr = (ConditionExpr) cond;
                 ConditionWithValueSet conditionWithValueSet = new ConditionWithValueSet(sootMethod, ifStmt);
                 conditionTrackerInfo.addRefinedConditions(conditionWithValueSet);
@@ -143,7 +147,7 @@ public class ConditionAnalyzer  extends Analyzer {
                 RefinedCondition rf = new RefinedCondition(conditionWithValueSet, conditionExpr.getOp1(),
                         SootUtils.getActualOp(conditionExpr), conditionExpr.getOp2(), predUnit, satisfied);
                 conditionWithValueSet.addRefinedCondition(rf);
-
+                System.out.println("failIfNullBytePresent "+ rf.toString());
 
                 // trace from the direct condition
                 extendRelatedValues(conditionWithValueSet, sootMethod,  predUnit, conditionExpr.getOp1(),
