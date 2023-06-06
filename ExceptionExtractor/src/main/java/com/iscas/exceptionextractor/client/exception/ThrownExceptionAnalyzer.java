@@ -153,6 +153,9 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             //if controlPath is the same, only reserve one
             HashSet controlUnits = pdgUtils.getCDSMap().get(lastUnit);
             List<ControlDependOnUnit> controlPath = PDGUtils.getControlPathFromPDG(controlUnits, path);
+            if(sootMethod.getSignature().contains("<org.apache.commons.io.FilenameUtils: void failIfNullBytePresent(java.lang.String)>"))
+                System.out.println("failIfNullBytePresent "+ controlUnits);
+                System.out.println("failIfNullBytePresent "+ path.size());
             if(!historyPath.contains(PrintUtils.printList(controlPath))) {
                 historyPath.add(PrintUtils.printList(controlPath));
                 if(lastUnit instanceof  ThrowStmt) {
