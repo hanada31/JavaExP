@@ -280,32 +280,40 @@ public class ExceptionInfoClientOutput {
      * printExceptionInfoList
      */
     public static void printExceptionInfoList() {
-        StringBuilder sb = new StringBuilder();
+        Set<String> history = new HashSet<>();
+        StringBuilder finalTxt = new StringBuilder();
         Map<String, List<ExceptionInfo>> map = Global.v().getAppModel().getMethod2ExceptionList();
         for (SootClass sootClass : SootUtils.getApplicationClasses()) {
             for (SootMethod sootMethod : sootClass.getMethods()) {
-                if(!map.containsKey(sootMethod.getSignature())) continue;
-                for (ExceptionInfo exceptionInfo: map.get(sootMethod.getSignature())) {
+                if (!map.containsKey(sootMethod.getSignature())) continue;
+                for (ExceptionInfo exceptionInfo : map.get(sootMethod.getSignature())) {
                     //print condition information
-                    sb.append("\n"+sootMethod.getSignature() + "\n");
-                    sb.append("Type:"+ exceptionInfo.getExceptionName() + "\n");
-                    if(exceptionInfo.getExceptionMsg().length()>0)
-                        sb.append("Message:"+ exceptionInfo.getExceptionMsg() + "\n");
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("\n" + sootMethod.getSignature() + "\n");
+                    sb.append("Type:" + exceptionInfo.getExceptionName() + "\n");
+                    if (exceptionInfo.getExceptionMsg().length() > 0)
+                        sb.append("Message:" + exceptionInfo.getExceptionMsg() + "\n");
                     StringBuilder subStr = new StringBuilder();
                     for (ConditionWithValueSet conditionWithValueSet : exceptionInfo.getConditionTrackerInfo().getRefinedConditions().values()) {
                         if (conditionWithValueSet.toString().length() > 0)
                             subStr.append(conditionWithValueSet + "\n");
                     }
-                    if (subStr.length() ==0 && exceptionInfo.getConditionTrackerInfo().getRelatedVarType() == RelatedVarType.Empty) {
-                        subStr.append("no condition\n");//RefinedCondition:
+                    if (subStr.length() == 0 && exceptionInfo.getConditionTrackerInfo().getRelatedVarType() == RelatedVarType.Empty) {
+                        subStr.append("Direct Throw Without Any Condition\n");//RefinedCondition:
                     }
-                    if (subStr.length() >0){
-                        sb.append("RefinedCondition:\n"+subStr);
+                    if (subStr.length() > 0) {
+                        sb.append("RefinedCondition:\n" + subStr);
+                    }
+
+                    if (!history.contains(sb.toString())) {
+                        history.add(sb.toString());
+                        finalTxt.append(sb);
                     }
                 }
             }
         }
-        if(sb!=null && sb.length()>0)
-            FileUtils.writeText2File(MyConfig.getInstance().getExceptionFilePath() + "exceptionConditions.txt", sb.toString(), false);
+        if(finalTxt!=null && finalTxt.length()>0) {
+            FileUtils.writeText2File(MyConfig.getInstance().getExceptionFilePath() + "exceptionConditions.txt", finalTxt.toString(), false);
+        }
     }
 }

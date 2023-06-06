@@ -20,14 +20,11 @@ public class RefinedCondition implements Cloneable {
     private String refinedConditionInCaller;
 
 
-    private boolean satisfied;
+    private boolean satisfied = true;
 
-    public RefinedCondition() {
-    }
-
-    public RefinedCondition(ConditionWithValueSet conditionWithValueSet, Value leftVar, String operator, Value rightValue, Unit unit) {
+    public RefinedCondition(ConditionWithValueSet conditionWithValueSet, Value leftVar, String operator, Value rightValue, Unit unit, boolean satisfied) {
         this.conditionWithValueSet = conditionWithValueSet;
-        this.satisfied = conditionWithValueSet.getIsSatisfy();
+        this.satisfied = satisfied;
         this.leftVar = leftVar;
         this.leftStr = leftVar == null?"":leftVar.toString();
         this.operator = operator;
@@ -38,7 +35,24 @@ public class RefinedCondition implements Cloneable {
 
     public RefinedCondition(String refinedConditionInCaller) {
         this.refinedConditionInCaller = refinedConditionInCaller;
+        for(String op: IROperator.operators){
+            if(refinedConditionInCaller.contains(" " + op +" ")){
+                String ss[] = refinedConditionInCaller.split(" " + op +" ");
+                if(ss.length == 2){
+                    this.operator = op;
+                    this.leftStr = ss[0];
+                    this.rightStr = ss[1];
+                }
+            }
+        }
+
+
     }
+
+    public RefinedCondition() {
+
+    }
+
     public void changeSatisfied(){
         if(satisfied) satisfied = false;
         else  satisfied = true;
@@ -118,53 +132,56 @@ public class RefinedCondition implements Cloneable {
 
     @Override
     public String toString() {
-        if(refinedConditionInCaller!= null) return refinedConditionInCaller;
+        if(operator==null && refinedConditionInCaller!= null) return refinedConditionInCaller;
         if(operator==null) return "";
-        boolean satisfied2 = satisfied;
         if(satisfied == false) {
-            if(operator.equals("is")) {
-                operator ="is not";
-                satisfied2 = true;
-            }else if(operator.equals("is not")) {
-                operator ="is";
-                satisfied2 = true;
-            }else if(operator.equals("is null")) {
-                operator ="is not null";
-                satisfied2 = true;
-            }else if(operator.equals("larger or equal")) {
-                operator ="smaller than";
-                satisfied2 = true;
-            }else if(operator.equals("smaller or equal")) {
-                operator ="larger than";
-                satisfied2 = true;
-            }else if(operator.equals("smaller than")) {
-                operator ="larger or equal";
-                satisfied2 = true;
-            }else if(operator.equals("larger than")) {
-                operator ="smaller or equal";
-                satisfied2 = true;
-            }else if(operator.equals("equals") ) {
-                operator ="not equals";
-                satisfied2 = true;
-            }else if(operator.equals("not equals")) {
-                operator ="equals";
-                satisfied2 = true;
-            }else if(operator.equals("startsWith")) {
-                operator ="not startsWith";
-                satisfied2 = true;
-            }else if(operator.equals("endsWith")) {
-                operator ="not endsWith";
-                satisfied2 = true;
-            }else if(operator.equals("not startsWith")) {
-                operator ="startsWith";
-                satisfied2 = true;
-            }else if(operator.equals("not endsWith")) {
-                operator ="endsWith";
-                satisfied2 = true;
+            if(operator.equals(IROperator.isOP)) {
+                operator =IROperator.isNotOP;
+                satisfied = true;
+            }else if(operator.equals(IROperator.isNotOP)) {
+                operator =IROperator.isOP;
+                satisfied = true;
+            }else if(operator.equals(IROperator.largerOrEqualOP)) {
+                operator =IROperator.smallerOP;
+                satisfied = true;
+            }else if(operator.equals(IROperator.smallerOrEqualOP)) {
+                operator =IROperator.largerOP;
+                satisfied = true;
+            }else if(operator.equals(IROperator.smallerOP)) {
+                operator =IROperator.largerOrEqualOP;
+                satisfied = true;
+            }else if(operator.equals(IROperator.largerOP)) {
+                operator =IROperator.smallerOrEqualOP;
+                satisfied = true;
+            }else if(operator.equals(IROperator.equalsOp) ) {
+                operator =IROperator.notEqualsOp;
+                satisfied = true;
+            }else if(operator.equals(IROperator.notEqualsOp)) {
+                operator =IROperator.equalsOp;
+                satisfied = true;
+            }else if(operator.equals(IROperator.startsWithOP)) {
+                operator =IROperator.notStartsWithOP;
+                satisfied = true;
+            }else if(operator.equals(IROperator.endsWithOP)) {
+                operator =IROperator.notEndsWithOP;
+                satisfied = true;
+            }else if(operator.equals(IROperator.notStartsWithOP)) {
+                operator =IROperator.startsWithOP;
+                satisfied = true;
+            }else if(operator.equals(IROperator.notEndsWithOP)) {
+                operator =IROperator.endsWithOP;
+                satisfied = true;
+            }
+            else if(operator.equals(IROperator.notContainsOP)) {
+                operator =IROperator.containsOP;
+                satisfied = true;
+            }else if(operator.equals(IROperator.containsOP)) {
+                operator =IROperator.notContainsOP;
+                satisfied = true;
             }
         }
         String str = leftStr  +" "+ operator  +" "+ rightStr ;
-        return satisfied2==false? (str+", which is false"): str;
+        return satisfied?str:str+" returns 0";
     }
 
     public Unit getUnit() {

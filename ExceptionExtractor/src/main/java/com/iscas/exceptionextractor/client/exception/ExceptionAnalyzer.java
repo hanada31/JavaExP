@@ -27,7 +27,8 @@ public class ExceptionAnalyzer extends Analyzer {
 
     boolean filterMethod(SootMethod sootMethod) {
         List<String> mtds = new ArrayList<>();
-        mtds.add("MultipleCall");
+        mtds.add("failIfNullBytePresent");
+//        mtds.add("callee_with_arg");
 
         if(MyConfig.getInstance().getTag()!=null){
             mtds.add(MyConfig.getInstance().getTag());
@@ -53,11 +54,4 @@ public class ExceptionAnalyzer extends Analyzer {
         thrownExceptionAnalyzer.analyze();
 
     }
-
-
-
-
-
-
-
 }

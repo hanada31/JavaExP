@@ -54,7 +54,6 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             long startMS = System.currentTimeMillis();
 
             if(openFilter && filterMethod(sootMethod)) continue;
-            System.out.println(sootMethod.getSignature());
             if (!sootMethod.hasActiveBody()) continue;
             Map<Unit, List<ExceptionInfo>> InvokeStmtSetToCalleeWithException = new HashMap();
             // if callee throw an exception
@@ -94,6 +93,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
                         Map<Integer, Integer> formalPara2ActualPara = SootUtils.getFormalPara2ActualPara(sootMethod,unit);
                         if(formalPara2ActualPara.size()==0) continue;
                         ExceptionInfo exceptionInfoCopy = new ExceptionInfo(sootMethod, unit, exceptionInfo.getExceptionName());
+                        exceptionInfoCopy.setExceptionMsg(exceptionInfo.getExceptionMsg());
                         Map<Unit, ConditionWithValueSet> refinedConditionsOld = exceptionInfo.getConditionTrackerInfo().getRefinedConditions();
                         for (Map.Entry<Unit, ConditionWithValueSet> refinedConditionEntry : refinedConditionsOld.entrySet()) {
                             try {
@@ -101,15 +101,16 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
                                 List<RefinedCondition> toBeAdd = new ArrayList<>();
                                 List<RefinedCondition> toBeDel = new ArrayList<>();
                                 for (Map.Entry<Integer, Integer> idEntry : formalPara2ActualPara.entrySet()) {
+                                    int calleeId = idEntry.getKey()-1;
+                                    int callerId = idEntry.getValue()-1;
                                     for (RefinedCondition refinedCondition : newOne.getRefinedConditions()) {
-                                        int calleeId = idEntry.getKey()-1;
-                                        int callerId = idEntry.getValue()-1;
                                         if (refinedCondition.toString().contains("parameter" + calleeId)) {
                                             String newConditionStr = refinedCondition.toString().replace("parameter" + calleeId, "parameter" + callerId);
                                             RefinedCondition  newCondition = new RefinedCondition(newConditionStr);
                                             newCondition.setSatisfied(refinedCondition.isSatisfied());
                                             toBeAdd.add(newCondition);
-                                            toBeDel.add(refinedCondition);
+                                            if(callerId!=calleeId) // if it is same, only add once for repeat ones
+                                                toBeDel.add(refinedCondition);
                                         }
                                     }
                                 }

@@ -110,7 +110,7 @@ public class ConditionAnalyzer  extends Analyzer {
         for(RefinedCondition temp: refinedConditionList) {
             RefinedCondition newTemp = temp.clone();
             newTemp.changeSatisfied();
-            ConditionWithValueSet conditionWithValueSet = new ConditionWithValueSet(sootMethod, newTemp.getUnit(), newTemp.isSatisfied());
+            ConditionWithValueSet conditionWithValueSet = new ConditionWithValueSet(sootMethod, newTemp.getUnit());
             conditionTrackerInfo.addRefinedConditions(conditionWithValueSet);
             conditionWithValueSet.addRefinedCondition(newTemp);
         }
@@ -126,7 +126,7 @@ public class ConditionAnalyzer  extends Analyzer {
         getCondHistory.add(unit);
         for (ControlDependOnUnit controlDependOnUnit : controlDependOnPath) {
             Unit predUnit = controlDependOnUnit.getUnit();
-            boolean isSatisfy = controlDependOnUnit.isSatisfy();
+            boolean satisfied = controlDependOnUnit.isSatisfy();
             conditionTrackerInfo.getTracedUnits().add(predUnit);
             IfStmt ifStmt = (IfStmt) predUnit;
 
@@ -136,12 +136,12 @@ public class ConditionAnalyzer  extends Analyzer {
 
             if(cond instanceof ConditionExpr){
                 ConditionExpr conditionExpr = (ConditionExpr) cond;
-                ConditionWithValueSet conditionWithValueSet = new ConditionWithValueSet(sootMethod, ifStmt, isSatisfy);
+                ConditionWithValueSet conditionWithValueSet = new ConditionWithValueSet(sootMethod, ifStmt);
                 conditionTrackerInfo.addRefinedConditions(conditionWithValueSet);
                 // add the direct condition
 
                 RefinedCondition rf = new RefinedCondition(conditionWithValueSet, conditionExpr.getOp1(),
-                        SootUtils.getActualOp(conditionExpr), conditionExpr.getOp2(), predUnit);
+                        SootUtils.getActualOp(conditionExpr), conditionExpr.getOp2(), predUnit, satisfied);
                 conditionWithValueSet.addRefinedCondition(rf);
 
 
@@ -348,16 +348,13 @@ public class ConditionAnalyzer  extends Analyzer {
                                        List<Value> valueHistory, Set<Unit> getCondHistory, String location) {
         if(valueHistory.contains(value)) return "";// if defUnit is not a pred of unit
         valueHistory.add(value);
-        if(value.toString().contains("lengthof")){
-            System.out.println();
-        }
         if(value instanceof Local) {
             String methodSig = mSootMethod.getSignature();
             for(Unit defUnit: SootUtils.getDefOfLocal(methodSig,value, unit)) {
                 if (defUnit instanceof JIdentityStmt) {
                     JIdentityStmt identityStmt = (JIdentityStmt) defUnit;
                     //add refinedCondition
-                    addRefinedConditionIntoSet(conditionWithValueSet,value, "denote", identityStmt.getRightOp(), defUnit, location);
+                    addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.denoteOP, identityStmt.getRightOp(), defUnit, location);
                     if (identityStmt.getRightOp() instanceof ParameterRef) {//from parameter
                         conditionTrackerInfo.addRelatedParamValue(identityStmt.getRightOp());
                         int id = ((ParameterRef) identityStmt.getRightOp()).getIndex();
@@ -379,7 +376,7 @@ public class ConditionAnalyzer  extends Analyzer {
                     if (rightOp instanceof Local) {
                         extendRelatedValues(conditionWithValueSet, sootMethod,
                                 defUnit, rightOp, valueHistory, getCondHistory, location);
-                        addRefinedConditionIntoSet(conditionWithValueSet,value, "equals", rightOp, assignStmt, location);
+                        addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.equalsOp, rightOp, assignStmt, location);
                     } else if (rightOp instanceof AbstractInstanceFieldRef) {
                         //if com.iscas.crashtracker.base is from parameter, field is omitted, if com.iscas.crashtracker.base is this, parameter is recorded
                         Value base = ((AbstractInstanceFieldRef) rightOp).getBase();
@@ -395,7 +392,7 @@ public class ConditionAnalyzer  extends Analyzer {
                                         rv, valueHistory, getCondHistory, location);
                             }
                             conditionTrackerInfo.addRelatedFieldValues(field);
-                            addRefinedConditionIntoSet(conditionWithValueSet,value, "denote", rightOp, assignStmt, location);
+                            addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.denoteOP, rightOp, assignStmt, location);
                         }
                     } else if (rightOp instanceof Expr) {
                         if (rightOp instanceof InvokeExpr) {
@@ -407,25 +404,25 @@ public class ConditionAnalyzer  extends Analyzer {
                                 extendRelatedValues(conditionWithValueSet, sootMethod, defUnit,
                                         ((InstanceInvokeExpr) rightOp).getBase(),
                                         valueHistory, getCondHistory,  location);
-                                addRefinedConditionIntoSet(conditionWithValueSet,assignStmt.getLeftOp(), "is invoke", rightOp, assignStmt, location);
+                                addRefinedConditionIntoSet(conditionWithValueSet,assignStmt.getLeftOp(), IROperator.isiInvokeOP, rightOp, assignStmt, location);
                             }else{
-                                addRefinedConditionIntoSet(conditionWithValueSet,value, "equals", rightOp, assignStmt, location);
+                                addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.equalsOp, rightOp, assignStmt, location);
                             }
                         }else if(rightOp instanceof PhiExpr){
                             PhiExpr phiExpr = (PhiExpr) rightOp;
                             for(Value phiValue : phiExpr.getValues()) {
                                 extendRelatedValues(conditionWithValueSet, sootMethod, defUnit,
                                         phiValue, valueHistory, getCondHistory,  location);
-                                addRefinedConditionIntoSet(conditionWithValueSet, value, "phi replace", phiValue, assignStmt, location);
+                                addRefinedConditionIntoSet(conditionWithValueSet, value, IROperator.phiReplaceOp, phiValue, assignStmt, location);
                             }
                         }else if(rightOp instanceof JCastExpr){
                             JCastExpr castExpr = (JCastExpr) rightOp;
                             extendRelatedValues(conditionWithValueSet, sootMethod,
                                     defUnit, rightOp, valueHistory, getCondHistory, location);
                             if(castExpr.getOp() instanceof  Constant)
-                                addRefinedConditionIntoSet(conditionWithValueSet,value, "denote", castExpr.getOp(), assignStmt, location);
+                                addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.denoteOP, castExpr.getOp(), assignStmt, location);
                             else
-                                addRefinedConditionIntoSet(conditionWithValueSet,value, "equals", castExpr.getOp(), assignStmt, location);
+                                addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.equalsOp, castExpr.getOp(), assignStmt, location);
 
                         } else {
                             if (rightOp instanceof AbstractInstanceOfExpr || rightOp instanceof AbstractCastExpr
@@ -444,25 +441,25 @@ public class ConditionAnalyzer  extends Analyzer {
                             } else {
                                 getConditionFromUnit(mSootMethod, defUnit, getCondHistory);
                             }
-                            addRefinedConditionIntoSet(conditionWithValueSet,value, "equals", rightOp, assignStmt, location);
+                            addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.equalsOp, rightOp, assignStmt, location);
                         }
                     } else if (rightOp instanceof StaticFieldRef) {
                         //from static field value
                         conditionTrackerInfo.addRelatedFieldValues(((StaticFieldRef) rightOp).getField());
-                        addRefinedConditionIntoSet(conditionWithValueSet,value, "denote", rightOp, assignStmt, location);
+                        addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.denoteOP, rightOp, assignStmt, location);
                     }else if (rightOp instanceof JArrayRef) {
                         JArrayRef jArrayRef = (JArrayRef) rightOp;
                         extendRelatedValues(conditionWithValueSet, sootMethod, defUnit,
                                 jArrayRef.getBase(), valueHistory, getCondHistory,  location);
-                        addRefinedConditionIntoSet(conditionWithValueSet,value, "equals", rightOp, assignStmt, location);
+                        addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.equalsOp, rightOp, assignStmt, location);
                     }else if (rightOp instanceof JInstanceFieldRef) {
                         JInstanceFieldRef jInstanceFieldRef = (JInstanceFieldRef) rightOp;
                         extendRelatedValues(conditionWithValueSet, sootMethod, defUnit,
                                 jInstanceFieldRef.getBase(), valueHistory, getCondHistory,  location);
-                        addRefinedConditionIntoSet(conditionWithValueSet,value, "denote", rightOp, assignStmt, location);
+                        addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.denoteOP, rightOp, assignStmt, location);
                     }else {
                         getConditionFromUnit(mSootMethod, defUnit, getCondHistory);
-                        addRefinedConditionIntoSet(conditionWithValueSet,value, "equals", rightOp, assignStmt, location);
+                        addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.equalsOp, rightOp, assignStmt, location);
                     }
                 } else {
                     log.info(defUnit.getClass().getName() + "::" + defUnit);
@@ -475,7 +472,7 @@ public class ConditionAnalyzer  extends Analyzer {
 
     private void addRefinedConditionIntoSet(ConditionWithValueSet conditionWithValueSet, Value value, String operator, Value rightOp, Unit unit, String location) {
 //        if(location.equals("right")) return;
-        RefinedCondition refinedCondition = new RefinedCondition(conditionWithValueSet,value, operator, rightOp, unit);
+        RefinedCondition refinedCondition = new RefinedCondition(conditionWithValueSet,value, operator, rightOp, unit, true);
         conditionWithValueSet.addRefinedCondition(refinedCondition);
     }
 
