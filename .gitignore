@@ -38,12 +38,12 @@ replay_pid*
 
 # custom
 .settings/
-/ExceptionExtractor/target/
+/JavaExP/target/
 target
 Files/
 /result/
 /results/
 dependency-reduced-pom.xml
-/ExceptionExtractor/sootOutput/
+/JavaExP/sootOutput/
 /soot-dev/
 /M_framework/
