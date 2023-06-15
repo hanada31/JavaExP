@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.iscas</groupId>
-    <artifactId>exceptionextractor-cli</artifactId>
+    <artifactId>JavaExP-cli</artifactId>
     <version>1.0-SNAPSHOT</version>
 
 
     <packaging>pom</packaging>
     <modules>
-        <module>ExceptionExtractor</module>
+        <module>JavaExP</module>
         <module>soot-dev</module>
     </modules>
 
@@ -24,7 +24,7 @@
     <dependencies>
         <dependency>
             <groupId>com.iscas</groupId>
-            <artifactId>exceptionextractor</artifactId>
+            <artifactId>JavaExP</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
@@ -68,7 +68,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.iscas.exceptionextractor.Main</mainClass>
+                            <mainClass>com.iscas.JavaExP.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -91,7 +91,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.iscas.exceptionextractor.Main</mainClass>
+                            <mainClass>com.iscas.JavaExP.Main</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
@@ -102,6 +102,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>ExceptionExtractor</finalName>
+        <finalName>JavaExP</finalName>
     </build>
 </project>
