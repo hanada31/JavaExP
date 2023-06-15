@@ -302,7 +302,7 @@ public class ExceptionInfoClientOutput {
                         subStr.append("Direct Throw Without Any Condition\n");//RefinedCondition:
                     }
                     if (subStr.length() > 0) {
-                        sb.append("RefinedCondition:\n" + subStr);
+                        sb.append("ExceptionPreConditions:\n" + subStr);
                     }
 
                     if (!history.contains(sb.toString())) {

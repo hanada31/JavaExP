@@ -40,10 +40,8 @@ replay_pid*
 .settings/
 /JavaExP/target/
 target
-Files/
-/result/
 /results/
 dependency-reduced-pom.xml
 /JavaExP/sootOutput/
 /soot-dev/
-/M_framework/
+/Benchmark/
