@@ -153,7 +153,11 @@ public class ConditionWithValueSet implements  Cloneable {
 						for(Value value: ((InvokeExpr)temp.getRightValue()).getArgs()){
 							if(value.toString().equals(refinedCondition.getLeftStr())){
 								InvokeExpr rightInvoke = (InvokeExpr) (temp.getRightValue()).clone();
-								rightInvoke.setArg(i, refinedCondition.getRightValue());
+								if(refinedCondition.getRightValue()!=null)
+									rightInvoke.setArg(i, refinedCondition.getRightValue());
+								else{
+									//todo
+								}
 								RefinedCondition refinedCondition2 = new RefinedCondition(this,
 										temp.getLeftVar(), temp.getOperator() , rightInvoke, temp.getUnit(), temp.isSatisfied());
 								refinedCondition2.setLeftStr(temp.getLeftStr());
@@ -385,12 +389,12 @@ public class ConditionWithValueSet implements  Cloneable {
 				for (RefinedCondition temp : list) {
 					if (temp == refinedCondition) continue;
 					if (temp.getRightStr().equals(refinedCondition.getLeftStr())) {
-						temp.setRightStr(refinedCondition.getRightStr());
 						temp.setRightValue(refinedCondition.getRightValue());
+						temp.setRightStr(refinedCondition.getRightStr());
 					}
 					if (temp.getLeftStr().equals(refinedCondition.getLeftStr())) {
-						temp.setLeftStr(refinedCondition.getRightStr());
 						temp.setLeftVar(refinedCondition.getRightValue());
+						temp.setLeftStr(refinedCondition.getRightStr());
 					}
 				}
 			}

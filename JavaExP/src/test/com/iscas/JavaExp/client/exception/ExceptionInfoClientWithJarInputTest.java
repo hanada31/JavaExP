@@ -1,4 +1,4 @@
-package com.iscas.JavaExP.client.exception;
+package com.iscas.JavaExp.client.exception;
 
 import com.iscas.JavaExP.Main;
 import com.iscas.JavaExP.base.MyConfig;

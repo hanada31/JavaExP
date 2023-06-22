@@ -27,7 +27,7 @@ public class ExceptionAnalyzer extends Analyzer {
 
     boolean filterMethod(SootMethod sootMethod) {
         List<String> mtds = new ArrayList<>();
-        mtds.add("<org.apache.commons.io.IOUtils: long skip(java.io.InputStream,long)>");
+        mtds.add("<org.apache.commons.io.IOUtils: byte[] toByteArray(java.io.InputStream,long)>");
 //        mtds.add("callee_with_arg");
 
         if(MyConfig.getInstance().getTag()!=null){
