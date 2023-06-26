@@ -72,10 +72,11 @@ public class ConstantUtils {
     public static final int LARGECALLERSET = 10 ;
     public static final int SIGNLARCALLERDEPTH = 5;
     public static final int CFGPATHNUMBER = 100;
-	public static final int CFGPATHNODELEN = 200;
+	public static final int CFGPATHNODELEN = 100;
+    public static final long SINGLEMETHODTIME = 20* 1000; //120s
 
 
-	public static String CGANALYSISPREFIX = "android";
+    public static String CGANALYSISPREFIX = "android";
     public static String FRAMEWORKPREFIX = "android";
 
 	public static final int MANIFESTTIMEOUT =2 ;

@@ -153,9 +153,9 @@ public class ConditionWithValueSet implements  Cloneable {
 						for(Value value: ((InvokeExpr)temp.getRightValue()).getArgs()){
 							if(value.toString().equals(refinedCondition.getLeftStr())){
 								InvokeExpr rightInvoke = (InvokeExpr) (temp.getRightValue()).clone();
-								if(refinedCondition.getRightValue()!=null)
+								try {
 									rightInvoke.setArg(i, refinedCondition.getRightValue());
-								else{
+								}catch (Exception e){
 									//todo
 								}
 								RefinedCondition refinedCondition2 = new RefinedCondition(this,

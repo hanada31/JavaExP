@@ -7,8 +7,6 @@ import soot.options.Options;
 
 import java.io.File;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * @Author hanada
  * @Date 2022/9/8 14:04

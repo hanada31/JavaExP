@@ -298,14 +298,14 @@ public class ValueObtainer {
 	 */
 	private NestableObj stringApisOperation(Unit u, int depth) {
 		NestableObj resVal = new NestableObj(u.toString());
-		if (u.toString().contains("toString")) {
+		if (u.toString().contains("toString(")) {
 			JAssignStmt jas1 = (JAssignStmt) u;
 			Value invoke = jas1.getRightOp();
 			if (invoke instanceof AbstractInstanceInvokeExpr || invoke instanceof JStaticInvokeExpr) {
 				Value strVal = getValueFromInvokeExpr(invoke);
 				resVal = getValueofVar(strVal, u, depth + 1);
 			}
-		} else if (u.toString().contains("append") || u.toString().contains("concat")) {
+		} else if (u.toString().contains("append(") || u.toString().contains("concat(")) {
 			JAssignStmt jas1 = (JAssignStmt) u;
 			if (jas1.getRightOp() instanceof AbstractInstanceInvokeExpr) {
 				AbstractInstanceInvokeExpr invokeStmt = (AbstractInstanceInvokeExpr) jas1.getRightOp();
@@ -324,65 +324,67 @@ public class ValueObtainer {
 					}
 				}
 			}
-		} else if (u.toString().contains("valueOf") || u.toString().contains("copyValueOf")) {
+		} else if (u.toString().contains("valueOf(") || u.toString().contains("copyValueOf(")) {
 			InvokeExpr InvokeExpr = SootUtils.getInvokeExp(u);
 			if (InvokeExpr.getArgCount() > 0) {
 				Value strVal = InvokeExpr.getArg(0);
 				for (String val: getValueofVar(strVal, u, depth + 1).getValues())
 					resVal.addValue(val);
 			}
-		} else if (u.toString().contains("substring")) {
+		} else if (u.toString().contains("substring(")) {
 			JAssignStmt jas1 = (JAssignStmt) u;
-			AbstractInstanceInvokeExpr invokeStmt = (AbstractInstanceInvokeExpr) jas1.getRightOp();
-			Value strVal = invokeStmt.getBase();
-			int b = 0;
-			if (invokeStmt.getArgCount() > 0) {
-				NestableObj obj = getValueofVar(invokeStmt.getArg(0), u, depth + 1);
-				if (obj.getValues().size() > 0) {
-					String str_b = obj.getValues().get(0);
-					if (StringUtils.isInteger(str_b))
-						try {
-							b = Integer.parseInt(str_b);
-						} catch (Exception NumberFormatException) {
-							NumberFormatException.printStackTrace();
-						}
-					if (b < 0)
-						b = 0;
+			if(jas1.getRightOp() instanceof AbstractInstanceInvokeExpr ) {
+				AbstractInstanceInvokeExpr invokeStmt = (AbstractInstanceInvokeExpr) jas1.getRightOp();
+				Value strVal = invokeStmt.getBase();
+				int b = 0;
+				if (invokeStmt.getArgCount() > 0) {
+					NestableObj obj = getValueofVar(invokeStmt.getArg(0), u, depth + 1);
+					if (obj.getValues().size() > 0) {
+						String str_b = obj.getValues().get(0);
+						if (StringUtils.isInteger(str_b))
+							try {
+								b = Integer.parseInt(str_b);
+							} catch (Exception NumberFormatException) {
+								NumberFormatException.printStackTrace();
+							}
+						if (b < 0)
+							b = 0;
+					}
 				}
-			}
-			int e = 0;
-			if (invokeStmt.getArgCount() > 1) {
-				NestableObj obj = getValueofVar(invokeStmt.getArg(1), u, depth + 1);
-				if (obj.getValues().size() > 0) {
-					String str_e = obj.getValues().get(0);
-					if (StringUtils.isInteger(str_e))
-						try {
-							e = Integer.parseInt(str_e);
-						} catch (Exception NumberFormatException) {
-							NumberFormatException.printStackTrace();
-						}
+				int e = 0;
+				if (invokeStmt.getArgCount() > 1) {
+					NestableObj obj = getValueofVar(invokeStmt.getArg(1), u, depth + 1);
+					if (obj.getValues().size() > 0) {
+						String str_e = obj.getValues().get(0);
+						if (StringUtils.isInteger(str_e))
+							try {
+								e = Integer.parseInt(str_e);
+							} catch (Exception NumberFormatException) {
+								NumberFormatException.printStackTrace();
+							}
 
-					if (e < 0)
-						e = 0;
+						if (e < 0)
+							e = 0;
+					}
+				}
+				for (String old : getValueofVar(strVal, u, depth + 1).getValues()) {
+					if (old.length() == 0)
+						continue;
+					if (invokeStmt.getArgCount() == 1) {
+						if (b >= old.length())
+							b = old.length() - 1;
+						resVal.addValue(old.substring(b));
+					}
+					if (invokeStmt.getArgCount() == 2) {
+						if (b > old.length())
+							b = old.length();
+						if (e == 0 || e > old.length())
+							e = old.length();
+						resVal.addValue(old.substring(b, e));
+					}
 				}
 			}
-			for (String old : getValueofVar(strVal, u, depth + 1).getValues()) {
-				if (old.length() == 0)
-					continue;
-				if (invokeStmt.getArgCount() == 1) {
-					if (b >= old.length())
-						b = old.length() - 1;
-					resVal.addValue(old.substring(b));
-				}
-				if (invokeStmt.getArgCount() == 2) {
-					if (b > old.length())
-						b = old.length();
-					if (e == 0 || e > old.length())
-						e = old.length();
-					resVal.addValue(old.substring(b, e));
-				}
-			}
-		} else if (u.toString().contains("toLowerCase")) {
+		} else if (u.toString().contains("toLowerCase(")) {
 			JAssignStmt jas1 = (JAssignStmt) u;
 			Value invoke = jas1.getRightOp();
 			if (invoke instanceof AbstractInstanceInvokeExpr || invoke instanceof JStaticInvokeExpr) {
@@ -390,7 +392,7 @@ public class ValueObtainer {
 				for (String old : getValueofVar(strVal, u, depth + 1).getValues())
 					resVal.addValue(old.toLowerCase());
 			}
-		} else if (u.toString().contains("toUpperCase")) {
+		} else if (u.toString().contains("toUpperCase(")) {
 			JAssignStmt jas1 = (JAssignStmt) u;
 			Value invoke = jas1.getRightOp();
 			if (invoke instanceof AbstractInstanceInvokeExpr || invoke instanceof JStaticInvokeExpr) {
@@ -398,7 +400,7 @@ public class ValueObtainer {
 				for (String old : getValueofVar(strVal, u, depth + 1).getValues())
 					resVal.addValue(old.toUpperCase());
 			}
-		} else if (u.toString().contains("trim")) {
+		} else if (u.toString().contains("trim(")) {
 			JAssignStmt jas1 = (JAssignStmt) u;
 			Value invoke = jas1.getRightOp();
 			if (invoke instanceof AbstractInstanceInvokeExpr || invoke instanceof JStaticInvokeExpr) {

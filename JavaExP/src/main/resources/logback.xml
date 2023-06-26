@@ -11,4 +11,5 @@
     <logger name="soot.dexpler.DexBody" level="INFO" />
     <logger name="soot.jimple.infoflow.android.resources.ARSCFileParser" level="OFF"/>
     <logger name="soot.PackManager" level="INFO" />
+	<logger name="soot.PackManager" level="INFO" />
 </configuration>

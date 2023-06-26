@@ -13,7 +13,7 @@ import java.io.File;
  * @Version 1.0
  */
 @Slf4j
-public class ExceptionInfoClientTest {
+public class ExceptionInfoClientWithJarInputTest {
 
     @org.junit.Test
     public void testConfig() {
@@ -28,12 +28,11 @@ public class ExceptionInfoClientTest {
         String client = "ExceptionInfoClient";
         String path;
 
-        path = "..\\M_framework\\";
+        path = "..\\M_framework\\apk\\";
 //        path = "D:\\SoftwareData\\dataset\\android-framework\\classes\\";
-        String targetName = "testcase1.0";
-        targetName = "commons-io-2.6-jar";
+        String autName = "iflyrectj-6.0.3682-30010009";
 
-        MyConfig.getInstance().setAppName(targetName);
+        MyConfig.getInstance().setAppName(autName+".apk");
         MyConfig.getInstance().setAppPath(path + File.separator);
         MyConfig.getInstance().setClient(client);
         MyConfig.getInstance().setResultFolder("..\\results" + File.separator);
@@ -41,8 +40,11 @@ public class ExceptionInfoClientTest {
         MyConfig.getInstance().setAndroidJar("E:\\AndroidSDK\\android-sdk-windows-new\\platforms");
         MyConfig.getInstance().setSrc_prec(Options.src_prec_only_class);
         MyConfig.getInstance().setFileSuffixLength(0);
-        String targetFolder = MyConfig.getInstance().getResultFolder() +File.separator+targetName+File.separator;
-        MyConfig.getInstance().setExceptionFilePath(targetFolder+"exceptionInfo"+File.separator);
+        String autFolder = MyConfig.getInstance().getResultFolder() +File.separator+autName+File.separator;
+        MyConfig.getInstance().setExceptionFilePath(autFolder+"exceptionInfo"+File.separator);
+        MyConfig.getInstance().setPermissionFilePath(autFolder+"Permission"+File.separator+"permission.txt");
+        MyConfig.getInstance().setAndroidCGFilePath(autFolder+"CallGraphInfo"+File.separator+"cg.txt");
         MyConfig.getInstance().setJimple(false);
+//        MyConfig.getInstance().setTag("com.ifly");
     }
 }

@@ -18,9 +18,9 @@ public class CallGraphofJavaClient extends BaseClient {
 	@Override
 	protected void clientAnalyze() {
 		log.info("Start analyze with CallGraphClient.");
-		CallGraph cg = CallGraphBuilder.getCallGraph();
 		CgModify cgModify = new CgModify();
 		cgModify.analyze();
+		CallGraph cg = CallGraphBuilder.getCallGraph();
 		Global.v().getAppModel().setCg(cg);
 		log.info("Call Graph has " + cg.size() + " edges.");
 		log.info("Successfully analyze with CallGraphClient.");

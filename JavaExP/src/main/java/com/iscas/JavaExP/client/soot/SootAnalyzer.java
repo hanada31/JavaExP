@@ -44,6 +44,7 @@ public class SootAnalyzer extends Analyzer {
 	 * initialize soot
 	 */
 	public static void sootInit() {
+		log.info("sootInit start...");
 		soot.G.reset();
 		if(Global.v().getAppModel().getAppPath().endsWith(".apk") ){
 			Options.v().set_android_jars(MyConfig.getInstance().getAndroidJar());
@@ -75,6 +76,7 @@ public class SootAnalyzer extends Analyzer {
 	 * add transforms for analyzing
 	 */
 	private void sootTransform() {
+		log.info("sootTransform start...");
 		String pack = "jtp";
 		if (!MyConfig.getInstance().isJimple())
 			pack = "stp";
@@ -91,7 +93,9 @@ public class SootAnalyzer extends Analyzer {
 		soot.Main.v().autoSetOptions();
 		Scene.v().loadNecessaryClasses();
 		Scene.v().loadBasicClasses();
+		log.info("runPacks start...");
 		PackManager.v().runPacks();
+		log.info("runPacks end...");
 	}
 
 	/**

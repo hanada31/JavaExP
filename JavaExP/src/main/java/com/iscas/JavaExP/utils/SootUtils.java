@@ -281,14 +281,14 @@ public class SootUtils {
 	}
 
 	private static void addExcludeList(ArrayList<String> excludeList) {
-		excludeList.add("<android.");
-		excludeList.add("<androidx.");
-		excludeList.add("<kotlin.");
-		excludeList.add("<com.google.");
+//		excludeList.add("<android.");
+//		excludeList.add("<androidx.");
+//		excludeList.add("<kotlin.");
+//		excludeList.add("<com.google.");
+//		excludeList.add("<java.");
+//		excludeList.add("<javax.");
 		excludeList.add("<soot.");
 		excludeList.add("<junit.");
-		excludeList.add("<java.");
-		excludeList.add("<javax.");
 		excludeList.add("<sun.");
 		excludeList.add("<org.apache.");
 		excludeList.add("<org.eclipse.");

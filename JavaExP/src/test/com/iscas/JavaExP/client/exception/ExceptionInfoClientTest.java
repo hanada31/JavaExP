@@ -1,4 +1,4 @@
-package com.iscas.JavaExp.client.exception;
+package com.iscas.JavaExP.client.exception;
 
 import com.iscas.JavaExP.Main;
 import com.iscas.JavaExP.base.MyConfig;
@@ -13,7 +13,7 @@ import java.io.File;
  * @Version 1.0
  */
 @Slf4j
-public class ExceptionInfoClientWithJarInputTest {
+public class ExceptionInfoClientTest {
 
     @org.junit.Test
     public void testConfig() {
@@ -28,23 +28,21 @@ public class ExceptionInfoClientWithJarInputTest {
         String client = "ExceptionInfoClient";
         String path;
 
-        path = "..\\M_framework\\apk\\";
-//        path = "D:\\SoftwareData\\dataset\\android-framework\\classes\\";
-        String autName = "iflyrectj-6.0.3682-30010009";
+        path = "..\\Benchmark\\";
+//        path = "D:\\SoftwareData\\dataset\\android-framework\\classes";
+        String targetName = "jdk1.8";
+//        targetName = "testcase1.0";
 
-        MyConfig.getInstance().setAppName(autName+".apk");
+        MyConfig.getInstance().setAppName(targetName);
         MyConfig.getInstance().setAppPath(path + File.separator);
         MyConfig.getInstance().setClient(client);
         MyConfig.getInstance().setResultFolder("..\\results" + File.separator);
-        MyConfig.getInstance().setTimeLimit(100);
-        MyConfig.getInstance().setAndroidJar("E:\\AndroidSDK\\android-sdk-windows-new\\platforms");
+        MyConfig.getInstance().setTimeLimit(300);
+//        MyConfig.getInstance().setAndroidJar("E:\\AndroidSDK\\android-sdk-windows-new\\platforms");
         MyConfig.getInstance().setSrc_prec(Options.src_prec_only_class);
         MyConfig.getInstance().setFileSuffixLength(0);
-        String autFolder = MyConfig.getInstance().getResultFolder() +File.separator+autName+File.separator;
-        MyConfig.getInstance().setExceptionFilePath(autFolder+"exceptionInfo"+File.separator);
-        MyConfig.getInstance().setPermissionFilePath(autFolder+"Permission"+File.separator+"permission.txt");
-        MyConfig.getInstance().setAndroidCGFilePath(autFolder+"CallGraphInfo"+File.separator+"cg.txt");
+        String targetFolder = MyConfig.getInstance().getResultFolder() +File.separator+targetName+File.separator;
+        MyConfig.getInstance().setExceptionFilePath(targetFolder+"exceptionInfo"+File.separator);
         MyConfig.getInstance().setJimple(false);
-//        MyConfig.getInstance().setTag("com.ifly");
     }
 }

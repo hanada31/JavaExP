@@ -2,7 +2,7 @@ package com.iscas.JavaExP;
 
 import com.iscas.JavaExP.base.MyConfig;
 import com.iscas.JavaExP.client.BaseClient;
-import com.iscas.JavaExP.client.cg.cgApk.CallGraphofApkClient;
+import com.iscas.JavaExP.client.cg.cgJava.CallGraphofJavaClient;
 import com.iscas.JavaExP.client.exception.ExceptionInfoClient;
 import com.iscas.JavaExP.client.manifest.ManifestClient;
 import com.iscas.JavaExP.client.soot.IROutputClient;
@@ -85,7 +85,7 @@ public class Main {
 				client = new ManifestClient();
 				break;
 			case "CallGraphClient":
-				client = new CallGraphofApkClient();
+				client = new CallGraphofJavaClient();
 				break;
 			case "ExceptionInfoClient":
 			default:

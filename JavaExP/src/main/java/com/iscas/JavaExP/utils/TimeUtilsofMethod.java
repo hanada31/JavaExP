@@ -21,7 +21,6 @@ public class TimeUtilsofMethod {
 				setMethodTimeout(true);
 				log.info("Skip current method due to timeout of 1 minutes!");
 			}
-			// }, MyConfig.getInstance().getTimeLimit() * 5 *1000 );
 		}, MyConfig.getInstance().getTimeLimit() * 1000);
 	}
 

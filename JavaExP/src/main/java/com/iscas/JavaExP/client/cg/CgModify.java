@@ -52,32 +52,18 @@ public class CgModify extends Analyzer {
 		log.info("Call Graph has " + appModel.getCg().size() + " edges.");
 	}
 
-	/**
-	 * addTopoForSupplyMulti
-	 */
-	private void addTopoForSupplyMulti() {
-		List<SootMethod> subTopo = new ArrayList<SootMethod>();
-		appModel.getTopoMethodQueueSet().add(subTopo);
-		for (SootClass sc : Scene.v().getApplicationClasses()) {
-			for (SootMethod sm : sc.getMethods()) {
-				if (SootUtils.hasSootActiveBody(sm) == false)
-					continue;
-				if (!appModel.getTopoMethodQueue().contains(sm)) {
-					appModel.getTopoMethodQueue().add(0, sm);
-					subTopo.add(0, sm);
-				}
-			}
-		}
-	}
 
 	/**
 	 * addTopoForSupplyMulti
 	 */
 	private void addTopoForSupplySingle() {
 		if (appModel.getTopoMethodQueueSet().size() == 0)
-			appModel.getTopoMethodQueueSet().add(new ArrayList<SootMethod>());
+			appModel.getTopoMethodQueueSet().add(new ArrayList<>());
+		List<SootClass> classes = new ArrayList<>(Scene.v().getApplicationClasses());
+		if(classes.size()==0)
+			classes = new ArrayList<>(Scene.v().getClasses());
 		for (List<SootMethod> subTopo : appModel.getTopoMethodQueueSet()) {
-			for (SootClass sc : Scene.v().getApplicationClasses()) {
+			for (SootClass sc : classes) {
 				for (SootMethod sm : sc.getMethods()) {
 					if (SootUtils.hasSootActiveBody(sm) == false)
 						continue;

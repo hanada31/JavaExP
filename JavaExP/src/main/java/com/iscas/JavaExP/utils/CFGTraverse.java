@@ -53,13 +53,17 @@ public class CFGTraverse {
 
     }
 
-    public List<List<Unit>> traverseAllPathsEndWithThrowAndInvoke(Set invokeSet) {
+    public List<List<Unit>> traverseAllPathsEndWithThrowAndInvoke(Set invokeSet, long startMS) {
         Stack<PathNode> stack = new Stack<>(); // 用于存储路径节点的栈
         for (Unit u : cfg.getHeads()) {
             stack.push(new PathNode(u)); // 初始化根节点
         }
 
         while (!stack.isEmpty()) {
+            if(System.currentTimeMillis() - startMS > ConstantUtils.SINGLEMETHODTIME) {
+                log.info("Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ " +sootMethod.getSignature() );
+                break;
+            }
             if(allPaths.size()> ConstantUtils.CFGPATHNUMBER) return allPaths;
             PathNode node = stack.pop();
             Unit u = node.getCurrentUnit();

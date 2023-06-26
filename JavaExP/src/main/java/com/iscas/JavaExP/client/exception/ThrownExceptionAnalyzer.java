@@ -64,11 +64,14 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
         log.info("There are totally {} methods in TopoMethodQueue", totalCnt);
         int cnt = 0;
         long totalTime = 0;
+        long lastTotalTime = -1;
         for (SootMethod sootMethod : Global.v().getAppModel().getTopoMethodQueue()) {
             cnt++;
-            if (cnt % 200 == 0)
+            if (cnt % 200 == 0) {
                 log.info(String.format("This is the method #%d/%d, avg time per method: %.2fms",
-                        cnt, totalCnt, (totalTime / ((double) cnt))));
+                        cnt, totalCnt, (totalTime-lastTotalTime) / 200.0));
+                lastTotalTime = totalTime;
+            }
             long startMS = System.currentTimeMillis();
 
             if(openFilter && filterMethod(sootMethod)) continue;
@@ -76,9 +79,9 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             Map<Unit, List<ExceptionInfo>> InvokeStmtSetToCalleeWithException = new HashMap();
             // if callee throw an exception
             if(isInterProcedure)
-                InvokeStmtSetToCalleeWithException = getCalleeExceptionOfAll(sootMethod);
+                InvokeStmtSetToCalleeWithException = getCalleeExceptionOfAll(sootMethod, startMS);
             //analyze the method itself and combine the callee analysis
-            extractExceptionInfoOfMethod(sootMethod, InvokeStmtSetToCalleeWithException);
+            extractExceptionInfoOfMethod(sootMethod, InvokeStmtSetToCalleeWithException, startMS);
 
             if (MyConfig.getInstance().isStopFlag()) return;
             totalTime += (System.currentTimeMillis() - startMS);
@@ -86,10 +89,13 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
     }
 
 
-    private Map<Unit, List<ExceptionInfo>> getCalleeExceptionOfAll(SootMethod sootMethod) {
+    private Map<Unit, List<ExceptionInfo>> getCalleeExceptionOfAll(SootMethod sootMethod, long startMS) {
         Map<Unit, List<ExceptionInfo>> InvokeStmtSetToCalleeWithException = new HashMap();
-
         for(Unit unit : sootMethod.getActiveBody().getUnits()){
+//            if(System.currentTimeMillis() - startMS > ConstantUtils.SINGLEMETHODTIME) {
+//                log.info("Timeout while executing getCalleeExceptionOfAll @ " +sootMethod.getSignature() );
+//                continue;
+//            }
             InvokeExpr invokeExpr = SootUtils.getInvokeExp(unit);
             //for the callee
             if(invokeExpr !=null){
@@ -157,10 +163,9 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
      * @param sootMethod
      * @param invokeStmtSetToCalleeWithException
      */
-    private void extractExceptionInfoOfMethod(SootMethod sootMethod, Map<Unit, List<ExceptionInfo>> invokeStmtSetToCalleeWithException) {
+    private void extractExceptionInfoOfMethod(SootMethod sootMethod, Map<Unit, List<ExceptionInfo>> invokeStmtSetToCalleeWithException, long startMS) {
         HashSet<String> historyPath = new HashSet<>();
         List<List<Unit>> allPaths = getThrowAndInvokeEndPaths(sootMethod, invokeStmtSetToCalleeWithException.keySet());
-
         PDGUtils pdgUtils = new PDGUtils(sootMethod, new ExceptionalUnitGraph(sootMethod.getActiveBody()));
         pdgUtils.analyzeThrowAndInvokeControlDependency();
 
@@ -328,7 +333,8 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
 
     private List<List<Unit>> getThrowAndInvokeEndPaths(SootMethod sootMethod, Set invokeSet) {
         CFGTraverse cfgTraverse = new CFGTraverse(sootMethod);
-        cfgTraverse.traverseAllPathsEndWithThrowAndInvoke(invokeSet);
+        long startMS = System.currentTimeMillis();
+        cfgTraverse.traverseAllPathsEndWithThrowAndInvoke(invokeSet, startMS);
         return  cfgTraverse.getAllPaths();
     }
 
