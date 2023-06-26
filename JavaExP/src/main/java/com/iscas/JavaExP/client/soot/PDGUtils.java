@@ -1,6 +1,8 @@
-package com.iscas.JavaExP.utils;
+package com.iscas.JavaExP.client.soot;
 
 import com.iscas.JavaExP.model.analyzeModel.ControlDependOnUnit;
+import com.iscas.JavaExP.utils.PrintUtils;
+import com.iscas.JavaExP.utils.SootUtils;
 import soot.SootMethod;
 import soot.Unit;
 import soot.jimple.IfStmt;
@@ -9,7 +11,6 @@ import soot.jimple.TableSwitchStmt;
 import soot.jimple.ThrowStmt;
 import soot.toolkits.graph.Block;
 import soot.toolkits.graph.UnitGraph;
-import soot.toolkits.graph.pdg.HashMutablePDG;
 import soot.toolkits.graph.pdg.IRegion;
 import soot.toolkits.graph.pdg.PDGNode;
 import soot.toolkits.graph.pdg.PDGRegion;
@@ -22,7 +23,7 @@ import java.util.*;
  * @Date 2023/4/23 10:51
  * @Version 1.0
  */
-public class PDGUtils extends HashMutablePDG {
+public class PDGUtils extends MyHashMutablePDG {
     SootMethod sootMethod;
     Map<Unit, Block> unitToBlock;
     UnitGraph cfg;
@@ -78,7 +79,7 @@ public class PDGUtils extends HashMutablePDG {
 
     public void analyzeControlDependency(){
         /* first step: get direct control dependency information */
-        HashMutablePDG pdg = new HashMutablePDG(cfg);
+        MyHashMutablePDG pdg = new MyHashMutablePDG(cfg);
         for(Iterator<PDGNode> it = pdg.iterator(); it.hasNext();){
             PDGNode controlNode = it.next();
             if(controlNode.getType() == PDGNode.Type.CFGNODE){
@@ -110,7 +111,7 @@ public class PDGUtils extends HashMutablePDG {
 
     public void analyzeThrowControlDependency(){
         /* first step: get direct control dependency information */
-        HashMutablePDG pdg = new HashMutablePDG(cfg);
+        MyHashMutablePDG pdg = new MyHashMutablePDG(cfg);
         for(Iterator<PDGNode> it = pdg.iterator(); it.hasNext();){
             PDGNode controlNode = it.next();
             if(controlNode.getType() == PDGNode.Type.CFGNODE){
@@ -144,7 +145,7 @@ public class PDGUtils extends HashMutablePDG {
 
     public void analyzeThrowAndInvokeControlDependency(){
         /* first step: get direct control dependency information */
-        HashMutablePDG pdg = new HashMutablePDG(cfg);
+        MyHashMutablePDG pdg = new MyHashMutablePDG(cfg);
         for(Iterator<PDGNode> it = pdg.iterator(); it.hasNext();){
             PDGNode controlNode = it.next();
             if(controlNode.getType() == PDGNode.Type.CFGNODE){
