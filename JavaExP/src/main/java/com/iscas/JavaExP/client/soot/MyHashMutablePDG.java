@@ -25,7 +25,7 @@ public class MyHashMutablePDG extends HashMutablePDG {
 
         List<Region> regions2process = new LinkedList<Region>();
         Region topLevelRegion = this.m_regionAnalysis.getTopLevelRegion();
-        int m_strongRegionStartID = m_weakRegions.size();
+        this.m_strongRegionStartID = m_weakRegions.size();
 
         // This becomes the top-level region (or ENTRY region node)
         PDGNode pdgnode = new PDGNode(topLevelRegion, PDGNode.Type.REGION);
