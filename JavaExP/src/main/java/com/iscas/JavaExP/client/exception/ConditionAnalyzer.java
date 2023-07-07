@@ -382,7 +382,6 @@ public class ConditionAnalyzer  extends Analyzer {
                         String defType = extendRelatedValues(conditionWithValueSet, sootMethod,
                                 defUnit, base, valueHistory, getCondHistory, location);
                         //if the this variable is assigned from parameter, it is not field related.
-                        if(defType.equals("ThisRef")){
                             SootField field = ((AbstractInstanceFieldRef) rightOp).getField();
                             Value baseF = ((AbstractInstanceFieldRef) rightOp).getBase();
                             List<Value> rightValues = SootUtils.getFiledValueAssigns(mSootMethod, mUnit,baseF, field);
@@ -390,9 +389,11 @@ public class ConditionAnalyzer  extends Analyzer {
                                 extendRelatedValues(conditionWithValueSet, sootMethod, defUnit,
                                         rv, valueHistory, getCondHistory, location);
                             }
-                            conditionTrackerInfo.addRelatedFieldValues(field);
+                            if(defType.equals("ThisRef"))
+                                conditionTrackerInfo.addRelatedFieldValues(field);
+                            else
+                                conditionTrackerInfo.addRelatedParamValue(((AbstractInstanceFieldRef) rightOp).getBase());
                             addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.denoteOP, rightOp, assignStmt, location);
-                        }
                     } else if (rightOp instanceof Expr) {
                         if (rightOp instanceof InvokeExpr) {
                             InvokeExpr invokeExpr = SootUtils.getInvokeExp(defUnit);
@@ -416,13 +417,13 @@ public class ConditionAnalyzer  extends Analyzer {
                             }
                         }else if(rightOp instanceof JCastExpr){
                             JCastExpr castExpr = (JCastExpr) rightOp;
-                            extendRelatedValues(conditionWithValueSet, sootMethod,
-                                    defUnit, rightOp, valueHistory, getCondHistory, location);
                             if(castExpr.getOp() instanceof  Constant)
                                 addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.denoteOP, castExpr.getOp(), assignStmt, location);
-                            else
-                                addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.equalsOp, castExpr.getOp(), assignStmt, location);
-
+                            else {
+                                addRefinedConditionIntoSet(conditionWithValueSet, value, IROperator.equalsOp, castExpr.getOp(), assignStmt, location);
+                                extendRelatedValues(conditionWithValueSet, sootMethod,
+                                        defUnit, castExpr.getOp(), valueHistory, getCondHistory, location);
+                            }
                         } else {
                             if (rightOp instanceof AbstractInstanceOfExpr || rightOp instanceof AbstractCastExpr
                                     || rightOp instanceof AbstractBinopExpr || rightOp instanceof AbstractUnopExpr) {

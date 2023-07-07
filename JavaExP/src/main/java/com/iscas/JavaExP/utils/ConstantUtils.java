@@ -71,8 +71,8 @@ public class ConstantUtils {
 	public static final String onOptionsItemSelected = "boolean onOptionsItemSelected(android.view.MenuItem)";
     public static final int LARGECALLERSET = 10 ;
     public static final int SIGNLARCALLERDEPTH = 5;
-    public static final int CFGPATHNUMBER = 100;
-	public static final int CFGPATHNODELEN = 100;
+    public static final int CFGPATHNUMBER = 5000;
+	public static final int CFGPATHNODELEN = 500;
     public static final long SINGLEMETHODTIME = 20* 1000; //120s
 
 

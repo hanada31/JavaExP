@@ -1,0 +1,34 @@
+[
+  {
+    "qualifiedSignature": "android.app.InstantAppResolverService.onGetInstantAppResolveInfo(int[], java.lang.String, android.app.InstantAppResolverService.InstantAppResolutionCallback)",
+    "exception": "throw new IllegalStateException(\"Must define onGetInstantAppResolveInfo\");",
+    "pathCojunction": "true",
+    "backwardsPathConjunction": "true",
+    "simplifiedPathConjunction": "true",
+    "z3Program": "from z3 import *\nfrom z3_all_models import *\n\ntoken0 = String('token0')\n\nconstraints = [\n  True\n]\n\nsolver = Solver()\nfor constraint in constraints:\n  solver.add(constraint)\n\nmodels = list(all_smt(solver))\nfor model in models: print(model)",
+    "soundSymbolic": false,
+    "soundBackwards": true,
+    "maybe": false,
+    "line": 67,
+    "throwingLine": 68,
+    "isStatic": false,
+    "targetOnlyArguments": true,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/app/InstantAppResolverService.java"
+  },
+  {
+    "qualifiedSignature": "android.app.InstantAppResolverService.onGetInstantAppIntentFilter(int[], java.lang.String, android.app.InstantAppResolverService.InstantAppResolutionCallback)",
+    "exception": "throw new IllegalStateException(\"Must define onGetInstantAppIntentFilter\");",
+    "pathCojunction": "true",
+    "backwardsPathConjunction": "true",
+    "simplifiedPathConjunction": "true",
+    "z3Program": "from z3 import *\nfrom z3_all_models import *\n\ntoken0 = String('token0')\n\nconstraints = [\n  True\n]\n\nsolver = Solver()\nfor constraint in constraints:\n  solver.add(constraint)\n\nmodels = list(all_smt(solver))\nfor model in models: print(model)",
+    "soundSymbolic": false,
+    "soundBackwards": true,
+    "maybe": false,
+    "line": 81,
+    "throwingLine": 82,
+    "isStatic": false,
+    "targetOnlyArguments": true,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/app/InstantAppResolverService.java"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "qualifiedSignature": "android.provider.MediaStore.checkArgumentVolumeName(java.lang.String)",
+    "exception": "throw new IllegalArgumentException(\"Invalid volume name: \" + volumeName);",
+    "pathCojunction": "(!(TextUtils.isEmpty(volumeName))) && (!(VOLUME_INTERNAL.equals(volumeName))) && (!(VOLUME_EXTERNAL.equals(volumeName))) && (!(VOLUME_EXTERNAL_PRIMARY.equals(volumeName))) && (i < volumeName.length()) && (!('a' <= c && c <= 'f') || ('0' <= c && c <= '9') || (c == '-'))",
+    "symbolicPathConjunction": "(!(TextUtils.isEmpty(volumeName))) && (!(VOLUME_INTERNAL.equals(volumeName))) && (!(VOLUME_EXTERNAL.equals(volumeName))) && (!(VOLUME_EXTERNAL_PRIMARY.equals(volumeName))) && (i < volumeName.length()) && (!('a' <= c && c <= 'f') || ('0' <= c && c <= '9') || (c == '-'))",
+    "backwardsPathConjunction": "(!(TextUtils.isEmpty(volumeName))) && (!(VOLUME_INTERNAL.equals(volumeName))) && (!(VOLUME_EXTERNAL.equals(volumeName))) && (!(VOLUME_EXTERNAL_PRIMARY.equals(volumeName))) && (0 < volumeName.length()) && (!('a' <= volumeName.charAt(0) && volumeName.charAt(0) <= 'f') || ('0' <= volumeName.charAt(0) && volumeName.charAt(0) <= '9') || (volumeName.charAt(0) == '-'))",
+    "z3Program": "from z3 import *\nfrom z3_all_models import *\n\nvolumeName0 = String('volumeName0')\nVOLUME_INTERNAL0 = String('VOLUME_INTERNAL0')\nVOLUME_EXTERNAL0 = String('VOLUME_EXTERNAL0')\nVOLUME_EXTERNAL_PRIMARY0 = String('VOLUME_EXTERNAL_PRIMARY0')\ni0 = Int('i0')\n\nconstraints = [\n  VOLUME_INTERNAL0 == StringVal(\"internal\"), \n  VOLUME_EXTERNAL0 == StringVal(\"external\"), \n  VOLUME_EXTERNAL_PRIMARY0 == StringVal(\"external_primary\"), \n  i0 == 0,\n  c0 == volumeName0.charAt(i0),\n  And(And(And(And(And(Not(TextUtils.isEmpty(volumeName0)), Not(VOLUME_INTERNAL0 == volumeName0)), Not(VOLUME_EXTERNAL0 == volumeName0)), Not(VOLUME_EXTERNAL_PRIMARY0 == volumeName0)), i0 < Length(volumeName0)), Or(Or(Not(And('a' <= c0, c0 <= 'f')), And('0' <= c0, c0 <= '9')), c0 == '-'))\n]\n\nsolver = Solver()\nfor constraint in constraints:\n  solver.add(constraint)\n\nmodels = list(all_smt(solver))\nfor model in models: print(model)",
+    "symPyProgram": "from sympy import Symbol\nfrom sympy import simplify\nfrom sympy.core.relational import Eq, Ne, StrictGreaterThan, StrictLessThan, LessThan, GreaterThan\nfrom sympy.printing import ccode\n\nvolumeName = Symbol('volumeName')\nTextUtils_isEmpty = Symbol('TextUtils_isEmpty')\n\"internal\"_equals = Symbol('\"internal\"_equals')\n\"external\"_equals = Symbol('\"external\"_equals')\n\"external_primary\"_equals = Symbol('\"external_primary\"_equals')\nvolumeName_length = Symbol('volumeName_length')\nvolumeName_charAt = Symbol('volumeName_charAt')\nwit_str_0 = Symbol('wit_str_0') # 'a'\nwit_str_1 = Symbol('wit_str_1') # 'f'\nwit_str_2 = Symbol('wit_str_2') # '0'\nwit_str_3 = Symbol('wit_str_3') # '9'\nwit_str_4 = Symbol('wit_str_4') # '-'\npath_conjunction = ((((((~(TextUtils_isEmpty)) & (~(\"internal\"_equals))) & (~(\"external\"_equals))) & (~(\"external_primary\"_equals))) & (StrictLessThan(0, volumeName_length))) & (((~(((LessThan(wit_str_0, volumeName_charAt)) & (LessThan(volumeName_charAt, wit_str_1))))) | ((LessThan(wit_str_2, volumeName_charAt)) & (LessThan(volumeName_charAt, wit_str_3)))) | (Eq(volumeName_charAt, wit_str_4))))\nprint(ccode(simplify(path_conjunction)))",
+    "soundSymbolic": false,
+    "soundBackwards": false,
+    "maybe": true,
+    "line": 3272,
+    "throwingLine": 3291,
+    "isStatic": true,
+    "targetOnlyArguments": false,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/provider/MediaStore.java"
+  },
+  {
+    "qualifiedSignature": "android.provider.MediaStore.checkArgumentVolumeName(java.lang.String)",
+    "exception": "throw new IllegalArgumentException();",
+    "pathCojunction": "(TextUtils.isEmpty(volumeName))",
+    "symbolicPathConjunction": "(TextUtils.isEmpty(volumeName))",
+    "backwardsPathConjunction": "(TextUtils.isEmpty(volumeName))",
+    "simplifiedPathConjunction": "TextUtils.isEmpty(volumeName)",
+    "z3Program": "from z3 import *\nfrom z3_all_models import *\n\nvolumeName0 = String('volumeName0')\n\nconstraints = [\n  TextUtils.isEmpty(volumeName0)\n]\n\nsolver = Solver()\nfor constraint in constraints:\n  solver.add(constraint)\n\nmodels = list(all_smt(solver))\nfor model in models: print(model)",
+    "symPyProgram": "from sympy import Symbol\nfrom sympy import simplify\nfrom sympy.core.relational import Eq, Ne, StrictGreaterThan, StrictLessThan, LessThan, GreaterThan\nfrom sympy.printing import ccode\n\nvolumeName = Symbol('volumeName')\nTextUtils_isEmpty = Symbol('TextUtils_isEmpty')\npath_conjunction = TextUtils_isEmpty\nprint(ccode(simplify(path_conjunction)))",
+    "soundSymbolic": false,
+    "soundBackwards": false,
+    "maybe": true,
+    "line": 3272,
+    "throwingLine": 3274,
+    "isStatic": true,
+    "targetOnlyArguments": false,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/provider/MediaStore.java"
+  }
+]

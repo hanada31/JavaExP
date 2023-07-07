@@ -1,0 +1,38 @@
+[
+  {
+    "qualifiedSignature": "android.app.ActivityManager.TaskDescription.setPrimaryColor(int)",
+    "exception": "throw new RuntimeException(\"A TaskDescription's primary color should be opaque\");",
+    "pathCojunction": "(primaryColor != 0) && (Color.alpha(primaryColor) != 255)",
+    "symbolicPathConjunction": "((primaryColor != 0) && (Color.alpha(primaryColor) != 255))",
+    "backwardsPathConjunction": "(primaryColor != 0) && (Color.alpha(primaryColor) != 255)",
+    "simplifiedPathConjunction": "Color.alpha(primaryColor) != 255 && primaryColor != 0",
+    "z3Program": "from z3 import *\nfrom z3_all_models import *\n\nprimaryColor0 = Int('primaryColor0')\n\nconstraints = [\n  And(primaryColor0 != 0, Color.alpha(primaryColor0) != 255)\n]\n\nsolver = Solver()\nfor constraint in constraints:\n  solver.add(constraint)\n\nmodels = list(all_smt(solver))\nfor model in models: print(model)",
+    "symPyProgram": "from sympy import Symbol\nfrom sympy import simplify\nfrom sympy.core.relational import Eq, Ne, StrictGreaterThan, StrictLessThan, LessThan, GreaterThan\nfrom sympy.printing import ccode\n\nprimaryColor = Symbol('primaryColor', integer=True)\nColor_alpha = Symbol('Color_alpha')\npath_conjunction = ((Ne(primaryColor, 0)) & (Ne(Color_alpha, 255)))\nprint(ccode(simplify(path_conjunction)))",
+    "soundSymbolic": false,
+    "soundBackwards": false,
+    "maybe": true,
+    "line": 1148,
+    "throwingLine": 1151,
+    "isStatic": false,
+    "targetOnlyArguments": false,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/app/ActivityManager.java"
+  },
+  {
+    "qualifiedSignature": "android.app.ActivityManager.TaskDescription.setBackgroundColor(int)",
+    "exception": "throw new RuntimeException(\"A TaskDescription's background color should be opaque\");",
+    "pathCojunction": "(backgroundColor != 0) && (Color.alpha(backgroundColor) != 255)",
+    "symbolicPathConjunction": "((backgroundColor != 0) && (Color.alpha(backgroundColor) != 255))",
+    "backwardsPathConjunction": "(backgroundColor != 0) && (Color.alpha(backgroundColor) != 255)",
+    "simplifiedPathConjunction": "Color.alpha(backgroundColor) != 255 && backgroundColor != 0",
+    "z3Program": "from z3 import *\nfrom z3_all_models import *\n\nbackgroundColor0 = Int('backgroundColor0')\n\nconstraints = [\n  And(backgroundColor0 != 0, Color.alpha(backgroundColor0) != 255)\n]\n\nsolver = Solver()\nfor constraint in constraints:\n  solver.add(constraint)\n\nmodels = list(all_smt(solver))\nfor model in models: print(model)",
+    "symPyProgram": "from sympy import Symbol\nfrom sympy import simplify\nfrom sympy.core.relational import Eq, Ne, StrictGreaterThan, StrictLessThan, LessThan, GreaterThan\nfrom sympy.printing import ccode\n\nbackgroundColor = Symbol('backgroundColor', integer=True)\nColor_alpha = Symbol('Color_alpha')\npath_conjunction = ((Ne(backgroundColor, 0)) & (Ne(Color_alpha, 255)))\nprint(ccode(simplify(path_conjunction)))",
+    "soundSymbolic": false,
+    "soundBackwards": false,
+    "maybe": true,
+    "line": 1160,
+    "throwingLine": 1163,
+    "isStatic": false,
+    "targetOnlyArguments": false,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/app/ActivityManager.java"
+  }
+]

@@ -1,0 +1,40 @@
+[
+  {
+    "qualifiedSignature": "android.view.ViewPropertyAnimator.setDuration(long)",
+    "exception": "throw new IllegalArgumentException(\"Animators cannot have negative duration: \" + duration);",
+    "pathCojunction": "(duration < 0)",
+    "symbolicPathConjunction": "(duration < 0)",
+    "backwardsPathConjunction": "(duration < 0)",
+    "simplifiedPathConjunction": "duration < 0",
+    "z3Inputs": "[duration0 = -9223372036854775808]\n[duration0 = -1]\n[duration0 = -2]\n[duration0 = -3]\n[duration0 = -4]\n[duration0 = -5]\n[duration0 = -6]\n[duration0 = -7]\n[duration0 = -8]\n[duration0 = -9]\n",
+    "z3Program": "from z3 import *\nfrom z3_all_models import *\n\nduration0 = Int('duration0')\n\nconstraints = [\n  duration0 >= -9223372036854775808, duration0 <= 9223372036854775807, # implicit\n  duration0 < 0\n]\n\nsolver = Solver()\nfor constraint in constraints:\n  solver.add(constraint)\n\nmodels = list(all_smt(solver))\nfor model in models: print(model)",
+    "symPyProgram": "from sympy import Symbol\nfrom sympy import simplify\nfrom sympy.core.relational import Eq, Ne, StrictGreaterThan, StrictLessThan, LessThan, GreaterThan\nfrom sympy.printing import ccode\n\nduration = Symbol('duration')\npath_conjunction = (StrictLessThan(duration, 0))\nprint(ccode(simplify(path_conjunction)))",
+    "soundSymbolic": true,
+    "soundBackwards": true,
+    "maybe": false,
+    "line": 261,
+    "throwingLine": 263,
+    "isStatic": false,
+    "targetOnlyArguments": true,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/view/ViewPropertyAnimator.java"
+  },
+  {
+    "qualifiedSignature": "android.view.ViewPropertyAnimator.setStartDelay(long)",
+    "exception": "throw new IllegalArgumentException(\"Animators cannot have negative start \" + \"delay: \" + startDelay);",
+    "pathCojunction": "(startDelay < 0)",
+    "symbolicPathConjunction": "(startDelay < 0)",
+    "backwardsPathConjunction": "(startDelay < 0)",
+    "simplifiedPathConjunction": "startDelay < 0",
+    "z3Inputs": "[startDelay0 = -9223372036854775808]\n[startDelay0 = -1]\n[startDelay0 = -2]\n[startDelay0 = -3]\n[startDelay0 = -4]\n[startDelay0 = -5]\n[startDelay0 = -6]\n[startDelay0 = -7]\n[startDelay0 = -8]\n[startDelay0 = -9]\n",
+    "z3Program": "from z3 import *\nfrom z3_all_models import *\n\nstartDelay0 = Int('startDelay0')\n\nconstraints = [\n  startDelay0 >= -9223372036854775808, startDelay0 <= 9223372036854775807, # implicit\n  startDelay0 < 0\n]\n\nsolver = Solver()\nfor constraint in constraints:\n  solver.add(constraint)\n\nmodels = list(all_smt(solver))\nfor model in models: print(model)",
+    "symPyProgram": "from sympy import Symbol\nfrom sympy import simplify\nfrom sympy.core.relational import Eq, Ne, StrictGreaterThan, StrictLessThan, LessThan, GreaterThan\nfrom sympy.printing import ccode\n\nstartDelay = Symbol('startDelay')\npath_conjunction = (StrictLessThan(startDelay, 0))\nprint(ccode(simplify(path_conjunction)))",
+    "soundSymbolic": true,
+    "soundBackwards": true,
+    "maybe": false,
+    "line": 318,
+    "throwingLine": 320,
+    "isStatic": false,
+    "targetOnlyArguments": true,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/view/ViewPropertyAnimator.java"
+  }
+]

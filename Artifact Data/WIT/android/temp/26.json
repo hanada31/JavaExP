@@ -1,0 +1,21 @@
+[
+  {
+    "qualifiedSignature": "android.app.job.JobInfo.Builder.build()",
+    "exception": "throw new IllegalArgumentException(\"Can't provide estimated network usage without requiring a network\");",
+    "pathCojunction": "((mNetworkDownloadBytes > 0 || mNetworkUploadBytes > 0) && mNetworkRequest == null)",
+    "symbolicPathConjunction": "((mNetworkDownloadBytes > 0 || mNetworkUploadBytes > 0) && mNetworkRequest == null)",
+    "backwardsPathConjunction": "((mNetworkDownloadBytes > 0 || mNetworkUploadBytes > 0) && mNetworkRequest == null)",
+    "simplifiedPathConjunction": "mNetworkRequest == null && (mNetworkDownloadBytes > 0 || mNetworkUploadBytes > 0)",
+    "z3Inputs": "[mNetworkDownloadBytes0 = 1,\n mNetworkUploadBytes0 = 0,\n mNetworkRequest0_isNull = True]\n[mNetworkDownloadBytes0 = 0,\n mNetworkUploadBytes0 = 1,\n mNetworkRequest0_isNull = True]\n[mNetworkDownloadBytes0 = 2,\n mNetworkUploadBytes0 = -1,\n mNetworkRequest0_isNull = True]\n[mNetworkDownloadBytes0 = 2,\n mNetworkUploadBytes0 = 0,\n mNetworkRequest0_isNull = True]\n[mNetworkDownloadBytes0 = 3, mNetworkRequest0_isNull = True]\n[mNetworkDownloadBytes0 = 4, mNetworkRequest0_isNull = True]\n[mNetworkDownloadBytes0 = 5, mNetworkRequest0_isNull = True]\n[mNetworkDownloadBytes0 = 6, mNetworkRequest0_isNull = True]\n[mNetworkDownloadBytes0 = 7, mNetworkRequest0_isNull = True]\n[mNetworkDownloadBytes0 = 8, mNetworkRequest0_isNull = True]\n",
+    "z3Program": "from z3 import *\nfrom z3_all_models import *\n\nmNetworkDownloadBytes0 = Int('mNetworkDownloadBytes0')\nmNetworkUploadBytes0 = Int('mNetworkUploadBytes0')\nmNetworkRequest0_isNull = Bool('mNetworkRequest0_isNull')\n\nconstraints = [\n  And(Or(mNetworkDownloadBytes0 > 0, mNetworkUploadBytes0 > 0), mNetworkRequest0_isNull)\n]\n\nsolver = Solver()\nfor constraint in constraints:\n  solver.add(constraint)\n\nmodels = list(all_smt(solver))\nfor model in models: print(model)",
+    "symPyProgram": "from sympy import Symbol\nfrom sympy import simplify\nfrom sympy.core.relational import Eq, Ne, StrictGreaterThan, StrictLessThan, LessThan, GreaterThan\nfrom sympy.printing import ccode\n\nmNetworkDownloadBytes = Symbol('mNetworkDownloadBytes', integer=True)\nmNetworkUploadBytes = Symbol('mNetworkUploadBytes', integer=True)\nmNetworkRequest = Symbol('mNetworkRequest')\nnull = Symbol('null')\npath_conjunction = (((StrictGreaterThan(mNetworkDownloadBytes, 0)) | (StrictGreaterThan(mNetworkUploadBytes, 0))) & (Eq(mNetworkRequest, null)))\nprint(ccode(simplify(path_conjunction)))",
+    "soundSymbolic": true,
+    "soundBackwards": true,
+    "maybe": false,
+    "line": 1547,
+    "throwingLine": 1550,
+    "isStatic": false,
+    "targetOnlyArguments": false,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/app/job/JobInfo.java"
+  }
+]

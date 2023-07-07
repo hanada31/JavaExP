@@ -282,16 +282,40 @@ public class ConditionWithValueSet implements  Cloneable {
 		//optimize ($i1 is 0 + $i1 denote r0.<myThrow.ThrowTest: int outVar>) to (r0.<myThrow.ThrowTest: int outVar> equals 0)
 		for(RefinedCondition refinedCondition: list) {
 			if (refinedCondition.getOperator().equals(IROperator.denoteOP)) {
+				if(refinedCondition.getRightStr().contains("<android.content.pm.ApplicationInfo: int targetSdkVersion>")){
+					refinedCondition.setRightStr("targetSdkVersion");
+				}
 				for (RefinedCondition temp : list) {
 					if (temp == refinedCondition) continue;
 					if (temp.getLeftStr().equals(refinedCondition.getLeftStr())) {
 						temp.setLeftVar(refinedCondition.getRightValue());
+						if(refinedCondition.getRightValue() == null)
+							temp.setLeftStr(refinedCondition.getRightStr());
 					}
 					if (temp.getRightStr().equals(refinedCondition.getLeftStr())) {
 						temp.setRightValue(refinedCondition.getRightValue());
+						if(refinedCondition.getRightValue() == null)
+							temp.setLeftStr(refinedCondition.getRightStr());
 					}
 					if (temp.getRightStr().equals("lengthof "+refinedCondition.getLeftStr())) {
 						temp.setRightStr(refinedCondition.getRightStr()+".length");
+					}
+					if (temp.getOperator().equals("equals") && temp.getLeftVar() == refinedCondition.getLeftVar()) {
+						try {
+							RefinedCondition refinedConditionClone = refinedCondition.clone(); //r0.<myThrow.ThrowTest: int outVar> is 0
+							refinedConditionClone.setLeftVar(temp.getRightValue());
+							refinedConditions.add(refinedConditionClone);
+						} catch (CloneNotSupportedException e) {
+							e.printStackTrace();
+						}
+					}else if (temp.getOperator().equals("equals") && temp.getRightValue() == refinedCondition.getLeftVar()) {
+						try {
+							RefinedCondition refinedConditionClone = refinedCondition.clone(); //r0.<myThrow.ThrowTest: int outVar> is 0
+							refinedConditionClone.setLeftVar(temp.getLeftVar());
+							refinedConditions.add(refinedConditionClone);
+						} catch (CloneNotSupportedException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
@@ -330,6 +354,27 @@ public class ConditionWithValueSet implements  Cloneable {
 							} catch (CloneNotSupportedException e) {
 								e.printStackTrace();
 							}
+						}
+					}
+					if(temp.getLeftStr().startsWith(refinedCondition.getLeftStr() +" ") || temp.getLeftStr().startsWith(refinedCondition.getLeftStr() +".")){
+						try {
+							RefinedCondition tempClone = temp.clone(); //r0.<myThrow.ThrowTest: int outVar> is 0
+							tempClone.setLeftStr(tempClone.getLeftStr().replace(refinedCondition.getLeftStr()+" ",refinedCondition.getLeftStr()+" "));
+							tempClone.setLeftStr(tempClone.getLeftStr().replace(refinedCondition.getLeftStr()+".",refinedCondition.getLeftStr()+"."));
+							refinedConditions.add(tempClone);
+							toBeDel.add(temp);
+						} catch (CloneNotSupportedException e) {
+							e.printStackTrace();
+						}
+					}else if(temp.getRightStr().startsWith(refinedCondition.getLeftStr() +" ") || temp.getRightStr().startsWith(refinedCondition.getLeftStr() +".")){
+						try {
+							RefinedCondition tempClone = temp.clone(); //r0.<myThrow.ThrowTest: int outVar> is 0
+							tempClone.setRightStr(tempClone.getRightStr().replace(refinedCondition.getLeftStr()+" ",refinedCondition.getRightStr())+" ");
+							tempClone.setRightStr(tempClone.getRightStr().replace(refinedCondition.getLeftStr()+".",refinedCondition.getRightStr())+".");
+							refinedConditions.add(tempClone);
+							toBeDel.add(temp);
+						} catch (CloneNotSupportedException e) {
+							e.printStackTrace();
 						}
 					}
 				}
@@ -458,10 +503,10 @@ public class ConditionWithValueSet implements  Cloneable {
 			else if (refinedCondition.getRightStr().startsWith("$") || refinedCondition.getRightStr().startsWith("i")){
 				toBeDel.add(refinedCondition);
 			}
-			if (!refinedCondition.getLeftStr().contains("this") && !refinedCondition.getLeftStr().contains("parameter")
-					&& !refinedCondition.getRightStr().contains("parameter")) {
-				toBeDel.add(refinedCondition);
-			}
+//			if (!refinedCondition.getLeftStr().contains("this") && !refinedCondition.getLeftStr().contains("parameter")
+//					&& !refinedCondition.getRightStr().contains("parameter")) {
+//				toBeDel.add(refinedCondition);
+//			}
 		}
 		for(RefinedCondition temp: toBeDel){
 //			System.out.println("6 " +temp);

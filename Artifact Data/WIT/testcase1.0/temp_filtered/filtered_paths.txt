@@ -1,0 +1,5 @@
+/home/yanjw/state-of-art-tools/wit-replication-package/benchmark/handmade/testcase1.0/testcase/ExceptionCondition/MultiplePath.java
+/home/yanjw/state-of-art-tools/wit-replication-package/benchmark/handmade/testcase1.0/testcase/ExceptionCondition/FiledValueInfluenced.java
+/home/yanjw/state-of-art-tools/wit-replication-package/benchmark/handmade/testcase1.0/testcase/ExceptionCondition/Basic.java
+/home/yanjw/state-of-art-tools/wit-replication-package/benchmark/handmade/testcase1.0/testcase/ExceptionCondition/MultipleThrow.java
+/home/yanjw/state-of-art-tools/wit-replication-package/benchmark/handmade/testcase1.0/testcase/ExceptionCondition/MultipleCall.java

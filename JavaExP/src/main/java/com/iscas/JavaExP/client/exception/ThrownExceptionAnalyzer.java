@@ -169,8 +169,12 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
         List<List<Unit>> allPaths = getThrowAndInvokeEndPaths(sootMethod, invokeStmtSetToCalleeWithException.keySet());
         PDGUtils pdgUtils = new PDGUtils(sootMethod, new ExceptionalUnitGraph(sootMethod.getActiveBody()));
         pdgUtils.analyzeThrowAndInvokeControlDependency();
-
+//        System.err.println(allPaths.size());
         //for each throw unit in the end of a path
+        Map<Unit, Trap> caughtEntryUnits = new HashMap();
+        for (Trap trap : sootMethod.getActiveBody().getTraps()) {
+            caughtEntryUnits.put(trap.getHandlerUnit(),trap);
+        }
         for(List<Unit> path: allPaths) {
             Unit lastUnit = path.get(path.size()-1);
             //if controlPath is the same, only reserve one
@@ -179,7 +183,14 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             if(!historyPath.contains(PrintUtils.printList(controlPath))) {
                 historyPath.add(PrintUtils.printList(controlPath));
                 if(lastUnit instanceof  ThrowStmt) {
-                    extractExceptionInfoOfUnit(sootMethod, (ThrowStmt) lastUnit, controlPath);
+                    Trap trap = null;
+                    for(Unit unit: path){
+                        if(caughtEntryUnits.keySet().contains(unit)){
+                            trap= caughtEntryUnits.get(unit);
+                            break;
+                        }
+                    }
+                    extractExceptionInfoOfUnit(sootMethod, (ThrowStmt) lastUnit, controlPath, trap);
                 }
                 else {
                     //get the control dependency of invoke stmt and combine the result with callee analysis
@@ -194,11 +205,15 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
      * for one path that ends at throw unit, extract exception information from it
      * create a New ExceptionInfo object and add content
      */
-    private void extractExceptionInfoOfUnit(SootMethod sootMethod, ThrowStmt throwUnit, List<ControlDependOnUnit> controlPath) {
+    private void extractExceptionInfoOfUnit(SootMethod sootMethod, ThrowStmt throwUnit, List<ControlDependOnUnit> controlPath, Trap trap) {
         SootClass exceptionClass = getThrowUnitWithType(sootMethod, throwUnit, (Local) throwUnit.getOp());
         if(exceptionClass==null || exceptionClass.getName().equals("java.lang.Throwable")) return;
 
         ExceptionInfo exceptionInfo =  new ExceptionInfo(sootMethod, throwUnit, exceptionClass.getName());
+        if(trap != null) {
+            exceptionInfo.setRethrow(true);
+            exceptionInfo.setTrap(trap);
+        }
         thrownExceptionInfoList.add(exceptionInfo);
         Global.v().getAppModel().addMethod2ExceptionListForOne(sootMethod.getSignature(), exceptionInfo);
 

@@ -29,8 +29,8 @@ public class ExceptionInfoClientTest {
         String path;
 
         path = "..\\Benchmark\\";
-//        path = "D:\\SoftwareData\\dataset\\android-framework\\classes";
-        String targetName = "jdk1.8";
+        path = "D:\\SoftwareData\\dataset\\android-framework\\classes\\android2.3";
+        String targetName = "android";
 //        targetName = "testcase1.0";
 
         MyConfig.getInstance().setAppName(targetName);
@@ -44,5 +44,7 @@ public class ExceptionInfoClientTest {
         String targetFolder = MyConfig.getInstance().getResultFolder() +File.separator+targetName+File.separator;
         MyConfig.getInstance().setExceptionFilePath(targetFolder+"exceptionInfo"+File.separator);
         MyConfig.getInstance().setJimple(false);
+
     }
+
 }

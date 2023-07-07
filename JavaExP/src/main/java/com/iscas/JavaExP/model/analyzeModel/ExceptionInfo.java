@@ -14,12 +14,14 @@ public class ExceptionInfo implements  Cloneable {
     private AppModel.ExceptionType exceptionType;
     private String exceptionName;
     private String exceptionMsg="";
+    private boolean isRethrow =false;
+    private Trap trap;
 
     private String modifier;
     private SootMethod sootMethod;
     private String sootMethodName;
     private Unit unit;
-    private Trap trap;
+
 
     ConditionTrackerInfo conditionTrackerInfo;
 
@@ -146,6 +148,23 @@ public class ExceptionInfo implements  Cloneable {
             }
         }
         return isException;
+    }
+
+    public boolean isRethrow() {
+        return isRethrow;
+    }
+
+    public void setRethrow(boolean rethrow) {
+        isRethrow = rethrow;
+    }
+
+
+    public Trap getTrap() {
+        return trap;
+    }
+
+    public void setTrap(Trap trap) {
+        this.trap = trap;
     }
 
 //    @Override

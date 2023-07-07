@@ -1,0 +1,38 @@
+[
+  {
+    "qualifiedSignature": "android.bluetooth.BluetoothInputStream.read(byte[], int, int)",
+    "exception": "throw new NullPointerException(\"byte array is null\");",
+    "pathCojunction": "(b == null)",
+    "symbolicPathConjunction": "(b == null)",
+    "backwardsPathConjunction": "(b == null)",
+    "simplifiedPathConjunction": "b == null",
+    "z3Inputs": "[b0_isNull = True]\n",
+    "z3Program": "from z3 import *\nfrom z3_all_models import *\n\noffset0 = Int('offset0')\nlength0 = Int('length0')\nb0_isNull = Bool('b0_isNull')\n\nconstraints = [\n  b0_isNull\n]\n\nsolver = Solver()\nfor constraint in constraints:\n  solver.add(constraint)\n\nmodels = list(all_smt(solver))\nfor model in models: print(model)",
+    "symPyProgram": "from sympy import Symbol\nfrom sympy import simplify\nfrom sympy.core.relational import Eq, Ne, StrictGreaterThan, StrictLessThan, LessThan, GreaterThan\nfrom sympy.printing import ccode\n\nb = Symbol('b')\nnull = Symbol('null')\npath_conjunction = (Eq(b, null))\nprint(ccode(simplify(path_conjunction)))",
+    "soundSymbolic": true,
+    "soundBackwards": true,
+    "maybe": false,
+    "line": 81,
+    "throwingLine": 83,
+    "isStatic": false,
+    "targetOnlyArguments": true,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/bluetooth/BluetoothInputStream.java"
+  },
+  {
+    "qualifiedSignature": "android.bluetooth.BluetoothInputStream.read(byte[], int, int)",
+    "exception": "throw new ArrayIndexOutOfBoundsException(\"invalid offset or length\");",
+    "pathCojunction": "(!(b == null)) && ((offset | length) < 0 || length > b.length - offset)",
+    "symbolicPathConjunction": "(!(b == null)) && ((offset | length) < 0 || length > b.length - offset)",
+    "backwardsPathConjunction": "(!(b == null)) && ((offset | length) < 0 || length > b.length - offset)",
+    "z3Program": "from z3 import *\nfrom z3_all_models import *\n\noffset0 = Int('offset0')\nlength0 = Int('length0')\nb0_isNull = Bool('b0_isNull')\nb0_length = Int('b0_length')\n\nconstraints = [\n  b0_length >= 0, # implicit\n  And(Not(b0_isNull), Or(offset0 | length0 < 0, length0 > b0_length - offset0))\n]\n\nsolver = Solver()\nfor constraint in constraints:\n  solver.add(constraint)\n\nmodels = list(all_smt(solver))\nfor model in models: print(model)",
+    "symPyProgram": "from sympy import Symbol\nfrom sympy import simplify\nfrom sympy.core.relational import Eq, Ne, StrictGreaterThan, StrictLessThan, LessThan, GreaterThan\nfrom sympy.printing import ccode\n\nb = Symbol('b')\noffset = Symbol('offset', integer=True)\nlength = Symbol('length', integer=True)\nb_length = Symbol('b_length', integer=True)\nnull = Symbol('null')\npath_conjunction = ((~((Eq(b, null)))) & ((StrictLessThan((offset | length), 0)) | (StrictGreaterThan(length, (b_length - offset)))))\nprint(ccode(simplify(path_conjunction)))",
+    "soundSymbolic": true,
+    "soundBackwards": true,
+    "maybe": true,
+    "line": 81,
+    "throwingLine": 86,
+    "isStatic": false,
+    "targetOnlyArguments": true,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/bluetooth/BluetoothInputStream.java"
+  }
+]

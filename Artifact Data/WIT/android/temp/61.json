@@ -1,0 +1,37 @@
+[
+  {
+    "qualifiedSignature": "android.util.Property.set(T, V)",
+    "exception": "throw new UnsupportedOperationException(\"Property \" + getName() + \" is read-only\");",
+    "pathCojunction": "true",
+    "backwardsPathConjunction": "true",
+    "simplifiedPathConjunction": "true",
+    "z3Program": "from z3 import *\nfrom z3_all_models import *\n\n\nconstraints = [\n  True\n]\n\nsolver = Solver()\nfor constraint in constraints:\n  solver.add(constraint)\n\nmodels = list(all_smt(solver))\nfor model in models: print(model)",
+    "soundSymbolic": false,
+    "soundBackwards": true,
+    "maybe": false,
+    "line": 84,
+    "throwingLine": 85,
+    "isStatic": false,
+    "targetOnlyArguments": true,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/util/Property.java"
+  },
+  {
+    "qualifiedSignature": "android.util.Spline.createSpline(float[], float[])",
+    "exception": "throw new IllegalArgumentException(\"There must be at least two control points.\");",
+    "pathCojunction": "(x == null || x.length < 2)",
+    "symbolicPathConjunction": "(!(x == null || x.length < 2))",
+    "backwardsPathConjunction": "(x == null || x.length < 2)",
+    "simplifiedPathConjunction": "null == x || x.length < 2",
+    "z3Inputs": "[x0_length = 0, x0_isNull = False]\n[x0_length = 1]\n[x0_length = 0, x0_isNull = True]\n[x0_length = 2, x0_isNull = True]\n[x0_length = 3, x0_isNull = True]\n[x0_length = 4, x0_isNull = True]\n[x0_length = 5, x0_isNull = True]\n[x0_length = 6, x0_isNull = True]\n[x0_length = 7, x0_isNull = True]\n[x0_length = 8, x0_isNull = True]\n",
+    "z3Program": "from z3 import *\nfrom z3_all_models import *\n\nx0_isNull = Bool('x0_isNull')\nx0_length = Int('x0_length')\n\nconstraints = [\n  x0_length >= 0, # implicit\n  Or(x0_isNull, x0_length < 2)\n]\n\nsolver = Solver()\nfor constraint in constraints:\n  solver.add(constraint)\n\nmodels = list(all_smt(solver))\nfor model in models: print(model)",
+    "symPyProgram": "from sympy import Symbol\nfrom sympy import simplify\nfrom sympy.core.relational import Eq, Ne, StrictGreaterThan, StrictLessThan, LessThan, GreaterThan\nfrom sympy.printing import ccode\n\nx = Symbol('x')\nx_length = Symbol('x_length', integer=True)\nnull = Symbol('null')\npath_conjunction = ((Eq(x, null)) | (StrictLessThan(x_length, 2)))\nprint(ccode(simplify(path_conjunction)))",
+    "soundSymbolic": true,
+    "soundBackwards": true,
+    "maybe": false,
+    "line": 40,
+    "throwingLine": 41,
+    "isStatic": true,
+    "targetOnlyArguments": true,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/util/Spline.java"
+  }
+]

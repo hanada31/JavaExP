@@ -1,0 +1,47 @@
+[
+  {
+    "qualifiedSignature": "android.net.LocalSocket.isClosed()",
+    "exception": "throw new UnsupportedOperationException();",
+    "pathCojunction": "true",
+    "backwardsPathConjunction": "true",
+    "simplifiedPathConjunction": "true",
+    "soundSymbolic": false,
+    "soundBackwards": true,
+    "maybe": false,
+    "line": 271,
+    "throwingLine": 272,
+    "isStatic": false,
+    "targetOnlyArguments": true,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/net/LocalSocket.java"
+  },
+  {
+    "qualifiedSignature": "android.net.LocalSocket.isOutputShutdown()",
+    "exception": "throw new UnsupportedOperationException();",
+    "pathCojunction": "true",
+    "backwardsPathConjunction": "true",
+    "simplifiedPathConjunction": "true",
+    "soundSymbolic": false,
+    "soundBackwards": true,
+    "maybe": false,
+    "line": 281,
+    "throwingLine": 282,
+    "isStatic": false,
+    "targetOnlyArguments": true,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/net/LocalSocket.java"
+  },
+  {
+    "qualifiedSignature": "android.net.LocalSocket.isInputShutdown()",
+    "exception": "throw new UnsupportedOperationException();",
+    "pathCojunction": "true",
+    "backwardsPathConjunction": "true",
+    "simplifiedPathConjunction": "true",
+    "soundSymbolic": false,
+    "soundBackwards": true,
+    "maybe": false,
+    "line": 286,
+    "throwingLine": 287,
+    "isStatic": false,
+    "targetOnlyArguments": true,
+    "filePath": "/home/yanghengqin/platform_frameworks_base-android-10.0.0_r47/core/java/android/net/LocalSocket.java"
+  }
+]

@@ -1,0 +1,451 @@
+[2023-07-07 11:50:11.924] main INFO com.iscas.JavaExP.Main [Main.java:57] - Analyzing android10
+[2023-07-07 11:50:11.926] main INFO com.iscas.JavaExP.Main [Main.java:78] - using client ExceptionInfoClient
+[2023-07-07 11:50:11.928] main INFO c.i.J.c.e.ExceptionInfoClient [ExceptionInfoClient.java:31] - SootAnalyzer start...
+[2023-07-07 11:50:11.931] main INFO c.i.JavaExP.client.soot.SootAnalyzer [SootAnalyzer.java:47] - sootInit start...
+[2023-07-07 11:50:11.940] main INFO c.i.JavaExP.client.soot.SootAnalyzer [SootAnalyzer.java:79] - sootTransform start...
+[2023-07-07 11:50:24.088] main INFO c.i.JavaExP.client.soot.SootAnalyzer [SootAnalyzer.java:96] - runPacks start...
+[2023-07-07 11:51:09.986] main DEBUG soot.Scene [Scene.java:2161] - No main class given. Inferred 'app.ActivityThread' as main class.
+[2023-07-07 11:51:10.033] main DEBUG s.j.t.c.VirtualEdgesSummaries [VirtualEdgesSummaries.java:167] - Found 58 instanceinvoke, 4 staticinvoke edge descriptions
+[2023-07-07 11:51:10.035] main DEBUG s.j.t.c.OnFlyCallGraphBuilder [OnFlyCallGraphBuilder.java:229] - [Call Graph] For information on where the call graph may be incomplete, use the verbose option to the cg phase.
+[2023-07-07 11:52:06.574] main INFO c.i.JavaExP.client.soot.SootAnalyzer [SootAnalyzer.java:98] - runPacks end...
+[2023-07-07 11:52:06.578] main INFO c.i.JavaExP.client.soot.SootAnalyzer [SootAnalyzer.java:39] - Soot Analysis finish.
+[2023-07-07 11:52:06.578] main INFO c.i.J.c.e.ExceptionInfoClient [ExceptionInfoClient.java:36] - CallGraphofJavaClient start...
+[2023-07-07 11:52:06.580] main INFO c.i.J.c.c.c.CallGraphofJavaClient [CallGraphofJavaClient.java:20] - Start analyze with CallGraphClient.
+[2023-07-07 11:53:20.059] main INFO com.iscas.JavaExP.client.cg.CgModify [CgModify.java:52] - Call Graph has 250116 edges.
+[2023-07-07 11:53:20.061] main INFO c.i.J.c.cg.cgJava.CallGraphBuilder [CallGraphBuilder.java:26] - filtered CG Edge Size ***** 1908213
+[2023-07-07 11:53:20.064] main INFO c.i.J.c.cg.cgJava.CallGraphBuilder [CallGraphBuilder.java:28] - enhanced CG Edge Size ***** 1908213
+[2023-07-07 11:53:20.064] main INFO c.i.J.c.c.c.CallGraphofJavaClient [CallGraphofJavaClient.java:25] - Call Graph has 1908213 edges.
+[2023-07-07 11:53:20.064] main INFO c.i.J.c.c.c.CallGraphofJavaClient [CallGraphofJavaClient.java:26] - Successfully analyze with CallGraphClient.
+[2023-07-07 11:53:20.064] main INFO c.i.J.c.e.ExceptionInfoClient [ExceptionInfoClient.java:42] - ExceptionAnalyzer start...
+[2023-07-07 11:53:20.065] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:32] - getThrownExceptionList start...
+[2023-07-07 11:53:20.636] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:65] - There are totally 73977 methods in TopoMethodQueue
+[2023-07-07 11:53:20.781] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #200/73977, avg time per method: 0.73ms
+[2023-07-07 11:53:20.943] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #400/73977, avg time per method: 0.81ms
+[2023-07-07 11:53:21.758] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #600/73977, avg time per method: 4.08ms
+[2023-07-07 11:53:21.869] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #800/73977, avg time per method: 0.55ms
+[2023-07-07 11:53:22.572] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #1000/73977, avg time per method: 3.52ms
+[2023-07-07 11:53:31.103] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #1200/73977, avg time per method: 42.66ms
+[2023-07-07 11:53:51.590] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <widget.Editor$SelectionHandleView: void updatePosition(float,float)>
+[2023-07-07 11:53:51.602] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #1400/73977, avg time per method: 102.49ms
+[2023-07-07 11:53:51.653] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #1600/73977, avg time per method: 0.26ms
+[2023-07-07 11:53:51.691] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #1800/73977, avg time per method: 0.19ms
+[2023-07-07 11:53:52.014] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #2000/73977, avg time per method: 1.61ms
+[2023-07-07 11:53:52.256] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #2200/73977, avg time per method: 1.21ms
+[2023-07-07 11:54:01.106] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #2400/73977, avg time per method: 44.25ms
+[2023-07-07 11:54:01.161] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #2600/73977, avg time per method: 0.28ms
+[2023-07-07 11:54:01.198] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #2800/73977, avg time per method: 0.18ms
+[2023-07-07 11:54:01.239] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #3000/73977, avg time per method: 0.20ms
+[2023-07-07 11:54:01.277] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #3200/73977, avg time per method: 0.19ms
+[2023-07-07 11:54:21.281] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <content.pm.PackageParser: android.content.pm.PackageParser$Activity parseActivity(android.content.pm.PackageParser$Package,android.content.res.Resources,android.content.res.XmlResourceParser,int,java.lang.String[],boolean,boolean)>
+[2023-07-07 11:54:21.929] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #3400/73977, avg time per method: 103.26ms
+[2023-07-07 11:54:21.965] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #3600/73977, avg time per method: 0.18ms
+[2023-07-07 11:54:22.003] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #3800/73977, avg time per method: 0.19ms
+[2023-07-07 11:54:22.053] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #4000/73977, avg time per method: 0.25ms
+[2023-07-07 11:54:22.117] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #4200/73977, avg time per method: 0.32ms
+[2023-07-07 11:54:42.180] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <media.MediaScanner$MyMediaScannerClient: android.net.Uri endFile(android.media.MediaScanner$FileEntry,boolean,boolean,boolean,boolean,boolean)>
+[2023-07-07 11:54:42.186] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #4400/73977, avg time per method: 100.35ms
+[2023-07-07 11:54:54.899] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #4600/73977, avg time per method: 63.57ms
+[2023-07-07 11:54:55.425] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #4800/73977, avg time per method: 2.63ms
+[2023-07-07 11:54:55.465] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #5000/73977, avg time per method: 0.20ms
+[2023-07-07 11:54:55.520] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #5200/73977, avg time per method: 0.27ms
+[2023-07-07 11:54:55.580] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #5400/73977, avg time per method: 0.30ms
+[2023-07-07 11:54:55.624] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #5600/73977, avg time per method: 0.22ms
+[2023-07-07 11:54:55.979] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #5800/73977, avg time per method: 1.78ms
+[2023-07-07 11:54:59.451] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #6000/73977, avg time per method: 17.36ms
+[2023-07-07 11:54:59.495] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #6200/73977, avg time per method: 0.22ms
+[2023-07-07 11:55:19.527] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <os.BatteryStats$2: void <clinit>()>
+[2023-07-07 11:55:19.595] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #6400/73977, avg time per method: 100.50ms
+[2023-07-07 11:55:19.644] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #6600/73977, avg time per method: 0.24ms
+[2023-07-07 11:55:19.681] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #6800/73977, avg time per method: 0.18ms
+[2023-07-07 11:55:19.808] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #7000/73977, avg time per method: 0.64ms
+[2023-07-07 11:55:19.833] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #7200/73977, avg time per method: 0.13ms
+[2023-07-07 11:55:19.891] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #7400/73977, avg time per method: 0.29ms
+[2023-07-07 11:56:02.519] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #7600/73977, avg time per method: 213.14ms
+[2023-07-07 11:56:22.545] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <widget.TextView: void onMeasure(int,int)>
+[2023-07-07 11:56:22.559] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #7800/73977, avg time per method: 100.20ms
+[2023-07-07 11:56:22.604] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #8000/73977, avg time per method: 0.22ms
+[2023-07-07 11:56:22.689] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #8200/73977, avg time per method: 0.43ms
+[2023-07-07 11:56:22.722] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #8400/73977, avg time per method: 0.17ms
+[2023-07-07 11:56:22.765] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #8600/73977, avg time per method: 0.22ms
+[2023-07-07 11:56:22.971] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #8800/73977, avg time per method: 1.03ms
+[2023-07-07 11:56:23.124] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #9000/73977, avg time per method: 0.76ms
+[2023-07-07 11:56:23.291] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #9200/73977, avg time per method: 0.83ms
+[2023-07-07 11:56:23.323] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #9400/73977, avg time per method: 0.15ms
+[2023-07-07 11:56:23.373] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #9600/73977, avg time per method: 0.24ms
+[2023-07-07 11:56:23.551] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #9800/73977, avg time per method: 0.88ms
+[2023-07-07 11:56:24.288] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #10000/73977, avg time per method: 3.69ms
+[2023-07-07 11:56:24.346] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #10200/73977, avg time per method: 0.29ms
+[2023-07-07 11:56:32.631] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #10400/73977, avg time per method: 41.43ms
+[2023-07-07 11:56:32.951] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #10600/73977, avg time per method: 1.60ms
+[2023-07-07 11:56:52.962] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <view.ViewRootImpl: void performTraversals()>
+[2023-07-07 11:56:53.097] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #10800/73977, avg time per method: 100.73ms
+[2023-07-07 11:56:53.145] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #11000/73977, avg time per method: 0.24ms
+[2023-07-07 11:56:53.189] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #11200/73977, avg time per method: 0.22ms
+[2023-07-07 11:57:13.212] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <view.View: void buildDrawingCacheImpl(boolean)>
+[2023-07-07 11:57:13.238] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #11400/73977, avg time per method: 100.24ms
+[2023-07-07 11:57:13.264] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #11600/73977, avg time per method: 0.12ms
+[2023-07-07 11:57:13.307] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #11800/73977, avg time per method: 0.22ms
+[2023-07-07 11:57:13.333] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #12000/73977, avg time per method: 0.13ms
+[2023-07-07 11:57:14.437] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #12200/73977, avg time per method: 5.50ms
+[2023-07-07 11:57:14.500] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #12400/73977, avg time per method: 0.32ms
+[2023-07-07 11:57:14.560] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #12600/73977, avg time per method: 0.26ms
+[2023-07-07 11:57:14.622] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #12800/73977, avg time per method: 0.31ms
+[2023-07-07 11:57:14.839] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #13000/73977, avg time per method: 1.09ms
+[2023-07-07 11:57:15.088] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #13200/73977, avg time per method: 1.24ms
+[2023-07-07 11:57:16.287] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #13400/73977, avg time per method: 5.99ms
+[2023-07-07 11:57:16.317] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #13600/73977, avg time per method: 0.15ms
+[2023-07-07 11:57:16.373] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #13800/73977, avg time per method: 0.28ms
+[2023-07-07 11:57:27.582] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #14000/73977, avg time per method: 56.04ms
+[2023-07-07 11:57:47.584] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <view.View: void onInitializeAccessibilityNodeInfoInternal(android.view.accessibility.AccessibilityNodeInfo)>
+[2023-07-07 11:57:47.751] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #14200/73977, avg time per method: 100.84ms
+[2023-07-07 11:58:07.781] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <os.BatteryStats: void dumpLocked(android.content.Context,java.io.PrintWriter,int,int,long)>
+[2023-07-07 11:58:07.801] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #14400/73977, avg time per method: 100.25ms
+[2023-07-07 11:58:07.836] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #14600/73977, avg time per method: 0.17ms
+[2023-07-07 11:58:07.878] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #14800/73977, avg time per method: 0.21ms
+[2023-07-07 11:58:27.880] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <widget.TextView: void spanChange(android.text.Spanned,java.lang.Object,int,int,int,int)>
+[2023-07-07 11:58:28.030] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #15000/73977, avg time per method: 100.76ms
+[2023-07-07 11:58:48.242] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <app.assist.AssistStructure$ViewNode: int writeSelfToParcel(android.os.Parcel,android.os.PooledStringWriter,boolean,float[])>
+[2023-07-07 11:59:08.262] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <view.ScaleGestureDetector: boolean onTouchEvent(android.view.MotionEvent)>
+[2023-07-07 11:59:08.277] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #15200/73977, avg time per method: 201.24ms
+[2023-07-07 11:59:08.321] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #15400/73977, avg time per method: 0.22ms
+[2023-07-07 11:59:26.909] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #15600/73977, avg time per method: 92.94ms
+[2023-07-07 11:59:27.024] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #15800/73977, avg time per method: 0.57ms
+[2023-07-07 11:59:27.127] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #16000/73977, avg time per method: 0.51ms
+[2023-07-07 11:59:27.169] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #16200/73977, avg time per method: 0.21ms
+[2023-07-07 11:59:27.214] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #16400/73977, avg time per method: 0.23ms
+[2023-07-07 11:59:27.246] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #16600/73977, avg time per method: 0.16ms
+[2023-07-07 11:59:27.277] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #16800/73977, avg time per method: 0.16ms
+[2023-07-07 11:59:27.305] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #17000/73977, avg time per method: 0.14ms
+[2023-07-07 11:59:27.339] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #17200/73977, avg time per method: 0.17ms
+[2023-07-07 11:59:27.392] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #17400/73977, avg time per method: 0.27ms
+[2023-07-07 11:59:27.464] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #17600/73977, avg time per method: 0.35ms
+[2023-07-07 11:59:27.507] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #17800/73977, avg time per method: 0.22ms
+[2023-07-07 11:59:27.563] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #18000/73977, avg time per method: 0.28ms
+[2023-07-07 11:59:27.592] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #18200/73977, avg time per method: 0.15ms
+[2023-07-07 11:59:27.630] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #18400/73977, avg time per method: 0.19ms
+[2023-07-07 11:59:27.672] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #18600/73977, avg time per method: 0.21ms
+[2023-07-07 11:59:47.675] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <os.BatteryStats: void dumpLocked(android.content.Context,java.io.PrintWriter,java.lang.String,int,int,boolean)>
+[2023-07-07 11:59:48.068] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #18800/73977, avg time per method: 101.98ms
+[2023-07-07 11:59:59.435] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #19000/73977, avg time per method: 56.83ms
+[2023-07-07 11:59:59.537] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #19200/73977, avg time per method: 0.51ms
+[2023-07-07 11:59:59.825] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #19400/73977, avg time per method: 1.44ms
+[2023-07-07 11:59:59.875] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #19600/73977, avg time per method: 0.25ms
+[2023-07-07 11:59:59.992] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #19800/73977, avg time per method: 0.59ms
+[2023-07-07 12:00:00.037] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #20000/73977, avg time per method: 0.23ms
+[2023-07-07 12:00:20.077] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <widget.TextView: void setText(java.lang.CharSequence,android.widget.TextView$BufferType,boolean,int)>
+[2023-07-07 12:00:20.119] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #20200/73977, avg time per method: 100.41ms
+[2023-07-07 12:00:20.222] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #20400/73977, avg time per method: 0.51ms
+[2023-07-07 12:00:20.273] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #20600/73977, avg time per method: 0.26ms
+[2023-07-07 12:00:20.324] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #20800/73977, avg time per method: 0.26ms
+[2023-07-07 12:00:20.512] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #21000/73977, avg time per method: 0.94ms
+[2023-07-07 12:00:20.569] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #21200/73977, avg time per method: 0.28ms
+[2023-07-07 12:00:20.617] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #21400/73977, avg time per method: 0.24ms
+[2023-07-07 12:00:40.649] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <media.MediaCodecInfo$VideoCapabilities: int equivalentVP9Level(android.media.MediaFormat)>
+[2023-07-07 12:00:42.028] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #21600/73977, avg time per method: 106.99ms
+[2023-07-07 12:00:42.121] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #21800/73977, avg time per method: 0.46ms
+[2023-07-07 12:00:42.156] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #22000/73977, avg time per method: 0.17ms
+[2023-07-07 12:00:42.181] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #22200/73977, avg time per method: 0.12ms
+[2023-07-07 12:00:42.253] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #22400/73977, avg time per method: 0.35ms
+[2023-07-07 12:00:42.281] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #22600/73977, avg time per method: 0.14ms
+[2023-07-07 12:00:53.970] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #22800/73977, avg time per method: 58.45ms
+[2023-07-07 12:00:54.008] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #23000/73977, avg time per method: 0.19ms
+[2023-07-07 12:00:54.145] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #23200/73977, avg time per method: 0.69ms
+[2023-07-07 12:01:14.216] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <view.WindowManager$LayoutParams: java.lang.String toString()>
+[2023-07-07 12:01:14.224] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #23400/73977, avg time per method: 100.39ms
+[2023-07-07 12:01:14.369] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #23600/73977, avg time per method: 0.73ms
+[2023-07-07 12:01:34.414] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <content.res.Configuration: java.lang.String resourceQualifierString(android.content.res.Configuration)>
+[2023-07-07 12:01:34.420] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #23800/73977, avg time per method: 100.26ms
+[2023-07-07 12:01:34.518] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #24000/73977, avg time per method: 0.49ms
+[2023-07-07 12:01:34.844] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #24200/73977, avg time per method: 1.63ms
+[2023-07-07 12:01:34.894] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #24400/73977, avg time per method: 0.25ms
+[2023-07-07 12:01:34.967] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #24600/73977, avg time per method: 0.36ms
+[2023-07-07 12:01:35.111] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #24800/73977, avg time per method: 0.72ms
+[2023-07-07 12:01:35.172] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #25000/73977, avg time per method: 0.30ms
+[2023-07-07 12:01:35.680] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #25200/73977, avg time per method: 2.54ms
+[2023-07-07 12:01:35.756] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #25400/73977, avg time per method: 0.38ms
+[2023-07-07 12:01:35.806] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #25600/73977, avg time per method: 0.25ms
+[2023-07-07 12:01:35.839] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #25800/73977, avg time per method: 0.16ms
+[2023-07-07 12:01:36.079] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #26000/73977, avg time per method: 1.20ms
+[2023-07-07 12:01:36.149] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #26200/73977, avg time per method: 0.35ms
+[2023-07-07 12:01:36.189] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #26400/73977, avg time per method: 0.19ms
+[2023-07-07 12:01:36.294] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #26600/73977, avg time per method: 0.52ms
+[2023-07-07 12:01:36.330] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #26800/73977, avg time per method: 0.18ms
+[2023-07-07 12:01:36.365] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #27000/73977, avg time per method: 0.17ms
+[2023-07-07 12:01:36.765] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #27200/73977, avg time per method: 2.00ms
+[2023-07-07 12:01:36.836] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #27400/73977, avg time per method: 0.35ms
+[2023-07-07 12:01:37.081] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #27600/73977, avg time per method: 1.23ms
+[2023-07-07 12:01:37.154] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #27800/73977, avg time per method: 0.37ms
+[2023-07-07 12:01:37.182] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #28000/73977, avg time per method: 0.14ms
+[2023-07-07 12:01:37.223] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #28200/73977, avg time per method: 0.21ms
+[2023-07-07 12:01:37.255] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #28400/73977, avg time per method: 0.14ms
+[2023-07-07 12:01:37.326] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #28600/73977, avg time per method: 0.36ms
+[2023-07-07 12:01:37.355] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #28800/73977, avg time per method: 0.14ms
+[2023-07-07 12:01:37.839] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #29000/73977, avg time per method: 2.42ms
+[2023-07-07 12:01:38.052] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #29200/73977, avg time per method: 1.07ms
+[2023-07-07 12:01:38.088] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #29400/73977, avg time per method: 0.18ms
+[2023-07-07 12:01:38.334] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #29600/73977, avg time per method: 1.23ms
+[2023-07-07 12:01:38.417] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #29800/73977, avg time per method: 0.41ms
+[2023-07-07 12:01:38.662] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #30000/73977, avg time per method: 1.23ms
+[2023-07-07 12:01:38.737] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #30200/73977, avg time per method: 0.37ms
+[2023-07-07 12:01:38.771] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #30400/73977, avg time per method: 0.17ms
+[2023-07-07 12:01:38.955] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #30600/73977, avg time per method: 0.92ms
+[2023-07-07 12:01:38.985] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #30800/73977, avg time per method: 0.15ms
+[2023-07-07 12:01:39.225] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #31000/73977, avg time per method: 1.20ms
+[2023-07-07 12:01:39.268] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #31200/73977, avg time per method: 0.21ms
+[2023-07-07 12:01:40.181] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #31400/73977, avg time per method: 4.56ms
+[2023-07-07 12:01:40.233] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #31600/73977, avg time per method: 0.26ms
+[2023-07-07 12:01:40.262] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #31800/73977, avg time per method: 0.14ms
+[2023-07-07 12:01:40.324] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #32000/73977, avg time per method: 0.31ms
+[2023-07-07 12:01:40.361] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #32200/73977, avg time per method: 0.18ms
+[2023-07-07 12:02:00.387] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <net.wifi.WifiConfiguration: java.lang.String toString()>
+[2023-07-07 12:02:01.556] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #32400/73977, avg time per method: 105.97ms
+[2023-07-07 12:02:01.595] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #32600/73977, avg time per method: 0.19ms
+[2023-07-07 12:02:01.737] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #32800/73977, avg time per method: 0.71ms
+[2023-07-07 12:02:01.886] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #33000/73977, avg time per method: 0.74ms
+[2023-07-07 12:02:21.891] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <widget.GridView: void setupChild(android.view.View,int,int,boolean,int,boolean,boolean,int)>
+[2023-07-07 12:02:22.261] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #33200/73977, avg time per method: 101.88ms
+[2023-07-07 12:02:42.265] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <telecom.Call: void internalUpdate(android.telecom.ParcelableCall,java.util.Map)>
+[2023-07-07 12:02:42.571] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #33400/73977, avg time per method: 101.55ms
+[2023-07-07 12:02:42.640] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #33600/73977, avg time per method: 0.35ms
+[2023-07-07 12:02:48.372] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #33800/73977, avg time per method: 28.66ms
+[2023-07-07 12:02:48.417] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #34000/73977, avg time per method: 0.22ms
+[2023-07-07 12:03:08.434] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <view.View: void draw(android.graphics.Canvas)>
+[2023-07-07 12:03:08.449] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #34200/73977, avg time per method: 100.16ms
+[2023-07-07 12:03:08.484] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #34400/73977, avg time per method: 0.17ms
+[2023-07-07 12:03:08.518] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #34600/73977, avg time per method: 0.16ms
+[2023-07-07 12:03:13.148] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #34800/73977, avg time per method: 23.15ms
+[2023-07-07 12:03:13.190] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #35000/73977, avg time per method: 0.21ms
+[2023-07-07 12:03:33.192] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <widget.Toolbar: void onLayout(boolean,int,int,int,int)>
+[2023-07-07 12:03:54.484] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <widget.TextView: void makeNewLayout(int,int,android.text.BoringLayout$Metrics,android.text.BoringLayout$Metrics,int,boolean)>
+[2023-07-07 12:03:54.633] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #35200/73977, avg time per method: 207.21ms
+[2023-07-07 12:03:54.863] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #35400/73977, avg time per method: 1.15ms
+[2023-07-07 12:03:55.028] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #35600/73977, avg time per method: 0.83ms
+[2023-07-07 12:03:55.105] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #35800/73977, avg time per method: 0.39ms
+[2023-07-07 12:03:55.274] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #36000/73977, avg time per method: 0.85ms
+[2023-07-07 12:03:55.876] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #36200/73977, avg time per method: 3.01ms
+[2023-07-07 12:04:15.892] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <content.res.Configuration: android.content.res.Configuration generateDelta(android.content.res.Configuration,android.content.res.Configuration)>
+[2023-07-07 12:04:15.967] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #36400/73977, avg time per method: 100.46ms
+[2023-07-07 12:04:35.985] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <view.View: void setFlags(int,int)>
+[2023-07-07 12:04:36.007] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #36600/73977, avg time per method: 100.19ms
+[2023-07-07 12:04:36.078] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #36800/73977, avg time per method: 0.35ms
+[2023-07-07 12:04:36.154] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #37000/73977, avg time per method: 0.38ms
+[2023-07-07 12:04:36.539] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #37200/73977, avg time per method: 1.92ms
+[2023-07-07 12:04:50.300] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #37400/73977, avg time per method: 68.80ms
+[2023-07-07 12:05:10.313] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <view.WindowManager$LayoutParams: int copyFrom(android.view.WindowManager$LayoutParams)>
+[2023-07-07 12:05:10.338] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #37600/73977, avg time per method: 100.19ms
+[2023-07-07 12:05:10.376] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #37800/73977, avg time per method: 0.19ms
+[2023-07-07 12:05:12.403] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #38000/73977, avg time per method: 10.13ms
+[2023-07-07 12:05:12.450] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #38200/73977, avg time per method: 0.23ms
+[2023-07-07 12:05:16.253] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #38400/73977, avg time per method: 19.02ms
+[2023-07-07 12:05:16.870] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #38600/73977, avg time per method: 3.09ms
+[2023-07-07 12:05:17.447] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #38800/73977, avg time per method: 2.88ms
+[2023-07-07 12:05:17.484] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #39000/73977, avg time per method: 0.18ms
+[2023-07-07 12:05:17.514] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #39200/73977, avg time per method: 0.15ms
+[2023-07-07 12:05:17.695] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #39400/73977, avg time per method: 0.90ms
+[2023-07-07 12:05:17.741] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #39600/73977, avg time per method: 0.23ms
+[2023-07-07 12:05:17.806] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #39800/73977, avg time per method: 0.32ms
+[2023-07-07 12:05:37.829] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <content.pm.PackageParser: boolean parseBaseApplication(android.content.pm.PackageParser$Package,android.content.res.Resources,android.content.res.XmlResourceParser,int,java.lang.String[])>
+[2023-07-07 12:05:37.849] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #40000/73977, avg time per method: 100.21ms
+[2023-07-07 12:05:38.053] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #40200/73977, avg time per method: 1.02ms
+[2023-07-07 12:05:38.737] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #40400/73977, avg time per method: 3.42ms
+[2023-07-07 12:05:38.767] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #40600/73977, avg time per method: 0.15ms
+[2023-07-07 12:05:38.879] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #40800/73977, avg time per method: 0.56ms
+[2023-07-07 12:05:39.130] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #41000/73977, avg time per method: 1.25ms
+[2023-07-07 12:05:39.168] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #41200/73977, avg time per method: 0.19ms
+[2023-07-07 12:05:39.256] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #41400/73977, avg time per method: 0.44ms
+[2023-07-07 12:05:39.302] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #41600/73977, avg time per method: 0.22ms
+[2023-07-07 12:05:44.960] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #41800/73977, avg time per method: 28.28ms
+[2023-07-07 12:05:44.982] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #42000/73977, avg time per method: 0.11ms
+[2023-07-07 12:06:04.894] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #42200/73977, avg time per method: 99.56ms
+[2023-07-07 12:06:04.932] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #42400/73977, avg time per method: 0.19ms
+[2023-07-07 12:06:05.007] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #42600/73977, avg time per method: 0.37ms
+[2023-07-07 12:06:05.068] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #42800/73977, avg time per method: 0.31ms
+[2023-07-07 12:06:05.446] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #43000/73977, avg time per method: 1.89ms
+[2023-07-07 12:06:05.477] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #43200/73977, avg time per method: 0.16ms
+[2023-07-07 12:06:25.491] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <content.pm.ApplicationInfo: void dump(android.util.Printer,java.lang.String,int)>
+[2023-07-07 12:06:25.531] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #43400/73977, avg time per method: 100.27ms
+[2023-07-07 12:06:25.579] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #43600/73977, avg time per method: 0.24ms
+[2023-07-07 12:06:27.414] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #43800/73977, avg time per method: 9.18ms
+[2023-07-07 12:06:27.535] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #44000/73977, avg time per method: 0.60ms
+[2023-07-07 12:06:27.562] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #44200/73977, avg time per method: 0.14ms
+[2023-07-07 12:06:27.588] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #44400/73977, avg time per method: 0.13ms
+[2023-07-07 12:06:28.482] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #44600/73977, avg time per method: 4.47ms
+[2023-07-07 12:06:28.508] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #44800/73977, avg time per method: 0.13ms
+[2023-07-07 12:06:28.739] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #45000/73977, avg time per method: 1.16ms
+[2023-07-07 12:06:48.767] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <widget.ListView: void setupChild(android.view.View,int,int,boolean,int,boolean,boolean)>
+[2023-07-07 12:06:48.865] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #45200/73977, avg time per method: 100.63ms
+[2023-07-07 12:06:49.170] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #45400/73977, avg time per method: 1.53ms
+[2023-07-07 12:06:49.205] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #45600/73977, avg time per method: 0.17ms
+[2023-07-07 12:06:49.260] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #45800/73977, avg time per method: 0.28ms
+[2023-07-07 12:06:49.306] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #46000/73977, avg time per method: 0.23ms
+[2023-07-07 12:06:49.351] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #46200/73977, avg time per method: 0.23ms
+[2023-07-07 12:06:51.124] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #46400/73977, avg time per method: 8.86ms
+[2023-07-07 12:06:51.280] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #46600/73977, avg time per method: 0.78ms
+[2023-07-07 12:06:51.429] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #46800/73977, avg time per method: 0.74ms
+[2023-07-07 12:06:51.471] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #47000/73977, avg time per method: 0.21ms
+[2023-07-07 12:06:54.873] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #47200/73977, avg time per method: 17.01ms
+[2023-07-07 12:06:54.956] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #47400/73977, avg time per method: 0.41ms
+[2023-07-07 12:06:55.047] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #47600/73977, avg time per method: 0.46ms
+[2023-07-07 12:06:55.078] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #47800/73977, avg time per method: 0.16ms
+[2023-07-07 12:06:55.291] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #48000/73977, avg time per method: 1.06ms
+[2023-07-07 12:07:15.413] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <widget.ListView: void dispatchDraw(android.graphics.Canvas)>
+[2023-07-07 12:07:15.428] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #48200/73977, avg time per method: 100.69ms
+[2023-07-07 12:07:15.565] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #48400/73977, avg time per method: 0.68ms
+[2023-07-07 12:07:15.611] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #48600/73977, avg time per method: 0.23ms
+[2023-07-07 12:07:15.646] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #48800/73977, avg time per method: 0.17ms
+[2023-07-07 12:07:15.699] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #49000/73977, avg time per method: 0.27ms
+[2023-07-07 12:07:15.790] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #49200/73977, avg time per method: 0.46ms
+[2023-07-07 12:07:21.890] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #49400/73977, avg time per method: 30.50ms
+[2023-07-07 12:07:24.702] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #49600/73977, avg time per method: 14.05ms
+[2023-07-07 12:07:24.904] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #49800/73977, avg time per method: 1.01ms
+[2023-07-07 12:07:32.974] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #50000/73977, avg time per method: 40.35ms
+[2023-07-07 12:07:33.051] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #50200/73977, avg time per method: 0.38ms
+[2023-07-07 12:07:33.327] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #50400/73977, avg time per method: 1.38ms
+[2023-07-07 12:07:33.940] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #50600/73977, avg time per method: 3.07ms
+[2023-07-07 12:07:33.988] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #50800/73977, avg time per method: 0.24ms
+[2023-07-07 12:07:34.165] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #51000/73977, avg time per method: 0.88ms
+[2023-07-07 12:07:54.167] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <content.Intent: int fillIn(android.content.Intent,int)>
+[2023-07-07 12:07:54.194] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #51200/73977, avg time per method: 100.15ms
+[2023-07-07 12:08:14.362] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <text.method.QwertyKeyListener: boolean onKeyDown(android.view.View,android.text.Editable,int,android.view.KeyEvent)>
+[2023-07-07 12:08:14.399] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #51400/73977, avg time per method: 101.03ms
+[2023-07-07 12:08:34.500] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <text.StaticLayout: void generate(android.text.StaticLayout$Builder,boolean,boolean)>
+[2023-07-07 12:08:34.520] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #51600/73977, avg time per method: 100.60ms
+[2023-07-07 12:08:55.082] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <widget.AbsListView: boolean trackMotionScroll(int,int)>
+[2023-07-07 12:08:55.085] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #51800/73977, avg time per method: 102.83ms
+[2023-07-07 12:08:55.566] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #52000/73977, avg time per method: 2.40ms
+[2023-07-07 12:08:55.652] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #52200/73977, avg time per method: 0.43ms
+[2023-07-07 12:08:55.739] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #52400/73977, avg time per method: 0.43ms
+[2023-07-07 12:09:15.782] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <view.View: boolean draw(android.graphics.Canvas,android.view.ViewGroup,long)>
+[2023-07-07 12:09:15.803] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #52600/73977, avg time per method: 100.32ms
+[2023-07-07 12:09:15.840] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #52800/73977, avg time per method: 0.19ms
+[2023-07-07 12:09:15.867] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #53000/73977, avg time per method: 0.13ms
+[2023-07-07 12:09:15.901] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #53200/73977, avg time per method: 0.16ms
+[2023-07-07 12:09:15.932] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #53400/73977, avg time per method: 0.16ms
+[2023-07-07 12:09:15.957] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #53600/73977, avg time per method: 0.13ms
+[2023-07-07 12:09:15.999] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #53800/73977, avg time per method: 0.21ms
+[2023-07-07 12:09:16.221] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #54000/73977, avg time per method: 1.11ms
+[2023-07-07 12:09:36.258] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <widget.TextView: boolean bringPointIntoView(int)>
+[2023-07-07 12:09:36.265] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #54200/73977, avg time per method: 100.22ms
+[2023-07-07 12:09:36.384] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #54400/73977, avg time per method: 0.59ms
+[2023-07-07 12:09:56.391] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <os.BatteryStats$HistoryPrinter: void printNextItem(java.io.PrintWriter,android.os.BatteryStats$HistoryItem,long,boolean,boolean)>
+[2023-07-07 12:09:56.433] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #54600/73977, avg time per method: 100.24ms
+[2023-07-07 12:09:56.545] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #54800/73977, avg time per method: 0.56ms
+[2023-07-07 12:09:57.366] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #55000/73977, avg time per method: 4.10ms
+[2023-07-07 12:09:57.621] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #55200/73977, avg time per method: 1.28ms
+[2023-07-07 12:09:57.659] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #55400/73977, avg time per method: 0.19ms
+[2023-07-07 12:09:57.745] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #55600/73977, avg time per method: 0.43ms
+[2023-07-07 12:09:57.776] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #55800/73977, avg time per method: 0.16ms
+[2023-07-07 12:09:58.075] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #56000/73977, avg time per method: 1.50ms
+[2023-07-07 12:09:59.983] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #56200/73977, avg time per method: 9.53ms
+[2023-07-07 12:10:00.013] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #56400/73977, avg time per method: 0.15ms
+[2023-07-07 12:10:00.611] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #56600/73977, avg time per method: 2.99ms
+[2023-07-07 12:10:00.655] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #56800/73977, avg time per method: 0.22ms
+[2023-07-07 12:10:00.970] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #57000/73977, avg time per method: 1.58ms
+[2023-07-07 12:10:01.025] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #57200/73977, avg time per method: 0.27ms
+[2023-07-07 12:10:01.063] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #57400/73977, avg time per method: 0.19ms
+[2023-07-07 12:10:21.065] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <app.FragmentManagerImpl: void moveToState(android.app.Fragment,int,int,int,boolean)>
+[2023-07-07 12:10:41.379] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <service.wallpaper.WallpaperService$Engine: void updateSurface(boolean,boolean,boolean)>
+[2023-07-07 12:10:42.169] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #57600/73977, avg time per method: 205.53ms
+[2023-07-07 12:10:42.345] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #57800/73977, avg time per method: 0.88ms
+[2023-07-07 12:10:42.390] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #58000/73977, avg time per method: 0.22ms
+[2023-07-07 12:10:42.697] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #58200/73977, avg time per method: 1.54ms
+[2023-07-07 12:10:42.738] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #58400/73977, avg time per method: 0.20ms
+[2023-07-07 12:10:42.823] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #58600/73977, avg time per method: 0.43ms
+[2023-07-07 12:10:42.879] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #58800/73977, avg time per method: 0.27ms
+[2023-07-07 12:10:42.912] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #59000/73977, avg time per method: 0.16ms
+[2023-07-07 12:10:42.955] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #59200/73977, avg time per method: 0.22ms
+[2023-07-07 12:10:42.995] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #59400/73977, avg time per method: 0.20ms
+[2023-07-07 12:10:43.267] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #59600/73977, avg time per method: 1.36ms
+[2023-07-07 12:10:44.071] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #59800/73977, avg time per method: 4.02ms
+[2023-07-07 12:10:44.208] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #60000/73977, avg time per method: 0.68ms
+[2023-07-07 12:10:44.245] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #60200/73977, avg time per method: 0.19ms
+[2023-07-07 12:10:44.421] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #60400/73977, avg time per method: 0.87ms
+[2023-07-07 12:10:44.490] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #60600/73977, avg time per method: 0.35ms
+[2023-07-07 12:11:04.497] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <net.wifi.SupplicantState$2: void <clinit>()>
+[2023-07-07 12:11:04.526] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #60800/73977, avg time per method: 100.17ms
+[2023-07-07 12:11:24.635] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <view.View: java.lang.String toString()>
+[2023-07-07 12:11:24.669] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #61000/73977, avg time per method: 100.72ms
+[2023-07-07 12:11:44.695] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <hardware.camera2.legacy.LegacyRequestMapper: void convertRequestMetadata(android.hardware.camera2.legacy.LegacyRequest)>
+[2023-07-07 12:11:48.946] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #61200/73977, avg time per method: 121.38ms
+[2023-07-07 12:11:49.062] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #61400/73977, avg time per method: 0.58ms
+[2023-07-07 12:11:49.476] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #61600/73977, avg time per method: 2.07ms
+[2023-07-07 12:11:49.628] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #61800/73977, avg time per method: 0.76ms
+[2023-07-07 12:12:09.632] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <widget.LinearLayout: void measureHorizontal(int,int)>
+[2023-07-07 12:12:29.654] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <content.res.Configuration: int diff(android.content.res.Configuration,boolean)>
+[2023-07-07 12:12:31.424] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #62000/73977, avg time per method: 208.98ms
+[2023-07-07 12:12:31.468] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #62200/73977, avg time per method: 0.22ms
+[2023-07-07 12:12:31.643] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #62400/73977, avg time per method: 0.88ms
+[2023-07-07 12:12:32.587] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #62600/73977, avg time per method: 4.72ms
+[2023-07-07 12:12:32.975] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #62800/73977, avg time per method: 1.94ms
+[2023-07-07 12:12:33.289] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #63000/73977, avg time per method: 1.57ms
+[2023-07-07 12:12:33.342] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #63200/73977, avg time per method: 0.26ms
+[2023-07-07 12:12:33.472] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #63400/73977, avg time per method: 0.65ms
+[2023-07-07 12:12:53.638] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <telecom.Connection: java.lang.String capabilitiesToStringInternal(int,boolean)>
+[2023-07-07 12:12:53.660] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #63600/73977, avg time per method: 100.93ms
+[2023-07-07 12:13:13.674] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <content.res.Configuration: java.lang.String toString()>
+[2023-07-07 12:13:33.688] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <view.ViewGroup: boolean dispatchTouchEvent(android.view.MotionEvent)>
+[2023-07-07 12:13:35.771] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #63800/73977, avg time per method: 210.54ms
+[2023-07-07 12:13:35.811] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #64000/73977, avg time per method: 0.20ms
+[2023-07-07 12:13:35.864] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #64200/73977, avg time per method: 0.27ms
+[2023-07-07 12:13:35.972] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #64400/73977, avg time per method: 0.54ms
+[2023-07-07 12:13:55.976] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <renderscript.Element$1: void <clinit>()>
+[2023-07-07 12:13:56.193] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #64600/73977, avg time per method: 101.11ms
+[2023-07-07 12:13:56.222] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #64800/73977, avg time per method: 0.15ms
+[2023-07-07 12:13:56.363] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #65000/73977, avg time per method: 0.71ms
+[2023-07-07 12:13:56.419] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #65200/73977, avg time per method: 0.28ms
+[2023-07-07 12:13:56.531] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #65400/73977, avg time per method: 0.56ms
+[2023-07-07 12:13:56.584] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #65600/73977, avg time per method: 0.27ms
+[2023-07-07 12:13:56.652] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #65800/73977, avg time per method: 0.34ms
+[2023-07-07 12:14:16.663] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <text.StaticLayout: int out(java.lang.CharSequence,int,int,int,int,int,int,int,float,float,android.text.style.LineHeightSpan[],int[],android.graphics.Paint$FontMetricsInt,int,boolean,byte[],int,boolean,int,boolean,boolean,char[],float[],int,android.text.TextUtils$TruncateAt,float,float,android.text.TextPaint,boolean)>
+[2023-07-07 12:14:16.754] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #66000/73977, avg time per method: 100.51ms
+[2023-07-07 12:14:16.844] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #66200/73977, avg time per method: 0.45ms
+[2023-07-07 12:14:16.873] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #66400/73977, avg time per method: 0.14ms
+[2023-07-07 12:14:17.098] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #66600/73977, avg time per method: 1.12ms
+[2023-07-07 12:14:17.530] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #66800/73977, avg time per method: 2.16ms
+[2023-07-07 12:14:18.165] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #67000/73977, avg time per method: 3.18ms
+[2023-07-07 12:14:18.241] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #67200/73977, avg time per method: 0.38ms
+[2023-07-07 12:14:18.279] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #67400/73977, avg time per method: 0.19ms
+[2023-07-07 12:14:18.309] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #67600/73977, avg time per method: 0.14ms
+[2023-07-07 12:14:18.627] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #67800/73977, avg time per method: 1.59ms
+[2023-07-07 12:14:18.728] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #68000/73977, avg time per method: 0.51ms
+[2023-07-07 12:14:18.766] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #68200/73977, avg time per method: 0.19ms
+[2023-07-07 12:14:18.942] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #68400/73977, avg time per method: 0.88ms
+[2023-07-07 12:14:19.024] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #68600/73977, avg time per method: 0.41ms
+[2023-07-07 12:14:39.040] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <widget.RelativeLayout: void onMeasure(int,int)>
+[2023-07-07 12:14:39.066] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #68800/73977, avg time per method: 100.21ms
+[2023-07-07 12:14:40.744] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #69000/73977, avg time per method: 8.39ms
+[2023-07-07 12:14:40.794] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #69200/73977, avg time per method: 0.25ms
+[2023-07-07 12:14:40.832] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #69400/73977, avg time per method: 0.19ms
+[2023-07-07 12:14:40.872] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #69600/73977, avg time per method: 0.20ms
+[2023-07-07 12:14:40.917] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #69800/73977, avg time per method: 0.22ms
+[2023-07-07 12:14:41.079] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #70000/73977, avg time per method: 0.81ms
+[2023-07-07 12:14:41.111] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #70200/73977, avg time per method: 0.16ms
+[2023-07-07 12:14:41.146] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #70400/73977, avg time per method: 0.18ms
+[2023-07-07 12:14:41.201] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #70600/73977, avg time per method: 0.28ms
+[2023-07-07 12:14:41.408] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #70800/73977, avg time per method: 1.04ms
+[2023-07-07 12:14:41.436] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #71000/73977, avg time per method: 0.14ms
+[2023-07-07 12:14:41.498] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #71200/73977, avg time per method: 0.31ms
+[2023-07-07 12:14:41.530] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #71400/73977, avg time per method: 0.16ms
+[2023-07-07 12:14:42.280] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #71600/73977, avg time per method: 3.74ms
+[2023-07-07 12:14:43.893] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #71800/73977, avg time per method: 8.06ms
+[2023-07-07 12:14:46.518] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #72000/73977, avg time per method: 13.12ms
+[2023-07-07 12:14:46.548] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #72200/73977, avg time per method: 0.15ms
+[2023-07-07 12:14:49.934] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #72400/73977, avg time per method: 16.93ms
+[2023-07-07 12:14:49.981] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #72600/73977, avg time per method: 0.23ms
+[2023-07-07 12:14:50.485] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #72800/73977, avg time per method: 2.52ms
+[2023-07-07 12:15:11.512] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <content.Intent: void toShortString(java.lang.StringBuilder,boolean,boolean,boolean,boolean)>
+[2023-07-07 12:15:11.517] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #73000/73977, avg time per method: 105.15ms
+[2023-07-07 12:15:16.489] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #73200/73977, avg time per method: 24.86ms
+[2023-07-07 12:15:36.503] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <content.res.Configuration: int updateFrom(android.content.res.Configuration)>
+[2023-07-07 12:15:56.515] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <widget.TextView: void <init>(android.content.Context,android.util.AttributeSet,int,int)>
+[2023-07-07 12:15:56.579] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #73400/73977, avg time per method: 200.45ms
+[2023-07-07 12:16:16.583] main INFO com.iscas.JavaExP.utils.CFGTraverse [CFGTraverse.java:64] - Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ <view.SurfaceView: void updateSurface()>
+[2023-07-07 12:16:16.899] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #73600/73977, avg time per method: 101.60ms
+[2023-07-07 12:16:17.281] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:72] - This is the method #73800/73977, avg time per method: 1.91ms
+[2023-07-07 12:16:18.916] main INFO c.i.J.c.e.ThrownExceptionAnalyzer [ThrownExceptionAnalyzer.java:36] - getThrownExceptionList end...
+[2023-07-07 12:16:18.916] main INFO c.i.J.c.e.ExceptionInfoClient [ExceptionInfoClient.java:45] - Successfully analyze with ExceptionInfoClient.
+[2023-07-07 12:16:30.688] main INFO com.iscas.JavaExP.Main [Main.java:66] - ---------------------------------------
+[2023-07-07 12:16:30.688] main INFO com.iscas.JavaExP.Main [Main.java:67] - Analyzing android10 Finish...
+
+[2023-07-07 12:16:30.692] main INFO com.iscas.JavaExP.Main [Main.java:68] - ExceptionInfoClient time = 1578 seconds
+[2023-07-07 12:16:30.692] main INFO com.iscas.JavaExP.Main [Main.java:69] - Success! Please see files in the result folder results/

@@ -12,6 +12,7 @@ import com.iscas.JavaExP.utils.SootUtils;
 import lombok.extern.slf4j.Slf4j;
 import soot.SootClass;
 import soot.SootMethod;
+import soot.Trap;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -294,11 +295,16 @@ public class ExceptionInfoClientOutput {
                     if (exceptionInfo.getExceptionMsg().length() > 0)
                         sb.append("Message:" + exceptionInfo.getExceptionMsg() + "\n");
                     StringBuilder subStr = new StringBuilder();
+                    if(exceptionInfo.isRethrow()){
+                        Trap trap = exceptionInfo.getTrap();
+                        subStr.append("This is a rethrow exception after an exception with type "+ trap.getException().getName() +" is caught, ");//RefinedCondition:
+                        subStr.append("when executing the statements from "+trap.getBeginUnit() +" to " +trap.getEndUnit()+ "\n");//RefinedCondition:
+                    }
                     for (ConditionWithValueSet conditionWithValueSet : exceptionInfo.getConditionTrackerInfo().getRefinedConditions().values()) {
                         if (conditionWithValueSet.toString().length() > 0)
                             subStr.append(conditionWithValueSet + "\n");
                     }
-                    if (subStr.length() == 0 && exceptionInfo.getConditionTrackerInfo().getRelatedVarType() == RelatedVarType.Empty) {
+                    if (!exceptionInfo.isRethrow()&& subStr.length() == 0 && exceptionInfo.getConditionTrackerInfo().getRelatedVarType() == RelatedVarType.Empty) {
                         subStr.append("Direct Throw Without Any Condition\n");//RefinedCondition:
                     }
                     if (subStr.length() > 0) {
