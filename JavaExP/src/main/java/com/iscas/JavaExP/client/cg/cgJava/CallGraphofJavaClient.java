@@ -4,7 +4,6 @@ import com.iscas.JavaExP.base.Global;
 import com.iscas.JavaExP.client.BaseClient;
 import com.iscas.JavaExP.client.cg.CgModify;
 import lombok.extern.slf4j.Slf4j;
-import soot.jimple.toolkits.callgraph.CallGraph;
 
 /**
  * Analyzer Class
@@ -20,11 +19,8 @@ public class CallGraphofJavaClient extends BaseClient {
 		log.info("Start analyze with CallGraphClient.");
 		CgModify cgModify = new CgModify();
 		cgModify.analyze();
-		CallGraph cg = CallGraphBuilder.getCallGraph();
-		Global.v().getAppModel().setCg(cg);
-		log.info("Call Graph has " + cg.size() + " edges.");
+		log.info("Call Graph has " + Global.v().getAppModel().getCg().size() + " edges.");
 		log.info("Successfully analyze with CallGraphClient.");
-
 	}
 
 	@Override

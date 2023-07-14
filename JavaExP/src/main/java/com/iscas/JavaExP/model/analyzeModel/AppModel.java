@@ -64,11 +64,8 @@ public class AppModel implements Serializable {
 	private Map<Pair<Value, Unit>, List<Unit>> unit2defMap;
 	private Map<SootMethod, SootClass> entryMethod2Component;
 	private Map<Pair<SootMethod, Unit>, Set<SootMethod>> entryMethod2MethodAddThisCallBack;
-
-
 	private Map<Unit, List<ParameterSource>> unit2ParameterSource;
 	private Map<String, List<ExceptionInfo>> method2ExceptionList;
-
 	
 	public AppModel() {
 		String name = MyConfig.getInstance().getAppName();
