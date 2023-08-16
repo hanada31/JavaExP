@@ -110,7 +110,7 @@ public class Main {
 		options.addOption("name", true, "-name: Set the name of the apk under analysis.");
 		options.addOption("path", true, "-path: Set the path to the apk under analysis.");
 		options.addOption("androidJar", true, "-androidJar: Set the path of android.jar.");
-		options.addOption("isJimple", true, "-isJimple: Use Jimple for true, Shimple for false.");
+		options.addOption("isJimple", false, "-isJimple: Use Jimple for true, Shimple for false.");
 
 		options.addOption("exceptionPath", true, "-exceptionPath: exception file folder [optional].");
 		options.addOption("CGPath", true, "-CGPath: Android CallGraph file [optional.");
@@ -132,6 +132,7 @@ public class Main {
 		options.addOption("outputDir", true, "-outputDir: Set the output folder of the apk.");
 		options.addOption("sootOutput", false, "-sootOutput: Output the sootOutput");
 		options.addOption("exceptionInput", true, "-exceptionInput: exception file folder");
+		options.addOption("interProcedure", false, "-interProcedure: true for interProcedure, false for intraProcedure");
 
 		return options;
 	}
@@ -156,7 +157,6 @@ public class Main {
 
 		/** run config **/
 		MyConfig.getInstance().setTag(mCmd.getOptionValue("tag", null));
-		MyConfig.getInstance().setJimple(Boolean.parseBoolean((mCmd.getOptionValue("isJimple", "false"))));
 		MyConfig.getInstance().setAppName(mCmd.getOptionValue("name", ""));
 		MyConfig.getInstance().setAppPath(mCmd.getOptionValue("path", System.getProperty("user.dir")) + File.separator);
 		MyConfig.getInstance().setAndroidJar(mCmd.getOptionValue("androidJar", "lib"+File.separator+"platforms") + File.separator);
@@ -177,6 +177,10 @@ public class Main {
 		int timeLimit = Integer.valueOf(mCmd.getOptionValue("time", "90"));
 		MyConfig.getInstance().setTimeLimit(timeLimit);
 		MyConfig.getInstance().setCallgraphAlgorithm(mCmd.getOptionValue("callgraphAlgorithm", "CHA"));
+		if(mCmd.hasOption("interProcedure"))
+			MyConfig.getInstance().setInterProcedure(true);
+		if(mCmd.hasOption("isJimple"))
+			MyConfig.getInstance().setJimple(true);
 
 		String client = mCmd.getOptionValue("client", "MainClient");
 		MyConfig.getInstance().setClient(mCmd.getOptionValue("client", client));

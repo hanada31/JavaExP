@@ -16,7 +16,6 @@ import java.util.List;
 public class ExceptionAnalyzer extends Analyzer {
     // for debugging only
     boolean openFilter = false; //TODO
-    boolean isInterProcedure = true;
 
     public ExceptionAnalyzer() {
         super();
@@ -27,7 +26,7 @@ public class ExceptionAnalyzer extends Analyzer {
     boolean filterMethod(SootMethod sootMethod) {
         List<String> mtds = new ArrayList<>();
 //        mtds.add("enableForegroundDispatch(");
-        mtds.add("disableForegroundDispatchInternal(");
+//        mtds.add("disableForegroundDispatchInternal(");
 //        mtds.add("ensureNotOnMainThread(");
 //        mtds.add("callee_with_arg");
 

@@ -12,6 +12,7 @@ import soot.options.Options;
 public class MyConfig {
 
 	private boolean isJimple = false;
+	private boolean isInterProcedure = false;
 	private String resultFolder;
 	private String appName;
 	private String appPath;
@@ -37,6 +38,8 @@ public class MyConfig {
 
 	private String Strategy="";
 
+
+
 	private MyConfig() {
 	}
 
@@ -46,6 +49,14 @@ public class MyConfig {
 
 	public void setExceptionFolderPath(String exceptionFolderPath) {
 		ExceptionFolderPath = exceptionFolderPath;
+	}
+
+	public boolean isInterProcedure() {
+		return isInterProcedure;
+	}
+
+	public void setInterProcedure(boolean interProcedure) {
+		isInterProcedure = interProcedure;
 	}
 
 

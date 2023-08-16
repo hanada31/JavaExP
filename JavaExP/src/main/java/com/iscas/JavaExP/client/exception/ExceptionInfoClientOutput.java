@@ -15,6 +15,7 @@ import soot.SootMethod;
 import soot.Trap;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.*;
 
@@ -28,7 +29,7 @@ import static com.alibaba.fastjson.JSON.toJSONString;
 @Slf4j
 public class ExceptionInfoClientOutput {
 
-    public ExceptionInfoClientOutput() {}
+    public ExceptionInfoClientOutput() throws FileNotFoundException {}
 
     /**
      * write to Json File after each class is Analyzed
@@ -277,49 +278,76 @@ public class ExceptionInfoClientOutput {
         jsonObject.put("callerOfSignaler2SourceVar" , callerOfSingnlar2SourceVar);
     }
 
-    /**
-     * printExceptionInfoList
-     */
-    public static void printExceptionInfoList() {
-        Set<String> history = new HashSet<>();
-        StringBuilder finalTxt = new StringBuilder();
-        Map<String, List<ExceptionInfo>> map = Global.v().getAppModel().getMethod2ExceptionList();
-        for (SootClass sootClass : SootUtils.getApplicationClasses()) {
-            for (SootMethod sootMethod : sootClass.getMethods()) {
-                if (!map.containsKey(sootMethod.getSignature())) continue;
-                for (ExceptionInfo exceptionInfo : map.get(sootMethod.getSignature())) {
-                    //print condition information
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("\n" + sootMethod.getSignature() + "\n");
-                    sb.append("Type:" + exceptionInfo.getExceptionName() + "\n");
-                    if (exceptionInfo.getExceptionMsg().length() > 0)
-                        sb.append("Message:" + exceptionInfo.getExceptionMsg() + "\n");
-                    StringBuilder subStr = new StringBuilder();
-                    if(exceptionInfo.isRethrow()){
-                        Trap trap = exceptionInfo.getTrap();
-                        subStr.append("This is a rethrow exception after an exception with type "+ trap.getException().getName() +" is caught, ");//RefinedCondition:
-                        subStr.append("when executing the statements from "+trap.getBeginUnit() +" to " +trap.getEndUnit()+ "\n");//RefinedCondition:
-                    }
-                    for (ConditionWithValueSet conditionWithValueSet : exceptionInfo.getConditionTrackerInfo().getRefinedConditions().values()) {
-                        if (conditionWithValueSet.toString().length() > 0)
-                            subStr.append(conditionWithValueSet + "\n");
-                    }
-                    if (!exceptionInfo.isRethrow()&& subStr.length() == 0 && exceptionInfo.getConditionTrackerInfo().getRelatedVarType() == RelatedVarType.Empty) {
-                        subStr.append("Direct Throw Without Any Condition\n");//RefinedCondition:
-                    }
-                    if (subStr.length() > 0) {
-                        sb.append("ExceptionPreConditions:\n" + subStr);
-                    }
-
-                    if (!history.contains(sb.toString())) {
-                        history.add(sb.toString());
-                        finalTxt.append(sb);
-                    }
-                }
+    private static void addPreConditions(JSONObject jsonObject, ExceptionInfo exceptionInfo) {
+        ArrayList<String> preCondList= new ArrayList<>();
+        if(exceptionInfo==null) return;
+        // 将数组添加到JSON对象中
+        if (exceptionInfo.isRethrow()) {
+            Trap trap = exceptionInfo.getTrap();
+            preCondList.add("This is a rethrow exception after an exception with type " + trap.getException().getName() + " is caught, " +
+                    "when executing the statements from " + trap.getBeginUnit() + " to " + trap.getEndUnit());
+        }
+        for (ConditionWithValueSet conditionWithValueSet : exceptionInfo.getConditionTrackerInfo().getRefinedConditions().values()) {
+            if (conditionWithValueSet.toString().length() > 0){
+                for(RefinedCondition refinedCondition: conditionWithValueSet.getRefinedConditions())
+                    preCondList.add(refinedCondition.toString());
             }
         }
-        if(finalTxt!=null && finalTxt.length()>0) {
-            FileUtils.writeText2File(MyConfig.getInstance().getExceptionFilePath() + "exceptionConditions.txt", finalTxt.toString(), false);
+        if (!exceptionInfo.isRethrow() && preCondList.size() == 0 && exceptionInfo.getConditionTrackerInfo().getRelatedVarType() == RelatedVarType.Empty) {
+            preCondList.add("Direct Throw Without Any Condition");//RefinedCondition:
+        }
+        if (preCondList.size() > 0) {
+            jsonObject.put("preConditions", preCondList);
+        }
+    }
+    /**
+     * printExceptionInfoList in json format
+     */
+    public static void printExceptionInfoList(){
+        Set<String> history = new HashSet<>();
+        Map<String, List<ExceptionInfo>> map = Global.v().getAppModel().getMethod2ExceptionList();
+        JSONObject rootElement = new JSONObject(new LinkedHashMap());
+        JSONArray classListElement = new JSONArray(new ArrayList<>());
+        for (SootClass sootClass : SootUtils.getApplicationClasses()) {
+            JSONObject classElement = new JSONObject(new LinkedHashMap());
+            JSONArray methodListElement = new JSONArray(new ArrayList<>());
+            for (SootMethod sootMethod : sootClass.getMethods()) {
+                JSONObject methodElement = new JSONObject(new LinkedHashMap());
+                JSONArray exceptionListElement = new JSONArray(new ArrayList<>());
+                if (!map.containsKey(sootMethod.getSignature())) continue;
+                for (ExceptionInfo exceptionInfo : map.get(sootMethod.getSignature())) {
+                    JSONObject jsonObject = new JSONObject(true);
+                    addBasic1(jsonObject, exceptionInfo);
+                    addBasic2(jsonObject, exceptionInfo);
+                    addConditions(jsonObject, exceptionInfo);
+                    addPreConditions(jsonObject, exceptionInfo);
+                    if (!history.contains(jsonObject.toString())) {
+                        history.add(jsonObject.toString());
+                        exceptionListElement.add(jsonObject);
+                    }
+                }
+                if(exceptionListElement.size()>0) {
+                    methodElement.put("methodName", sootMethod.getSignature());
+                    methodElement.put("exceptions", exceptionListElement);
+                    methodListElement.add(methodElement);
+                }
+            }
+            if(methodListElement.size()>0) {
+                classElement.put("className", sootClass.getName());
+                classElement.put("methods", methodListElement);
+                classListElement.add(classElement);
+            }
+        }
+        if(classListElement.size()>0) {
+            rootElement.put("classes", classListElement);
+        }
+        try {
+            PrintWriter printWriter = new PrintWriter(MyConfig.getInstance().getExceptionFilePath() + "exceptionConditions.txt");
+            String jsonString = toJSONString(rootElement, SerializerFeature.PrettyFormat, SerializerFeature.SortField);
+            printWriter.write(jsonString);
+            printWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

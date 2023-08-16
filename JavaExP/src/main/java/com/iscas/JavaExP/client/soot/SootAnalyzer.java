@@ -63,7 +63,7 @@ public class SootAnalyzer extends Analyzer {
 			Options.v().set_output_format(Options.output_format_jimple);
 		else
 			Options.v().set_output_format(Options.output_format_shimple);
-		String out = MyConfig.getInstance().getResultFolder() + Global.v().getAppModel().getAppName() + File.separator
+		String out = MyConfig.getInstance().getResultFolder() +MyConfig.getInstance().getAppName() + File.separator
 				+ ConstantUtils.SOOTOUTPUT;
 		Options.v().set_output_dir(out);
 		Options.v().set_src_prec(MyConfig.getInstance().getSrc_prec());

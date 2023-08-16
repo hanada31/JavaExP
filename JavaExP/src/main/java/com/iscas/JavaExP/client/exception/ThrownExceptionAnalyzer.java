@@ -60,6 +60,10 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
      * analyze the information of thrown exceptions
      */
     private void getThrownExceptionList() {
+        if(MyConfig.getInstance().isInterProcedure())
+            log.info("!!!!!! isInterProcedure");
+        else
+            log.info("######## no InterProcedure");
         thrownExceptionInfoList = new ArrayList<>();
         int totalCnt = Global.v().getAppModel().getTopoMethodQueue().size();
         log.info("There are totally {} methods in TopoMethodQueue", totalCnt);
@@ -79,7 +83,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             if (!sootMethod.hasActiveBody()) continue;
             Map<Unit, List<ExceptionInfo>> InvokeStmtSetToCalleeWithException = new HashMap();
             // if callee throw an exception
-            if(isInterProcedure)
+            if(MyConfig.getInstance().isInterProcedure())
                 InvokeStmtSetToCalleeWithException = getCalleeExceptionOfAll(sootMethod, startMS);
             //analyze the method itself and combine the callee analysis
             extractExceptionInfoOfMethod(sootMethod, InvokeStmtSetToCalleeWithException, startMS);
@@ -93,10 +97,10 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
     private Map<Unit, List<ExceptionInfo>> getCalleeExceptionOfAll(SootMethod sootMethod, long startMS) {
         Map<Unit, List<ExceptionInfo>> InvokeStmtSetToCalleeWithException = new HashMap();
         for(Unit unit : sootMethod.getActiveBody().getUnits()){
-//            if(System.currentTimeMillis() - startMS > ConstantUtils.SINGLEMETHODTIME) {
-//                log.info("Timeout while executing getCalleeExceptionOfAll @ " +sootMethod.getSignature() );
-//                continue;
-//            }
+            if(System.currentTimeMillis() - startMS > ConstantUtils.SINGLEMETHODTIME) {
+                log.info("Timeout while executing getCalleeExceptionOfAll @ " +sootMethod.getSignature() );
+                continue;
+            }
             InvokeExpr invokeExpr = SootUtils.getInvokeExp(unit);
             //for the callee
             if(invokeExpr !=null){
@@ -166,7 +170,12 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
      */
     private void extractExceptionInfoOfMethod(SootMethod sootMethod, Map<Unit, List<ExceptionInfo>> invokeStmtSetToCalleeWithException, long startMS) {
         HashSet<String> historyPath = new HashSet<>();
-        List<List<Unit>> allPaths = getThrowAndInvokeEndPaths(sootMethod, invokeStmtSetToCalleeWithException.keySet());
+        List<List<Unit>> allPaths;
+        if(MyConfig.getInstance().isInterProcedure()) {
+            allPaths = getThrowAndInvokeEndPaths(sootMethod, invokeStmtSetToCalleeWithException.keySet());
+        }else {
+            allPaths = getThrowEndPaths(sootMethod);
+        }
         PDGUtils pdgUtils = new PDGUtils(sootMethod, new ExceptionalUnitGraph(sootMethod.getActiveBody()));
         pdgUtils.analyzeThrowAndInvokeControlDependency();
 //        System.err.println(allPaths.size());
@@ -363,5 +372,6 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
 //        ExceptionInfoClientOutput.getSummaryJsonArrayOfThrownException2(thrownExceptionInfoList, exceptionListElement);
 //        ExceptionInfoClientOutput.writeExceptionSummaryInJson(exceptionListElement,"thrownException2");
         ExceptionInfoClientOutput.printExceptionInfoList();
+
     }
 }
