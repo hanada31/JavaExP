@@ -350,4 +350,52 @@ public class ExceptionInfoClientOutput {
             e.printStackTrace();
         }
     }
+
+    /**
+     * printExceptionInfoList in json format
+     */
+    public static void printExceptionInfoListOfAll(){
+        Set<String> history = new HashSet<>();
+        Map<String, List<ExceptionInfo>> map = Global.v().getAppModel().getMethod2ExceptionList();
+        JSONObject rootElement = new JSONObject(new LinkedHashMap());
+        JSONArray classListElement = new JSONArray(new ArrayList<>());
+        for (SootClass sootClass : SootUtils.getApplicationClasses()) {
+            JSONObject classElement = new JSONObject(new LinkedHashMap());
+            JSONArray methodListElement = new JSONArray(new ArrayList<>());
+            for (SootMethod sootMethod : sootClass.getMethods()) {
+                JSONObject methodElement = new JSONObject(new LinkedHashMap());
+                JSONArray exceptionListElement = new JSONArray(new ArrayList<>());
+                if (map.containsKey(sootMethod.getSignature())) {
+                    for (ExceptionInfo exceptionInfo : map.get(sootMethod.getSignature())) {
+                        JSONObject jsonObject = new JSONObject(true);
+                        addBasic1(jsonObject, exceptionInfo);
+                        addBasic2(jsonObject, exceptionInfo);
+                        addConditions(jsonObject, exceptionInfo);
+                        addPreConditions(jsonObject, exceptionInfo);
+                        if (!history.contains(jsonObject.toString())) {
+                            history.add(jsonObject.toString());
+                            exceptionListElement.add(jsonObject);
+                        }
+                    }
+                }
+                methodElement.put("methodName", sootMethod.getSignature());
+                methodElement.put("exceptions", exceptionListElement);
+                methodListElement.add(methodElement);
+            }
+            classElement.put("className", sootClass.getName());
+            classElement.put("methods", methodListElement);
+            classListElement.add(classElement);
+
+        }
+        rootElement.put("classes", classListElement);
+
+        try {
+            PrintWriter printWriter = new PrintWriter(MyConfig.getInstance().getExceptionFilePath() + "exceptionConditionsOfAll.txt");
+            String jsonString = toJSONString(rootElement, SerializerFeature.PrettyFormat, SerializerFeature.SortField);
+            printWriter.write(jsonString);
+            printWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -44,3 +44,6 @@ target
 dependency-reduced-pom.xml
 /JavaExP/sootOutput/
 /Benchmark/
+/src/
+*.jar
+soot-dev/

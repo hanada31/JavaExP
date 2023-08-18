@@ -372,6 +372,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
 //        ExceptionInfoClientOutput.getSummaryJsonArrayOfThrownException2(thrownExceptionInfoList, exceptionListElement);
 //        ExceptionInfoClientOutput.writeExceptionSummaryInJson(exceptionListElement,"thrownException2");
         ExceptionInfoClientOutput.printExceptionInfoList();
+        ExceptionInfoClientOutput.printExceptionInfoListOfAll();
 
     }
 }
