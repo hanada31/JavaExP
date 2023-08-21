@@ -114,7 +114,7 @@ public class Basic {
     }
 
     /**
-     * @throws RuntimeException: parameter0 is null && parameter1 is null
+     * @throws RuntimeException: parameter0 is null && parameter1 is not null
      */
     public void throw_with_combined_condition5(String x, String y){
         if(x==null) {

@@ -41,6 +41,30 @@ public class MultipleCall {
     /**
      * @throws RuntimeException: parameter0 < 1000
      */
+    public void throw_exception_caller_with_arg_caught(int x){
+        try {
+            callee_with_arg(x);
+        }catch (Exception e){
+        }
+    }
+
+    public void throw_exception_caller_with_arg_notcaught(int x){
+        try {
+            int a = 3;
+            compute(a);
+            System.out.println();
+        }catch (Exception e){
+        }
+        callee_with_arg(x);
+    }
+
+    private void compute(int a) {
+        System.out.println(a);
+    }
+
+    /**
+     * @throws RuntimeException: parameter0 < 1000
+     */
     public void callee_with_arg(int m) {
         if(m<1000)
             throw new RuntimeException("throw_exception_in_callee");

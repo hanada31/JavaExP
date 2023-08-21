@@ -3,7 +3,9 @@ package com.iscas.JavaExP.client.exception;
 import com.iscas.JavaExP.base.Analyzer;
 import com.iscas.JavaExP.base.Global;
 import com.iscas.JavaExP.model.analyzeModel.*;
-import com.iscas.JavaExP.utils.*;
+import com.iscas.JavaExP.utils.ConstantUtils;
+import com.iscas.JavaExP.utils.SootUtils;
+import com.iscas.JavaExP.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import soot.*;
 import soot.jimple.*;
@@ -11,7 +13,7 @@ import soot.jimple.internal.*;
 import soot.jimple.toolkits.callgraph.Edge;
 import soot.shimple.PhiExpr;
 import soot.toolkits.graph.BriefUnitGraph;
-import soot.toolkits.graph.ExceptionalUnitGraph;
+import soot.toolkits.graph.UnitGraph;
 import soot.toolkits.scalar.UnitValueBoxPair;
 
 import java.util.*;
@@ -284,7 +286,7 @@ public class ConditionAnalyzer  extends Analyzer {
         if(units.contains(unit) || units.size()> ConstantUtils.CONDITIONHISTORYSIZE) return false;
         units.add(unit);
         Body body = sootMethod.getActiveBody();
-        ExceptionalUnitGraph unitGraph = new ExceptionalUnitGraph(body);
+        UnitGraph unitGraph = new BriefUnitGraph(body);
         List<Unit> predsOf = unitGraph.getPredsOf(unit);
         for (Unit predUnit : predsOf) {
             if (predUnit instanceof JIdentityStmt ) {

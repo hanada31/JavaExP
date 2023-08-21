@@ -4,7 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import soot.Body;
 import soot.SootMethod;
 import soot.Unit;
-import soot.toolkits.graph.ExceptionalUnitGraph;
+import soot.jimple.InvokeExpr;
+import soot.toolkits.graph.BriefUnitGraph;
 import soot.toolkits.graph.UnitGraph;
 
 import java.util.*;
@@ -22,7 +23,7 @@ public class CFGTraverse {
     public CFGTraverse(SootMethod sootMethod) {
         this.sootMethod = sootMethod;
         Body body = sootMethod.retrieveActiveBody();
-        cfg = new ExceptionalUnitGraph(body);
+        cfg = new BriefUnitGraph(body);
         endUnitNumMap = new HashMap<>();
     }
 
@@ -53,13 +54,12 @@ public class CFGTraverse {
 
     }
 
-    public List<List<Unit>> traverseAllPathsEndWithThrowAndInvoke(Set invokeSet, long startMS) {
+    public List<List<Unit>> traverseAllPathsEndWithThrowAndInvoke( long startMS) {
         endUnitNumMap = new HashMap<>();
         Stack<PathNode> stack = new Stack<>(); // 用于存储路径节点的栈
         for (Unit u : cfg.getHeads()) {
             stack.push(new PathNode(u)); // 初始化根节点
         }
-
         while (!stack.isEmpty()) {
             if(System.currentTimeMillis() - startMS > ConstantUtils.SINGLEMETHODTIME) {
                 log.info("Timeout while executing traverseAllPathsEndWithThrowAndInvoke @ " +sootMethod.getSignature() );
@@ -68,21 +68,16 @@ public class CFGTraverse {
             if(allPaths.size()> ConstantUtils.CFGPATHNUMBER) return allPaths;
             PathNode node = stack.pop();
             Unit u = node.getCurrentUnit();
-            if(invokeSet.contains(u)){
-                allPaths.add(new ArrayList<>(node.getPath())); // 找到一条路径
-                if(!endUnitNumMap.containsKey(u) ||endUnitNumMap.get(u)< ConstantUtils.ENDUNITMAXNUMBER) {
-                    allPaths.add(node.getPath()); // 找到一条路径
-                    updateEndUnitNumMap(u);
-                }
-            }
+            InvokeExpr invokeExpr = SootUtils.getInvokeExp(u);
             if (cfg.getSuccsOf(u).isEmpty()) {
-                if (SootUtils.isNotCaughtThrowUnit(sootMethod,u)) { // 仅保存end at throw 的
-                    if(!endUnitNumMap.containsKey(u) ||endUnitNumMap.get(u)< ConstantUtils.ENDUNITMAXNUMBER) {
-                        allPaths.add(node.getPath()); // 找到一条路径
-                        updateEndUnitNumMap(u);
-                    }
+                //for the callee
+                if(invokeExpr !=null || SootUtils.isNotCaughtThrowUnit(sootMethod,u)) { // 仅保存end at throw 的
+                    addPathToAllPath(u,node);
                 }
             } else {
+                if(invokeExpr !=null ){
+                    addPathToAllPath(u,node);
+                }
                 for (Unit succ : cfg.getSuccsOf(u)) {
                     if(node.getPath().size()>ConstantUtils.CFGPATHNODELEN) break;
                     if(node.getPath().contains(succ)) break;
@@ -92,6 +87,13 @@ public class CFGTraverse {
             }
         }
         return allPaths;
+    }
+
+    private void addPathToAllPath(Unit u, PathNode node) {
+        if(!endUnitNumMap.containsKey(u) ||endUnitNumMap.get(u)< ConstantUtils.ENDUNITMAXNUMBER) {
+            allPaths.add(node.getPath()); // 找到一条路径
+            updateEndUnitNumMap(u);
+        }
     }
 
     private List<List<Unit>> traverseWithThrow(UnitGraph cfg) {
@@ -107,11 +109,7 @@ public class CFGTraverse {
 
             if (cfg.getSuccsOf(u).isEmpty()) {
                 if (SootUtils.isNotCaughtThrowUnit(sootMethod,u)) { // 仅保存end at throw 的
-                    if(!endUnitNumMap.containsKey(u) || endUnitNumMap.get(u)< ConstantUtils.ENDUNITMAXNUMBER) {
-                        allPaths.add(node.getPath()); // 找到一条路径
-                        updateEndUnitNumMap(u);
-//                        System.out.println("allPaths.size() "+allPaths.size());
-                    }
+                    addPathToAllPath(u,node);
                 }
             } else {
                 for (Unit succ : cfg.getSuccsOf(u)) {
