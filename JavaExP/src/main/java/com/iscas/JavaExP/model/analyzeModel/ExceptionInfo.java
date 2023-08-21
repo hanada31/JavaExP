@@ -21,7 +21,7 @@ public class ExceptionInfo implements  Cloneable {
     private SootMethod sootMethod;
     private String sootMethodName;
     private Unit unit;
-
+    private int throwUnitOrder=-1;
 
     ConditionTrackerInfo conditionTrackerInfo;
 
@@ -165,6 +165,14 @@ public class ExceptionInfo implements  Cloneable {
 
     public void setTrap(Trap trap) {
         this.trap = trap;
+    }
+
+    public int getThrowUnitOrder() {
+        return throwUnitOrder;
+    }
+
+    public void setThrowUnitOrder(int throwUnitOrder) {
+        this.throwUnitOrder = throwUnitOrder;
     }
 
 //    @Override

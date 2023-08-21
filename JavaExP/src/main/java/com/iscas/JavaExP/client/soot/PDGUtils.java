@@ -8,7 +8,6 @@ import soot.Unit;
 import soot.jimple.IfStmt;
 import soot.jimple.LookupSwitchStmt;
 import soot.jimple.TableSwitchStmt;
-import soot.jimple.ThrowStmt;
 import soot.toolkits.graph.Block;
 import soot.toolkits.graph.UnitGraph;
 import soot.toolkits.graph.pdg.IRegion;
@@ -137,7 +136,7 @@ public class PDGUtils extends MyHashMutablePDG {
 
         /* second step: calculate both indirect and direct control dependency maintained by CDSMap */
         for(Unit key: CDMap.keySet()){
-            if(!(key instanceof ThrowStmt)) continue; // only throw units are concerned
+            if(!SootUtils.isNotCaughtThrowUnit(sootMethod,key)) continue; // only throw units are concerned
             CDSMap.put(key, new HashSet<Unit>());
             addIntoCDSMap(key, key);
         }
@@ -171,7 +170,7 @@ public class PDGUtils extends MyHashMutablePDG {
 
         /* second step: calculate both indirect and direct control dependency maintained by CDSMap */
         for(Unit key: CDMap.keySet()){
-            if(!(key instanceof ThrowStmt) && SootUtils.getInvokeExp(key)==null) continue; // only throw units are concerned
+            if(!SootUtils.isNotCaughtThrowUnit(sootMethod,key) && SootUtils.getInvokeExp(key)==null) continue; // only throw units are concerned
             CDSMap.put(key, new HashSet<Unit>());
             addIntoCDSMap(key, key);
         }

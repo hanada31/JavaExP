@@ -72,6 +72,7 @@ public class ConstantUtils {
     public static final int LARGECALLERSET = 10 ;
     public static final int SIGNLARCALLERDEPTH = 5;
     public static final int CFGPATHNUMBER = 500;
+    public static final int ENDUNITMAXNUMBER = 10;
 	public static final int CFGPATHNODELEN = 50;
     public static final long SINGLEMETHODTIME = 20* 1000; //120s
 

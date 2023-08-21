@@ -178,7 +178,6 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
         }
         PDGUtils pdgUtils = new PDGUtils(sootMethod, new ExceptionalUnitGraph(sootMethod.getActiveBody()));
         pdgUtils.analyzeThrowAndInvokeControlDependency();
-//        System.err.println(allPaths.size());
         //for each throw unit in the end of a path
         Map<Unit, Trap> caughtEntryUnits = new HashMap();
         for (Trap trap : sootMethod.getActiveBody().getTraps()) {
@@ -219,6 +218,8 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
         if(exceptionClass==null || exceptionClass.getName().equals("java.lang.Throwable")) return;
 
         ExceptionInfo exceptionInfo =  new ExceptionInfo(sootMethod, throwUnit, exceptionClass.getName());
+        int order = SootUtils.getThrowUnitListFromMethod(sootMethod).indexOf(throwUnit);
+        exceptionInfo.setThrowUnitOrder(order);
         if(trap != null) {
             exceptionInfo.setRethrow(true);
             exceptionInfo.setTrap(trap);

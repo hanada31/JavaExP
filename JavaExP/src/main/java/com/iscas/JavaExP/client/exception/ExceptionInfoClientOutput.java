@@ -189,13 +189,16 @@ public class ExceptionInfoClientOutput {
 
     public static void addBasic1(JSONObject jsonObject, ExceptionInfo info) {
         jsonObject.put("method", info.getSootMethod().getSignature());
+        jsonObject.put("modifier", info.getModifier());
+        jsonObject.put("throwUnit", info.getUnit().toString());
+        jsonObject.put("throwUnitOrder", info.getThrowUnitOrder());
         jsonObject.put("ExceptionName", info.getExceptionName());
         jsonObject.put("ExceptionType", info.getExceptionType());
         jsonObject.put("message", info.getExceptionMsg());
     }
 
     public static void addBasic2(JSONObject jsonObject, ExceptionInfo info) {
-        jsonObject.put("modifier", info.getModifier());
+
 //        jsonObject.put("osVersionRelated", info.isOsVersionRelated());
 //        jsonObject.put("resourceRelated", info.isResourceRelated());
 //        jsonObject.put("assessRelated", info.isAssessRelated());

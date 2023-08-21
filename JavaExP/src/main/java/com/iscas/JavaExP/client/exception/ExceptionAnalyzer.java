@@ -25,7 +25,7 @@ public class ExceptionAnalyzer extends Analyzer {
 
     boolean filterMethod(SootMethod sootMethod) {
         List<String> mtds = new ArrayList<>();
-//        mtds.add("enableForegroundDispatch(");
+        mtds.add("org.apache.commons.io.FileUtils: void doCopyFile(");
 //        mtds.add("disableForegroundDispatchInternal(");
 //        mtds.add("ensureNotOnMainThread(");
 //        mtds.add("callee_with_arg");

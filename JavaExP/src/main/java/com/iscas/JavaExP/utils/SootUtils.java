@@ -1404,6 +1404,43 @@ public class SootUtils {
 		return units;
 	}
 
+	public static List<Unit> getThrowUnitListFromMethod(SootMethod m) {
+		List<Unit> units = getUnitListFromMethod(m);
+		List<Unit> throwUnits = new ArrayList<>();
+		for(Unit u: units){
+			if(u instanceof  ThrowStmt) {
+				List<Unit> defs = SootUtils.getDefOfLocal(m.getSignature(), ((ThrowStmt) u).getOp(), u);
+				if(defs.size()==0) continue;
+				boolean isCaught = false;
+				for (Trap trap : m.getActiveBody().getTraps()) {
+					if (trap.getHandlerUnit() == defs.get(0))
+						isCaught = true;
+				}
+				if (!isCaught)
+					throwUnits.add(u);
+			}
+
+		}
+		return throwUnits;
+	}
+
+	public static boolean isNotCaughtThrowUnit(SootMethod m, Unit u) {
+		boolean isNotCaughtThrowUnit = false;
+		if(u instanceof ThrowStmt) {
+			List<Unit> defs = SootUtils.getDefOfLocal(m.getSignature(), ((ThrowStmt) u).getOp(), u);
+			if(defs.size()==0) return false;
+			boolean isCaught = false;
+			for (Trap trap : m.getActiveBody().getTraps()) {
+				if(trap.getHandlerUnit()== defs.get(0))
+					isCaught = true;
+			}
+			if(!isCaught)
+				isNotCaughtThrowUnit = true;
+		}
+
+		return isNotCaughtThrowUnit;
+	}
+
 	public static void getDirectPredsofUnit(SootMethod sootMethod, Unit unit, List<Unit> res) {
 		BriefUnitGraph unitGraph = new BriefUnitGraph(sootMethod.getActiveBody());
 		List<Unit> predsOf = unitGraph.getPredsOf(unit);

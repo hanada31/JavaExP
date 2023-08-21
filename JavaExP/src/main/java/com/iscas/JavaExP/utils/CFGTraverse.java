@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import soot.Body;
 import soot.SootMethod;
 import soot.Unit;
-import soot.jimple.ThrowStmt;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.toolkits.graph.UnitGraph;
 
@@ -19,11 +18,12 @@ import java.util.*;
 public class CFGTraverse {
     SootMethod sootMethod;
     UnitGraph cfg;
-
+    Map<Unit, Integer> endUnitNumMap;
     public CFGTraverse(SootMethod sootMethod) {
         this.sootMethod = sootMethod;
         Body body = sootMethod.retrieveActiveBody();
         cfg = new ExceptionalUnitGraph(body);
+        endUnitNumMap = new HashMap<>();
     }
 
     List<List<Unit>> allPaths = new ArrayList<>();
@@ -54,6 +54,7 @@ public class CFGTraverse {
     }
 
     public List<List<Unit>> traverseAllPathsEndWithThrowAndInvoke(Set invokeSet, long startMS) {
+        endUnitNumMap = new HashMap<>();
         Stack<PathNode> stack = new Stack<>(); // 用于存储路径节点的栈
         for (Unit u : cfg.getHeads()) {
             stack.push(new PathNode(u)); // 初始化根节点
@@ -69,10 +70,18 @@ public class CFGTraverse {
             Unit u = node.getCurrentUnit();
             if(invokeSet.contains(u)){
                 allPaths.add(new ArrayList<>(node.getPath())); // 找到一条路径
+                if(!endUnitNumMap.containsKey(u) ||endUnitNumMap.get(u)< ConstantUtils.ENDUNITMAXNUMBER) {
+                    allPaths.add(node.getPath()); // 找到一条路径
+                    updateEndUnitNumMap(u);
+                }
             }
             if (cfg.getSuccsOf(u).isEmpty()) {
-                if (u instanceof ThrowStmt) // 仅保存end at throw 的
-                    allPaths.add(node.getPath()); // 找到一条路径
+                if (SootUtils.isNotCaughtThrowUnit(sootMethod,u)) { // 仅保存end at throw 的
+                    if(!endUnitNumMap.containsKey(u) ||endUnitNumMap.get(u)< ConstantUtils.ENDUNITMAXNUMBER) {
+                        allPaths.add(node.getPath()); // 找到一条路径
+                        updateEndUnitNumMap(u);
+                    }
+                }
             } else {
                 for (Unit succ : cfg.getSuccsOf(u)) {
                     if(node.getPath().size()>ConstantUtils.CFGPATHNODELEN) break;
@@ -86,19 +95,24 @@ public class CFGTraverse {
     }
 
     private List<List<Unit>> traverseWithThrow(UnitGraph cfg) {
+        endUnitNumMap = new HashMap<>();
         Stack<PathNode> stack = new Stack<>(); // 用于存储路径节点的栈
         for (Unit u : cfg.getHeads()) {
             stack.push(new PathNode(u)); // 初始化根节点
         }
-
         while (!stack.isEmpty()) {
             if(allPaths.size()> ConstantUtils.CFGPATHNUMBER) return allPaths;
             PathNode node = stack.pop();
             Unit u = node.getCurrentUnit();
 
             if (cfg.getSuccsOf(u).isEmpty()) {
-                if (u instanceof ThrowStmt) // 仅保存end at throw 的
-                    allPaths.add(node.getPath()); // 找到一条路径
+                if (SootUtils.isNotCaughtThrowUnit(sootMethod,u)) { // 仅保存end at throw 的
+                    if(!endUnitNumMap.containsKey(u) || endUnitNumMap.get(u)< ConstantUtils.ENDUNITMAXNUMBER) {
+                        allPaths.add(node.getPath()); // 找到一条路径
+                        updateEndUnitNumMap(u);
+//                        System.out.println("allPaths.size() "+allPaths.size());
+                    }
+                }
             } else {
                 for (Unit succ : cfg.getSuccsOf(u)) {
                     if(node.getPath().size()>ConstantUtils.CFGPATHNODELEN) break;
@@ -111,7 +125,16 @@ public class CFGTraverse {
         return allPaths;
     }
 
+    private void updateEndUnitNumMap(Unit u) {
+        if(endUnitNumMap.containsKey(u)){
+            endUnitNumMap.put(u, endUnitNumMap.get(u)+1);
+        }else {
+            endUnitNumMap.put(u, 1);
+        }
+    }
+
     private List<List<Unit>> traverse(UnitGraph cfg) {
+        endUnitNumMap = new HashMap<>();
         Stack<PathNode> stack = new Stack<>(); // 用于存储路径节点的栈
 
         for (Unit u : cfg.getHeads()) {
@@ -136,8 +159,6 @@ public class CFGTraverse {
         }
         return allPaths;
     }
-
-
 }
 
 class PathNode {
