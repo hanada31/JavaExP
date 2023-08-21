@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class ExceptionAnalyzer extends Analyzer {
     // for debugging only
-    boolean openFilter = false; //TODO
+    boolean openFilter = true; //TODO
 
     public ExceptionAnalyzer() {
         super();
@@ -25,7 +25,7 @@ public class ExceptionAnalyzer extends Analyzer {
 
     boolean filterMethod(SootMethod sootMethod) {
         List<String> mtds = new ArrayList<>();
-        mtds.add("MultipleCall");
+        mtds.add("org.apache.commons.io.FileSystemUtils: long parseBytes(");
 //        mtds.add("Basic");
 //        mtds.add("callee_with_arg");
 

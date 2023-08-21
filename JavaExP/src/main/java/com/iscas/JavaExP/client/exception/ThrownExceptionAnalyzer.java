@@ -10,7 +10,7 @@ import soot.*;
 import soot.jimple.*;
 import soot.jimple.internal.JCastExpr;
 import soot.shimple.PhiExpr;
-import soot.toolkits.graph.BriefUnitGraph;
+import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.toolkits.scalar.ValueUnitPair;
 
 import java.util.*;
@@ -101,7 +101,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
         }else {
             allPaths = getThrowEndPaths(sootMethod);
         }
-        PDGUtils pdgUtils = new PDGUtils(sootMethod, new BriefUnitGraph(sootMethod.getActiveBody()));
+        PDGUtils pdgUtils = new PDGUtils(sootMethod, new ExceptionalUnitGraph(sootMethod.getActiveBody()));
         pdgUtils.analyzeThrowAndInvokeControlDependency();
         //for each throw unit in the end of a path
 
@@ -111,6 +111,13 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             //if controlPath is the same, only reserve one
             HashSet controlUnits = pdgUtils.getCDSMap().get(lastUnit);
             List<ControlDependOnUnit> controlPath = PDGUtils.getControlPathFromPDG(controlUnits, path);
+
+            if(controlUnits!=null) {
+                controlPath = PDGUtils.getControlPathFromPDG(controlUnits, path);
+            }else{
+                controlPath = ConditionAnalyzer.getAllDominate_self_analysis(sootMethod, lastUnit, path);
+            }
+
             if(!historyPath.contains(PrintUtils.printList(controlPath) +lastUnit.toString())) {
                 historyPath.add(PrintUtils.printList(controlPath) +lastUnit.toString());
                 if(lastUnit instanceof  ThrowStmt) {

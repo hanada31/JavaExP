@@ -3,6 +3,7 @@ package com.iscas.JavaExP.client.exception;
 import com.iscas.JavaExP.base.Analyzer;
 import com.iscas.JavaExP.base.Global;
 import com.iscas.JavaExP.model.analyzeModel.*;
+import com.iscas.JavaExP.utils.CollectionUtils;
 import com.iscas.JavaExP.utils.ConstantUtils;
 import com.iscas.JavaExP.utils.SootUtils;
 import com.iscas.JavaExP.utils.StringUtils;
@@ -169,77 +170,77 @@ public class ConditionAnalyzer  extends Analyzer {
 //        //for shortcut paths
 //        List<ControlDependOnUnit> dominatePathCopy = new ArrayList<>(dominatePaths);
 //        for(ControlDependOnUnit controlDependOnUnit : dominatePathCopy){
-//            if(!mPath.contains(controlDependOnUnit.unit))
+//            if(!mPath.contains(controlDependOnUnit.getUnit()))
 //                dominatePaths.remove(controlDependOnUnit);
 //        }
 //        return dominatePaths;
 //    }
-//    static List<ControlDependOnUnit> getAllDominate_self_analysis(SootMethod sootMethod, Unit mUnit, List<Unit> mPath) {
-//        List<Unit> allPredsOfThrowUnit = new ArrayList<>();
-//        SootUtils.getAllPredsofUnit(sootMethod, mUnit,allPredsOfThrowUnit);
-//        List<ControlDependOnUnit> dominatePaths = new ArrayList<>();
-//        int size = -1;
-//        while (size !=  dominatePaths.size()) {
-//            size = dominatePaths.size();
-//            for (Unit predUnit : sootMethod.getActiveBody().getUnits()) {
-//                boolean newFind = true;
-//                for(ControlDependOnUnit temp: dominatePaths){
-//                    if(temp.unit == predUnit)  newFind = false;
-//                }
-//                if (predUnit instanceof IfStmt && newFind) {
-//                    IfStmt ifStmt = (IfStmt) predUnit;
-//                    //it is not a dominating condition
-//                    boolean isDominate = getIsDominate(sootMethod, ifStmt, allPredsOfThrowUnit, dominatePaths);
-//                    if (isDominate == true) {
-//                        //judge the if statement is satisfied by where it goes to in mPath
-//                        Unit ifTarget = ifStmt.getTarget();
-//                        Unit ifNext = mPath.get(mPath.indexOf(ifStmt)+1);
-//                        boolean satisfied = (ifTarget == ifNext)?true:false;
-//                        dominatePaths.add(new ControlDependOnUnit(ifStmt, satisfied));
-//                    }
-//                }
-//            }
-//        }
-//        //for shortcut paths
-//        List<ControlDependOnUnit> dominatePathCopy = new ArrayList<>(dominatePaths);
-//        for(ControlDependOnUnit controlDependOnUnit : dominatePathCopy){
-//            if(!mPath.contains(controlDependOnUnit.unit))
-//                dominatePaths.remove(controlDependOnUnit);
-//        }
-//        return dominatePaths;
-//    }
-//
-//    static boolean getIsDominate(SootMethod sootMethod, IfStmt ifStmt, List<Unit> allPredsOfThrowUnit, List<ControlDependOnUnit> dominatePaths) {
-//        if (!allPredsOfThrowUnit.contains(ifStmt.getTarget())) {
-//            return true;
-//        }
-//        //data-flow analysis!!! whether an ifUnit can jump out throw unit before two branch merge.
-//        //if the first common item in allpredsofthrowunit
-//        List<Unit> list1 = new ArrayList<>();
-//        list1.add(ifStmt.getTarget());
-//        SootUtils.getAllSuccsofUnit(sootMethod, ifStmt.getTarget(),list1);
-//        List<Unit> list2 = new ArrayList<>();
-//        list2.add(SootUtils.getNotTargetOfIfUnit(sootMethod, ifStmt));
-//        SootUtils.getAllSuccsofUnit(sootMethod, SootUtils.getNotTargetOfIfUnit(sootMethod, ifStmt),list2);
-//        Unit common = CollectionUtils.getCommonElement(list1,list2);
-//        if (common != null && !allPredsOfThrowUnit.contains(common)) {
-//            return true;
-//        }
-//        if (common == null && !allPredsOfThrowUnit.contains(CollectionUtils.getLastItemInList(list1))) {
-//            return true;
-//        }
-//        if (common == null && !allPredsOfThrowUnit.contains(CollectionUtils.getLastItemInList(list2))) {
-//            return true;
-//        }
-//
-//        // in same line with existing
-//        for(ControlDependOnUnit dominateOne: dominatePaths){
-//            if(dominateOne.unit.getJavaSourceStartLineNumber() == ifStmt.getJavaSourceStartLineNumber()) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    static List<ControlDependOnUnit> getAllDominate_self_analysis(SootMethod sootMethod, Unit mUnit, List<Unit> mPath) {
+        List<Unit> allPredsOfThrowUnit = new ArrayList<>();
+        SootUtils.getAllPredsofUnit(sootMethod, mUnit,allPredsOfThrowUnit);
+        List<ControlDependOnUnit> dominatePaths = new ArrayList<>();
+        int size = -1;
+        while (size !=  dominatePaths.size()) {
+            size = dominatePaths.size();
+            for (Unit predUnit : sootMethod.getActiveBody().getUnits()) {
+                boolean newFind = true;
+                for(ControlDependOnUnit temp: dominatePaths){
+                    if(temp.getUnit() == predUnit)  newFind = false;
+                }
+                if (predUnit instanceof IfStmt && newFind) {
+                    IfStmt ifStmt = (IfStmt) predUnit;
+                    //it is not a dominating condition
+                    boolean isDominate = getIsDominate(sootMethod, ifStmt, allPredsOfThrowUnit, dominatePaths);
+                    if (isDominate == true) {
+                        //judge the if statement is satisfied by where it goes to in mPath
+                        Unit ifTarget = ifStmt.getTarget();
+                        Unit ifNext = mPath.get(mPath.indexOf(ifStmt)+1);
+                        boolean satisfied = (ifTarget == ifNext)?true:false;
+                        dominatePaths.add(new ControlDependOnUnit(ifStmt, satisfied));
+                    }
+                }
+            }
+        }
+        //for shortcut paths
+        List<ControlDependOnUnit> dominatePathCopy = new ArrayList<>(dominatePaths);
+        for(ControlDependOnUnit controlDependOnUnit : dominatePathCopy){
+            if(!mPath.contains(controlDependOnUnit.getUnit()))
+                dominatePaths.remove(controlDependOnUnit);
+        }
+        return dominatePaths;
+    }
+
+    static boolean getIsDominate(SootMethod sootMethod, IfStmt ifStmt, List<Unit> allPredsOfThrowUnit, List<ControlDependOnUnit> dominatePaths) {
+        if (!allPredsOfThrowUnit.contains(ifStmt.getTarget())) {
+            return true;
+        }
+        //data-flow analysis!!! whether an ifUnit can jump out throw unit before two branch merge.
+        //if the first common item in allpredsofthrowunit
+        List<Unit> list1 = new ArrayList<>();
+        list1.add(ifStmt.getTarget());
+        SootUtils.getAllSuccsofUnit(sootMethod, ifStmt.getTarget(),list1);
+        List<Unit> list2 = new ArrayList<>();
+        list2.add(SootUtils.getNotTargetOfIfUnit(sootMethod, ifStmt));
+        SootUtils.getAllSuccsofUnit(sootMethod, SootUtils.getNotTargetOfIfUnit(sootMethod, ifStmt),list2);
+        Unit common = CollectionUtils.getCommonElement(list1,list2);
+        if (common != null && !allPredsOfThrowUnit.contains(common)) {
+            return true;
+        }
+        if (common == null && !allPredsOfThrowUnit.contains(CollectionUtils.getLastItemInList(list1))) {
+            return true;
+        }
+        if (common == null && !allPredsOfThrowUnit.contains(CollectionUtils.getLastItemInList(list2))) {
+            return true;
+        }
+
+        // in same line with existing
+        for(ControlDependOnUnit dominateOne: dominatePaths){
+            if(dominateOne.getUnit().getJavaSourceStartLineNumber() == ifStmt.getJavaSourceStartLineNumber()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * get not return check conditions

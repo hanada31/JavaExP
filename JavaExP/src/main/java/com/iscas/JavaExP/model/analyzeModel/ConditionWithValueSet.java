@@ -66,6 +66,10 @@ public class ConditionWithValueSet implements  Cloneable {
 
 	public void optimizeCondition() {
 		List<RefinedCondition> list = new ArrayList<>();
+		List<RefinedCondition> original = new ArrayList<>();
+		for(RefinedCondition refinedCondition: refinedConditions){
+			original.add(refinedCondition);
+		}
 		boolean optimize = true;
 		if (optimize) {
 			int id = 1, signature = 12345;
@@ -109,6 +113,7 @@ public class ConditionWithValueSet implements  Cloneable {
 			list = new ArrayList(refinedConditions);
 			optimizePrintFormat(list);
 		}
+		if(list.size()==0) refinedConditions = original;
 	}
 
 	/**

@@ -71,7 +71,7 @@ public class RegularExpressionAnalyzer  extends Analyzer {
                         if (arg instanceof Local) {
                             List<String> message = Lists.newArrayList();
                             message.add("");
-                            getMsgContentByTracingValue(sootMethod, (Local) arg, unit, message);
+                            getMsgContentByTracingValue(sootMethod, (Local) arg, predUnit, message);
                             exceptionMsg = addQeSymbolToMessage(message.get(0));
                         } else if (arg instanceof Constant) {
                             StringConstant arg1 = (StringConstant) arg;
@@ -129,7 +129,7 @@ public class RegularExpressionAnalyzer  extends Analyzer {
                 if (invokeSig.equals("<java.lang.StringBuilder: java.lang.String toString()>")) {
                     Value value = invokeExpr.getUseBoxes().get(0).getValue();
                     if (value instanceof Local) {
-                        getMsgContentByTracingValue( sootMethod, (Local) value, unit, message);
+                        getMsgContentByTracingValue( sootMethod, (Local) value, defOfLocal, message);
                     }
                 } else if (invokeSig.startsWith("<java.lang.StringBuilder: java.lang.StringBuilder append")) {
                     Value argConstant = invokeExpr.getArgs().get(0);
@@ -154,7 +154,7 @@ public class RegularExpressionAnalyzer  extends Analyzer {
 
                     Value value = ((JVirtualInvokeExpr) invokeExpr).getBaseBox().getValue();
                     if (value instanceof Local) {
-                        getMsgContentByTracingValue(sootMethod, (Local) value, unit, message);
+                        getMsgContentByTracingValue(sootMethod, (Local) value, defOfLocal, message);
                     }
                 }
             } else if (rightOp instanceof NewExpr) {
@@ -163,7 +163,7 @@ public class RegularExpressionAnalyzer  extends Analyzer {
                     traceStringBuilderBack(sootMethod, defOfLocal, message, 0);
                 }
             } else if (rightOp instanceof Local) {
-                getMsgContentByTracingValue( sootMethod, (Local) rightOp, unit, message ) ;
+                getMsgContentByTracingValue( sootMethod, (Local) rightOp, defOfLocal, message ) ;
             }
         }
     }
