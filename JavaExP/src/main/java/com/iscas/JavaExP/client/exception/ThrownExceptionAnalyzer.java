@@ -168,6 +168,8 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
                 if(exceptionInfo.getConditionTrackerInfo().getRefinedConditions().size()==0){
                     //no parameter analysis
                     ExceptionInfo exceptionInfoCopy = new ExceptionInfo(sootMethod, unit, exceptionInfo.getExceptionName());
+                    Unit intraUnit = exceptionInfo.getIntraThrowUnit()==null?exceptionInfo.getUnit():exceptionInfo.getIntraThrowUnit();
+                    exceptionInfoCopy.setIntraThrowUnit(intraUnit);
                     Global.v().getAppModel().addMethod2ExceptionListForOne(sootMethod.getSignature(), exceptionInfoCopy);
                     exceptionInfoListOfCallee.add(exceptionInfoCopy);
                 }else {
@@ -175,6 +177,8 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
                     Map<Integer, Integer> formalPara2ActualPara = SootUtils.getFormalPara2ActualPara(sootMethod,unit);
                     if(formalPara2ActualPara.size()==0) continue;
                     ExceptionInfo exceptionInfoCopy = new ExceptionInfo(sootMethod, unit, exceptionInfo.getExceptionName());
+                    Unit intraUnit = exceptionInfo.getIntraThrowUnit()==null?exceptionInfo.getUnit():exceptionInfo.getIntraThrowUnit();
+                    exceptionInfoCopy.setIntraThrowUnit(intraUnit);
                     exceptionInfoCopy.setExceptionMsg(exceptionInfo.getExceptionMsg());
                     Map<Unit, ConditionWithValueSet> refinedConditionsOld = exceptionInfo.getConditionTrackerInfo().getRefinedConditions();
                     for (Map.Entry<Unit, ConditionWithValueSet> refinedConditionEntry : refinedConditionsOld.entrySet()) {
@@ -247,9 +251,9 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
         }
         Trap trap = null;
         for(Unit unit: path){
-            if(caughtEntryUnits.keySet().contains(unit)){
+            if(caughtEntryUnits.keySet().contains(unit) && path.contains(caughtEntryUnits.get(unit).getBeginUnit())){
                 trap= caughtEntryUnits.get(unit);
-                break;
+                break; //re do
             }
         }
         return trap;

@@ -64,9 +64,16 @@ public class ConditionAnalyzer  extends Analyzer {
         getConditionFromUnit(sootMethod, exceptionUnit, new HashSet<>());
 
         //optimize condition of unit
+        List<RefinedCondition> original = new ArrayList<>();
+
         for(ConditionWithValueSet conditionWithValueSet :conditionTrackerInfo.getRefinedConditions().values() ) {
+//            for(RefinedCondition refinedCondition: conditionWithValueSet.getRefinedConditions()){
+//                original.add(refinedCondition);
+//            }
             conditionWithValueSet.optimizeCondition();
         }
+//        if(conditionTrackerInfo.getRefinedConditions().size()==0) conditionTrackerInfo.get = original;
+
 
         //get Related Methods
         getRelatedMethods(sootMethod);

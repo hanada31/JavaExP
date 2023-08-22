@@ -66,10 +66,6 @@ public class ConditionWithValueSet implements  Cloneable {
 
 	public void optimizeCondition() {
 		List<RefinedCondition> list = new ArrayList<>();
-		List<RefinedCondition> original = new ArrayList<>();
-		for(RefinedCondition refinedCondition: refinedConditions){
-			original.add(refinedCondition);
-		}
 		boolean optimize = true;
 		if (optimize) {
 			int id = 1, signature = 12345;
@@ -103,6 +99,10 @@ public class ConditionWithValueSet implements  Cloneable {
 				//optimize, transport is variables to each use point
 				list = new ArrayList(refinedConditions);
 				optimizeIsVariable(list);
+
+				//optimize, model some judgement statements like equals
+				list = new ArrayList(refinedConditions);
+				optimizeCmpInst(list);
 			}
 
 			//optimize, remove redundant variables
@@ -113,8 +113,8 @@ public class ConditionWithValueSet implements  Cloneable {
 			list = new ArrayList(refinedConditions);
 			optimizePrintFormat(list);
 		}
-		if(list.size()==0) refinedConditions = original;
 	}
+
 
 	/**
 	 * trasfer phi to phi stmt
@@ -388,6 +388,36 @@ public class ConditionWithValueSet implements  Cloneable {
 		for(RefinedCondition temp: toBeDel){
 //			System.out.println("3 " +temp);
 			refinedConditions.remove(temp);
+		}
+	}
+	private void optimizeCmpInst(List<RefinedCondition> list) {
+		Set<RefinedCondition> toBeAdd = new HashSet<>();
+		for(RefinedCondition refinedCondition: list) {
+			if (refinedCondition.getOperator().equals(IROperator.isOP)) {
+				if(refinedCondition.getLeftStr().contains(" cmp ")){
+					if(refinedCondition.getRightStr().equals("0")){
+						RefinedCondition add = new RefinedCondition();
+						add.setLeftStr(refinedCondition.getLeftStr().split(" cmp ")[0]);
+						add.setRightStr(refinedCondition.getLeftStr().split(" cmp ")[1]);
+						add.setOperator(IROperator.notEqualsOp);
+						toBeAdd.add(add);
+					}
+				}
+			}else if (refinedCondition.getOperator().equals(IROperator.isNotOP)) {
+				if(refinedCondition.getLeftStr().contains(" cmp ")){
+					if(refinedCondition.getRightStr().equals("0")){
+						RefinedCondition add = new RefinedCondition();
+						add.setLeftStr(refinedCondition.getLeftStr().split(" cmp ")[0]);
+						add.setRightStr(refinedCondition.getLeftStr().split(" cmp ")[1]);
+						add.setOperator(IROperator.equalsOp);
+						toBeAdd.add(add);
+					}
+				}
+			}
+		}
+		for(RefinedCondition temp: toBeAdd){
+//			System.out.println("4 " +temp);
+			refinedConditions.add(temp);
 		}
 	}
 

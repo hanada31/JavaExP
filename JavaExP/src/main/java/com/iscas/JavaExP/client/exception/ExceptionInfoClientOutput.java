@@ -190,7 +190,10 @@ public class ExceptionInfoClientOutput {
     public static void addBasic1(JSONObject jsonObject, ExceptionInfo info) {
         jsonObject.put("method", info.getSootMethod().getSignature());
         jsonObject.put("modifier", info.getModifier());
-        jsonObject.put("throwUnit", info.getUnit().toString());
+        if(info.getIntraThrowUnit()==null)
+            jsonObject.put("throwUnit", info.getUnit().toString());
+        else
+            jsonObject.put("throwUnit", info.getUnit().toString()+";"+info.getIntraThrowUnit().toString());
         jsonObject.put("throwUnitOrder", info.getThrowUnitOrder());
         jsonObject.put("ExceptionName", info.getExceptionName());
         jsonObject.put("ExceptionType", info.getExceptionType());
@@ -293,7 +296,8 @@ public class ExceptionInfoClientOutput {
         for (ConditionWithValueSet conditionWithValueSet : exceptionInfo.getConditionTrackerInfo().getRefinedConditions().values()) {
             if (conditionWithValueSet.toString().length() > 0){
                 for(RefinedCondition refinedCondition: conditionWithValueSet.getRefinedConditions())
-                    preCondList.add(refinedCondition.toString());
+                    if(!preCondList.contains(refinedCondition.toString()))
+                        preCondList.add(refinedCondition.toString());
             }
         }
         if (!exceptionInfo.isRethrow() && preCondList.size() == 0 && exceptionInfo.getConditionTrackerInfo().getRelatedVarType() == RelatedVarType.Empty) {

@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class ExceptionAnalyzer extends Analyzer {
     // for debugging only
-    boolean openFilter = true; //TODO
+    boolean openFilter = false; //TODO
 
     public ExceptionAnalyzer() {
         super();
