@@ -7,17 +7,16 @@ import org.jetbrains.annotations.NotNull;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
+import soot.ValueBox;
 import soot.jimple.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ConditionWithValueSet implements  Cloneable {
 	private Unit conditionUnit;
 	private List<RefinedCondition> refinedConditions = new ArrayList<>();
 	private SootMethod sootMethod;
+	private Map<Value,String> value2StringMap = new HashMap<>();
 
 	@Override
 	public ConditionWithValueSet clone() throws CloneNotSupportedException {
@@ -54,7 +53,9 @@ public class ConditionWithValueSet implements  Cloneable {
 			if(old.toString().equals(refinedCondition.toString()))
 				return;
 		}
-		if(refinedCondition!=null && refinedCondition.toString().length()>0) {
+		if(refinedCondition!=null) {
+			if((refinedCondition.getLeftStr()!=null || refinedCondition.getLeftStr().length()>0)
+				&& (refinedCondition.getRightStr()!=null ||refinedCondition.getRightStr().length()>0))
 			this.refinedConditions.add(refinedCondition);
 		}
 	}
@@ -66,17 +67,70 @@ public class ConditionWithValueSet implements  Cloneable {
 
 	public void optimizeCondition() {
 		List<RefinedCondition> list = new ArrayList<>();
+		list = new ArrayList(refinedConditions);
+		RefinedCondition keyCond = list.get(0);
+
+		String leftStr, rightStr;
+		leftStr = optimizeRefinedCondition(keyCond.getLeftVar());
+		if(keyCond.getLeftVar().getUseBoxes().size()>0) {
+			leftStr = keyCond.getLeftStr();
+			for (ValueBox vb : keyCond.getLeftVar().getUseBoxes()) {
+				leftStr = leftStr.replace(vb.getValue().toString(), optimizeRefinedCondition(vb.getValue()));
+			}
+		}
+		rightStr = optimizeRefinedCondition(keyCond.getRightValue());
+		if(keyCond.getRightValue().getUseBoxes().size()>0) {
+			rightStr = keyCond.getRightStr();
+			for (ValueBox vb : keyCond.getRightValue().getUseBoxes()) {
+				rightStr = rightStr.replace(vb.getValue().toString(), optimizeRefinedCondition(vb.getValue()));
+			}
+		}
+		System.out.println(leftStr+" "+ keyCond.getOperator()+" "+ rightStr);
+		refinedConditions.clear();
+		keyCond.setLeftStr(leftStr);
+		keyCond.setRightStr(rightStr);
+		refinedConditions.add(keyCond);
+	}
+
+	private String optimizeRefinedCondition(Value value) {
+		if (value2StringMap.containsKey(value)) return value2StringMap.get(value);
+			for (int i = 1; i < refinedConditions.size(); i++) {
+			RefinedCondition temp = refinedConditions.get(i);
+			if (temp.getLeftVar() == value) {
+				if (temp.getOperator() == IROperator.denoteOP || temp.getOperator() == IROperator.phiReplaceOp
+						|| temp.getOperator() == IROperator.isOP || temp.getOperator() == IROperator.isiInvokeOP
+						|| temp.getOperator() == IROperator.equalsOp) {
+					String str = optimizeRefinedCondition(temp.getRightValue());
+					if(temp.getRightValue().getUseBoxes().size()>0) {
+						str = temp.getRightStr();
+						for (ValueBox vb : temp.getRightValue().getUseBoxes()) {
+							str = str.replace(vb.getValue().toString(), optimizeRefinedCondition(vb.getValue()));
+						}
+					}
+					value2StringMap.put(value, str);
+					return formatOutput(str);
+				}
+			}
+		}
+		if(value instanceof ParameterRef)
+			return "parameter" + ((ParameterRef)value).getIndex();
+		return formatOutput(value.toString());
+	}
+
+	private String formatOutput(String str) {
+		if(str.startsWith("lengthof "))
+			return str.replace("lengthof ","")+".length";
+		return str;
+	}
+
+
+	public void optimizeCondition_old() {
+		List<RefinedCondition> list = new ArrayList<>();
 		boolean optimize = true;
 		if (optimize) {
 			int id = 1, signature = 12345;
 			while(list.hashCode()!=signature && id++<5) {
 				//optimize, transport denoted variables to each use point
-				signature = list.hashCode();
-				list = new ArrayList(refinedConditions);
-				optimizeBeforePhiVariable(list);
-
-				//optimize, transport denoted variables to each use point
-				signature = list.hashCode();
 				list = new ArrayList(refinedConditions);
 				optimizePhiVariable(list);
 
@@ -103,6 +157,7 @@ public class ConditionWithValueSet implements  Cloneable {
 				//optimize, model some judgement statements like equals
 				list = new ArrayList(refinedConditions);
 				optimizeCmpInst(list);
+				signature = list.hashCode();
 			}
 
 			//optimize, remove redundant variables
@@ -115,28 +170,6 @@ public class ConditionWithValueSet implements  Cloneable {
 		}
 	}
 
-
-	/**
-	 * trasfer phi to phi stmt
-	 * @param list
-	 */
-	private void optimizeBeforePhiVariable(List<RefinedCondition> list) {
-
-//		for(RefinedCondition refinedCondition: list) {
-//			if (refinedCondition.getOperator().equals(IROperator.phiReplaceOp) &&
-//					(!refinedCondition.getRightStr().startsWith("$") &&!refinedCondition.getRightStr().startsWith("i"))) {
-//				for (RefinedCondition temp : list) {
-//					if (temp == refinedCondition) continue;
-//					if (temp.getRightStr().equals(refinedCondition.getLeftStr())) {
-//						RefinedCondition refinedCondition2 = new RefinedCondition(this,
-//								temp.getLeftVar(), temp.getOperator() , refinedCondition.getRightValue(), temp.getUnit(), temp.isSatisfied());
-//						refinedCondition2.setRightStr(temp.getRightStr());
-//						addRefinedCondition(refinedCondition2);
-//					}
-//				}
-//			}
-//		}
-	}
 
 	/**
 	 * trasfer phi to unphi stmt
@@ -161,7 +194,6 @@ public class ConditionWithValueSet implements  Cloneable {
 								try {
 									rightInvoke.setArg(i, refinedCondition.getRightValue());
 								}catch (Exception e){
-									//todo
 								}
 								RefinedCondition refinedCondition2 = new RefinedCondition(this,
 										temp.getLeftVar(), temp.getOperator() , rightInvoke, temp.getUnit(), temp.isSatisfied());
@@ -176,7 +208,6 @@ public class ConditionWithValueSet implements  Cloneable {
 			}
 		}
 		for(RefinedCondition temp: toBeDel){
-//			System.out.println("1 " +temp);
 			refinedConditions.remove(temp);
 		}
 	}
@@ -309,7 +340,8 @@ public class ConditionWithValueSet implements  Cloneable {
 						try {
 							RefinedCondition refinedConditionClone = refinedCondition.clone(); //r0.<myThrow.ThrowTest: int outVar> is 0
 							refinedConditionClone.setLeftVar(temp.getRightValue());
-							refinedConditions.add(refinedConditionClone);
+							addRefinedCondition(refinedConditionClone);
+
 						} catch (CloneNotSupportedException e) {
 							e.printStackTrace();
 						}
@@ -317,7 +349,7 @@ public class ConditionWithValueSet implements  Cloneable {
 						try {
 							RefinedCondition refinedConditionClone = refinedCondition.clone(); //r0.<myThrow.ThrowTest: int outVar> is 0
 							refinedConditionClone.setLeftVar(temp.getLeftVar());
-							refinedConditions.add(refinedConditionClone);
+							addRefinedCondition(refinedConditionClone);
 						} catch (CloneNotSupportedException e) {
 							e.printStackTrace();
 						}
@@ -341,7 +373,7 @@ public class ConditionWithValueSet implements  Cloneable {
 							try {
 								RefinedCondition tempClone = temp.clone(); //r0.<myThrow.ThrowTest: int outVar> is 0
 								tempClone.setLeftStr(tempClone.getLeftStr().replace(tempLeft.getBase().toString()+".",refinedCondition.getRightStr()+"."));
-								refinedConditions.add(tempClone);
+								addRefinedCondition(tempClone);
 								toBeDel.add(temp);
 							} catch (CloneNotSupportedException e) {
 								e.printStackTrace();
@@ -354,7 +386,7 @@ public class ConditionWithValueSet implements  Cloneable {
 							try {
 								RefinedCondition tempClone = temp.clone();
 								tempClone.setRightStr(tempClone.getRightStr().replace(tempRight.getBase().toString()+".",refinedCondition.getRightStr()+"."));
-								refinedConditions.add(tempClone);
+								addRefinedCondition(tempClone);
 								toBeDel.add(temp);
 							} catch (CloneNotSupportedException e) {
 								e.printStackTrace();
@@ -364,9 +396,8 @@ public class ConditionWithValueSet implements  Cloneable {
 					if(temp.getLeftStr().startsWith(refinedCondition.getLeftStr() +" ") || temp.getLeftStr().startsWith(refinedCondition.getLeftStr() +".")){
 						try {
 							RefinedCondition tempClone = temp.clone(); //r0.<myThrow.ThrowTest: int outVar> is 0
-							tempClone.setLeftStr(tempClone.getLeftStr().replace(refinedCondition.getLeftStr()+" ",refinedCondition.getLeftStr()+" "));
 							tempClone.setLeftStr(tempClone.getLeftStr().replace(refinedCondition.getLeftStr()+".",refinedCondition.getLeftStr()+"."));
-							refinedConditions.add(tempClone);
+							addRefinedCondition(tempClone);
 							toBeDel.add(temp);
 						} catch (CloneNotSupportedException e) {
 							e.printStackTrace();
@@ -374,9 +405,8 @@ public class ConditionWithValueSet implements  Cloneable {
 					}else if(temp.getRightStr().startsWith(refinedCondition.getLeftStr() +" ") || temp.getRightStr().startsWith(refinedCondition.getLeftStr() +".")){
 						try {
 							RefinedCondition tempClone = temp.clone(); //r0.<myThrow.ThrowTest: int outVar> is 0
-							tempClone.setRightStr(tempClone.getRightStr().replace(refinedCondition.getLeftStr()+" ",refinedCondition.getRightStr())+" ");
 							tempClone.setRightStr(tempClone.getRightStr().replace(refinedCondition.getLeftStr()+".",refinedCondition.getRightStr())+".");
-							refinedConditions.add(tempClone);
+							addRefinedCondition(tempClone);
 							toBeDel.add(temp);
 						} catch (CloneNotSupportedException e) {
 							e.printStackTrace();
@@ -391,33 +421,32 @@ public class ConditionWithValueSet implements  Cloneable {
 		}
 	}
 	private void optimizeCmpInst(List<RefinedCondition> list) {
-		Set<RefinedCondition> toBeAdd = new HashSet<>();
 		for(RefinedCondition refinedCondition: list) {
-			if (refinedCondition.getOperator().equals(IROperator.isOP)) {
-				if(refinedCondition.getLeftStr().contains(" cmp ")){
-					if(refinedCondition.getRightStr().equals("0")){
-						RefinedCondition add = new RefinedCondition();
-						add.setLeftStr(refinedCondition.getLeftStr().split(" cmp ")[0]);
-						add.setRightStr(refinedCondition.getLeftStr().split(" cmp ")[1]);
-						add.setOperator(IROperator.notEqualsOp);
-						toBeAdd.add(add);
+			if(refinedCondition.getLeftStr().contains(" cmp ")){
+				String left = refinedCondition.getLeftStr().split(" cmp ")[0];
+				for(RefinedCondition leftDef: list) {
+					if(leftDef.getLeftStr().equals(left) && (leftDef.getOperator().equals(IROperator.isOP)
+							|| leftDef.getOperator().equals(IROperator.isiInvokeOP) || leftDef.getOperator().equals(IROperator.denoteOP))){
+						left = leftDef.getRightStr();
 					}
 				}
-			}else if (refinedCondition.getOperator().equals(IROperator.isNotOP)) {
-				if(refinedCondition.getLeftStr().contains(" cmp ")){
-					if(refinedCondition.getRightStr().equals("0")){
-						RefinedCondition add = new RefinedCondition();
-						add.setLeftStr(refinedCondition.getLeftStr().split(" cmp ")[0]);
-						add.setRightStr(refinedCondition.getLeftStr().split(" cmp ")[1]);
-						add.setOperator(IROperator.equalsOp);
-						toBeAdd.add(add);
+				String right = refinedCondition.getLeftStr().split(" cmp ")[1];
+				for(RefinedCondition rightDef: list) {
+					if(rightDef.getLeftStr().equals(right) && (rightDef.getOperator().equals(IROperator.isOP)
+							|| rightDef.getOperator().equals(IROperator.isiInvokeOP) || rightDef.getOperator().equals(IROperator.denoteOP))){
+						right = rightDef.getRightStr();
+					}
+				}
+				if(refinedCondition.getRightStr().equals("0")) {
+					refinedCondition.setLeftStr(left);
+					refinedCondition.setRightStr(right);
+					if (refinedCondition.getOperator().equals(IROperator.isOP)) {
+						refinedCondition.setOperator(IROperator.equalsOp);
+					} else if (refinedCondition.getOperator().equals(IROperator.isNotOP)) {
+						refinedCondition.setOperator(IROperator.notEqualsOp);
 					}
 				}
 			}
-		}
-		for(RefinedCondition temp: toBeAdd){
-//			System.out.println("4 " +temp);
-			refinedConditions.add(temp);
 		}
 	}
 

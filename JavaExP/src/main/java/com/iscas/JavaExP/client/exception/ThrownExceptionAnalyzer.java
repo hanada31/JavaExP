@@ -180,6 +180,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
                     Unit intraUnit = exceptionInfo.getIntraThrowUnit()==null?exceptionInfo.getUnit():exceptionInfo.getIntraThrowUnit();
                     exceptionInfoCopy.setIntraThrowUnit(intraUnit);
                     exceptionInfoCopy.setExceptionMsg(exceptionInfo.getExceptionMsg());
+                    exceptionInfoCopy.getConditionTrackerInfo().getConditions().addAll(exceptionInfo.getConditionTrackerInfo().getConditions());
                     Map<Unit, ConditionWithValueSet> refinedConditionsOld = exceptionInfo.getConditionTrackerInfo().getRefinedConditions();
                     for (Map.Entry<Unit, ConditionWithValueSet> refinedConditionEntry : refinedConditionsOld.entrySet()) {
                         try {

@@ -296,8 +296,13 @@ public class ExceptionInfoClientOutput {
         for (ConditionWithValueSet conditionWithValueSet : exceptionInfo.getConditionTrackerInfo().getRefinedConditions().values()) {
             if (conditionWithValueSet.toString().length() > 0){
                 for(RefinedCondition refinedCondition: conditionWithValueSet.getRefinedConditions())
-                    if(!preCondList.contains(refinedCondition.toString()))
+                    if(!preCondList.contains(refinedCondition.toString())) {
+                        if (refinedCondition.getLeftStr().length() == 0)
+                            refinedCondition.setLeftStr("sth.");
+                        if (refinedCondition.getRightStr().length() == 0)
+                            refinedCondition.setRightStr("sth.");
                         preCondList.add(refinedCondition.toString());
+                    }
             }
         }
         if (!exceptionInfo.isRethrow() && preCondList.size() == 0 && exceptionInfo.getConditionTrackerInfo().getRelatedVarType() == RelatedVarType.Empty) {
@@ -335,6 +340,14 @@ public class ExceptionInfoClientOutput {
                 }
                 if(exceptionListElement.size()>0) {
                     methodElement.put("methodName", sootMethod.getSignature());
+                    if(sootMethod.isPublic())
+                        methodElement.put("modifier", "public");
+                    else if(sootMethod.isPrivate())
+                        methodElement.put("modifier","private");
+                    else if(sootMethod.isProtected())
+                        methodElement.put("modifier","protected");
+                    else
+                        methodElement.put("modifier","default");
                     methodElement.put("exceptions", exceptionListElement);
                     methodListElement.add(methodElement);
                 }

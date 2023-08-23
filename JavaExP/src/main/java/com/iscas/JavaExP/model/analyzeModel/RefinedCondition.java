@@ -11,6 +11,8 @@ import soot.jimple.ParameterRef;
  */
 public class RefinedCondition implements Cloneable {
     private Value leftVar;
+    private RefinedCondition leftRefinedCondition;
+    private RefinedCondition rightRefinedCondition;
     private String leftStr;
     private String operator;
     private Value rightValue;
@@ -51,6 +53,22 @@ public class RefinedCondition implements Cloneable {
 
     public RefinedCondition() {
 
+    }
+
+    public RefinedCondition getLeftRefinedCondition() {
+        return leftRefinedCondition;
+    }
+
+    public void setLeftRefinedCondition(RefinedCondition leftRefinedCondition) {
+        this.leftRefinedCondition = leftRefinedCondition;
+    }
+
+    public RefinedCondition getRightRefinedCondition() {
+        return rightRefinedCondition;
+    }
+
+    public void setRightRefinedCondition(RefinedCondition rightRefinedCondition) {
+        this.rightRefinedCondition = rightRefinedCondition;
     }
 
     public void changeSatisfied(){

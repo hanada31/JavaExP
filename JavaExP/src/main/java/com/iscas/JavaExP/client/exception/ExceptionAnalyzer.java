@@ -25,7 +25,6 @@ public class ExceptionAnalyzer extends Analyzer {
 
     boolean filterMethod(SootMethod sootMethod) {
         List<String> mtds = new ArrayList<>();
-        mtds.add("org.apache.commons.io.FileSystemUtils: long parseBytes(");
 //        mtds.add("Basic");
 //        mtds.add("callee_with_arg");
 
