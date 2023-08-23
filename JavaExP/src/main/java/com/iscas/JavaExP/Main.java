@@ -156,7 +156,7 @@ public class Main {
 		}
 
 		/** run config **/
-		MyConfig.getInstance().setTag(mCmd.getOptionValue("tag", null));
+		MyConfig.getInstance().setFilterKeyword(mCmd.getOptionValue("filterKeyword", null));
 		MyConfig.getInstance().setAppName(mCmd.getOptionValue("name", ""));
 		MyConfig.getInstance().setAppPath(mCmd.getOptionValue("path", System.getProperty("user.dir")) + File.separator);
 		MyConfig.getInstance().setAndroidJar(mCmd.getOptionValue("androidJar", "lib"+File.separator+"platforms") + File.separator);
@@ -181,6 +181,8 @@ public class Main {
 			MyConfig.getInstance().setInterProcedure(true);
 		if(mCmd.hasOption("isJimple"))
 			MyConfig.getInstance().setJimple(true);
+		if(mCmd.hasOption("inConservativeOptimize"))
+			MyConfig.getInstance().setConservativeOptimize(false);
 
 		String client = mCmd.getOptionValue("client", "MainClient");
 		MyConfig.getInstance().setClient(mCmd.getOptionValue("client", client));

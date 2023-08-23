@@ -13,6 +13,7 @@ public class MyConfig {
 
 	private boolean isJimple = false;
 	private boolean isInterProcedure = false;
+	private boolean isConservativeOptimize = true;
 	private String resultFolder;
 	private String appName;
 	private String appPath;
@@ -21,7 +22,7 @@ public class MyConfig {
 	private int timeLimit;
 	private String androidJar;
 	private boolean stopFlag = false;
-	private String tag ;
+	private String filterKeyword ;
 
 	private boolean isSootAnalyzeFinish;
 	private boolean isManifestClientFinish;
@@ -59,6 +60,14 @@ public class MyConfig {
 		isInterProcedure = interProcedure;
 	}
 
+	public boolean isConservativeOptimize() {
+		return isConservativeOptimize;
+	}
+
+	public void setConservativeOptimize(boolean conservativeOptimize) {
+		isConservativeOptimize = conservativeOptimize;
+	}
+
 
 	private static class SingletonInstance {
 		private static final MyConfig INSTANCE = new MyConfig();
@@ -68,12 +77,12 @@ public class MyConfig {
 		return SingletonInstance.INSTANCE;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getFilterKeyword() {
+		return filterKeyword;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setFilterKeyword(String filterKeyword) {
+		this.filterKeyword = filterKeyword;
 	}
 
 	public boolean isJimple() {

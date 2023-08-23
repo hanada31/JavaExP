@@ -19,7 +19,7 @@ public class ExceptionAnalyzer extends Analyzer {
 
     public ExceptionAnalyzer() {
         super();
-        if(MyConfig.getInstance().getTag()!=null)
+        if(MyConfig.getInstance().getFilterKeyword()!=null)
            openFilter = true;
     }
 
@@ -28,8 +28,8 @@ public class ExceptionAnalyzer extends Analyzer {
 //        mtds.add("Basic");
 //        mtds.add("callee_with_arg");
 
-        if(MyConfig.getInstance().getTag()!=null){
-            mtds.add(MyConfig.getInstance().getTag());
+        if(MyConfig.getInstance().getFilterKeyword()!=null){
+            mtds.add(MyConfig.getInstance().getFilterKeyword());
         }
         for(String tag: mtds){
             if (sootMethod.getSignature().contains(tag)) {

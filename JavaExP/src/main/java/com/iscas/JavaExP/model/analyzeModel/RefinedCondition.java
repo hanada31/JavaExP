@@ -199,6 +199,8 @@ public class RefinedCondition implements Cloneable {
             }
         }
         String str = leftStr  +" "+ operator  +" "+ rightStr ;
+        if(str.endsWith("is not 0"))
+            str = str.replace("is not 0","");
         return satisfied?str:str+", it returns 0";
     }
 
