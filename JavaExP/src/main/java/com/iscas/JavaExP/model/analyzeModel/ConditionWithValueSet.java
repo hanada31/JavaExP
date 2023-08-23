@@ -65,7 +65,7 @@ public class ConditionWithValueSet implements  Cloneable {
 		return PrintUtils.printList(refinedConditions, "\n") ;
 	}
 
-	public void optimizeCondition() {
+	public void optimizeConditionConservative() {
 		List<RefinedCondition> list = new ArrayList<>();
 		list = new ArrayList(refinedConditions);
 		RefinedCondition keyCond = list.get(0);
@@ -85,7 +85,7 @@ public class ConditionWithValueSet implements  Cloneable {
 				rightStr = rightStr.replace(vb.getValue().toString(), optimizeRefinedCondition(vb.getValue()));
 			}
 		}
-		System.out.println(leftStr+" "+ keyCond.getOperator()+" "+ rightStr);
+//		System.out.println(leftStr+" "+ keyCond.getOperator()+" "+ rightStr);
 		refinedConditions.clear();
 		keyCond.setLeftStr(leftStr);
 		keyCond.setRightStr(rightStr);
@@ -124,7 +124,7 @@ public class ConditionWithValueSet implements  Cloneable {
 	}
 
 
-	public void optimizeCondition_old() {
+	public void optimizeConditionInConservative() {
 		List<RefinedCondition> list = new ArrayList<>();
 		boolean optimize = true;
 		if (optimize) {
@@ -309,7 +309,6 @@ public class ConditionWithValueSet implements  Cloneable {
 			}
 		}
 		for(RefinedCondition temp: toBeDel){
-//			System.out.println("2 " +temp);
 			refinedConditions.remove(temp);
 		}
 	}
@@ -416,7 +415,6 @@ public class ConditionWithValueSet implements  Cloneable {
 			}
 		}
 		for(RefinedCondition temp: toBeDel){
-//			System.out.println("3 " +temp);
 			refinedConditions.remove(temp);
 		}
 	}
@@ -468,7 +466,6 @@ public class ConditionWithValueSet implements  Cloneable {
 			}
 		}
 		for(RefinedCondition temp: toBeDel){
-//			System.out.println("4 " +temp);
 			refinedConditions.remove(temp);
 		}
 	}
@@ -510,7 +507,6 @@ public class ConditionWithValueSet implements  Cloneable {
 		}
 
 		for(RefinedCondition temp: toBeDel){
-//			System.out.println("5 " +temp);
 			refinedConditions.remove(temp);
 		}
 	}
@@ -573,7 +569,6 @@ public class ConditionWithValueSet implements  Cloneable {
 //			}
 		}
 		for(RefinedCondition temp: toBeDel){
-//			System.out.println("6 " +temp);
 			refinedConditions.remove(temp);
 		}
 	}

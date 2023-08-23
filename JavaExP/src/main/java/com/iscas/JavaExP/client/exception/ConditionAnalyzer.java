@@ -2,6 +2,7 @@ package com.iscas.JavaExP.client.exception;
 
 import com.iscas.JavaExP.base.Analyzer;
 import com.iscas.JavaExP.base.Global;
+import com.iscas.JavaExP.base.MyConfig;
 import com.iscas.JavaExP.model.analyzeModel.*;
 import com.iscas.JavaExP.utils.CollectionUtils;
 import com.iscas.JavaExP.utils.ConstantUtils;
@@ -67,14 +68,12 @@ public class ConditionAnalyzer  extends Analyzer {
         List<RefinedCondition> original = new ArrayList<>();
 
         for(ConditionWithValueSet conditionWithValueSet :conditionTrackerInfo.getRefinedConditions().values() ) {
-//            for(RefinedCondition refinedCondition: conditionWithValueSet.getRefinedConditions()){
-//                original.add(refinedCondition);
-//            }
-            conditionWithValueSet.optimizeCondition();
+            if(MyConfig.getInstance().isConservativeOptimize()) {
+                conditionWithValueSet.optimizeConditionConservative();
+            }else {
+            conditionWithValueSet.optimizeConditionInConservative();
+            }
         }
-//        if(conditionTrackerInfo.getRefinedConditions().size()==0) conditionTrackerInfo.get = original;
-
-
         //get Related Methods
         getRelatedMethods(sootMethod);
     }
