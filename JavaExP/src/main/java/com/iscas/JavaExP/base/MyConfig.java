@@ -23,7 +23,7 @@ public class MyConfig {
 	private String androidJar;
 	private boolean stopFlag = false;
 	private String filterKeyword ;
-
+	private boolean writeOutput = false;
 	private boolean isSootAnalyzeFinish;
 	private boolean isManifestClientFinish;
 	private boolean isCallGraphClientFinish;
@@ -42,7 +42,7 @@ public class MyConfig {
 
 
 	private MyConfig() {
-	}
+ 	}
 
 	public String getExceptionFolderPath() {
 		return ExceptionFolderPath;
@@ -66,6 +66,14 @@ public class MyConfig {
 
 	public void setConservativeOptimize(boolean conservativeOptimize) {
 		isConservativeOptimize = conservativeOptimize;
+	}
+
+	public boolean isWriteOutput() {
+		return writeOutput;
+	}
+
+	public void setWriteOutput(boolean writeOutput) {
+		this.writeOutput = writeOutput;
 	}
 
 

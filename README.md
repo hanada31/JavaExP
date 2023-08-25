@@ -1,8 +1,6 @@
 # JavaExP
 
-Java Exception Precondition extractor 
-
-
+Java Exception-aware API analyzer, build exception-aware API lifecycle model
 
 
 ## Install Requirements
@@ -12,8 +10,6 @@ Java Exception Precondition extractor
 2. Java 11
 
 3. maven 3.6.3
-
-4. Windows  (by default)
 
    
 

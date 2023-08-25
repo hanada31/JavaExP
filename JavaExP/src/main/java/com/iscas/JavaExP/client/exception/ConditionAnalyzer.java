@@ -65,8 +65,8 @@ public class ConditionAnalyzer  extends Analyzer {
         getConditionFromUnit(sootMethod, exceptionUnit, new HashSet<>());
 
         //optimize condition of unit
-        List<RefinedCondition> original = new ArrayList<>();
 
+        
         for(ConditionWithValueSet conditionWithValueSet :conditionTrackerInfo.getRefinedConditions().values() ) {
             if(MyConfig.getInstance().isConservativeOptimize()) {
                 conditionWithValueSet.optimizeConditionConservative();

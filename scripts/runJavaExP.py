@@ -19,9 +19,18 @@ if __name__ == '__main__' :
     path = sys.argv[1]
     name = sys.argv[2] 
     output = sys.argv[3]
-    vmArgs = " -Xms2g -Xmx100g -XX:+UseStringDeduplication -XX:+UseG1GC "
-    
-    command = "java -jar " + vmArgs +jarFile+"  -path "+ path +" -name "+name+ " -client ExceptionInfoClient " +" -outputDir " +output 
-    print (command)
-    executeCmd(command)
-                    
+    extra = ""
+    if len(sys.argv)>4 and sys.argv[4] =="interProcedure":
+        extra += " -interProcedure " 
+    vmArgs = ""
+    if name == "all":
+        print ("all files to be analyzed")
+        for name in os.listdir(path):
+            if name.endswith(".jar"):
+                command = "java -jar " + vmArgs +jarFile+"  -path "+ path +" -name "+name+ " -client ExceptionInfoClient " +" -outputDir " +output  +extra +" >> logs/"+name+"-log.txt"
+                print (command)
+                executeCmd(command)
+    else:
+        command = "java -jar " + vmArgs +jarFile+"  -path "+ path +" -name "+name+ " -client ExceptionInfoClient " +" -outputDir " +output  +extra +" >> logs/"+name+"-log.txt"
+        print (command)
+        executeCmd(command)

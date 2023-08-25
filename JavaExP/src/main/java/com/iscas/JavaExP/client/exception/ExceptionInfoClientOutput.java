@@ -399,6 +399,14 @@ public class ExceptionInfoClientOutput {
                     }
                 }
                 methodElement.put("methodName", sootMethod.getSignature());
+                if(sootMethod.isPublic())
+                    methodElement.put("modifier", "public");
+                else if(sootMethod.isPrivate())
+                    methodElement.put("modifier","private");
+                else if(sootMethod.isProtected())
+                    methodElement.put("modifier","protected");
+                else
+                    methodElement.put("modifier","default");
                 methodElement.put("exceptions", exceptionListElement);
                 methodListElement.add(methodElement);
             }

@@ -74,7 +74,8 @@ public class ConstantUtils {
     public static final int CFGPATHNUMBER = 500;
     public static final int ENDUNITMAXNUMBER = 10;
 	public static final int CFGPATHNODELEN = 50;
-    public static final long SINGLEMETHODTIME = 20* 1000; //120s
+    public static final long SINGLEMETHODTIME = 20* 1000; //20s
+    public static final long TIMEFOROPTIMIZE = 20* 1000; //10s
 
 
     public static String CGANALYSISPREFIX = "android";

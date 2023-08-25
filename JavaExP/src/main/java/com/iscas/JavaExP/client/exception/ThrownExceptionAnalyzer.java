@@ -110,14 +110,14 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             Unit lastUnit = path.get(path.size()-1);
             //if controlPath is the same, only reserve one
             HashSet controlUnits = pdgUtils.getCDSMap().get(lastUnit);
-            List<ControlDependOnUnit> controlPath = PDGUtils.getControlPathFromPDG(controlUnits, path);
-
+            List<ControlDependOnUnit> controlPath;
             if(controlUnits!=null) {
                 controlPath = PDGUtils.getControlPathFromPDG(controlUnits, path);
             }else{
-                controlPath = ConditionAnalyzer.getAllDominate_self_analysis(sootMethod, lastUnit, path);
-            }
+                controlPath = PDGUtils.getControlPathFromPDG(new HashSet<>(path), path);
 
+//                controlPath = ConditionAnalyzer.getAllDominate_self_analysis(sootMethod, lastUnit, path);
+            }
             if(!historyPath.contains(PrintUtils.printList(controlPath) +lastUnit.toString())) {
                 historyPath.add(PrintUtils.printList(controlPath) +lastUnit.toString());
                 if(lastUnit instanceof  ThrowStmt) {
@@ -266,6 +266,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
      * create a New ExceptionInfo object and add content
      */
     private void extractExceptionInfoOfUnit(SootMethod sootMethod, ThrowStmt throwUnit, List<ControlDependOnUnit> controlPath, Trap trap) {
+//        log.info("extractExceptionInfoOfUnit" + sootMethod.getSignature());
         SootClass exceptionClass = getThrowUnitWithType(sootMethod, throwUnit, (Local) throwUnit.getOp());
         if(exceptionClass==null || exceptionClass.getName().equals("java.lang.Throwable")) return;
 
@@ -294,6 +295,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
      * analyze the conditions of call sites that invokes callee with exceptions
      */
     private void mergeExceptionInfoOfUnit(SootMethod sootMethod, Unit unit, List<ControlDependOnUnit> controlPath, List<ExceptionInfo> exceptionInfoSet) {
+//        log.info("mergeExceptionInfoOfUnit" + sootMethod.getSignature());
         //get condition of exception
         for(ExceptionInfo exceptionInfo: exceptionInfoSet) {
 //            getConditionOfUnit(exceptionInfo, controlPath);
