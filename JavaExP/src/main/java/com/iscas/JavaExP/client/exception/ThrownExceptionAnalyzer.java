@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import soot.*;
 import soot.jimple.*;
 import soot.jimple.internal.JCastExpr;
+import soot.jimple.internal.JEqExpr;
+import soot.jimple.internal.JIfStmt;
 import soot.shimple.PhiExpr;
 import soot.toolkits.graph.ExceptionalUnitGraph;
 import soot.toolkits.scalar.ValueUnitPair;
@@ -115,9 +117,10 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
                 controlPath = PDGUtils.getControlPathFromPDG(controlUnits, path);
             }else{
                 controlPath = PDGUtils.getControlPathFromPDG(new HashSet<>(path), path);
-
 //                controlPath = ConditionAnalyzer.getAllDominate_self_analysis(sootMethod, lastUnit, path);
             }
+            updateControlPathWithRequireNotNull(controlPath, path);
+
             if(!historyPath.contains(PrintUtils.printList(controlPath) +lastUnit.toString())) {
                 historyPath.add(PrintUtils.printList(controlPath) +lastUnit.toString());
                 if(lastUnit instanceof  ThrowStmt) {
@@ -135,7 +138,15 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             if(!historyPath.contains(PrintUtils.printList(controlPath) +lastUnit.toString())) {
                 historyPath.add(PrintUtils.printList(controlPath) +lastUnit.toString());
                 if(! (lastUnit instanceof  ThrowStmt)) {
-                    if(isCaughtInterProcedureException(sootMethod, path) == false) {
+                    if (SootUtils.getInvokeExp(lastUnit).getMethod().getSignature().contains(ConstantUtils.REQUIRENOTNULL)) {
+                        ExceptionInfo exceptionInfo = extractExceptionOfRequireNonNull(sootMethod, lastUnit);
+                        List<ExceptionInfo>  exceptionInfoListOfCallee = new ArrayList<>();
+                        exceptionInfoListOfCallee.add(exceptionInfo);
+                        mergeExceptionInfoOfUnit(sootMethod, lastUnit, controlPath, exceptionInfoListOfCallee);
+                        int order = SootUtils.getThrowUnitListFromMethod(sootMethod).indexOf(lastUnit);
+                        exceptionInfo.setThrowUnitOrder(order);
+                    }
+                    else if(isCaughtInterProcedureException(sootMethod, path) == false) {
                         List<ExceptionInfo> calleeExceptions = getCalleeExceptionOfLastUnit(sootMethod, lastUnit);
                         mergeExceptionInfoOfUnit(sootMethod, lastUnit, controlPath, calleeExceptions);
                     }
@@ -143,6 +154,18 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             }
         }
     }
+
+    private void updateControlPathWithRequireNotNull(List<ControlDependOnUnit> controlPath, List<Unit> path) {
+        for(Unit u : path){
+            InvokeExpr invokeExpr = SootUtils.getInvokeExp(u);
+            if(invokeExpr!=null && u.toString().contains(ConstantUtils.REQUIRENOTNULL)){
+                IfStmt ifStmt = new JIfStmt(new JEqExpr(invokeExpr.getArgs().get(0),NullConstant.v()), u);
+                ControlDependOnUnit controlDependOnUnit = new ControlDependOnUnit(ifStmt,false);
+                controlPath.add(controlDependOnUnit);
+            }
+        }
+    }
+
 
     /**]
      * get the exceptions thrown in the callee method
@@ -170,6 +193,8 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
                     ExceptionInfo exceptionInfoCopy = new ExceptionInfo(sootMethod, unit, exceptionInfo.getExceptionName());
                     Unit intraUnit = exceptionInfo.getIntraThrowUnit()==null?exceptionInfo.getUnit():exceptionInfo.getIntraThrowUnit();
                     exceptionInfoCopy.setIntraThrowUnit(intraUnit);
+                    exceptionInfoCopy.setInvokedMethod(callee);
+                    exceptionInfoCopy.setExceptionMsg(exceptionInfo.getExceptionMsg());
                     Global.v().getAppModel().addMethod2ExceptionListForOne(sootMethod.getSignature(), exceptionInfoCopy);
                     exceptionInfoListOfCallee.add(exceptionInfoCopy);
                 }else {
@@ -179,6 +204,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
                     ExceptionInfo exceptionInfoCopy = new ExceptionInfo(sootMethod, unit, exceptionInfo.getExceptionName());
                     Unit intraUnit = exceptionInfo.getIntraThrowUnit()==null?exceptionInfo.getUnit():exceptionInfo.getIntraThrowUnit();
                     exceptionInfoCopy.setIntraThrowUnit(intraUnit);
+                    exceptionInfoCopy.setInvokedMethod(callee);
                     exceptionInfoCopy.setExceptionMsg(exceptionInfo.getExceptionMsg());
                     exceptionInfoCopy.getConditionTrackerInfo().getConditions().addAll(exceptionInfo.getConditionTrackerInfo().getConditions());
                     Map<Unit, ConditionWithValueSet> refinedConditionsOld = exceptionInfo.getConditionTrackerInfo().getRefinedConditions();
@@ -290,6 +316,42 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
         getConditionOfUnit(exceptionInfo, controlPath);
 
     }
+
+
+    private ExceptionInfo extractExceptionOfRequireNonNull(SootMethod sootMethod, Unit nullCheckUnit) {
+        SootClass exceptionClass = Scene.v().getSootClass("java.lang.NullPointerException");
+        ExceptionInfo exceptionInfo =  new ExceptionInfo(sootMethod, nullCheckUnit, exceptionClass.getName());
+        int order = SootUtils.getThrowUnitListFromMethod(sootMethod).indexOf(nullCheckUnit);
+        exceptionInfo.setThrowUnitOrder(order);
+        exceptionInfo.findExceptionType(exceptionClass);
+        thrownExceptionInfoList.add(exceptionInfo);
+        InvokeExpr invokeExpr = SootUtils.getInvokeExp(nullCheckUnit);
+        if(invokeExpr.getArgs().size()>1){
+            RegularExpressionAnalyzer regularExpressionAnalyzer = new RegularExpressionAnalyzer(sootMethod, nullCheckUnit, exceptionInfo.getExceptionName());
+            if(invokeExpr.getArgs().get(1) instanceof  StringConstant){
+                StringConstant constant = (StringConstant) invokeExpr.getArgs().get(1);
+                String exceptionMsg = regularExpressionAnalyzer.addQeSymbolToMessage(constant.value+" is null");
+                exceptionInfo.setExceptionMsg(exceptionMsg);
+            }else if(invokeExpr.getArgs().get(1) instanceof Local){
+                regularExpressionAnalyzer.getMsgContentByTracingValue(sootMethod, (Local) invokeExpr.getArgs().get(1), nullCheckUnit, new ArrayList<>());
+                exceptionInfo.setExceptionMsg(regularExpressionAnalyzer.getExceptionMsg().replace("\\E"," is null\\E"));
+            }
+        }
+        //get condition of requireNotNull
+        List<ControlDependOnUnit> controlPath = new ArrayList<>();
+        IfStmt ifStmt = new JIfStmt(new JEqExpr(invokeExpr.getArgs().get(0),NullConstant.v()), nullCheckUnit);
+        ControlDependOnUnit controlDependOnUnit = new ControlDependOnUnit(ifStmt,true);
+        controlPath.add(controlDependOnUnit);
+        ConditionAnalyzer conditionAnalyzer = new ConditionAnalyzer(sootMethod,nullCheckUnit, controlPath);
+        conditionAnalyzer.analyze();
+        ConditionTrackerInfo conditionTrackerInfo = conditionAnalyzer.getConditionTrackerInfo();
+        exceptionInfo.getConditionTrackerInfo().getRefinedConditions().putAll(conditionTrackerInfo.getRefinedConditions());
+
+
+        Global.v().getAppModel().addMethod2ExceptionListForOne(sootMethod.getSignature(), exceptionInfo);
+        return  exceptionInfo;
+    }
+
     /**
      * mergeExceptionInfoOfUnit
      * analyze the conditions of call sites that invokes callee with exceptions
@@ -317,7 +379,6 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
         ConditionTrackerInfo conditionTrackerInfo = conditionAnalyzer.getConditionTrackerInfo();
         exceptionInfo.setConditionTrackerInfo(conditionTrackerInfo);
     }
-
 
     /**
      * get throw units with message from a method

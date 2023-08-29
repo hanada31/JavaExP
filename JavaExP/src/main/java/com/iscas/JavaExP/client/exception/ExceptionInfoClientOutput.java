@@ -188,16 +188,20 @@ public class ExceptionInfoClientOutput {
     }
 
     public static void addBasic1(JSONObject jsonObject, ExceptionInfo info) {
+        jsonObject.put("exceptionName", info.getExceptionName());
+//        jsonObject.put("ExceptionType", info.getExceptionType());
+        jsonObject.put("message", info.getExceptionMsg());
         jsonObject.put("method", info.getSootMethod().getSignature());
         jsonObject.put("modifier", info.getModifier());
-        if(info.getIntraThrowUnit()==null)
+        if(info.getIntraThrowUnit()==null) {
             jsonObject.put("throwUnit", info.getUnit().toString());
-        else
-            jsonObject.put("throwUnit", info.getUnit().toString()+";"+info.getIntraThrowUnit().toString());
+        }
+        else {
+            jsonObject.put("invokeUnit", info.getUnit().toString() );
+            jsonObject.put("invokedMethod", info.getInvokedMethod().getSignature());
+            jsonObject.put("throwUnit", info.getIntraThrowUnit().toString());
+        }
         jsonObject.put("throwUnitOrder", info.getThrowUnitOrder());
-        jsonObject.put("ExceptionName", info.getExceptionName());
-        jsonObject.put("ExceptionType", info.getExceptionType());
-        jsonObject.put("message", info.getExceptionMsg());
     }
 
     public static void addBasic2(JSONObject jsonObject, ExceptionInfo info) {

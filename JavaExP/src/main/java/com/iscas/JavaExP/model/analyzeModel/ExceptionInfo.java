@@ -23,6 +23,7 @@ public class ExceptionInfo implements  Cloneable {
     private Unit unit;
     private Unit intraThrowUnit;
     private int throwUnitOrder=-1;
+    private SootMethod invokedMethod;
 
     ConditionTrackerInfo conditionTrackerInfo;
 
@@ -30,6 +31,7 @@ public class ExceptionInfo implements  Cloneable {
     }
     public ExceptionInfo(SootMethod sootMethod, Unit unit, String exceptionName) {
         this.sootMethod = sootMethod;
+        this.invokedMethod = sootMethod;
         initModifier();
         this.unit = unit;
         this.exceptionName = exceptionName;
@@ -37,11 +39,11 @@ public class ExceptionInfo implements  Cloneable {
     }
     public ExceptionInfo(SootMethod sootMethod, Trap trap, String exceptionName) {
         this.sootMethod = sootMethod;
+        this.invokedMethod = sootMethod;
         initModifier();
         this.trap = trap;
         this.exceptionName = exceptionName;
         this.conditionTrackerInfo = new ConditionTrackerInfo(sootMethod,unit);
-
     }
 
     public ConditionTrackerInfo getConditionTrackerInfo() {
@@ -108,7 +110,6 @@ public class ExceptionInfo implements  Cloneable {
     }
 
     public void setSootMethodName(String sootMethodName) {
-        //			"method":"<android.database.sqlite.SQLiteClosable: void acquireReference()>",
         String[] ss = sootMethodName.split(" ");
         String prefix = ss[0].replace("<","").replace(":",".");
         String suffix = ss[2].split("\\(")[0];
@@ -125,8 +126,8 @@ public class ExceptionInfo implements  Cloneable {
 
     public boolean findExceptionType(SootClass sootClass) {
         boolean isException = false;
-        List<String> StandardChecked = FileUtils.getListFromFile("D:\\ProjectData\\IdeaProjects\\ExceptionExtractor\\ExceptionExtractor\\src\\main\\resources\\checked_exceptions.txt");
-        List<String> StandardUnChecked_Runtime = FileUtils.getListFromFile("D:\\ProjectData\\IdeaProjects\\ExceptionExtractor\\ExceptionExtractor\\src\\main\\resources\\unchecked_exceptions.txt");
+        List<String> StandardChecked = FileUtils.getListFromFile("src\\main\\resources\\checked_exceptions.txt");
+        List<String> StandardUnChecked_Runtime = FileUtils.getListFromFile("src\\main\\resources\\unchecked_exceptions.txt");
         //get exception type
         setExceptionType(AppModel.ExceptionType.ThirdParty);
         if(StandardChecked.contains(sootClass.getName())){ //should be empty
@@ -159,7 +160,6 @@ public class ExceptionInfo implements  Cloneable {
         isRethrow = rethrow;
     }
 
-
     public Trap getTrap() {
         return trap;
     }
@@ -184,17 +184,13 @@ public class ExceptionInfo implements  Cloneable {
         this.intraThrowUnit = intraThrowUnit;
     }
 
-//    @Override
-//    protected Object clone() throws CloneNotSupportedException {
-//        ExceptionInfo exceptionInfo = new ExceptionInfo();
-//        exceptionInfo.setExceptionMsg(exceptionMsg);
-//        exceptionInfo.setExceptionType(exceptionType);
-//        exceptionInfo.setExceptionName(exceptionName);
-//        exceptionInfo.setSootMethod(sootMethod);
-//        exceptionInfo.setSootMethodName(sootMethodName);
-//        exceptionInfo.setModifier(modifier);
-//        exceptionInfo.setConditionTrackerInfo((ConditionTrackerInfo) conditionTrackerInfo.clone());
-//        return exceptionInfo;
-//    }
+
+    public SootMethod getInvokedMethod() {
+        return invokedMethod;
+    }
+
+    public void setInvokedMethod(SootMethod invokedMethod) {
+        this.invokedMethod = invokedMethod;
+    }
 }
 

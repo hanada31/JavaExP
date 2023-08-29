@@ -1418,8 +1418,13 @@ public class SootUtils {
 				}
 				if (!isCaught)
 					throwUnits.add(u);
+			}else {
+				if(SootUtils.getInvokeExp(u)!=null) {
+					if (SootUtils.getInvokeExp(u).getMethod().getSignature().contains("<java.util.Objects: java.lang.Object requireNonNull(")) {
+						throwUnits.add(u);
+					}
+				}
 			}
-
 		}
 		return throwUnits;
 	}
@@ -1437,7 +1442,6 @@ public class SootUtils {
 			if(!isCaught)
 				isNotCaughtThrowUnit = true;
 		}
-
 		return isNotCaughtThrowUnit;
 	}
 

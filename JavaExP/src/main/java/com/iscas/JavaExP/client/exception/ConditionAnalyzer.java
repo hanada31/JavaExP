@@ -60,13 +60,10 @@ public class ConditionAnalyzer  extends Analyzer {
      * @param exceptionUnit
      */
     void getConditionAndValueFromUnit(SootMethod sootMethod, Unit exceptionUnit) {
-
         //get condition of unit
         getConditionFromUnit(sootMethod, exceptionUnit, new HashSet<>());
 
         //optimize condition of unit
-
-        
         for(ConditionWithValueSet conditionWithValueSet :conditionTrackerInfo.getRefinedConditions().values() ) {
             if(MyConfig.getInstance().isConservativeOptimize()) {
                 conditionWithValueSet.optimizeConditionConservative();

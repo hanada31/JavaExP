@@ -76,6 +76,7 @@ public class ConstantUtils {
 	public static final int CFGPATHNODELEN = 50;
     public static final long SINGLEMETHODTIME = 20* 1000; //20s
     public static final long TIMEFOROPTIMIZE = 20* 1000; //10s
+    public static final CharSequence REQUIRENOTNULL = "<java.util.Objects: java.lang.Object requireNonNull(";
 
 
     public static String CGANALYSISPREFIX = "android";

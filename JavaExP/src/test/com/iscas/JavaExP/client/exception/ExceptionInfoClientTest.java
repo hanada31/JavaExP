@@ -29,9 +29,9 @@ public class ExceptionInfoClientTest {
         String path;
 
         path = "..\\Benchmark\\common-io\\";
-        path = "D:\\SoftwareData\\dataset\\android-framework\\jars\\";
-        String targetName = "android4.4";
-        targetName = "framework-Lollipop_5.0_21.jar";
+//        path = "D:\\SoftwareData\\dataset\\android-framework\\jars\\";
+        String targetName = "commons-io-2.7.jar";
+//        targetName = "framework-Lollipop_5.0_21.jar";
 //        targetName = "testcase1.0";
 
         MyConfig.getInstance().setAppName(targetName);
@@ -45,11 +45,11 @@ public class ExceptionInfoClientTest {
         String targetFolder = MyConfig.getInstance().getResultFolder() +File.separator+targetName+File.separator;
         MyConfig.getInstance().setExceptionFilePath(targetFolder+"exceptionInfo"+File.separator);
         MyConfig.getInstance().setJimple(false);
-        MyConfig.getInstance().setInterProcedure(false);
+        MyConfig.getInstance().setInterProcedure(true);
         MyConfig.getInstance().setConservativeOptimize(true);
-//        MyConfig.getInstance().setWriteOutput(true);
+        MyConfig.getInstance().setWriteOutput(true);
 
-//        MyConfig.getInstance().setFilterKeyword("org.apache.commons.io.IOCase: org.apache.commons.io.IOCase forName(java.lang.String)");
+//        MyConfig.getInstance().setFilterKeyword("<org.apache.commons.io.input.ReaderInputStream: int read(byte[],int,int)>");
     }
 
 }

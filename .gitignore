@@ -46,4 +46,4 @@ dependency-reduced-pom.xml
 /Benchmark/
 /src/
 *.jar
-soot-dev/
+/soot-dev/
