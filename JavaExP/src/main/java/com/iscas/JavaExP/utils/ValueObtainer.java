@@ -199,8 +199,8 @@ public class ValueObtainer {
 							ParameterRef pr = (ParameterRef) jid.getRightOp();
 							if (contextsValue.getObjs().size() > pr.getIndex() + 1) {
 								resList = contextsValue.getObjs().get(pr.getIndex() + 1);
-								// log.info(method_name+" "+contextsValue.getObjs());
-
+							}else{
+								resList.addValue(ConstantUtils.FORMALPARA+(pr.getIndex()+" "));
 							}
 							InvokeExpr exp = SootUtils.getInvokeExp(u);
 							if (exp != null) {

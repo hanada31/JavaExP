@@ -50,7 +50,6 @@ public class ExceptionInfoClientOutput {
                     JSONObject jsonObject = new JSONObject(true);
                     exceptionListElement.add(jsonObject);
                     addBasic1(jsonObject, info);
-                    addBasic2(jsonObject, info);
                     addConditions(jsonObject, info);
                     addRelatedValues(jsonObject, info);
                     addRelatedMethods(jsonObject, info);
@@ -201,17 +200,14 @@ public class ExceptionInfoClientOutput {
             jsonObject.put("invokedMethod", info.getInvokedMethod().getSignature());
             jsonObject.put("throwUnit", info.getIntraThrowUnit().toString());
         }
+        if(info.getIntraThrowUnitMethod()!=null)
+            jsonObject.put("throwUnitInMethod", info.getIntraThrowUnitMethod().getSignature());
+        jsonObject.put("callChain", info.getCallChain());
+//        if(info.getThrowUnitOrder()==-1 &&info.getIntraThrowUnitMethod()==null)
+//            System.err.println("aaa "+info.getSootMethod().getSignature());
         jsonObject.put("throwUnitOrder", info.getThrowUnitOrder());
     }
 
-    public static void addBasic2(JSONObject jsonObject, ExceptionInfo info) {
-
-//        jsonObject.put("osVersionRelated", info.isOsVersionRelated());
-//        jsonObject.put("resourceRelated", info.isResourceRelated());
-//        jsonObject.put("assessRelated", info.isAssessRelated());
-//        jsonObject.put("hardwareRelated", info.isHardwareRelated());
-//        jsonObject.put("manifestRelated", info.isManifestRelated());
-    }
 
     public static void addConditions(JSONObject jsonObject, ExceptionInfo info) {
 //        jsonObject.put("relatedCondType", info.getRelatedCondType());
@@ -334,7 +330,6 @@ public class ExceptionInfoClientOutput {
                 for (ExceptionInfo exceptionInfo : map.get(sootMethod.getSignature())) {
                     JSONObject jsonObject = new JSONObject(true);
                     addBasic1(jsonObject, exceptionInfo);
-                    addBasic2(jsonObject, exceptionInfo);
                     addConditions(jsonObject, exceptionInfo);
                     addPreConditions(jsonObject, exceptionInfo);
                     if (!history.contains(jsonObject.toString())) {
@@ -393,7 +388,6 @@ public class ExceptionInfoClientOutput {
                     for (ExceptionInfo exceptionInfo : map.get(sootMethod.getSignature())) {
                         JSONObject jsonObject = new JSONObject(true);
                         addBasic1(jsonObject, exceptionInfo);
-                        addBasic2(jsonObject, exceptionInfo);
                         addConditions(jsonObject, exceptionInfo);
                         addPreConditions(jsonObject, exceptionInfo);
                         if (!history.contains(jsonObject.toString())) {

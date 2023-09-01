@@ -1,9 +1,11 @@
 package com.iscas.JavaExP.client.exception;
 
+import com.google.common.collect.Lists;
 import com.iscas.JavaExP.base.Global;
 import com.iscas.JavaExP.base.MyConfig;
 import com.iscas.JavaExP.client.soot.PDGUtils;
 import com.iscas.JavaExP.model.analyzeModel.*;
+import com.iscas.JavaExP.model.sootAnalysisModel.NestableObj;
 import com.iscas.JavaExP.utils.*;
 import lombok.extern.slf4j.Slf4j;
 import soot.*;
@@ -188,64 +190,100 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             if(exceptionInfoList==null) return exceptionInfoListOfCallee;
             InvokeStmtSetToCalleeWithException.put(unit,exceptionInfoListOfCallee);
             for(ExceptionInfo exceptionInfo: exceptionInfoList){
-                if(exceptionInfo.getConditionTrackerInfo().getRefinedConditions().size()==0){
-                    //no parameter analysis
-                    ExceptionInfo exceptionInfoCopy = new ExceptionInfo(sootMethod, unit, exceptionInfo.getExceptionName());
-                    Unit intraUnit = exceptionInfo.getIntraThrowUnit()==null?exceptionInfo.getUnit():exceptionInfo.getIntraThrowUnit();
-                    exceptionInfoCopy.setIntraThrowUnit(intraUnit);
-                    exceptionInfoCopy.setInvokedMethod(callee);
-                    exceptionInfoCopy.setExceptionMsg(exceptionInfo.getExceptionMsg());
-                    Global.v().getAppModel().addMethod2ExceptionListForOne(sootMethod.getSignature(), exceptionInfoCopy);
-                    exceptionInfoListOfCallee.add(exceptionInfoCopy);
-                }else {
-                    //parameter analysis
-                    Map<Integer, Integer> formalPara2ActualPara = SootUtils.getFormalPara2ActualPara(sootMethod,unit);
-                    if(formalPara2ActualPara.size()==0) continue;
-                    ExceptionInfo exceptionInfoCopy = new ExceptionInfo(sootMethod, unit, exceptionInfo.getExceptionName());
-                    Unit intraUnit = exceptionInfo.getIntraThrowUnit()==null?exceptionInfo.getUnit():exceptionInfo.getIntraThrowUnit();
-                    exceptionInfoCopy.setIntraThrowUnit(intraUnit);
-                    exceptionInfoCopy.setInvokedMethod(callee);
-                    exceptionInfoCopy.setExceptionMsg(exceptionInfo.getExceptionMsg());
-                    exceptionInfoCopy.getConditionTrackerInfo().getConditions().addAll(exceptionInfo.getConditionTrackerInfo().getConditions());
-                    Map<Unit, ConditionWithValueSet> refinedConditionsOld = exceptionInfo.getConditionTrackerInfo().getRefinedConditions();
-                    for (Map.Entry<Unit, ConditionWithValueSet> refinedConditionEntry : refinedConditionsOld.entrySet()) {
-                        try {
-                            ConditionWithValueSet newOne = refinedConditionEntry.getValue().clone();
-                            List<RefinedCondition> toBeAdd = new ArrayList<>();
-                            List<RefinedCondition> toBeDel = new ArrayList<>();
-                            for (Map.Entry<Integer, Integer> idEntry : formalPara2ActualPara.entrySet()) {
-                                int calleeId = idEntry.getKey()-1;
-                                int callerId = idEntry.getValue()-1;
-                                for (RefinedCondition refinedCondition : newOne.getRefinedConditions()) {
-                                    if (refinedCondition.toString().contains("parameter" + calleeId)) {
-                                        String newConditionStr = refinedCondition.toString().replace("parameter" + calleeId, "parameter" + callerId);
-                                        RefinedCondition  newCondition = new RefinedCondition(newConditionStr);
-                                        newCondition.setSatisfied(refinedCondition.isSatisfied());
-                                        toBeAdd.add(newCondition);
-                                        if(callerId!=calleeId) // if it is same, only add once for repeat ones
-                                            toBeDel.add(refinedCondition);
-                                    }
-                                }
-                            }
-                            for(RefinedCondition newCondition: toBeAdd){
-                                newOne.addRefinedCondition(newCondition);
-                            }
-                            for(RefinedCondition oldCondition: toBeDel){
-                                newOne.getRefinedConditions().remove(oldCondition);
-                            }
-                            exceptionInfoCopy.getConditionTrackerInfo().addRefinedConditions(newOne);
-                        } catch (CloneNotSupportedException e) {
-                            e.printStackTrace();
+                ExceptionInfo exceptionInfoCopy = new ExceptionInfo(sootMethod, unit, exceptionInfo.getExceptionName());
+                updateExceptionThrowInfo(exceptionInfo, exceptionInfoCopy, callee,unit);
+                updateExceptionCondition(exceptionInfo, exceptionInfoCopy);
+                updateExceptionMessageByConstantTracking(exceptionInfo, exceptionInfoCopy);
+                Global.v().getAppModel().addMethod2ExceptionListForOne(sootMethod.getSignature(), exceptionInfoCopy);
+                exceptionInfoListOfCallee.add(exceptionInfoCopy);
+            }
+        }
+        return exceptionInfoListOfCallee;
+    }
+
+    private void updateExceptionThrowInfo(ExceptionInfo exceptionInfo, ExceptionInfo exceptionInfoCopy, SootMethod callee, Unit invokeUnit) {
+        if(exceptionInfo.getIntraThrowUnit()==null){
+            exceptionInfoCopy.setIntraThrowUnit(exceptionInfo.getUnit());
+        }else{
+            exceptionInfoCopy.setIntraThrowUnit(exceptionInfo.getIntraThrowUnit());
+        }
+        if(exceptionInfo.getIntraThrowUnitMethod()==null){
+            exceptionInfoCopy.setIntraThrowUnitMethod(exceptionInfo.getSootMethod());
+        }else{
+            exceptionInfoCopy.setIntraThrowUnitMethod(exceptionInfo.getIntraThrowUnitMethod());
+        }
+        exceptionInfoCopy.setCallChain(invokeUnit+" -> "+exceptionInfo.getCallChain());
+        exceptionInfoCopy.setInvokedMethod(callee);
+        exceptionInfoCopy.setExceptionMsg(exceptionInfo.getExceptionMsg());
+    }
+
+    private void updateExceptionMessageByConstantTracking(ExceptionInfo exceptionInfo, ExceptionInfo exceptionInfoCopy) {
+        Map<Integer, Integer> formalPara2ActualPara = SootUtils.getFormalPara2ActualPara(exceptionInfoCopy.getSootMethod(),exceptionInfoCopy.getUnit());
+        String message = exceptionInfoCopy.getExceptionMsg();
+        if(message.contains(ConstantUtils.FORMALPARA)) {
+            boolean isVariable = false;
+            for (Map.Entry<Integer, Integer> idEntry : formalPara2ActualPara.entrySet()) {
+                int calleeId = idEntry.getKey() - 1;
+                int callerId = idEntry.getValue() - 1;
+                if (message.contains(ConstantUtils.FORMALPARA + calleeId)) {
+                    exceptionInfoCopy.setExceptionMsg(message.replace(ConstantUtils.FORMALPARA + calleeId, ConstantUtils.FORMALPARA + callerId));
+                    isVariable = true;
+                }
+            }
+            if(isVariable == false){
+                String idStr = message.split(ConstantUtils.FORMALPARA)[1].split(" ")[0];
+                int parameterId = Integer.parseInt(idStr);
+                ValueObtainer valueObtainer = new ValueObtainer(exceptionInfoCopy.getInvokedMethod().getSignature());
+                InvokeExpr invokeExpr = SootUtils.getInvokeExp(exceptionInfoCopy.getUnit());
+                if(invokeExpr!=null) {
+                    if(invokeExpr.getArgCount()>parameterId) {
+                        NestableObj obj = valueObtainer.getValueofVar(invokeExpr.getArg(parameterId), exceptionInfoCopy.getUnit(), 0);
+                        if (obj.getValues().size() > 0) {
+                            exceptionInfoCopy.setExceptionMsg(message.replace(ConstantUtils.FORMALPARA + parameterId+" ", obj.getValues().get(0)));
                         }
                     }
-                    Global.v().getAppModel().addMethod2ExceptionListForOne(sootMethod.getSignature(), exceptionInfoCopy);
-                    exceptionInfoListOfCallee.add(exceptionInfoCopy);
                 }
             }
         }
-
-        return exceptionInfoListOfCallee;
     }
+    private void updateExceptionCondition(ExceptionInfo exceptionInfo, ExceptionInfo exceptionInfoCopy) {
+        Map<Integer, Integer> formalPara2ActualPara = SootUtils.getFormalPara2ActualPara(exceptionInfo.getSootMethod(),exceptionInfo.getUnit());
+        Map<Unit, ConditionWithValueSet> refinedConditionsOld = exceptionInfo.getConditionTrackerInfo().getRefinedConditions();
+        exceptionInfoCopy.getConditionTrackerInfo().getConditions().addAll(exceptionInfo.getConditionTrackerInfo().getConditions());
+
+        for (Map.Entry<Unit, ConditionWithValueSet> refinedConditionEntry : refinedConditionsOld.entrySet()) {
+            try {
+                ConditionWithValueSet newOne = refinedConditionEntry.getValue().clone();
+                List<RefinedCondition> toBeAdd = new ArrayList<>();
+                List<RefinedCondition> toBeDel = new ArrayList<>();
+                for (Map.Entry<Integer, Integer> idEntry : formalPara2ActualPara.entrySet()) {
+                    int calleeId = idEntry.getKey()-1;
+                    int callerId = idEntry.getValue()-1;
+                    for (RefinedCondition refinedCondition : newOne.getRefinedConditions()) {
+                        if (refinedCondition.toString().contains("parameter" + calleeId)) {
+                            String newConditionStr = refinedCondition.toString().replace("parameter" + calleeId, "parameter" + callerId);
+                            RefinedCondition  newCondition = new RefinedCondition(newConditionStr);
+                            newCondition.setSatisfied(refinedCondition.isSatisfied());
+                            toBeAdd.add(newCondition);
+                            if(callerId!=calleeId) // if it is same, only add once for repeat ones
+                                toBeDel.add(refinedCondition);
+                        }
+                    }
+                }
+                for(RefinedCondition newCondition: toBeAdd){
+                    newOne.addRefinedCondition(newCondition);
+                }
+                for(RefinedCondition oldCondition: toBeDel){
+                    newOne.getRefinedConditions().remove(oldCondition);
+                }
+                exceptionInfoCopy.getConditionTrackerInfo().addRefinedConditions(newOne);
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     /**
      * for inter-procedure exception, judge whether it is caught in the caller
      * @param sootMethod
@@ -299,6 +337,8 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
         ExceptionInfo exceptionInfo =  new ExceptionInfo(sootMethod, throwUnit, exceptionClass.getName());
         int order = SootUtils.getThrowUnitListFromMethod(sootMethod).indexOf(throwUnit);
         exceptionInfo.setThrowUnitOrder(order);
+        exceptionInfo.setCallChain(throwUnit.toString());
+
         if(trap != null) {
             exceptionInfo.setRethrow(true);
             exceptionInfo.setTrap(trap);
@@ -323,6 +363,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
         ExceptionInfo exceptionInfo =  new ExceptionInfo(sootMethod, nullCheckUnit, exceptionClass.getName());
         int order = SootUtils.getThrowUnitListFromMethod(sootMethod).indexOf(nullCheckUnit);
         exceptionInfo.setThrowUnitOrder(order);
+        exceptionInfo.setCallChain(nullCheckUnit.toString());
         exceptionInfo.findExceptionType(exceptionClass);
         thrownExceptionInfoList.add(exceptionInfo);
         InvokeExpr invokeExpr = SootUtils.getInvokeExp(nullCheckUnit);
@@ -333,8 +374,23 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
                 String exceptionMsg = regularExpressionAnalyzer.addQeSymbolToMessage(constant.value+" is null");
                 exceptionInfo.setExceptionMsg(exceptionMsg);
             }else if(invokeExpr.getArgs().get(1) instanceof Local){
-                regularExpressionAnalyzer.getMsgContentByTracingValue(sootMethod, (Local) invokeExpr.getArgs().get(1), nullCheckUnit, new ArrayList<>());
-                exceptionInfo.setExceptionMsg(regularExpressionAnalyzer.getExceptionMsg().replace("\\E"," is null\\E"));
+                Local var = (Local) invokeExpr.getArgs().get(1);
+                List<String> message = Lists.newArrayList();
+                message.add("");
+                regularExpressionAnalyzer.getMsgContentByTracingValue(sootMethod, var, nullCheckUnit, message);
+                String exceptionMsg="[\\s\\S]* is null";
+                if(regularExpressionAnalyzer.getExceptionMsg().contains("\\E"))
+                    exceptionMsg = regularExpressionAnalyzer.getExceptionMsg().replace("\\E"," is null\\E");
+                else{
+                    if(regularExpressionAnalyzer.getExceptionMsg().equals("[\\s\\S]*")){
+                        ValueObtainer valueObtainer = new ValueObtainer(sootMethod.getSignature());
+                        NestableObj obj = valueObtainer.getValueofVar(var,nullCheckUnit,0 );
+                        if (obj.getValues().size() > 0) {
+                            exceptionMsg = regularExpressionAnalyzer.addQeSymbolToMessage(obj.getValues().get(0)+" is null");
+                        }
+                    }
+                }
+                exceptionInfo.setExceptionMsg(exceptionMsg);
             }
         }
         //get condition of requireNotNull

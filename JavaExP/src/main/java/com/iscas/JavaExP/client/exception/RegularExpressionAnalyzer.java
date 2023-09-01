@@ -2,6 +2,7 @@ package com.iscas.JavaExP.client.exception;
 
 import com.google.common.collect.Lists;
 import com.iscas.JavaExP.base.Analyzer;
+import com.iscas.JavaExP.utils.ConstantUtils;
 import com.iscas.JavaExP.utils.SootUtils;
 import com.iscas.JavaExP.utils.StringUtils;
 import soot.*;
@@ -176,6 +177,8 @@ public class RegularExpressionAnalyzer  extends Analyzer {
                 }
             } else if (rightOp instanceof Local) {
                 getMsgContentByTracingValue( sootMethod, (Local) rightOp, defOfLocal, message ) ;
+            }else if(rightOp instanceof ParameterRef){
+                message.set(0, ConstantUtils.FORMALPARA +((ParameterRef) rightOp).getIndex()+" ");
             }
         }
     }

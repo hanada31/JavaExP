@@ -29,8 +29,9 @@ public class ExceptionInfoClientTest {
         String path;
 
         path = "..\\Benchmark\\common-io\\";
+//        path = "..\\Benchmark\\";
 //        path = "D:\\SoftwareData\\dataset\\android-framework\\jars\\";
-        String targetName = "commons-io-2.7.jar";
+        String targetName = "commons-io-2.9.0.jar";
 //        targetName = "framework-Lollipop_5.0_21.jar";
 //        targetName = "testcase1.0";
 
@@ -39,7 +40,6 @@ public class ExceptionInfoClientTest {
         MyConfig.getInstance().setClient(client);
         MyConfig.getInstance().setResultFolder("..\\results" + File.separator);
         MyConfig.getInstance().setTimeLimit(3000);
-//        MyConfig.getInstance().setAndroidJar("E:\\AndroidSDK\\android-sdk-windows-new\\platforms");
         MyConfig.getInstance().setSrc_prec(Options.src_prec_class);
         MyConfig.getInstance().setFileSuffixLength(0);
         String targetFolder = MyConfig.getInstance().getResultFolder() +File.separator+targetName+File.separator;
@@ -47,9 +47,9 @@ public class ExceptionInfoClientTest {
         MyConfig.getInstance().setJimple(false);
         MyConfig.getInstance().setInterProcedure(true);
         MyConfig.getInstance().setConservativeOptimize(true);
-        MyConfig.getInstance().setWriteOutput(true);
+        MyConfig.getInstance().setWriteOutput(false);
 
-//        MyConfig.getInstance().setFilterKeyword("<org.apache.commons.io.input.ReaderInputStream: int read(byte[],int,int)>");
+//        MyConfig.getInstance().setFilterKeyword("testcase.ExceptionCondition.MultipleCall: void throw_message");
     }
 
 }

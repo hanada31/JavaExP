@@ -22,6 +22,8 @@ public class ExceptionInfo implements  Cloneable {
     private String sootMethodName;
     private Unit unit;
     private Unit intraThrowUnit;
+    private SootMethod intraThrowUnitMethod;
+    private String callChain="end.";
     private int throwUnitOrder=-1;
     private SootMethod invokedMethod;
 
@@ -36,6 +38,7 @@ public class ExceptionInfo implements  Cloneable {
         this.unit = unit;
         this.exceptionName = exceptionName;
         this.conditionTrackerInfo = new ConditionTrackerInfo(sootMethod,unit);
+        setSootMethod(sootMethod);
     }
     public ExceptionInfo(SootMethod sootMethod, Trap trap, String exceptionName) {
         this.sootMethod = sootMethod;
@@ -44,6 +47,7 @@ public class ExceptionInfo implements  Cloneable {
         this.trap = trap;
         this.exceptionName = exceptionName;
         this.conditionTrackerInfo = new ConditionTrackerInfo(sootMethod,unit);
+        setSootMethod(sootMethod);
     }
 
     public ConditionTrackerInfo getConditionTrackerInfo() {
@@ -191,6 +195,23 @@ public class ExceptionInfo implements  Cloneable {
 
     public void setInvokedMethod(SootMethod invokedMethod) {
         this.invokedMethod = invokedMethod;
+    }
+
+
+    public SootMethod getIntraThrowUnitMethod() {
+        return intraThrowUnitMethod;
+    }
+
+    public void setIntraThrowUnitMethod(SootMethod intraThrowUnitMethod) {
+        this.intraThrowUnitMethod = intraThrowUnitMethod;
+    }
+
+    public String getCallChain() {
+        return callChain;
+    }
+
+    public void setCallChain(String callChain) {
+        this.callChain = callChain;
     }
 }
 

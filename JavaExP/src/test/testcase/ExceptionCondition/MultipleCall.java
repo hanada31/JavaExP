@@ -1,5 +1,7 @@
 package testcase.ExceptionCondition;
 
+import java.util.Objects;
+
 /**
  * @Author hanada
  * @Date 2023/4/13 12:46
@@ -75,6 +77,30 @@ public class MultipleCall {
      */
     public void callee_without_arg() {
         throw new RuntimeException("throw_exception_in_callee_directly");
+    }
+
+    public void throw_message_caller_caller() {
+        throw_message_caller( "source1");
+    }
+
+    public void throw_message_caller(String msg) {
+        throw_message_callee("a", msg);
+        throw_message_callee("a", "source2");
+    }
+    public void throw_message_callee(String s, String msg) {
+            throw new RuntimeException(msg);
+    }
+
+    public void throw_message_caller_caller_require() {
+        throw_message_caller_require( "source1");
+    }
+
+    public void throw_message_caller_require(String msg) {
+        throw_message_callee_require("a", msg);
+        throw_message_callee_require("a", "source2");
+    }
+    public void throw_message_callee_require(String s, String msg) {
+        Objects.requireNonNull(s, msg);
     }
 
 }
