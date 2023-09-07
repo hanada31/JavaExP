@@ -271,9 +271,19 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
         }
     }
 
-    private void updateExceptionCondition(ExceptionInfo exceptionInfoCallee, ExceptionInfo exceptionInfoToBeUpdate, SootMethod sootMethod, Unit invokeUnit, boolean isreverse) {
+    /**
+     * updateExceptionCondition_old,
+     * update caller with callee's constraints
+     * copy unmatched constraints in callee to caller
+     * close the conflict deletion if use this method
+     * @param exceptionInfoCallee
+     * @param exceptionInfoToBeUpdate
+     * @param sootMethod
+     * @param invokeUnit
+     * @param isreverse
+     */
+    private void updateExceptionCondition_old(ExceptionInfo exceptionInfoCallee, ExceptionInfo exceptionInfoToBeUpdate, SootMethod sootMethod, Unit invokeUnit, boolean isreverse) {
         Map<Integer, Integer> formalPara2ActualPara = SootUtils.getFormalPara2ActualPara(sootMethod,invokeUnit);
-        SootMethod invokedMtd = SootUtils.getInvokeExp(invokeUnit).getMethod();
         Map<Unit, ConditionWithValueSet> refinedConditionsOld = exceptionInfoCallee.getConditionTrackerInfo().getConditionWithValueSetMap();
         for(Value cond :exceptionInfoCallee.getConditionTrackerInfo().getConditions())
             exceptionInfoToBeUpdate.getConditionTrackerInfo().addRelatedCondition(cond);
@@ -283,41 +293,105 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
         }
         for (Map.Entry<Unit, ConditionWithValueSet> refinedConditionEntry : refinedConditionsOld.entrySet()) {
             try {
-                ConditionWithValueSet cloneConditionWithValueSet = refinedConditionEntry.getValue().clone();
+                ConditionWithValueSet newOne = refinedConditionEntry.getValue().clone();
                 List<RefinedCondition> toBeAdd = new ArrayList<>();
-                for (RefinedCondition refinedCondition : cloneConditionWithValueSet.getRefinedConditions()) {
-                    Set<String> parameters = extractParameters(refinedCondition.toString());
-                    for(int id: formalPara2ActualPara.keySet())
-                        parameters.remove(Integer.toString(id-1));
-                    String newConditionStr = refinedCondition.toString();
-                    for(String calleeId : parameters){
-                        newConditionStr = newConditionStr.replace("parameter" + calleeId, "parameter" + "_"+calleeId+"_in_method_"+invokedMtd.getName());
-                    }
+                List<RefinedCondition> toBeDel = new ArrayList<>();
+                for (RefinedCondition refinedCondition : newOne.getRefinedConditions()) {
                     for (Map.Entry<Integer, Integer> idEntry : formalPara2ActualPara.entrySet()) {
                         int calleeId = idEntry.getKey()-1;
                         int callerId = idEntry.getValue()-1;
                         if (refinedCondition.toString().contains("parameter" + calleeId)) {
-                            newConditionStr = newConditionStr.replace("parameter" + calleeId, "parameter" + callerId);
+                            String newConditionStr = refinedCondition.toString().replace("parameter" + calleeId, "parameter" + callerId);
+                            RefinedCondition  newCondition = new RefinedCondition(newConditionStr);
+                            newCondition.setSatisfied(refinedCondition.isSatisfied());
+                            if(isreverse) {
+                                newCondition.changeSatisfied();
+                            }
+                            toBeDel.add(refinedCondition);
+                            toBeAdd.add(newCondition);
                         }
                     }
-                    RefinedCondition  newCondition = new RefinedCondition(newConditionStr);
-                    newCondition.setSatisfied(refinedCondition.isSatisfied());
-                    if(isreverse) {
-                        newCondition.changeSatisfied();
-                    }
-                    toBeAdd.add(newCondition);
                 }
-                cloneConditionWithValueSet.getRefinedConditions().clear();
+                for(RefinedCondition oldCondition: toBeDel){
+                    newOne.getRefinedConditions().remove(oldCondition);
+                }
                 for(RefinedCondition newCondition: toBeAdd){
-                    cloneConditionWithValueSet.addRefinedCondition(newCondition);
+                    newOne.addRefinedCondition(newCondition);
                 }
                 if(isAddToEmpty)
-                    exceptionInfoToBeUpdate.getConditionTrackerInfo().addConditionWithValueSet(cloneConditionWithValueSet);
+                    exceptionInfoToBeUpdate.getConditionTrackerInfo().addConditionWithValueSet(newOne);
                 else
-                    exceptionInfoToBeUpdate.getConditionTrackerInfo().addConditionWithValueSetNotLast(cloneConditionWithValueSet);
+                    exceptionInfoToBeUpdate.getConditionTrackerInfo().addConditionWithValueSetNotLast(newOne);
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * updateExceptionCondition_old,
+     * update caller with callee's constraints
+     * replace unmatched constraints in callee to caller
+     * @param exceptionInfoCallee
+     * @param exceptionInfoToBeUpdate
+     * @param sootMethod
+     * @param invokeUnit
+     * @param isreverse
+     */
+    private void updateExceptionCondition(ExceptionInfo exceptionInfoCallee, ExceptionInfo exceptionInfoToBeUpdate, SootMethod sootMethod, Unit invokeUnit, boolean isreverse) {
+        if(exceptionInfoCallee==exceptionInfoToBeUpdate)  return;
+        Map<Integer, Integer> formalPara2ActualPara = SootUtils.getFormalPara2ActualPara(sootMethod,invokeUnit);
+        SootMethod invokedMtd = SootUtils.getInvokeExp(invokeUnit).getMethod();
+        for(Value cond :exceptionInfoCallee.getConditionTrackerInfo().getConditions())
+            exceptionInfoToBeUpdate.getConditionTrackerInfo().addRelatedCondition(cond);
+        boolean isAddToEmpty = false;
+        if(exceptionInfoToBeUpdate.getConditionTrackerInfo().getConditionWithValueSetMap().size()==0){
+            isAddToEmpty = true;
+        }
+        Map<Unit, ConditionWithValueSet> refinedConditionsOld = exceptionInfoCallee.getConditionTrackerInfo().getConditionWithValueSetMap();
+        for (Map.Entry<Unit, ConditionWithValueSet> refinedConditionEntry : refinedConditionsOld.entrySet()) {
+            ConditionWithValueSet cloneConditionWithValueSet;
+            try {
+                cloneConditionWithValueSet = refinedConditionEntry.getValue().clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+                continue;
+            }
+            List<RefinedCondition> toBeAdd = new ArrayList<>();
+            List<RefinedCondition> tobeDel = new ArrayList<>();
+            for (RefinedCondition refinedCondition : cloneConditionWithValueSet.getRefinedConditions()) {
+                Set<String> parameters = extractParameters(refinedCondition.toString());
+                for(int id: formalPara2ActualPara.keySet())
+                    parameters.remove(Integer.toString(id-1));
+                String newConditionStr = refinedCondition.toString();
+                for(String calleeId : parameters){
+                    newConditionStr = newConditionStr.replace("parameter" + calleeId, "parameter" + "_"+calleeId+"_in_method_"+invokedMtd.getName());
+                }
+                for (Map.Entry<Integer, Integer> idEntry : formalPara2ActualPara.entrySet()) {
+                    int calleeId = idEntry.getKey()-1;
+                    int callerId = idEntry.getValue()-1;
+                    if (refinedCondition.toString().contains("parameter" + calleeId)) {
+                        newConditionStr = newConditionStr.replace("parameter" + calleeId, "parameter" + callerId);
+                    }
+                }
+                RefinedCondition  newCondition = new RefinedCondition(newConditionStr);
+                newCondition.setSatisfied(refinedCondition.isSatisfied());
+                if(isreverse) {
+                    newCondition.changeSatisfied();
+                }
+                toBeAdd.add(newCondition);
+                tobeDel.add(refinedCondition);
+            }
+            for(RefinedCondition oldCondition: tobeDel){
+                cloneConditionWithValueSet.addRefinedCondition(oldCondition);
+            }
+            for(RefinedCondition newCondition: toBeAdd){
+                cloneConditionWithValueSet.addRefinedCondition(newCondition);
+            }
+            if(isAddToEmpty)
+                exceptionInfoToBeUpdate.getConditionTrackerInfo().addConditionWithValueSet(cloneConditionWithValueSet);
+            else
+                exceptionInfoToBeUpdate.getConditionTrackerInfo().addConditionWithValueSetNotLast(cloneConditionWithValueSet);
         }
     }
     public static Set<String> extractParameters(String input) {
@@ -482,6 +556,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             InvokeExpr invokeExpr = SootUtils.getInvokeExp(unitInPath);
             if(invokeExpr!=null) {
                 SootMethod callee = invokeExpr.getMethod();
+                if(sootMethod==callee) continue;
                 if (unitInPath.toString().contains(ConstantUtils.REQUIRENOTNULL)) {
                     List<ControlDependOnUnit> controlPathTemp = new ArrayList<>();
                     IfStmt ifStmt = new JIfStmt(new JNeExpr(invokeExpr.getArgs().get(0),NullConstant.v()), unitInPath);
