@@ -3,6 +3,7 @@ package com.iscas.JavaExP.model.analyzeModel;
 import com.iscas.JavaExP.utils.FileUtils;
 import soot.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -213,5 +214,41 @@ public class ExceptionInfo implements  Cloneable {
     public void setCallChain(String callChain) {
         this.callChain = callChain;
     }
+    public ArrayList<RefinedCondition> getRefinedConditions() {
+        ArrayList<RefinedCondition> preCondList= new ArrayList<>();
+        for (ConditionWithValueSet conditionWithValueSet : getConditionTrackerInfo().getConditionWithValueSetMap().values()) {
+            if (conditionWithValueSet.toString().length() > 0) {
+                for(RefinedCondition refinedCondition: conditionWithValueSet.getRefinedConditions()) {
+                    if (!preCondList.contains(refinedCondition.toString())) {
+                        preCondList.add(refinedCondition);
+                    }
+                }
+            }
+        }
+        return preCondList;
+    }
+
+    public ArrayList<RefinedCondition> getReversedCloneRefinedConditions() {
+        ArrayList<RefinedCondition> preCondList= new ArrayList<>();
+        for (ConditionWithValueSet conditionWithValueSet : getConditionTrackerInfo().getConditionWithValueSetMap().values()) {
+            if (conditionWithValueSet.toString().length() > 0) {
+                for(RefinedCondition refinedCondition: conditionWithValueSet.getRefinedConditions()){
+                    try {
+                        RefinedCondition refinedConditionClone = refinedCondition.clone();
+                        refinedConditionClone.changeSatisfied();
+                        if(!preCondList.contains(refinedConditionClone.toString())) {
+                            preCondList.add(refinedConditionClone);
+                        }
+                    } catch (CloneNotSupportedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return preCondList;
+    }
+
+
+
 }
 

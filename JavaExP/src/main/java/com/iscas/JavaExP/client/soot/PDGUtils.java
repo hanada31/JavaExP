@@ -196,9 +196,10 @@ public class PDGUtils extends MyHashMutablePDG {
     public static List<ControlDependOnUnit> getControlPathFromPDG(HashSet<Unit> controlUnits, List<Unit> mPath) {
         List<ControlDependOnUnit> controlPath = new ArrayList<>();
         if(controlUnits ==null) return controlPath;
-        for(Unit controlUnit: controlUnits){
-            if(!(controlUnit instanceof  IfStmt)) continue;
-            IfStmt ifStmt = (IfStmt) controlUnit;
+        for(Unit unitInPath: mPath){
+            if(!controlUnits.contains(unitInPath)) continue;
+            if(!(unitInPath instanceof  IfStmt)) continue;
+            IfStmt ifStmt = (IfStmt) unitInPath;
             Unit ifTarget = ifStmt.getTarget();
             Unit ifNext = mPath.get(mPath.indexOf(ifStmt)+1);
             boolean satisfied = (ifTarget == ifNext)?true:false;

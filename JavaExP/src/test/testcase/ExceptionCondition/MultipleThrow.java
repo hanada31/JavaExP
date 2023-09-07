@@ -13,10 +13,10 @@ public class MultipleThrow {
      */
     public void throw_two_exception(String x){
         if(x==null)
-            throw new RuntimeException("throw_two_exception");
+            throw new RuntimeException("parameter0 is null");
 
         if(x.startsWith("123"))
-            throw new NullPointerException("throw_two_exception");
+            throw new NullPointerException("parameter0 startsWith \"123\"");
     }
 
     /**
@@ -25,13 +25,13 @@ public class MultipleThrow {
      */
     public void throw_two_exception2(String x , String y){
         if(x==null)
-            throw new RuntimeException("throw_two_exception2");
+            throw new RuntimeException("parameter0 is null");
 
         if(y==null)
             System.out.println(y);
 
         if(x.startsWith("123"))
-            throw new NullPointerException("throw_two_exception2");
+            throw new NullPointerException("parameter0 startsWith \"123\"");
     }
 
 

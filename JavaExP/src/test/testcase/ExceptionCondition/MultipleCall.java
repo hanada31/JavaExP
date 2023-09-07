@@ -10,23 +10,6 @@ import java.util.Objects;
 public class MultipleCall {
 
     /**
-     * @throws RuntimeException: parameter0 equals "67890"  && parameter0 length not equals 2
-     */
-    public void throw_with_ret_value_condition(String x){
-        String y = call_another_method(x);
-        if(x.equals(y))
-            throw new RuntimeException("throw_with_ret_value_condition");
-    }
-
-    public String call_another_method(String x) {
-        if(x.length() ==2)
-            return "12345";
-        else
-            return "67890";
-    }
-
-
-    /**
      * @throws RuntimeException: no condition
      */
     public void throw_exception_caller(){
@@ -41,27 +24,13 @@ public class MultipleCall {
     }
 
     /**
-     * @throws RuntimeException: parameter0 < 1000
+     * @throws RuntimeException: no exception
      */
     public void throw_exception_caller_with_arg_caught(int x){
         try {
             callee_with_arg(x);
         }catch (Exception e){
         }
-    }
-
-    public void throw_exception_caller_with_arg_notcaught(int x){
-        try {
-            int a = 3;
-            compute(a);
-            System.out.println();
-        }catch (Exception e){
-        }
-        callee_with_arg(x);
-    }
-
-    private void compute(int a) {
-        System.out.println(a);
     }
 
     /**
@@ -79,28 +48,41 @@ public class MultipleCall {
         throw new RuntimeException("throw_exception_in_callee_directly");
     }
 
-    public void throw_message_caller_caller() {
-        throw_message_caller( "source1");
-    }
-
-    public void throw_message_caller(String msg) {
-        throw_message_callee("a", msg);
-        throw_message_callee("a", "source2");
-    }
-    public void throw_message_callee(String s, String msg) {
-            throw new RuntimeException(msg);
-    }
-
-    public void throw_message_caller_caller_require() {
-        throw_message_caller_require( "source1");
-    }
-
-    public void throw_message_caller_require(String msg) {
-        throw_message_callee_require("a", msg);
-        throw_message_callee_require("a", "source2");
-    }
+    /**
+     * @throws NullPointerException:  parameter0 is null
+     */
     public void throw_message_callee_require(String s, String msg) {
         Objects.requireNonNull(s, msg);
+    }
+
+    /**
+     * @throws NullPointerException: parameter0 is null
+     * @throws IllegalAccessException: parameter0 is not null && parameter1 is not null && parameter1.len <=3 && parameter0 startswith deepCall
+     * @throws IllegalArgumentException: parameter0 is not null && parameter1 is null
+     * @throws RuntimeException: parameter0 is not null && parameter1 is not null && parameter1.len >3
+     */
+    public void deepCall(String s, String msg) throws IllegalAccessException {
+        Objects.requireNonNull(s);
+        calleeNullInDeepCall(msg);
+        calleeSizeInDeepCall(msg);
+        if(s.startsWith("deepCall"))
+            throw new IllegalAccessException("parameter0 startswith deepCall");
+    }
+
+    /**
+     * @throws IllegalArgumentException:  parameter0 is null
+     */
+    public void calleeNullInDeepCall(String msg) {
+        if(msg==null)
+            throw new IllegalArgumentException("parameter0 is null");
+    }
+
+    /**
+     * @throws RuntimeException:  parameter0.len >3
+     */
+    public void calleeSizeInDeepCall(String msg) {
+        if(msg.length()>3)
+            throw new RuntimeException("parameter0.len >3");
     }
 
 }

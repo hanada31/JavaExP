@@ -30,4 +30,15 @@ public class IROperator {
 	public static String[] operators = {phiReplaceOp, denoteOP, isiInvokeOP, largerOrEqualOP, smallerOrEqualOP, smallerOP, largerOP,
 			notEqualsOp, equalsOp, notStartsWithOP, startsWithOP, notEndsWithOP, endsWithOP, notContainsOP, containsOP, isNotOP, isOP};
 
+
+	public static boolean isReverseOperator(String op1, String op2) {
+		if(op1.equals(isOP) && op2.equals(isNotOP)) return true;
+		if(op1.equals(equalsOp) && op2.equals(notEqualsOp)) return true;
+		if(op1.equals(smallerOP) && op2.equals(largerOrEqualOP)) return true;
+		if(op1.equals(largerOP) && op2.equals(smallerOrEqualOP)) return true;
+		if(op1.equals(containsOP) && op2.equals(notContainsOP)) return true;
+		if(op1.equals(startsWithOP) && op2.equals(notStartsWithOP)) return true;
+		if(op1.equals(endsWithOP) && op2.equals(notEndsWithOP)) return true;
+		return false;
+	}
 }

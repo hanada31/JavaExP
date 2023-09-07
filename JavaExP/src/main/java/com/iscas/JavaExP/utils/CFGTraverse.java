@@ -71,11 +71,11 @@ public class CFGTraverse {
             InvokeExpr invokeExpr = SootUtils.getInvokeExp(u);
             if (cfg.getSuccsOf(u).isEmpty()) {
                 //for the callee
-                if(invokeExpr !=null || SootUtils.isNotCaughtThrowUnit(sootMethod,u)) { // 仅保存end at throw 的
+                if(isTargetInvoke(invokeExpr)  || SootUtils.isNotCaughtThrowUnit(sootMethod,u)) { // 仅保存end at throw 的
                     addPathToAllPath(u,node);
                 }
             } else {
-                if(invokeExpr !=null ){
+                if(isTargetInvoke(invokeExpr) ){
                     addPathToAllPath(u,node);
                 }
                 for (Unit succ : cfg.getSuccsOf(u)) {
@@ -87,6 +87,17 @@ public class CFGTraverse {
             }
         }
         return allPaths;
+    }
+
+    private boolean isTargetInvoke(InvokeExpr invokeExpr) {
+        if(invokeExpr !=null && invokeExpr.getMethod().hasActiveBody()){
+            if( invokeExpr.getMethod().getSignature().contains(ConstantUtils.REQUIRENOTNULL)) return true;
+            if(invokeExpr.getMethod().getDeclaringClass().getName().startsWith("java.") || invokeExpr.getMethod().getDeclaringClass().getName().startsWith("javax.")){
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     private void addPathToAllPath(Unit u, PathNode node) {

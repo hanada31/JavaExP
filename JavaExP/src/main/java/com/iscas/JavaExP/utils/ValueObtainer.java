@@ -232,28 +232,6 @@ public class ValueObtainer {
 		return resList;
 	}
 
-	private boolean isValidType(Type type) {
-		if (type instanceof PrimType)
-			return true;
-		if (type.toString().contains("java.lang."))
-			return true;
-		if (type.toString().contains("android.content.Context"))
-			return true;
-		for (String str : ConstantUtils.fragmentClasses) {
-			if (type.toString().equals(str))
-				return true;
-		}
-		for (String str : ConstantUtils.dialogFragmentClasses) {
-			if (type.toString().equals(str))
-				return true;
-		}
-		for (String str : ConstantUtils.componentClasses) {
-			if (type.toString().equals(str))
-				return true;
-		}
-		// log.info(type);
-		return false;
-	}
 
 	/**
 	 * get context of method invocation inv

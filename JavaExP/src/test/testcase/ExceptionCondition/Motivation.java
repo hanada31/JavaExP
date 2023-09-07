@@ -9,8 +9,6 @@ import java.util.List;
  * @Version 1.0
  */
 public class Motivation {
-    private final String ERRORSTR = "Error String";
-
     /**
      * @throws RuntimeException: parameter1 is null && parameter0 startsWith "Error" && parameter2 smaller than 3
      */
@@ -33,7 +31,7 @@ public class Motivation {
                 }
             }
             errStr = second;
-            if (errStr.startsWith(ERRORSTR.substring(0,5)))
+            if (errStr.startsWith("Error"))
                 throw new RuntimeException("bug!");
         }
         System.out.println(errStr);
@@ -61,7 +59,7 @@ public class Motivation {
                 }
             }
             errStr = second;
-            if (errStr.startsWith(ERRORSTR.substring(0,5)))
+            if (errStr.startsWith("Error"))
                 throw new RuntimeException("bug2!");
         }
         System.out.println(errStr);

@@ -1,6 +1,0 @@
-run time of project	gs-core-1.3-src	is	431s
-run time of project	guava-19.0	is	6133s
-run time of project	android	is	7699s
-run time of project	jdk8u_nashorn	is	1759s
-run time of project	jgrapht-core	is	119s
-run time of project	commons-io-commons-io-2.6	is	3903s

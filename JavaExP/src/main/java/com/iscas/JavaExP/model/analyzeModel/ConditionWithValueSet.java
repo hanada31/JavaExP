@@ -18,7 +18,10 @@ public class ConditionWithValueSet implements  Cloneable {
 	private SootMethod sootMethod;
 	private Map<Value,String> value2StringMap = new HashMap<>();
 	private RefinedCondition optimizedConditionResult;
-	private long startMS;
+	private boolean isConflict = false;
+
+
+
 	@Override
 	public ConditionWithValueSet clone() throws CloneNotSupportedException {
 		ConditionWithValueSet conditionWithValueSetClone = new ConditionWithValueSet(sootMethod, conditionUnit);
@@ -67,8 +70,6 @@ public class ConditionWithValueSet implements  Cloneable {
 	}
 
 	public void optimizeConditionConservative() {
-//		startMS = System.currentTimeMillis();
-
 		optimizedConditionResult = refinedConditions.get(0);
 
 		String leftStr, rightStr;
@@ -88,12 +89,12 @@ public class ConditionWithValueSet implements  Cloneable {
 		}else{
 			rightStr = optimizeRefinedCondition(optimizedConditionResult.getRightValue(),new HashSet<>());
 		}
-//		System.out.println(leftStr+" "+ keyCond.getOperator()+" "+ rightStr);
 		refinedConditions.clear();
 		optimizedConditionResult.setLeftStr(leftStr);
 		optimizedConditionResult.setRightStr(rightStr);
 		refinedConditions.add(optimizedConditionResult);
 	}
+
 
 	private String optimizeRefinedCondition(Value value, Set<Value> history) {
 		if (value2StringMap.containsKey(value)) return value2StringMap.get(value);
@@ -588,5 +589,13 @@ public class ConditionWithValueSet implements  Cloneable {
 
 	public void setOptimizedConditionResult(RefinedCondition optimizedConditionResult) {
 		this.optimizedConditionResult = optimizedConditionResult;
+	}
+
+	public boolean isConflict() {
+		return isConflict;
+	}
+
+	public void setConflict(boolean conflict) {
+		isConflict = conflict;
 	}
 }

@@ -4,6 +4,9 @@ import soot.Unit;
 import soot.Value;
 import soot.jimple.ParameterRef;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @Author hanada
  * @Date 2023/4/14 10:19
@@ -72,14 +75,16 @@ public class RefinedCondition implements Cloneable {
     }
 
     public void changeSatisfied(){
-        if(satisfied) satisfied = false;
-        else  satisfied = true;
+        if(this.satisfied)
+            this.satisfied = false;
+        else
+            this.satisfied = true;
     }
     public boolean isSatisfied() {
-        return satisfied;
+        return this.satisfied;
     }
     public void setSatisfied(boolean flag) {
-        satisfied = flag;
+        this.satisfied = flag;
     }
 
     @Override
@@ -154,7 +159,10 @@ public class RefinedCondition implements Cloneable {
         if(operator==null) return "";
         if(satisfied == false) {
             if(operator.equals(IROperator.isOP)) {
-                operator =IROperator.isNotOP;
+                if(rightStr.contains("not"))
+                    rightStr.replace("not","");
+                else
+                    operator =IROperator.isNotOP;
                 satisfied = true;
             }else if(operator.equals(IROperator.isNotOP)) {
                 operator =IROperator.isOP;
@@ -172,16 +180,25 @@ public class RefinedCondition implements Cloneable {
                 operator =IROperator.smallerOrEqualOP;
                 satisfied = true;
             }else if(operator.equals(IROperator.equalsOp) ) {
-                operator =IROperator.notEqualsOp;
+                if(rightStr.contains("not"))
+                    rightStr.replace("not","");
+                else
+                    operator =IROperator.notEqualsOp;
                 satisfied = true;
             }else if(operator.equals(IROperator.notEqualsOp)) {
                 operator =IROperator.equalsOp;
                 satisfied = true;
             }else if(operator.equals(IROperator.startsWithOP)) {
-                operator =IROperator.notStartsWithOP;
+                if(rightStr.contains("not"))
+                    rightStr.replace("not","");
+                else
+                    operator =IROperator.notStartsWithOP;
                 satisfied = true;
             }else if(operator.equals(IROperator.endsWithOP)) {
-                operator =IROperator.notEndsWithOP;
+                if(rightStr.contains("not"))
+                    rightStr.replace("not","");
+                else
+                    operator =IROperator.notEndsWithOP;
                 satisfied = true;
             }else if(operator.equals(IROperator.notStartsWithOP)) {
                 operator =IROperator.startsWithOP;
@@ -198,10 +215,37 @@ public class RefinedCondition implements Cloneable {
                 satisfied = true;
             }
         }
+
         String str = leftStr  +" "+ operator  +" "+ rightStr ;
+        str = processString(str);
         return satisfied?str:str+", it returns 0";
     }
 
+    public static String processString(String input) {
+        // 匹配 "parameterX cmp YL" 形式的字符串
+        String regex = "parameter(\\d+) cmp (\\d+)L (larger or equal| smaller or equal|larger than|smaller than|equal) 0";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+
+        StringBuffer result = new StringBuffer();
+
+        while (matcher.find()) {
+            // 提取参数名、数字、比较符
+            String paramName = "parameter" + matcher.group(1);
+            String cmpValue = matcher.group(2);
+            String comparison = matcher.group(3);
+            // 根据比较符构建新的字符串
+            String replacement = paramName + " " + comparison + " " +  cmpValue;
+
+            // 将匹配的部分替换为新字符串
+            matcher.appendReplacement(result, replacement);
+        }
+
+        // 将剩余部分添加到结果中
+        matcher.appendTail(result);
+
+        return result.toString();
+    }
     public Unit getUnit() {
         return unit;
     }

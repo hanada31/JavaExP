@@ -7,7 +7,6 @@ import com.iscas.JavaExP.model.analyzeModel.*;
 import com.iscas.JavaExP.utils.CollectionUtils;
 import com.iscas.JavaExP.utils.ConstantUtils;
 import com.iscas.JavaExP.utils.SootUtils;
-import com.iscas.JavaExP.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import soot.*;
 import soot.jimple.*;
@@ -46,12 +45,6 @@ public class ConditionAnalyzer  extends Analyzer {
     @Override
     public void analyze() {
         getConditionAndValueFromUnit(mSootMethod, mUnit);
-//        getReturnConditions();
-//        try {
-//            addOtherNotThrowConditions(mSootMethod, mUnit);
-//        } catch (CloneNotSupportedException e) {
-//            e.printStackTrace();
-//        }
     }
 
     /**
@@ -62,67 +55,42 @@ public class ConditionAnalyzer  extends Analyzer {
     void getConditionAndValueFromUnit(SootMethod sootMethod, Unit exceptionUnit) {
         //get condition of unit
         getConditionFromUnit(sootMethod, exceptionUnit, new HashSet<>());
-
         //optimize condition of unit
-        for(ConditionWithValueSet conditionWithValueSet :conditionTrackerInfo.getRefinedConditions().values() ) {
+        for(ConditionWithValueSet conditionWithValueSet :conditionTrackerInfo.getConditionWithValueSetMap().values() ) {
             if(MyConfig.getInstance().isConservativeOptimize()) {
                 conditionWithValueSet.optimizeConditionConservative();
             }else {
-            conditionWithValueSet.optimizeConditionInConservative();
+                conditionWithValueSet.optimizeConditionInConservative();
             }
         }
-        //get Related Methods
-        getRelatedMethods(sootMethod);
     }
 
-    /**
-     * get Related Methods
-     * @param sootMethod
-     */
-    private void getRelatedMethods(SootMethod sootMethod) {
-        List<String> trace = new ArrayList<>();
-        trace.add(sootMethod.getSignature());
-        if(conditionTrackerInfo.getRelatedParamValues().size()>0 && conditionTrackerInfo.getRelatedFieldValues().size() ==0) {
-            List<String> newTrace = new ArrayList<>(trace);
-            RelatedMethod addMethod = new RelatedMethod(sootMethod.getSignature(), RelatedMethodSource.CALLER, 0, newTrace);
-            conditionTrackerInfo.addRelatedMethodsInSameClassMap(addMethod);
-            conditionTrackerInfo.addRelatedMethods(sootMethod.getSignature());
-            List<String> newTrace2 = new ArrayList<>(trace);
-            getExceptionCallerByParam(sootMethod, new HashSet<>(), 1,
-                    RelatedMethodSource.CALLER, conditionTrackerInfo.getRelatedValueIndex(), newTrace2);
-        }else if(conditionTrackerInfo.getRelatedParamValues().size()==0 && conditionTrackerInfo.getRelatedFieldValues().size()>0) {
-            List<String> newTrace = new ArrayList<>(trace);
-            getExceptionCallerByField(sootMethod, new HashSet<>(), 1,
-                    RelatedMethodSource.FIELD, newTrace);
-        }else if(conditionTrackerInfo.getRelatedParamValues().size()>0 && conditionTrackerInfo.getRelatedFieldValues().size()>0){
-            List<String> newTrace = new ArrayList<>(trace);
-            getExceptionCallerByField(sootMethod, new HashSet<>(), 1,
-                    RelatedMethodSource.FIELD, newTrace);
-            List<String> newTrace2 = new ArrayList<>(trace);
-            getExceptionCallerByParam(sootMethod, new HashSet<>(),1,
-                    RelatedMethodSource.CALLER, conditionTrackerInfo.getRelatedValueIndex(), newTrace2);
-        }
-    }
-
-    private void addIntoMethod2ExceptionList(SootMethod sootMethod, Unit unit) throws CloneNotSupportedException {
-        List<RefinedCondition> refinedConditionList = new ArrayList<>();
-        Map<String, List<ExceptionInfo>> map = Global.v().getAppModel().getMethod2ExceptionList();
-        for(ExceptionInfo exceptionInfo: map.get(sootMethod.getSignature())){
-            if(exceptionInfo.getUnit() != unit){
-                for(ConditionWithValueSet temp:exceptionInfo.getConditionTrackerInfo().getRefinedConditions().values())
-                    refinedConditionList.addAll(temp.getRefinedConditions());
+    public static boolean conflictCheck(RefinedCondition rf, RefinedCondition optimizedConditionResult) {
+        if(rf.getLeftStr().equals(optimizedConditionResult.getLeftStr())
+                && rf.getOperator().equals(optimizedConditionResult.getOperator())){
+            if(rf.getRightStr().equals("not "+ optimizedConditionResult.getRightStr())
+                    || optimizedConditionResult.getRightStr().equals("not "+ rf.getRightStr()) ){
+                return true;
             }
         }
-        for(RefinedCondition temp: refinedConditionList) {
-            RefinedCondition newTemp = temp.clone();
-            newTemp.changeSatisfied();
-            ConditionWithValueSet conditionWithValueSet = new ConditionWithValueSet(sootMethod, newTemp.getUnit());
-            conditionTrackerInfo.addRefinedConditions(conditionWithValueSet);
-            conditionWithValueSet.addRefinedCondition(newTemp);
+        if(rf.getLeftStr().equals(optimizedConditionResult.getLeftStr())
+                && rf.getRightStr().equals(optimizedConditionResult.getRightStr())){
+            if(rf.getOperator().equals("not "+ optimizedConditionResult.getOperator())
+                    || optimizedConditionResult.getOperator().equals("not "+ rf.getOperator()) ){
+                return true;
+            }
         }
-
+        if(rf.getLeftStr().equals(optimizedConditionResult.getLeftStr())
+                && rf.getRightStr().equals(optimizedConditionResult.getRightStr())){
+            if(IROperator.isReverseOperator(rf.getOperator(),optimizedConditionResult.getOperator())){
+                return true;
+            }
+            if(IROperator.isReverseOperator(optimizedConditionResult.getOperator(),rf.getOperator())){
+                return true;
+            }
+        }
+        return false;
     }
-
     /**
      * get the latest condition info for an conditionTrackerInfo
      * only analyze one level if condition, forward
@@ -143,11 +111,14 @@ public class ConditionAnalyzer  extends Analyzer {
             if(cond instanceof ConditionExpr){
                 ConditionExpr conditionExpr = (ConditionExpr) cond;
                 ConditionWithValueSet conditionWithValueSet = new ConditionWithValueSet(sootMethod, ifStmt);
-                conditionTrackerInfo.addRefinedConditions(conditionWithValueSet);
+                conditionTrackerInfo.addConditionWithValueSet(conditionWithValueSet);
                 // add the direct condition
 
                 RefinedCondition rf = new RefinedCondition(conditionWithValueSet, conditionExpr.getOp1(),
                         SootUtils.getActualOp(conditionExpr), conditionExpr.getOp2(), predUnit, satisfied);
+//                if(conditionWithValueSet.getRefinedConditions().size()==0){
+//                    conditionWithValueSet.setKeyRefinedCondition(rf);
+//                }
                 conditionWithValueSet.addRefinedCondition(rf);
 
                 // trace from the direct condition
@@ -245,42 +216,42 @@ public class ConditionAnalyzer  extends Analyzer {
         return false;
     }
 
-    /**
-     * get not return check conditions
-     */
-    private void getReturnConditions() {
-        int b = conditionTrackerInfo.getConditions().size();
-        Set<Unit> retUnits = new HashSet<>();
-        for (Unit u: mSootMethod.getActiveBody().getUnits()) {
-            if (u instanceof ReturnStmt) {
-                if(!isConditionOfRetIsCaughtException(mSootMethod, u, new HashSet<>()))
-                    retUnits.add(u);
-            }
-        }
-        for(Unit condUnit: conditionTrackerInfo.getConditionUnits()) {
-            getRetUnitsFlowIntoConditionUnits(mSootMethod, condUnit, retUnits, new HashSet<>());
-        }
-        for (Unit retUnit : retUnits) {
-            getConditionAndValueFromUnit(mSootMethod, retUnit);
-        }
+//    /**
+//     * get not return check conditions
+//     */
+//    private void getReturnConditions() {
+//        int b = conditionTrackerInfo.getConditions().size();
+//        Set<Unit> retUnits = new HashSet<>();
+//        for (Unit u: mSootMethod.getActiveBody().getUnits()) {
+//            if (u instanceof ReturnStmt) {
+//                if(!isConditionOfRetIsCaughtException(mSootMethod, u, new HashSet<>()))
+//                    retUnits.add(u);
+//            }
+//        }
+//        for(Unit condUnit: conditionTrackerInfo.getConditionUnits()) {
+//            getRetUnitsFlowIntoConditionUnits(mSootMethod, condUnit, retUnits, new HashSet<>());
+//        }
+//        for (Unit retUnit : retUnits) {
+//            getConditionAndValueFromUnit(mSootMethod, retUnit);
+//        }
+//
+//        int e = conditionTrackerInfo.getConditions().size();
+//        getConditionType( e-b);
+//    }
 
-        int e = conditionTrackerInfo.getConditions().size();
-        getConditionType( e-b);
-    }
-
-
-    /**
-     * get RelatedCondType
-     * @param retValue
-     */
-    void getConditionType(int retValue) {
-        if(retValue>0)
-            conditionTrackerInfo.setRelatedCondType(RelatedCondType.NotReturn);
-        else if(conditionTrackerInfo.getConditions().size()>0)
-            conditionTrackerInfo.setRelatedCondType(RelatedCondType.Basic);
-        else
-            conditionTrackerInfo.setRelatedCondType(RelatedCondType.Empty);
-    }
+//
+//    /**
+//     * get RelatedCondType
+//     * @param retValue
+//     */
+//    void getConditionType(int retValue) {
+//        if(retValue>0)
+//            conditionTrackerInfo.setRelatedCondType(RelatedCondType.NotReturn);
+//        else if(conditionTrackerInfo.getConditions().size()>0)
+//            conditionTrackerInfo.setRelatedCondType(RelatedCondType.Basic);
+//        else
+//            conditionTrackerInfo.setRelatedCondType(RelatedCondType.Empty);
+//    }
 
     /**
      * get the latest condition info for an conditionTrackerInfo
@@ -361,9 +332,9 @@ public class ConditionAnalyzer  extends Analyzer {
                     //add refinedCondition
                     addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.denoteOP, identityStmt.getRightOp(), defUnit, location);
                     if (identityStmt.getRightOp() instanceof ParameterRef) {//from parameter
-                        conditionTrackerInfo.addRelatedParamValue(identityStmt.getRightOp());
+//                        conditionTrackerInfo.addRelatedParamValue(identityStmt.getRightOp());
                         int id = ((ParameterRef) identityStmt.getRightOp()).getIndex();
-                        conditionTrackerInfo.getRelatedValueIndex().add(id);
+//                        conditionTrackerInfo.getRelatedValueIndex().add(id);
                         traceCallerOfParamValue(sootMethod, id, 1);
                         conditionTrackerInfo.addCallerOfSingnlar2SourceVar(sootMethod.getSignature(), id);
                         return "ParameterRef";
@@ -395,10 +366,10 @@ public class ConditionAnalyzer  extends Analyzer {
                                 extendRelatedValues(conditionWithValueSet, sootMethod, defUnit,
                                         rv, valueHistory, getCondHistory, location);
                             }
-                            if(defType.equals("ThisRef"))
-                                conditionTrackerInfo.addRelatedFieldValues(field);
-                            else
-                                conditionTrackerInfo.addRelatedParamValue(((AbstractInstanceFieldRef) rightOp).getBase());
+//                            if(defType.equals("ThisRef"))
+//                                conditionTrackerInfo.addRelatedFieldValues(field);
+//                            else
+//                                conditionTrackerInfo.addRelatedParamValue(((AbstractInstanceFieldRef) rightOp).getBase());
                             addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.denoteOP, rightOp, assignStmt, location);
                     } else if (rightOp instanceof Expr) {
                         if (rightOp instanceof InvokeExpr) {
@@ -451,7 +422,7 @@ public class ConditionAnalyzer  extends Analyzer {
                         }
                     } else if (rightOp instanceof StaticFieldRef) {
                         //from static field value
-                        conditionTrackerInfo.addRelatedFieldValues(((StaticFieldRef) rightOp).getField());
+//                        conditionTrackerInfo.addRelatedFieldValues(((StaticFieldRef) rightOp).getField());
                         addRefinedConditionIntoSet(conditionWithValueSet,value, IROperator.denoteOP, rightOp, assignStmt, location);
                     }else if (rightOp instanceof JArrayRef) {
                         JArrayRef jArrayRef = (JArrayRef) rightOp;
@@ -519,125 +490,125 @@ public class ConditionAnalyzer  extends Analyzer {
 
 
 
+//
+//    /**
+//     * getExceptionCaller
+//     * @param sootMethod
+//     * @param trace
+//     */
+//    private void getExceptionCallerByParam(SootMethod sootMethod, Set<SootMethod> callerHistory, int depth,
+//                                           RelatedMethodSource mtdSource, Set<Integer> paramIndexCallee, List<String> trace) {
+//        if(callerHistory.contains(sootMethod) || depth >ConstantUtils.CALLDEPTH)  return;
+//        callerHistory.add(sootMethod);
+//        Set<String> history = new HashSet<>();
+//        for (Iterator<Edge> it = Global.v().getAppModel().getCg().edgesInto(sootMethod); it.hasNext(); ) {
+//            Edge edge = it.next();
+//            SootMethod edgeSourceMtd = edge.getSrc().method();
+//            if(history.contains(edgeSourceMtd.getSignature())){
+//                continue;
+//            }
+//            history.add(edgeSourceMtd.getSignature());
+//            Set<Integer> paramIndexCaller = new HashSet<>();
+//            if(mtdSource == RelatedMethodSource.CALLER){
+//                paramIndexCaller = SootUtils.getIndexesFromMethod(edge, paramIndexCallee);
+//                if(paramIndexCaller.size() ==0 ) continue;
+//            }
+//            boolean flag = false;
+//            Set<SootClass> targetClasses = new HashSet<>();
+//            targetClasses.add(edgeSourceMtd.getDeclaringClass());
+//            List<SootClass> supers = SootUtils.getSuperClassesWithAbstract(edgeSourceMtd);
+//            targetClasses.addAll(supers);//android.app.ContextImpl && android.app.Context
+//            for (SootClass sootClass : targetClasses) {
+//                String signature = edgeSourceMtd.getSignature().replace(edgeSourceMtd.getDeclaringClass().getName(), sootClass.getName());
+//                SootMethod sm = SootUtils.getSootMethodBySignature(signature);
+//                String pkg1 = sootClass.getPackageName();
+//                String pkg2 = mSootMethod.getDeclaringClass().getPackageName();
+//                if (StringUtils.getPkgPrefix(pkg1, 2).equals(StringUtils.getPkgPrefix(pkg2, 2))
+//                        || edgeSourceMtd.getName().equals(sootMethod.getName())) {
+//                    if (edgeSourceMtd.getDeclaringClass() == sootClass) {
+////                        addRelatedMethodWithInfo(trace, signature, mtdSource, depth, edgeSourceMtd);
+//                        flag = true;
+//                    }
+//                    else if (supers.contains(sootClass)) {
+//                        addRelatedMethodWithInfo(trace, signature, mtdSource, depth, edgeSourceMtd);
+//                        flag = true;
+//                    }
+//                    if(sm!=null) {
+//                        Iterator<SootClass> it2 = sm.getDeclaringClass().getInterfaces().iterator();
+//                        while (it2.hasNext()) {
+//                            SootClass interfaceSC = it2.next();
+//                            for (SootMethod interfaceSM : interfaceSC.getMethods()) {
+//                                if(interfaceSM.getName().equals(sm.getName())) {
+//                                    addRelatedMethodWithInfo(trace, interfaceSM.getSignature(), mtdSource, depth, edgeSourceMtd);
+//                                    flag = true;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            if(flag) {
+//                List<String> newTrace = new ArrayList<>(trace);
+//                newTrace.add(0, edgeSourceMtd.getSignature());
+//                getExceptionCallerByParam(edgeSourceMtd, callerHistory, depth + 1, mtdSource, paramIndexCaller, newTrace);
+//            }
+//        }
+//    }
+//
+//    private void addRelatedMethodWithInfo( List<String> trace, String signature, RelatedMethodSource mtdSource,
+//                                           int depth,  SootMethod edgeSourceMtd) {
+//        List<String> newTrace = new ArrayList<>(trace);
+//        newTrace.add(0, signature);
+//        RelatedMethod addMethodObj = new RelatedMethod(signature, mtdSource, depth, newTrace);
+//        addRelatedMethodInstance(edgeSourceMtd, addMethodObj);
+//    }
 
-    /**
-     * getExceptionCaller
-     * @param sootMethod
-     * @param trace
-     */
-    private void getExceptionCallerByParam(SootMethod sootMethod, Set<SootMethod> callerHistory, int depth,
-                                           RelatedMethodSource mtdSource, Set<Integer> paramIndexCallee, List<String> trace) {
-        if(callerHistory.contains(sootMethod) || depth >ConstantUtils.CALLDEPTH)  return;
-        callerHistory.add(sootMethod);
-        Set<String> history = new HashSet<>();
-        for (Iterator<Edge> it = Global.v().getAppModel().getCg().edgesInto(sootMethod); it.hasNext(); ) {
-            Edge edge = it.next();
-            SootMethod edgeSourceMtd = edge.getSrc().method();
-            if(history.contains(edgeSourceMtd.getSignature())){
-                continue;
-            }
-            history.add(edgeSourceMtd.getSignature());
-            Set<Integer> paramIndexCaller = new HashSet<>();
-            if(mtdSource == RelatedMethodSource.CALLER){
-                paramIndexCaller = SootUtils.getIndexesFromMethod(edge, paramIndexCallee);
-                if(paramIndexCaller.size() ==0 ) continue;
-            }
-            boolean flag = false;
-            Set<SootClass> targetClasses = new HashSet<>();
-            targetClasses.add(edgeSourceMtd.getDeclaringClass());
-            List<SootClass> supers = SootUtils.getSuperClassesWithAbstract(edgeSourceMtd);
-            targetClasses.addAll(supers);//android.app.ContextImpl && android.app.Context
-            for (SootClass sootClass : targetClasses) {
-                String signature = edgeSourceMtd.getSignature().replace(edgeSourceMtd.getDeclaringClass().getName(), sootClass.getName());
-                SootMethod sm = SootUtils.getSootMethodBySignature(signature);
-                String pkg1 = sootClass.getPackageName();
-                String pkg2 = mSootMethod.getDeclaringClass().getPackageName();
-                if (StringUtils.getPkgPrefix(pkg1, 2).equals(StringUtils.getPkgPrefix(pkg2, 2))
-                        || edgeSourceMtd.getName().equals(sootMethod.getName())) {
-                    if (edgeSourceMtd.getDeclaringClass() == sootClass) {
-                        addRelatedMethodWithInfo(trace, signature, mtdSource, depth, edgeSourceMtd);
-                        flag = true;
-                    }
-                    else if (supers.contains(sootClass)) {
-                        addRelatedMethodWithInfo(trace, signature, mtdSource, depth, edgeSourceMtd);
-                        flag = true;
-                    }
-                    if(sm!=null) {
-                        Iterator<SootClass> it2 = sm.getDeclaringClass().getInterfaces().iterator();
-                        while (it2.hasNext()) {
-                            SootClass interfaceSC = it2.next();
-                            for (SootMethod interfaceSM : interfaceSC.getMethods()) {
-                                if(interfaceSM.getName().equals(sm.getName())) {
-                                    addRelatedMethodWithInfo(trace, interfaceSM.getSignature(), mtdSource, depth, edgeSourceMtd);
-                                    flag = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if(flag) {
-                List<String> newTrace = new ArrayList<>(trace);
-                newTrace.add(0, edgeSourceMtd.getSignature());
-                getExceptionCallerByParam(edgeSourceMtd, callerHistory, depth + 1, mtdSource, paramIndexCaller, newTrace);
-            }
-        }
-    }
+//    private void addRelatedMethodInstance(SootMethod edgeSource, RelatedMethod addMethod) {
+//        if(edgeSource.isPublic()) {
+//            if (edgeSource.getDeclaringClass() == mSootMethod.getDeclaringClass())
+//                conditionTrackerInfo.addRelatedMethodsInSameClassMap(addMethod);
+//            else
+//                conditionTrackerInfo.addRelatedMethodsInDiffClassMap(addMethod);
+//            conditionTrackerInfo.addRelatedMethods(addMethod.getMethod());
+//        }
+//    }
 
-    private void addRelatedMethodWithInfo( List<String> trace, String signature, RelatedMethodSource mtdSource,
-                                           int depth,  SootMethod edgeSourceMtd) {
-        List<String> newTrace = new ArrayList<>(trace);
-        newTrace.add(0, signature);
-        RelatedMethod addMethodObj = new RelatedMethod(signature, mtdSource, depth, newTrace);
-        addRelatedMethodInstance(edgeSourceMtd, addMethodObj);
-    }
-
-    private void addRelatedMethodInstance(SootMethod edgeSource, RelatedMethod addMethod) {
-        if(edgeSource.isPublic()) {
-            if (edgeSource.getDeclaringClass() == mSootMethod.getDeclaringClass())
-                conditionTrackerInfo.addRelatedMethodsInSameClassMap(addMethod);
-            else
-                conditionTrackerInfo.addRelatedMethodsInDiffClassMap(addMethod);
-            conditionTrackerInfo.addRelatedMethods(addMethod.getMethod());
-        }
-    }
-
-
-    /**
-     * getExceptionCallerByField
-     * @param sootMethod
-     * @param callerHistory
-     * @param depth
-     * @param mtdSource
-     * @param trace
-     */
-    private void getExceptionCallerByField(SootMethod sootMethod,HashSet<SootMethod> callerHistory, int depth, RelatedMethodSource mtdSource, List<String> trace) {
-        for(SootField field: conditionTrackerInfo.getRelatedFieldValues()){
-            for(SootMethod otherMethod: sootMethod.getDeclaringClass().getMethods()){
-                if(!otherMethod.hasActiveBody()) continue;
-                if(SootUtils.fieldIsChanged(field, otherMethod)){
-                    if(otherMethod.isPublic()) {
-                        List<String> newTrace = new ArrayList<>(trace);
-                        newTrace.add(0,"key field: " + field.toString());
-                        newTrace.add(0,otherMethod.getSignature());
-                        RelatedMethod addMethod = new RelatedMethod(otherMethod.getSignature(),mtdSource,depth, trace);
-                        if(otherMethod.getDeclaringClass() == mSootMethod.getDeclaringClass()) {
-                            conditionTrackerInfo.addRelatedMethodsInSameClassMap(addMethod);
-                        }
-                        else {
-                            conditionTrackerInfo.addRelatedMethodsInDiffClassMap(addMethod);
-                        }
-                        conditionTrackerInfo.addRelatedMethods(otherMethod.getSignature());
-                    }
-                    List<String> newTrace = new ArrayList<>(trace);
-                    newTrace.add(0,"key field: " + field.toString());
-                    newTrace.add(0,otherMethod.getSignature());
-                    getExceptionCallerByParam(otherMethod, callerHistory,
-                            depth+1, RelatedMethodSource.FIELDCALLER, new HashSet<>(), newTrace);
-                }
-            }
-        }
-    }
+//
+//    /**
+//     * getExceptionCallerByField
+//     * @param sootMethod
+//     * @param callerHistory
+//     * @param depth
+//     * @param mtdSource
+//     * @param trace
+//     */
+//    private void getExceptionCallerByField(SootMethod sootMethod,HashSet<SootMethod> callerHistory, int depth, RelatedMethodSource mtdSource, List<String> trace) {
+//        for(SootField field: conditionTrackerInfo.getRelatedFieldValues()){
+//            for(SootMethod otherMethod: sootMethod.getDeclaringClass().getMethods()){
+//                if(!otherMethod.hasActiveBody()) continue;
+//                if(SootUtils.fieldIsChanged(field, otherMethod)){
+//                    if(otherMethod.isPublic()) {
+//                        List<String> newTrace = new ArrayList<>(trace);
+//                        newTrace.add(0,"key field: " + field.toString());
+//                        newTrace.add(0,otherMethod.getSignature());
+//                        RelatedMethod addMethod = new RelatedMethod(otherMethod.getSignature(),mtdSource,depth, trace);
+////                        if(otherMethod.getDeclaringClass() == mSootMethod.getDeclaringClass()) {
+////                            conditionTrackerInfo.addRelatedMethodsInSameClassMap(addMethod);
+////                        }
+////                        else {
+////                            conditionTrackerInfo.addRelatedMethodsInDiffClassMap(addMethod);
+////                        }
+////                        conditionTrackerInfo.addRelatedMethods(otherMethod.getSignature());
+//                    }
+//                    List<String> newTrace = new ArrayList<>(trace);
+//                    newTrace.add(0,"key field: " + field.toString());
+//                    newTrace.add(0,otherMethod.getSignature());
+//                    getExceptionCallerByParam(otherMethod, callerHistory,
+//                            depth+1, RelatedMethodSource.FIELDCALLER, new HashSet<>(), newTrace);
+//                }
+//            }
+//        }
+//    }
 
 //     /**
 //     * get the goto destination of IfStatement
