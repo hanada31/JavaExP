@@ -28,9 +28,9 @@ public class ConstantUtils {
 	public static final String onCreateOptionsMenu = "boolean onCreateOptionsMenu(android.view.Menu)";
 	public static final String onOptionsItemSelected = "boolean onOptionsItemSelected(android.view.MenuItem)";
     public static final int SIGNLARCALLERDEPTH = 10;
-    public static final int CFGPATHNUMBER = 1000;
-    public static final int ENDUNITMAXNUMBER = 20;
-	public static final int CFGPATHNODELEN = 100;
+    public static final int CFGPATHNUMBER = 500;
+    public static final int ENDUNITMAXNUMBER = 10;
+	public static final int CFGPATHNODELEN = 50;
     public static final long SINGLEMETHODTIME = 20* 1000; //20s
     public static final CharSequence REQUIRENOTNULL = "<java.util.Objects: java.lang.Object requireNonNull(";
     public static final String FORMALPARA = "@parameter@";

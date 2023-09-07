@@ -42,7 +42,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
     @Override
     public void analyze() {
         log.info("getThrownExceptionList start...");
-        getThrownExceptionNumber();
+//        getThrownExceptionNumber();
         getThrownExceptionList();
         outputThrowExceptionInfo();
         log.info("getThrownExceptionList end...");
