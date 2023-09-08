@@ -28,7 +28,6 @@ public class Main {
 		/** analyze args**/
 		CommandLine mCmd = getCommandLine(args);
 		analyzeArgs(mCmd);
-		
 		/** start**/
 		startAnalyze();
 
@@ -55,6 +54,11 @@ public class Main {
 	 */
 	public static void startAnalyze() {
 		log.info("Analyzing " + MyConfig.getInstance().getAppName());
+
+		log.info("------Config------");
+		log.info(MyConfig.getInstance().toString());
+		log.info("------Config------");
+
 		BaseClient client = getClient();
 
 		TimeUtilsofProject.setTotalTimer(client);
@@ -64,9 +68,10 @@ public class Main {
 
 		long endTime = System.currentTimeMillis();
 		log.info("---------------------------------------");
-		log.info("Analyzing " + MyConfig.getInstance().getAppName() + " Finish...\n");
 		log.info(MyConfig.getInstance().getClient() + " time = " + (endTime - startTime) / 1000 + " seconds");
 		log.info("Success! Please see files in the result folder "+ MyConfig.getInstance().getResultFolder());
+		log.info("Analyzing " + MyConfig.getInstance().getAppName() + " Finish...\n");
+
 	}
 
 	/**
@@ -133,6 +138,7 @@ public class Main {
 		options.addOption("sootOutput", false, "-sootOutput: Output the sootOutput");
 		options.addOption("exceptionInput", true, "-exceptionInput: exception file folder");
 		options.addOption("interProcedure", false, "-interProcedure: true for interProcedure, false for intraProcedure");
+		options.addOption("lightWeight", false, "-lightWeight: true for light weight mode, false for normal");
 
 		return options;
 	}
@@ -176,9 +182,11 @@ public class Main {
 
 		int timeLimit = Integer.valueOf(mCmd.getOptionValue("time", "90"));
 		MyConfig.getInstance().setTimeLimit(timeLimit);
-		MyConfig.getInstance().setCallgraphAlgorithm(mCmd.getOptionValue("callgraphAlgorithm", "CHA"));
+		MyConfig.getInstance().setCallgraphAlgorithm(mCmd.getOptionValue("callgraphAlgorithm", "SPARK"));
 		if(mCmd.hasOption("interProcedure"))
 			MyConfig.getInstance().setInterProcedure(true);
+		if(mCmd.hasOption("lightWeight"))
+			MyConfig.getInstance().setLightWightMode(true);
 		if(mCmd.hasOption("isJimple"))
 			MyConfig.getInstance().setJimple(true);
 		if(mCmd.hasOption("inConservativeOptimize"))
@@ -187,8 +195,6 @@ public class Main {
 		String client = mCmd.getOptionValue("client", "MainClient");
 		MyConfig.getInstance().setClient(mCmd.getOptionValue("client", client));
 
-
-		
 		if (!mCmd.hasOption("name")) {
 			printHelp("Please input the apk name use -name.");
 		}

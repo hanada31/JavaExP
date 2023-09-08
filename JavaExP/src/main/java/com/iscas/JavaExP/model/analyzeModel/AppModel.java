@@ -398,6 +398,12 @@ public class AppModel implements Serializable {
 	public void addMethod2ExceptionListForOne(String sootMethod, ExceptionInfo exceptionInfo ) {
 		if(method2ExceptionList.get(sootMethod) == null)
 			method2ExceptionList.put(sootMethod,new ArrayList<>());
+		for(ExceptionInfo exceptionInfoOld: method2ExceptionList.get(sootMethod)) {
+			if (exceptionInfoOld == exceptionInfo || exceptionInfoOld.toString().equals(exceptionInfo.toString())) {
+				return;
+				//TODO
+			}
+		}
 		this.method2ExceptionList.get(sootMethod).add(exceptionInfo);
 	}
 	public void addMethod2ExceptionList(String sootMethod, List<ExceptionInfo> exceptionInfoList ) {

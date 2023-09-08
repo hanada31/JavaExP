@@ -248,7 +248,24 @@ public class ExceptionInfo implements  Cloneable {
         return preCondList;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "ExceptionInfo{" +
+                "exceptionType=" + exceptionType +
+                ", exceptionName='" + exceptionName + '\'' +
+                ", exceptionMsg='" + exceptionMsg + '\'' +
+                ", isRethrow=" + isRethrow +
+                ", modifier='" + modifier + '\'' +
+                ", sootMethod=" + sootMethod.getSignature() +
+                ", sootMethodName='" + sootMethodName + '\'' +
+                ", unit=" + unit +
+                ", intraThrowUnit=" + intraThrowUnit +
+                ", intraThrowUnitMethod=" + intraThrowUnitMethod +
+                ", callChain='" + callChain + '\'' +
+                ", throwUnitOrder=" + throwUnitOrder +
+                ", invokedMethod=" + invokedMethod.toString() +
+                ", conditionTrackerInfo=" + conditionTrackerInfo +
+                '}';
+    }
 }
 

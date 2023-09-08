@@ -34,9 +34,11 @@ public class ConstantUtils {
     public static final long SINGLEMETHODTIME = 20* 1000; //20s
     public static final CharSequence REQUIRENOTNULL = "<java.util.Objects: java.lang.Object requireNonNull(";
     public static final String FORMALPARA = "@parameter@";
+    public static final int CGCALLCHAINLIMIT = 10;
+	public static final int EXCEPTIONINFOSIZE = 100;
 
 
-    public static String CGANALYSISPREFIX = "android";
+	public static String CGANALYSISPREFIX = "android";
     public static String FRAMEWORKPREFIX = "android";
 	public static final int CONDITIONHISTORYSIZE = 50;
 

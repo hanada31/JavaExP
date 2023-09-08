@@ -38,6 +38,7 @@ public class MyConfig {
 	private String FileVersion = null;
 
 	private String Strategy="";
+	private boolean lightWightMode=false;
 
 
 
@@ -74,6 +75,14 @@ public class MyConfig {
 
 	public void setWriteOutput(boolean writeOutput) {
 		this.writeOutput = writeOutput;
+	}
+
+	public boolean isLightWightMode() {
+		return lightWightMode;
+	}
+
+	public void setLightWightMode(boolean lightWightMode) {
+		this.lightWightMode = lightWightMode;
 	}
 
 
@@ -294,4 +303,35 @@ public class MyConfig {
 	}
 
 
+	@Override
+	public String toString() {
+		return "MyConfig{" +
+				"\n lightWightMode=" + lightWightMode +
+				"\n isInterProcedure=" + isInterProcedure +
+				"\n isConservativeOptimize=" + isConservativeOptimize +
+				"\n writeOutput=" + writeOutput +
+				"\n filterKeyword='" + filterKeyword + '\'' +
+				"\n isJimple=" + isJimple +
+				"\n client='" + client + '\'' +
+				"\n callgraphAlgorithm='" + callgraphAlgorithm + '\'' +
+				"\n appName='" + appName + '\'' +
+				"\n appPath='" + appPath + '\'' +
+				"\n resultFolder='" + resultFolder + '\'' +
+				"\n timeLimit=" + timeLimit +
+//				"\n androidJar='" + androidJar + '\'' +
+//				"\n stopFlag=" + stopFlag +
+//				"\n isSootAnalyzeFinish=" + isSootAnalyzeFinish +
+//				"\n isManifestClientFinish=" + isManifestClientFinish +
+//				"\n isCallGraphClientFinish=" + isCallGraphClientFinish +
+//				"\n src_prec=" + src_prec +
+//				"\n fileSuffixLength=" + fileSuffixLength +
+//				"\n CrashInfoFilePath='" + CrashInfoFilePath + '\'' +
+//				"\n ExceptionFilePath='" + ExceptionFilePath + '\'' +
+//				"\n ExceptionFolderPath='" + ExceptionFolderPath + '\'' +
+//				"\n PermissionFilePath='" + PermissionFilePath + '\'' +
+//				"\n AndroidCGFilePath='" + AndroidCGFilePath + '\'' +
+//				"\n FileVersion='" + FileVersion + '\'' +
+//				"\n Strategy='" + Strategy + '\'' +
+				"\n }";
+	}
 }

@@ -19,18 +19,27 @@ if __name__ == '__main__' :
     path = sys.argv[1]
     name = sys.argv[2] 
     output = sys.argv[3]
+    
+    outputFolder = "0908/"
+    if not os.path.exists("logs-"+outputFolder):
+        shutil.os.mkdir("logs-"+outputFolder)
     extra = ""
     if len(sys.argv)>4 and sys.argv[4] =="interProcedure":
         extra += " -interProcedure " 
+    if len(sys.argv)>5 and sys.argv[5] =="lightWeight":
+        extra += " -lightWeight " 
     vmArgs = ""
     if name == "all":
         print ("all files to be analyzed")
         for name in os.listdir(path):
+            if os.path.exists(outputFolder + output+"//"+name):
+                print(outputFolder + output+"//"+name)
+                continue
             if name.endswith(".jar"):
-                command = "java -jar " + vmArgs +jarFile+"  -path "+ path +" -name "+name+ " -client ExceptionInfoClient " +" -outputDir " +output  +extra +" >> logs/"+name+"-log.txt"
+                command = "java -jar " + vmArgs +jarFile+"  -path "+ path +" -name "+name+ " -client ExceptionInfoClient " +" -outputDir " + outputFolder + output  +extra + " >> "+"logs-"+outputFolder+name+"-log.txt"
                 print (command)
                 executeCmd(command)
     else:
-        command = "java -jar " + vmArgs +jarFile+"  -path "+ path +" -name "+name+ " -client ExceptionInfoClient " +" -outputDir " +output  +extra +" >> logs/"+name+"-log.txt"
+        command = "java -jar " + vmArgs +jarFile+"  -path "+ path +" -name "+name+ " -client ExceptionInfoClient " +" -outputDir " + outputFolder + output  +extra +" >> "+"logs-"+outputFolder+name+"-log.txt"
         print (command)
         executeCmd(command)

@@ -1,5 +1,6 @@
 package com.iscas.JavaExP.model.analyzeModel;
 
+import com.iscas.JavaExP.utils.PrintUtils;
 import soot.SootMethod;
 import soot.Unit;
 import soot.Value;
@@ -145,4 +146,14 @@ public class ConditionTrackerInfo implements Cloneable{
         this.keyConditionWithValueSet = keyConditionWithValueSet;
     }
 
+    @Override
+    public String toString() {
+        return "ConditionTrackerInfo{" +
+                "sootMethod=" + sootMethod.getSignature() +
+                ", unit=" + unit +
+                ", conditions=" + conditions +
+                ", ConditionWithValueSetMap=" + PrintUtils.printMap(ConditionWithValueSetMap) +
+                ", keyConditionWithValueSet=" + keyConditionWithValueSet +
+                '}';
+    }
 }
