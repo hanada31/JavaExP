@@ -39,6 +39,7 @@ public class MyConfig {
 
 	private String Strategy="";
 	private boolean lightWightMode=false;
+	private boolean conflictCheck=false;
 
 
 
@@ -83,6 +84,14 @@ public class MyConfig {
 
 	public void setLightWightMode(boolean lightWightMode) {
 		this.lightWightMode = lightWightMode;
+	}
+
+	public boolean isConflictCheck() {
+		return conflictCheck;
+	}
+
+	public void setConflictCheck(boolean conflictCheck) {
+		this.conflictCheck = conflictCheck;
 	}
 
 
@@ -309,6 +318,7 @@ public class MyConfig {
 				"\n lightWightMode=" + lightWightMode +
 				"\n isInterProcedure=" + isInterProcedure +
 				"\n isConservativeOptimize=" + isConservativeOptimize +
+				"\n conflictCheck=" + conflictCheck +
 				"\n writeOutput=" + writeOutput +
 				"\n filterKeyword='" + filterKeyword + '\'' +
 				"\n isJimple=" + isJimple +

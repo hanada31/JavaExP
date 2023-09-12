@@ -139,6 +139,7 @@ public class Main {
 		options.addOption("exceptionInput", true, "-exceptionInput: exception file folder");
 		options.addOption("interProcedure", false, "-interProcedure: true for interProcedure, false for intraProcedure");
 		options.addOption("lightWeight", false, "-lightWeight: true for light weight mode, false for normal");
+		options.addOption("conflictCheck", false, "-conflictCheck: true for unsat path conflict check, false for not check");
 
 		return options;
 	}
@@ -187,6 +188,8 @@ public class Main {
 			MyConfig.getInstance().setInterProcedure(true);
 		if(mCmd.hasOption("lightWeight"))
 			MyConfig.getInstance().setLightWightMode(true);
+		if(mCmd.hasOption("conflictCheck"))
+			MyConfig.getInstance().setConflictCheck(true);
 		if(mCmd.hasOption("isJimple"))
 			MyConfig.getInstance().setJimple(true);
 		if(mCmd.hasOption("inConservativeOptimize"))

@@ -20,14 +20,23 @@ if __name__ == '__main__' :
     name = sys.argv[2] 
     output = sys.argv[3]
     
-    outputFolder = "0908/"
+    outputFolder = "0909-noConflict/"
     if not os.path.exists("logs-"+outputFolder):
         shutil.os.mkdir("logs-"+outputFolder)
     extra = ""
-    if len(sys.argv)>4 and sys.argv[4] =="interProcedure":
-        extra += " -interProcedure " 
-    if len(sys.argv)>5 and sys.argv[5] =="lightWeight":
-        extra += " -lightWeight " 
+    if not os.path.exists("logs-"+outputFolder):
+        shutil.os.mkdir("logs-"+outputFolder)
+    extra = ""
+    for index,arg in enumerate(sys.argv):
+        if arg =="interProcedure":
+            extra += " -interProcedure " 
+        if arg =="lightWeight":
+            extra += " -lightWeight " 
+        if arg =="conflictCheck":
+            extra += " -conflictCheck " 
+    print(extra)
+    
+    
     vmArgs = ""
     if name == "all":
         print ("all files to be analyzed")

@@ -337,13 +337,15 @@ public class ExceptionInfoClientOutput {
     }
 
     private static boolean checkConflictedConditions(ExceptionInfo exceptionInfo) {
-        for(ConditionWithValueSet oldCond : exceptionInfo.getConditionTrackerInfo().getConditionWithValueSetMap().values()) {
-            for(RefinedCondition oldRF:  oldCond.getRefinedConditions()) {
-                for (ConditionWithValueSet newCond :  exceptionInfo.getConditionTrackerInfo().getConditionWithValueSetMap().values()) {
-                    if(oldCond==newCond) continue;
-                    for (RefinedCondition newRF : newCond.getRefinedConditions()) {
-                        if (ConditionAnalyzer.conflictCheck(oldRF, newRF)) {
-                            return true;
+        if(MyConfig.getInstance().isConflictCheck()) {
+            for (ConditionWithValueSet oldCond : exceptionInfo.getConditionTrackerInfo().getConditionWithValueSetMap().values()) {
+                for (RefinedCondition oldRF : oldCond.getRefinedConditions()) {
+                    for (ConditionWithValueSet newCond : exceptionInfo.getConditionTrackerInfo().getConditionWithValueSetMap().values()) {
+                        if (oldCond == newCond) continue;
+                        for (RefinedCondition newRF : newCond.getRefinedConditions()) {
+                            if (ConditionAnalyzer.conflictCheck(oldRF, newRF)) {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -368,7 +370,7 @@ public class ExceptionInfoClientOutput {
                 JSONArray exceptionListElement = new JSONArray(new ArrayList<>());
                 if(!map.containsKey(sootMethod.getSignature()) ) continue;
                 for (ExceptionInfo exceptionInfo : map.get(sootMethod.getSignature())) {
-//                    if(checkConflictedConditions(exceptionInfo)) continue;
+                    if(checkConflictedConditions(exceptionInfo)) continue;
                     JSONObject jsonObject = new JSONObject(true);
                     addBasic1(jsonObject, exceptionInfo);
                     addConditions(jsonObject, exceptionInfo);
@@ -427,7 +429,7 @@ public class ExceptionInfoClientOutput {
                 JSONArray exceptionListElement = new JSONArray(new ArrayList<>());
                 if (map.containsKey(sootMethod.getSignature())) {
                     for (ExceptionInfo exceptionInfo : map.get(sootMethod.getSignature())) {
-//                        if(checkConflictedConditions(exceptionInfo)) continue;
+                        if(checkConflictedConditions(exceptionInfo)) continue;
                         JSONObject jsonObject = new JSONObject(true);
                         addBasic1(jsonObject, exceptionInfo);
                         addConditions(jsonObject, exceptionInfo);

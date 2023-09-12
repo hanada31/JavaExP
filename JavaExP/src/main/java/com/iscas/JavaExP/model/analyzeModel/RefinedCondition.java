@@ -223,7 +223,7 @@ public class RefinedCondition implements Cloneable {
 
     public static String processString(String input) {
         // 匹配 "parameterX cmp YL" 形式的字符串
-        String regex = "parameter(\\d+) cmp (\\d+)L (larger or equal| smaller or equal|larger than|smaller than|equal) 0";
+        String regex = "parameter(\\d+) cmp (\\d+)L (larger or equal|smaller or equal|larger than|smaller than|equal) 0";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
 

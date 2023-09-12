@@ -83,14 +83,16 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             analyzeSootMethod(sootMethod,totalCnt);
             if (MyConfig.getInstance().isStopFlag()) return;
         }
-//        for (SootMethod sootMethod : Global.v().getAppModel().getTopoMethodQueue()) {
-//            List<ExceptionInfo>  exceptionInfoList = Global.v().getAppModel().getMethod2ExceptionList().get(sootMethod.getSignature());
-//            if(exceptionInfoList==null || exceptionInfoList.size()==0 ) {
-//                cnt++;
-//                analyzeSootMethod(sootMethod, totalCnt);
-//                if (MyConfig.getInstance().isStopFlag()) return;
-//            }
-//        }
+        if(!MyConfig.getInstance().isLightWightMode()) {
+            for (SootMethod sootMethod : Global.v().getAppModel().getTopoMethodQueue()) {
+                List<ExceptionInfo> exceptionInfoList = Global.v().getAppModel().getMethod2ExceptionList().get(sootMethod.getSignature());
+                if (exceptionInfoList == null || exceptionInfoList.size() == 0) {
+                    cnt++;
+                    analyzeSootMethod(sootMethod, totalCnt);
+                    if (MyConfig.getInstance().isStopFlag()) return;
+                }
+            }
+        }
     }
 
     private void analyzeSootMethod(SootMethod sootMethod, int totalCnt) {
@@ -217,7 +219,7 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
                 }
                 ExceptionInfo exceptionInfoCopy = new ExceptionInfo(sootMethod, unit, exceptionInfo.getExceptionName());
                 updateExceptionThrowInfo(exceptionInfo, exceptionInfoCopy, callee,unit);
-                updateExceptionCondition(exceptionInfo, exceptionInfoCopy,sootMethod,unit,false);
+                updateExceptionCondition(exceptionInfo, exceptionInfoCopy,sootMethod,unit);
                 updateExceptionMessageByConstantTracking(exceptionInfo, exceptionInfoCopy);
                 Global.v().getAppModel().addMethod2ExceptionListForOne(sootMethod.getSignature(), exceptionInfoCopy);
                 exceptionInfoListOfCallee.add(exceptionInfoCopy);
@@ -271,7 +273,6 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             }
         }
     }
-
     /**
      * updateExceptionCondition_old,
      * update caller with callee's constraints
@@ -280,9 +281,74 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
      * @param exceptionInfoToBeUpdate
      * @param sootMethod
      * @param invokeUnit
-     * @param isreverse
      */
-    private void updateExceptionCondition(ExceptionInfo exceptionInfoCallee, ExceptionInfo exceptionInfoToBeUpdate, SootMethod sootMethod, Unit invokeUnit, boolean isreverse) {
+    private void updateExceptionCondition_Reverse(ExceptionInfo exceptionInfoCallee, ExceptionInfo exceptionInfoToBeUpdate, SootMethod sootMethod, Unit invokeUnit) {
+        if (exceptionInfoCallee == exceptionInfoToBeUpdate) return;
+        ConditionWithValueSet refinedConditionsOld = exceptionInfoCallee.getConditionTrackerInfo().getKeyConditionWithValueSet();
+        if(refinedConditionsOld==null) return;
+        Map<Integer, Integer> formalPara2ActualPara = SootUtils.getFormalPara2ActualPara(sootMethod, invokeUnit);
+        for(Value cond :exceptionInfoCallee.getConditionTrackerInfo().getConditions())
+            exceptionInfoToBeUpdate.getConditionTrackerInfo().addRelatedCondition(cond);
+        try {
+            ConditionWithValueSet cloneConditionWithValueSet = refinedConditionsOld.clone();
+            List<RefinedCondition> toBeAdd = new ArrayList<>();
+            List<RefinedCondition> tobeDel = new ArrayList<>();
+            for (RefinedCondition refinedCondition : cloneConditionWithValueSet.getRefinedConditions()) {
+                Set<String> parameters = extractParameters(refinedCondition.toString());
+                for (int id : formalPara2ActualPara.keySet())
+                    parameters.remove(Integer.toString(id - 1));
+                String newConditionStr = refinedCondition.toString();
+                for (String calleeId : parameters) {
+                    newConditionStr = newConditionStr.replace("parameter" + calleeId, "parameter" + "_" + calleeId + "_in_method_" +
+                            SootUtils.getInvokeExp(invokeUnit).getMethod().getName());
+                }
+                for (Map.Entry<Integer, Integer> idEntry : formalPara2ActualPara.entrySet()) {
+                    int calleeId = idEntry.getKey() - 1;
+                    int callerId = idEntry.getValue() - 1;
+                    if (refinedCondition.toString().contains("parameter" + calleeId)) {
+                        newConditionStr = newConditionStr.replace("parameter" + calleeId, "parameter" + callerId);
+                    }
+                }
+                if (!newConditionStr.equals(refinedCondition.toString())) {
+                    RefinedCondition newCondition = new RefinedCondition(newConditionStr);
+                    newCondition.setSatisfied(refinedCondition.isSatisfied());
+                    newCondition.changeSatisfied();
+                    toBeAdd.add(newCondition);
+                    tobeDel.add(refinedCondition);
+                }
+                else {
+                    refinedCondition.changeSatisfied();
+                }
+            }
+            for (RefinedCondition oldCondition : tobeDel) {
+                cloneConditionWithValueSet.getRefinedConditions().remove(oldCondition);
+            }
+            for (RefinedCondition newCondition : toBeAdd) {
+                cloneConditionWithValueSet.addRefinedCondition(newCondition);
+            }
+            boolean isAddToEmpty = false;
+            if (exceptionInfoToBeUpdate.getConditionTrackerInfo().getConditionWithValueSetMap().size() == 0) {
+                isAddToEmpty = true;
+            }
+            if (isAddToEmpty)
+                exceptionInfoToBeUpdate.getConditionTrackerInfo().addConditionWithValueSet(cloneConditionWithValueSet);
+            else
+                exceptionInfoToBeUpdate.getConditionTrackerInfo().addConditionWithValueSetNotLast(cloneConditionWithValueSet);
+        }catch(CloneNotSupportedException e){
+            e.printStackTrace();
+        }
+
+    }
+    /**
+     * updateExceptionCondition_old,
+     * update caller with callee's constraints
+     * replace unmatched constraints in callee to caller
+     * @param exceptionInfoCallee
+     * @param exceptionInfoToBeUpdate
+     * @param sootMethod
+     * @param invokeUnit
+     */
+    private void updateExceptionCondition(ExceptionInfo exceptionInfoCallee, ExceptionInfo exceptionInfoToBeUpdate, SootMethod sootMethod, Unit invokeUnit) {
         if (exceptionInfoCallee == exceptionInfoToBeUpdate) return;
         Map<Integer, Integer> formalPara2ActualPara = SootUtils.getFormalPara2ActualPara(sootMethod, invokeUnit);
         Map<Unit, ConditionWithValueSet> refinedConditionsOld = exceptionInfoCallee.getConditionTrackerInfo().getConditionWithValueSetMap();
@@ -293,7 +359,6 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
             isAddToEmpty = true;
         }
         //TODO, multiple condition need merge to condition and reverse
-        if(isreverse && refinedConditionsOld.entrySet().size()>1) return;
         for (Map.Entry<Unit, ConditionWithValueSet> refinedConditionEntry : refinedConditionsOld.entrySet()) {
             try {
                 ConditionWithValueSet cloneConditionWithValueSet = refinedConditionEntry.getValue().clone();
@@ -319,16 +384,9 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
                     if (!newConditionStr.equals(refinedCondition.toString())) {
                         RefinedCondition newCondition = new RefinedCondition(newConditionStr);
                         newCondition.setSatisfied(refinedCondition.isSatisfied());
-                        if (isreverse) {
-                            newCondition.changeSatisfied();
-                        }
+
                         toBeAdd.add(newCondition);
                         tobeDel.add(refinedCondition);
-                    }
-                    else {
-                        if (isreverse) {
-                            refinedCondition.changeSatisfied();
-                        }
                     }
                 }
                 for (RefinedCondition oldCondition : tobeDel) {
@@ -526,9 +584,8 @@ public class ThrownExceptionAnalyzer extends ExceptionAnalyzer {
                     if (unitInPath == unit) break;
                     List<ExceptionInfo> exceptionInfoList = Global.v().getAppModel().getMethod2ExceptionList().get(callee.getSignature());
                     if (exceptionInfoList == null) continue;
-//                    if(exceptionInfoList.size()>0) System.out.println(callee.getSignature());
                     for (ExceptionInfo exceptionInfoCallee : exceptionInfoList) {
-                        updateExceptionCondition(exceptionInfoCallee, exceptionInfoToBeUpdate, sootMethod, unitInPath, true);
+                        updateExceptionCondition_Reverse(exceptionInfoCallee, exceptionInfoToBeUpdate, sootMethod, unitInPath);
                     }
                 }
             }
