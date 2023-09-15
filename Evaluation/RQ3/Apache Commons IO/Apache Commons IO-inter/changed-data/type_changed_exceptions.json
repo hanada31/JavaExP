@@ -1,0 +1,1307 @@
+[
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void copyToDirectory(java.io.File,java.io.File)>",
+        "modifier": "public",
+        "added_version": "v2.6",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.FileNotFoundException",
+                "modifier": "public",
+                "added_version": "2.6",
+                "exceptionName_history": [
+                    {
+                        "version<2.9.0": "java.io.IOException"
+                    }
+                ],
+                "message": "\\QThe source \\E[\\s\\S]*\\Q does not exist\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter0 is not null",
+                        "virtualinvoke parameter0.<java.io.File: boolean isFile()>() is 0",
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r1",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r1",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void moveDirectory(java.io.File,java.io.File)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.FileExistsException",
+                "modifier": "public",
+                "added_version": "1.4",
+                "exceptionName_history": [
+                    {
+                        "version<2.0": "java.io.IOException"
+                    }
+                ],
+                "message": "\\QFile element in parameter '%s' already exists: '%s'\\E",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QDestination '\\E[\\s\\S]*\\Q' already exists\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter0 is not null",
+                        "parameter1 is not null",
+                        "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "staticinvoke <org.apache.commons.io.FileUtils: void requireAbsent(java.io.File,java.lang.String)>(r1, \"destDir\") -> throw $r1",
+                "callChain_history": [
+                    {
+                        "version<2.2": "throw $r10"
+                    },
+                    {
+                        "version<2.5": "throw $r19"
+                    },
+                    {
+                        "version<2.9.0": "throw $r24"
+                    }
+                ],
+                "invokeUnit": "staticinvoke <org.apache.commons.io.FileUtils: void requireAbsent(java.io.File,java.lang.String)>(r1, \"destDir\")",
+                "invokeUnit_history": [
+                    {
+                        "version<2.9.0": null
+                    }
+                ],
+                "throwUnit": "throw $r10",
+                "throwUnitOrder": 4
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void moveDirectoryToDirectory(java.io.File,java.io.File,boolean)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.FileExistsException",
+                "modifier": "public",
+                "added_version": "1.4",
+                "removed_version": "2.8.0",
+                "exceptionName_history": [
+                    {
+                        "version<2.0": "java.io.IOException"
+                    }
+                ],
+                "message": "\\QDestination '\\E[\\s\\S]*\\Q' already exists\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is not 0",
+                        "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                        "parameter0 is not null",
+                        "parameter_1_in_method_moveDirectory is not null",
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean isDirectory()>() is not 0",
+                        "virtualinvoke parameter_1_in_method_moveDirectory.<java.io.File: boolean exists()>() is not 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.7": [
+                            [
+                                "parameter0 is not null",
+                                "parameter_1_in_method_moveDirectory is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is not 0",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean isDirectory()>() is not 0",
+                                "virtualinvoke parameter_1_in_method_moveDirectory.<java.io.File: boolean exists()>() is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke parameter_1_in_method_moveDirectory.<java.io.File: boolean exists()>() is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "staticinvoke <org.apache.commons.io.FileUtils: void moveDirectory(java.io.File,java.io.File)>(r0, $r2) -> throw $r24",
+                "callChain_history": [
+                    {
+                        "version<2.2": "staticinvoke <org.apache.commons.io.FileUtils: void moveDirectory(java.io.File,java.io.File)>(r0, $r2) -> throw $r10"
+                    },
+                    {
+                        "version<2.5": "staticinvoke <org.apache.commons.io.FileUtils: void moveDirectory(java.io.File,java.io.File)>(r0, $r2) -> throw $r19"
+                    }
+                ],
+                "invokeUnit": "staticinvoke <org.apache.commons.io.FileUtils: void moveDirectory(java.io.File,java.io.File)>(r0, $r2)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r10",
+                "throwUnitInMethod": "<org.apache.commons.io.FileUtils: void moveDirectory(java.io.File,java.io.File)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.FileUtils: void moveDirectory(java.io.File,java.io.File)>"
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void moveFile(java.io.File,java.io.File)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.FileExistsException",
+                "modifier": "public",
+                "added_version": "1.4",
+                "exceptionName_history": [
+                    {
+                        "version<2.0": "java.io.IOException"
+                    }
+                ],
+                "message": "\\QFile element in parameter '%s' already exists: '%s'\\E",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QDestination '\\E[\\s\\S]*\\Q' already exists\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                        "parameter0 is not null",
+                        "parameter1 is not null",
+                        "virtualinvoke parameter0.<java.io.File: boolean isFile()>() is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.9.0": [
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "staticinvoke <org.apache.commons.io.FileUtils: void moveFile(java.io.File,java.io.File,java.nio.file.CopyOption[])>(r0, r1, $r2) -> staticinvoke <org.apache.commons.io.FileUtils: void requireAbsent(java.io.File,java.lang.String)>(r1, \"destFile\") -> throw $r1",
+                "callChain_history": [
+                    {
+                        "version<2.9.0": "throw $r16"
+                    },
+                    {
+                        "version<2.12.0": "staticinvoke <org.apache.commons.io.FileUtils: void moveFile(java.io.File,java.io.File,java.nio.file.CopyOption[])>(r0, r1, $r2) -> staticinvoke <org.apache.commons.io.FileUtils: void requireAbsent(java.io.File,java.lang.String)>(r1, null) -> throw $r1"
+                    }
+                ],
+                "invokeUnit": "staticinvoke <org.apache.commons.io.FileUtils: void moveFile(java.io.File,java.io.File,java.nio.file.CopyOption[])>(r0, r1, $r2)",
+                "invokeUnit_history": [
+                    {
+                        "version<2.9.0": null
+                    }
+                ],
+                "throwUnit": "throw $r16",
+                "throwUnitOrder": 4
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void moveFileToDirectory(java.io.File,java.io.File,boolean)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.FileExistsException",
+                "modifier": "public",
+                "added_version": "1.4",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [
+                    {
+                        "version<2.0": "java.io.IOException"
+                    }
+                ],
+                "message": "\\QDestination '\\E[\\s\\S]*\\Q' already exists\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                        "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                        "parameter0 is not null",
+                        "parameter_1_in_method_moveFile is not null",
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean isDirectory()>() is not 0",
+                        "parameter2 is 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean mkdirs()>() is not 0",
+                        "virtualinvoke parameter_1_in_method_moveFile.<java.io.File: boolean exists()>() is not 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.7": [
+                            [
+                                "parameter0 is not null",
+                                "parameter_1_in_method_moveFile is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean isDirectory()>() is not 0",
+                                "virtualinvoke parameter_1_in_method_moveFile.<java.io.File: boolean exists()>() is not 0"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.8.0": [
+                            [
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "parameter0 is not null",
+                                "parameter_1_in_method_moveFile is not null",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean isDirectory()>() is not 0",
+                                "virtualinvoke parameter_1_in_method_moveFile.<java.io.File: boolean exists()>() is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke parameter_1_in_method_moveFile.<java.io.File: boolean exists()>() is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "staticinvoke <org.apache.commons.io.FileUtils: void moveFile(java.io.File,java.io.File)>(r0, $r2) -> throw $r16",
+                "callChain_history": [],
+                "invokeUnit": "staticinvoke <org.apache.commons.io.FileUtils: void moveFile(java.io.File,java.io.File)>(r0, $r2)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r16",
+                "throwUnitInMethod": "<org.apache.commons.io.FileUtils: void moveFile(java.io.File,java.io.File)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.FileUtils: void moveFile(java.io.File,java.io.File)>"
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void moveToDirectory(java.io.File,java.io.File,boolean)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.FileExistsException",
+                "modifier": "public",
+                "added_version": "1.4",
+                "removed_version": "2.7",
+                "exceptionName_history": [
+                    {
+                        "version<2.0": "java.io.IOException"
+                    }
+                ],
+                "message": "\\QDestination '\\E[\\s\\S]*\\Q' already exists\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter0 is not null",
+                        "parameter_1_in_method_moveDirectory is not null",
+                        "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is not 0",
+                        "parameter1 is not null",
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean isDirectory()>() is not 0",
+                        "virtualinvoke parameter_1_in_method_moveDirectory.<java.io.File: boolean exists()>() is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke parameter_1_in_method_moveDirectory.<java.io.File: boolean exists()>() is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "staticinvoke <org.apache.commons.io.FileUtils: void moveDirectoryToDirectory(java.io.File,java.io.File,boolean)>(r0, r1, z2) -> staticinvoke <org.apache.commons.io.FileUtils: void moveDirectory(java.io.File,java.io.File)>(r0, $r2) -> throw $r24",
+                "callChain_history": [
+                    {
+                        "version<2.2": "staticinvoke <org.apache.commons.io.FileUtils: void moveDirectoryToDirectory(java.io.File,java.io.File,boolean)>(r0, r1, z2) -> staticinvoke <org.apache.commons.io.FileUtils: void moveDirectory(java.io.File,java.io.File)>(r0, $r2) -> throw $r10"
+                    },
+                    {
+                        "version<2.5": "staticinvoke <org.apache.commons.io.FileUtils: void moveDirectoryToDirectory(java.io.File,java.io.File,boolean)>(r0, r1, z2) -> staticinvoke <org.apache.commons.io.FileUtils: void moveDirectory(java.io.File,java.io.File)>(r0, $r2) -> throw $r19"
+                    }
+                ],
+                "invokeUnit": "staticinvoke <org.apache.commons.io.FileUtils: void moveDirectoryToDirectory(java.io.File,java.io.File,boolean)>(r0, r1, z2)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r10",
+                "throwUnitInMethod": "<org.apache.commons.io.FileUtils: void moveDirectory(java.io.File,java.io.File)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.FileUtils: void moveDirectoryToDirectory(java.io.File,java.io.File,boolean)>"
+            },
+            {
+                "exceptionName": "org.apache.commons.io.FileExistsException",
+                "modifier": "public",
+                "added_version": "1.4",
+                "removed_version": "2.7",
+                "exceptionName_history": [
+                    {
+                        "version<2.0": "java.io.IOException"
+                    }
+                ],
+                "message": "\\QDestination '\\E[\\s\\S]*\\Q' already exists\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter0 is not null",
+                        "parameter_1_in_method_moveFile is not null",
+                        "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                        "parameter1 is not null",
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean isDirectory()>() is not 0",
+                        "virtualinvoke parameter_1_in_method_moveFile.<java.io.File: boolean exists()>() is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke parameter_1_in_method_moveFile.<java.io.File: boolean exists()>() is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "staticinvoke <org.apache.commons.io.FileUtils: void moveFileToDirectory(java.io.File,java.io.File,boolean)>(r0, r1, z2) -> staticinvoke <org.apache.commons.io.FileUtils: void moveFile(java.io.File,java.io.File)>(r0, $r2) -> throw $r16",
+                "callChain_history": [],
+                "invokeUnit": "staticinvoke <org.apache.commons.io.FileUtils: void moveFileToDirectory(java.io.File,java.io.File,boolean)>(r0, r1, z2)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r16",
+                "throwUnitInMethod": "<org.apache.commons.io.FileUtils: void moveFile(java.io.File,java.io.File)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.FileUtils: void moveFileToDirectory(java.io.File,java.io.File,boolean)>"
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileSystemUtils",
+        "methodSignature": "<org.apache.commons.io.FileSystemUtils: long freeSpace(java.lang.String)>",
+        "modifier": "public",
+        "added_version": "v1.1",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.0",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [
+                    {
+                        "version<2.5": "org.apache.commons.io.IOExceptionWithCause"
+                    }
+                ],
+                "message": "\\QCommand line threw an InterruptedException for command \\E[\\s\\S]*\\Q timeout=\\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0",
+                        "parameter0 is not null",
+                        "parameter_2_in_method_freeSpaceOS is not 0",
+                        "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter0, 0) is not null"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter_2_in_method_freeSpaceOS is not 0",
+                                "parameter0 is not null"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            [
+                                "parameter0 is not null",
+                                "parameter_2_in_method_freeSpaceOS is not 0",
+                                "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter0, 0) is not null"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.5": [
+                            "parameter0 is not null"
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0"
+                        ]
+                    }
+                ],
+                "callChain": "$l1 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i0, 0, -1L) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r22 = virtualinvoke r2.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r17, 2147483647, l1) -> throw $r30",
+                "callChain_history": [
+                    {
+                        "version<2.5": "$l1 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i0, 0, -1L) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r29"
+                    },
+                    {
+                        "version<2.6": "$l1 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i0, 0, -1L) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r30"
+                    }
+                ],
+                "invokeUnit": "$l1 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i0, 0, -1L)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r29",
+                "throwUnitInMethod": "<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>"
+            },
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.0",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [
+                    {
+                        "version<2.5": "org.apache.commons.io.IOExceptionWithCause"
+                    }
+                ],
+                "message": "\\QCommand line threw an InterruptedException for command \\E[\\s\\S]*\\Q timeout=\\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0",
+                        "parameter0 is not null",
+                        "parameter_2_in_method_freeSpaceOS is 0",
+                        "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter0, 0) is not null"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter_2_in_method_freeSpaceOS is 0",
+                                "parameter0 is not null"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            [
+                                "parameter0 is not null",
+                                "parameter_2_in_method_freeSpaceOS is 0",
+                                "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter0, 0) is not null"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.5": [
+                            "parameter0 is not null"
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0"
+                        ]
+                    }
+                ],
+                "callChain": "$l1 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i0, 0, -1L) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r22 = virtualinvoke r2.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r17, 2147483647, l1) -> throw $r30",
+                "callChain_history": [
+                    {
+                        "version<2.5": "$l1 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i0, 0, -1L) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r29"
+                    },
+                    {
+                        "version<2.6": "$l1 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i0, 0, -1L) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r30"
+                    }
+                ],
+                "invokeUnit": "$l1 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i0, 0, -1L)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r29",
+                "throwUnitInMethod": "<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>"
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileSystemUtils",
+        "methodSignature": "<org.apache.commons.io.FileSystemUtils: long freeSpaceKb()>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.0",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [
+                    {
+                        "version<2.5": "org.apache.commons.io.IOExceptionWithCause"
+                    }
+                ],
+                "message": "\\QCommand line threw an InterruptedException for command \\E[\\s\\S]*\\Q timeout=\\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter_0_in_method_freeSpaceKb.<java.lang.String: char charAt(int)>(0) is not 0",
+                        "parameter_0_in_method_freeSpaceKb is not null",
+                        "parameter_2_in_method_freeSpaceOS is not 0",
+                        "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter_0_in_method_freeSpaceKb, 0) is not null"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter_2_in_method_freeSpaceOS is not 0",
+                                "parameter_0_in_method_freeSpaceKb is not null"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            [
+                                "parameter_0_in_method_freeSpaceKb is not null",
+                                "parameter_2_in_method_freeSpaceOS is not 0",
+                                "virtualinvoke parameter_0_in_method_freeSpaceKb.<java.lang.String: char charAt(int)>(0) is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter_0_in_method_freeSpaceKb, 0) is not null"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.5": [
+                            "parameter_0_in_method_freeSpaceKb is not null"
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            "virtualinvoke parameter_0_in_method_freeSpaceKb.<java.lang.String: char charAt(int)>(0) is not 0"
+                        ]
+                    }
+                ],
+                "callChain": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(long)>(-1L) -> $l1 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>($r1, l0) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r22 = virtualinvoke r2.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r17, 2147483647, l1) -> throw $r30",
+                "callChain_history": [
+                    {
+                        "version<2.5": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(long)>(-1L) -> $l1 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>($r1, l0) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r29"
+                    },
+                    {
+                        "version<2.6": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(long)>(-1L) -> $l1 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>($r1, l0) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r30"
+                    }
+                ],
+                "invokeUnit": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(long)>(-1L)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r29",
+                "throwUnitInMethod": "<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.FileSystemUtils: long freeSpaceKb(long)>"
+            },
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.0",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [
+                    {
+                        "version<2.5": "org.apache.commons.io.IOExceptionWithCause"
+                    }
+                ],
+                "message": "\\QCommand line threw an InterruptedException for command \\E[\\s\\S]*\\Q timeout=\\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter_0_in_method_freeSpaceKb.<java.lang.String: char charAt(int)>(0) is not 0",
+                        "parameter_0_in_method_freeSpaceKb is not null",
+                        "parameter_2_in_method_freeSpaceOS is 0",
+                        "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter_0_in_method_freeSpaceKb, 0) is not null"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter_2_in_method_freeSpaceOS is 0",
+                                "parameter_0_in_method_freeSpaceKb is not null"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            [
+                                "parameter_0_in_method_freeSpaceKb is not null",
+                                "parameter_2_in_method_freeSpaceOS is 0",
+                                "virtualinvoke parameter_0_in_method_freeSpaceKb.<java.lang.String: char charAt(int)>(0) is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter_0_in_method_freeSpaceKb, 0) is not null"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.5": [
+                            "parameter_0_in_method_freeSpaceKb is not null"
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            "virtualinvoke parameter_0_in_method_freeSpaceKb.<java.lang.String: char charAt(int)>(0) is not 0"
+                        ]
+                    }
+                ],
+                "callChain": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(long)>(-1L) -> $l1 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>($r1, l0) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r22 = virtualinvoke r2.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r17, 2147483647, l1) -> throw $r30",
+                "callChain_history": [
+                    {
+                        "version<2.5": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(long)>(-1L) -> $l1 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>($r1, l0) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r29"
+                    },
+                    {
+                        "version<2.6": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(long)>(-1L) -> $l1 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>($r1, l0) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r30"
+                    }
+                ],
+                "invokeUnit": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(long)>(-1L)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r29",
+                "throwUnitInMethod": "<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.FileSystemUtils: long freeSpaceKb(long)>"
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileSystemUtils",
+        "methodSignature": "<org.apache.commons.io.FileSystemUtils: long freeSpaceKb(long)>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.0",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [
+                    {
+                        "version<2.5": "org.apache.commons.io.IOExceptionWithCause"
+                    }
+                ],
+                "message": "\\QCommand line threw an InterruptedException for command \\E[\\s\\S]*\\Q timeout=\\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter_0_in_method_freeSpaceKb.<java.lang.String: char charAt(int)>(0) is not 0",
+                        "parameter_0_in_method_freeSpaceKb is not null",
+                        "parameter_2_in_method_freeSpaceOS is not 0",
+                        "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter_0_in_method_freeSpaceKb, 0) is not null"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter_2_in_method_freeSpaceOS is not 0",
+                                "parameter_0_in_method_freeSpaceKb is not null"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            [
+                                "parameter_0_in_method_freeSpaceKb is not null",
+                                "parameter_2_in_method_freeSpaceOS is not 0",
+                                "virtualinvoke parameter_0_in_method_freeSpaceKb.<java.lang.String: char charAt(int)>(0) is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter_0_in_method_freeSpaceKb, 0) is not null"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.5": [
+                            "parameter_0_in_method_freeSpaceKb is not null"
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            "virtualinvoke parameter_0_in_method_freeSpaceKb.<java.lang.String: char charAt(int)>(0) is not 0"
+                        ]
+                    }
+                ],
+                "callChain": "$l1 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>($r1, l0) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r22 = virtualinvoke r2.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r17, 2147483647, l1) -> throw $r30",
+                "callChain_history": [
+                    {
+                        "version<2.5": "$l1 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>($r1, l0) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r29"
+                    },
+                    {
+                        "version<2.6": "$l1 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>($r1, l0) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r30"
+                    }
+                ],
+                "invokeUnit": "$l1 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>($r1, l0)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r29",
+                "throwUnitInMethod": "<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>"
+            },
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.0",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [
+                    {
+                        "version<2.5": "org.apache.commons.io.IOExceptionWithCause"
+                    }
+                ],
+                "message": "\\QCommand line threw an InterruptedException for command \\E[\\s\\S]*\\Q timeout=\\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter_0_in_method_freeSpaceKb.<java.lang.String: char charAt(int)>(0) is not 0",
+                        "parameter_0_in_method_freeSpaceKb is not null",
+                        "parameter_2_in_method_freeSpaceOS is 0",
+                        "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter_0_in_method_freeSpaceKb, 0) is not null"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter_2_in_method_freeSpaceOS is 0",
+                                "parameter_0_in_method_freeSpaceKb is not null"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            [
+                                "parameter_0_in_method_freeSpaceKb is not null",
+                                "parameter_2_in_method_freeSpaceOS is 0",
+                                "virtualinvoke parameter_0_in_method_freeSpaceKb.<java.lang.String: char charAt(int)>(0) is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter_0_in_method_freeSpaceKb, 0) is not null"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.5": [
+                            "parameter_0_in_method_freeSpaceKb is not null"
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            "virtualinvoke parameter_0_in_method_freeSpaceKb.<java.lang.String: char charAt(int)>(0) is not 0"
+                        ]
+                    }
+                ],
+                "callChain": "$l1 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>($r1, l0) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r22 = virtualinvoke r2.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r17, 2147483647, l1) -> throw $r30",
+                "callChain_history": [
+                    {
+                        "version<2.5": "$l1 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>($r1, l0) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r29"
+                    },
+                    {
+                        "version<2.6": "$l1 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>($r1, l0) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r30"
+                    }
+                ],
+                "invokeUnit": "$l1 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>($r1, l0)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r29",
+                "throwUnitInMethod": "<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>"
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileSystemUtils",
+        "methodSignature": "<org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String)>",
+        "modifier": "public",
+        "added_version": "v1.2",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.0",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [
+                    {
+                        "version<2.5": "org.apache.commons.io.IOExceptionWithCause"
+                    }
+                ],
+                "message": "\\QCommand line threw an InterruptedException for command \\E[\\s\\S]*\\Q timeout=\\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0",
+                        "parameter0 is not null",
+                        "parameter_2_in_method_freeSpaceOS is not 0",
+                        "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter0, 0) is not null"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter_2_in_method_freeSpaceOS is not 0",
+                                "parameter0 is not null"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            [
+                                "parameter0 is not null",
+                                "parameter_2_in_method_freeSpaceOS is not 0",
+                                "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter0, 0) is not null"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.5": [
+                            "parameter0 is not null"
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0"
+                        ]
+                    }
+                ],
+                "callChain": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>(r0, -1L) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r22 = virtualinvoke r2.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r17, 2147483647, l1) -> throw $r30",
+                "callChain_history": [
+                    {
+                        "version<2.5": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>(r0, -1L) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r29"
+                    },
+                    {
+                        "version<2.6": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>(r0, -1L) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r30"
+                    }
+                ],
+                "invokeUnit": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>(r0, -1L)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r29",
+                "throwUnitInMethod": "<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>"
+            },
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.0",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [
+                    {
+                        "version<2.5": "org.apache.commons.io.IOExceptionWithCause"
+                    }
+                ],
+                "message": "\\QCommand line threw an InterruptedException for command \\E[\\s\\S]*\\Q timeout=\\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0",
+                        "parameter0 is not null",
+                        "parameter_2_in_method_freeSpaceOS is 0",
+                        "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter0, 0) is not null"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter_2_in_method_freeSpaceOS is 0",
+                                "parameter0 is not null"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            [
+                                "parameter0 is not null",
+                                "parameter_2_in_method_freeSpaceOS is 0",
+                                "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter0, 0) is not null"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.5": [
+                            "parameter0 is not null"
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0"
+                        ]
+                    }
+                ],
+                "callChain": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>(r0, -1L) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r22 = virtualinvoke r2.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r17, 2147483647, l1) -> throw $r30",
+                "callChain_history": [
+                    {
+                        "version<2.5": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>(r0, -1L) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r29"
+                    },
+                    {
+                        "version<2.6": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>(r0, -1L) -> $l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r30"
+                    }
+                ],
+                "invokeUnit": "$l0 = staticinvoke <org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>(r0, -1L)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r29",
+                "throwUnitInMethod": "<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>"
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileSystemUtils",
+        "methodSignature": "<org.apache.commons.io.FileSystemUtils: long freeSpaceKb(java.lang.String,long)>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.0",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [
+                    {
+                        "version<2.5": "org.apache.commons.io.IOExceptionWithCause"
+                    }
+                ],
+                "message": "\\QCommand line threw an InterruptedException for command \\E[\\s\\S]*\\Q timeout=\\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0",
+                        "parameter0 is not null",
+                        "parameter_2_in_method_freeSpaceOS is not 0",
+                        "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter0, 0) is not null"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter_2_in_method_freeSpaceOS is not 0",
+                                "parameter0 is not null"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            [
+                                "parameter0 is not null",
+                                "parameter_2_in_method_freeSpaceOS is not 0",
+                                "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter0, 0) is not null"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.5": [
+                            "parameter0 is not null"
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0"
+                        ]
+                    }
+                ],
+                "callChain": "$l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r22 = virtualinvoke r2.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r17, 2147483647, l1) -> throw $r30",
+                "callChain_history": [
+                    {
+                        "version<2.5": "$l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r29"
+                    },
+                    {
+                        "version<2.6": "$l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l4 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r30"
+                    }
+                ],
+                "invokeUnit": "$l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r29",
+                "throwUnitInMethod": "<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>"
+            },
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.0",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [
+                    {
+                        "version<2.5": "org.apache.commons.io.IOExceptionWithCause"
+                    }
+                ],
+                "message": "\\QCommand line threw an InterruptedException for command \\E[\\s\\S]*\\Q timeout=\\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0",
+                        "parameter0 is not null",
+                        "parameter_2_in_method_freeSpaceOS is 0",
+                        "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter0, 0) is not null"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter_2_in_method_freeSpaceOS is 0",
+                                "parameter0 is not null"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            [
+                                "parameter0 is not null",
+                                "parameter_2_in_method_freeSpaceOS is 0",
+                                "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String,boolean)>(parameter0, 0) is not null"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.5": [
+                            "parameter0 is not null"
+                        ]
+                    },
+                    {
+                        "version<2.6": [
+                            "virtualinvoke parameter0.<java.lang.String: char charAt(int)>(0) is not 0"
+                        ]
+                    }
+                ],
+                "callChain": "$l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r22 = virtualinvoke r2.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r17, 2147483647, l1) -> throw $r30",
+                "callChain_history": [
+                    {
+                        "version<2.5": "$l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r29"
+                    },
+                    {
+                        "version<2.6": "$l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0) -> $l5_1 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceWindows(java.lang.String,long)>(r0, l1) -> $r21 = virtualinvoke r1.<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>($r16, 2147483647, l1) -> throw $r30"
+                    }
+                ],
+                "invokeUnit": "$l2 = virtualinvoke $r1.<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>(r0, $i1, 1, l0)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r29",
+                "throwUnitInMethod": "<org.apache.commons.io.FileSystemUtils: java.util.List performCommand(java.lang.String[],int,long)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.FileSystemUtils: long freeSpaceOS(java.lang.String,int,boolean,long)>"
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.ObservableInputStream",
+        "methodSignature": "<org.apache.commons.io.input.ObservableInputStream: int read(byte[])>",
+        "modifier": "public",
+        "added_version": "v2.6",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.IOExceptionList",
+                "modifier": "public",
+                "added_version": "2.6",
+                "exceptionName_history": [
+                    {
+                        "version<2.13.0": "java.io.IOException"
+                    }
+                ],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter_0_in_method_forAll is not null",
+                        "parameter_3_in_method_notify is not null",
+                        "staticinvoke <org.apache.commons.io.IOExceptionList: boolean isEmpty(java.util.List)>(parameter_0_in_method_checkEmpty) is 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.9.0": [
+                            [
+                                "null is not null",
+                                "interfaceinvoke interfaceinvoke virtualinvoke @this: org.apache.commons.io.input.ObservableInputStream.<org.apache.commons.io.input.ObservableInputStream: java.util.List getObservers()>().<java.util.List: java.util.Iterator iterator()>().<java.util.Iterator: boolean hasNext()>() is not 0"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.13.0": [
+                            [
+                                "parameter_3_in_method_notify is not null"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.IOExceptionList: boolean isEmpty(java.util.List)>(parameter_0_in_method_checkEmpty) is 0"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.9.0": [
+                            "interfaceinvoke interfaceinvoke virtualinvoke @this: org.apache.commons.io.input.ObservableInputStream.<org.apache.commons.io.input.ObservableInputStream: java.util.List getObservers()>().<java.util.List: java.util.Iterator iterator()>().<java.util.Iterator: boolean hasNext()>() is not 0"
+                        ]
+                    },
+                    {
+                        "version<2.13.0": [
+                            "parameter_3_in_method_notify is not null"
+                        ]
+                    }
+                ],
+                "callChain": "specialinvoke r0.<org.apache.commons.io.input.ObservableInputStream: void notify(byte[],int,int,java.io.IOException)>(r1, 0, i0_3, r3_2) -> virtualinvoke r1.<org.apache.commons.io.input.ObservableInputStream: void noteError(java.io.IOException)>(r0) -> specialinvoke r0.<org.apache.commons.io.input.ObservableInputStream: void forEachObserver(org.apache.commons.io.function.IOConsumer)>($r2) -> staticinvoke <org.apache.commons.io.function.IOConsumer: void forAll(org.apache.commons.io.function.IOConsumer,java.lang.Iterable)>(r0, $r2) -> staticinvoke <org.apache.commons.io.function.IOStreams: void forAll(java.util.stream.Stream,org.apache.commons.io.function.IOConsumer)>($r1, r2) -> staticinvoke <org.apache.commons.io.function.IOStreams: void forAll(java.util.stream.Stream,org.apache.commons.io.function.IOConsumer,java.util.function.BiFunction)>(r0, r1, $r2) -> interfaceinvoke $r1.<org.apache.commons.io.function.IOStream: void forAll(org.apache.commons.io.function.IOConsumer,java.util.function.BiFunction)>(r2, $r3) -> staticinvoke <org.apache.commons.io.IOExceptionList: void checkEmpty(java.util.List,java.lang.Object)>($r10, null) -> throw $r1",
+                "callChain_history": [
+                    {
+                        "version<2.9.0": "virtualinvoke r0.<org.apache.commons.io.input.ObservableInputStream: void noteError(java.io.IOException)>(r3_2) -> virtualinvoke r4.<org.apache.commons.io.input.ObservableInputStream$Observer: void error(java.io.IOException)>(r5) -> throw r0"
+                    },
+                    {
+                        "version<2.13.0": "specialinvoke r0.<org.apache.commons.io.input.ObservableInputStream: void notify(byte[],int,int,java.io.IOException)>(r1, 0, i0_3, r3_2) -> throw r0"
+                    }
+                ],
+                "invokeUnit": "specialinvoke r0.<org.apache.commons.io.input.ObservableInputStream: void notify(byte[],int,int,java.io.IOException)>(r1, 0, i0_3, r3_2)",
+                "invokeUnit_history": [
+                    {
+                        "version<2.9.0": "virtualinvoke r0.<org.apache.commons.io.input.ObservableInputStream: void noteError(java.io.IOException)>(r3_2)"
+                    }
+                ],
+                "throwUnit": "throw r0",
+                "throwUnitInMethod": "<org.apache.commons.io.input.ObservableInputStream$Observer: void error(java.io.IOException)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.input.ObservableInputStream: void noteError(java.io.IOException)>"
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.ObservableInputStream",
+        "methodSignature": "<org.apache.commons.io.input.ObservableInputStream: int read(byte[],int,int)>",
+        "modifier": "public",
+        "added_version": "v2.6",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.IOExceptionList",
+                "modifier": "public",
+                "added_version": "2.6",
+                "exceptionName_history": [
+                    {
+                        "version<2.13.0": "java.io.IOException"
+                    }
+                ],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter_0_in_method_forAll is not null",
+                        "parameter_3_in_method_notify is not null",
+                        "staticinvoke <org.apache.commons.io.IOExceptionList: boolean isEmpty(java.util.List)>(parameter_0_in_method_checkEmpty) is 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.9.0": [
+                            [
+                                "null is not null",
+                                "interfaceinvoke interfaceinvoke virtualinvoke @this: org.apache.commons.io.input.ObservableInputStream.<org.apache.commons.io.input.ObservableInputStream: java.util.List getObservers()>().<java.util.List: java.util.Iterator iterator()>().<java.util.Iterator: boolean hasNext()>() is not 0"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.13.0": [
+                            [
+                                "parameter_3_in_method_notify is not null"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.IOExceptionList: boolean isEmpty(java.util.List)>(parameter_0_in_method_checkEmpty) is 0"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.9.0": [
+                            "interfaceinvoke interfaceinvoke virtualinvoke @this: org.apache.commons.io.input.ObservableInputStream.<org.apache.commons.io.input.ObservableInputStream: java.util.List getObservers()>().<java.util.List: java.util.Iterator iterator()>().<java.util.Iterator: boolean hasNext()>() is not 0"
+                        ]
+                    },
+                    {
+                        "version<2.13.0": [
+                            "parameter_3_in_method_notify is not null"
+                        ]
+                    }
+                ],
+                "callChain": "specialinvoke r0.<org.apache.commons.io.input.ObservableInputStream: void notify(byte[],int,int,java.io.IOException)>(r1, i0, i2_3, r3_2) -> virtualinvoke r1.<org.apache.commons.io.input.ObservableInputStream: void noteError(java.io.IOException)>(r0) -> specialinvoke r0.<org.apache.commons.io.input.ObservableInputStream: void forEachObserver(org.apache.commons.io.function.IOConsumer)>($r2) -> staticinvoke <org.apache.commons.io.function.IOConsumer: void forAll(org.apache.commons.io.function.IOConsumer,java.lang.Iterable)>(r0, $r2) -> staticinvoke <org.apache.commons.io.function.IOStreams: void forAll(java.util.stream.Stream,org.apache.commons.io.function.IOConsumer)>($r1, r2) -> staticinvoke <org.apache.commons.io.function.IOStreams: void forAll(java.util.stream.Stream,org.apache.commons.io.function.IOConsumer,java.util.function.BiFunction)>(r0, r1, $r2) -> interfaceinvoke $r1.<org.apache.commons.io.function.IOStream: void forAll(org.apache.commons.io.function.IOConsumer,java.util.function.BiFunction)>(r2, $r3) -> staticinvoke <org.apache.commons.io.IOExceptionList: void checkEmpty(java.util.List,java.lang.Object)>($r10, null) -> throw $r1",
+                "callChain_history": [
+                    {
+                        "version<2.9.0": "virtualinvoke r0.<org.apache.commons.io.input.ObservableInputStream: void noteError(java.io.IOException)>(r3_2) -> virtualinvoke r4.<org.apache.commons.io.input.ObservableInputStream$Observer: void error(java.io.IOException)>(r5) -> throw r0"
+                    },
+                    {
+                        "version<2.13.0": "specialinvoke r0.<org.apache.commons.io.input.ObservableInputStream: void notify(byte[],int,int,java.io.IOException)>(r1, i0, i2_3, r3_2) -> throw r0"
+                    }
+                ],
+                "invokeUnit": "specialinvoke r0.<org.apache.commons.io.input.ObservableInputStream: void notify(byte[],int,int,java.io.IOException)>(r1, i0, i2_3, r3_2)",
+                "invokeUnit_history": [
+                    {
+                        "version<2.9.0": "virtualinvoke r0.<org.apache.commons.io.input.ObservableInputStream: void noteError(java.io.IOException)>(r3_2)"
+                    }
+                ],
+                "throwUnit": "throw r0",
+                "throwUnitInMethod": "<org.apache.commons.io.input.ObservableInputStream$Observer: void error(java.io.IOException)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.input.ObservableInputStream: void noteError(java.io.IOException)>"
+            }
+        ]
+    }
+]

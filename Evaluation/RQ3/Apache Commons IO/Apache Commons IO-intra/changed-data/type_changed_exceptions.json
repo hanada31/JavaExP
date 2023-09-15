@@ -1,0 +1,159 @@
+[
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void copyToDirectory(java.io.File,java.io.File)>",
+        "modifier": "public",
+        "added_version": "v2.6",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.FileNotFoundException",
+                "modifier": "public",
+                "added_version": "2.6",
+                "exceptionName_history": [
+                    {
+                        "version<2.9.0": "java.io.IOException"
+                    }
+                ],
+                "message": "\\QThe source \\E[\\s\\S]*\\Q does not exist\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean isFile()>() is 0",
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.7": [
+                            [
+                                "parameter0 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean isFile()>() is 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r1",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r1",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void moveDirectory(java.io.File,java.io.File)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.FileExistsException",
+                "modifier": "public",
+                "added_version": "1.4",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [
+                    {
+                        "version<2.0": "java.io.IOException"
+                    }
+                ],
+                "message": "\\QDestination '\\E[\\s\\S]*\\Q' already exists\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.7": [
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r24",
+                "callChain_history": [
+                    {
+                        "version<2.2": "throw $r10"
+                    },
+                    {
+                        "version<2.5": "throw $r19"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r10",
+                "throwUnitOrder": 4
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void moveFile(java.io.File,java.io.File)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.FileExistsException",
+                "modifier": "public",
+                "added_version": "1.4",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [
+                    {
+                        "version<2.0": "java.io.IOException"
+                    }
+                ],
+                "message": "\\QDestination '\\E[\\s\\S]*\\Q' already exists\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.7": [
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r16",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r16",
+                "throwUnitOrder": 4
+            }
+        ]
+    }
+]

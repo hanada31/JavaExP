@@ -3,6 +3,7 @@ import os
 import re
 from collections import Counter
 from config import *
+from pathlib import Path
 
 RESULT_DIR = 'preprocess_result'
 
@@ -98,7 +99,8 @@ def preprocess(version: str, tag: str, result_dir: str):
             for k, v in list(exception.items()):
                 exception[rename_dict.get(k, k)] = exception.pop(k)
 
-    os.makedirs(os.path.dirname(result_dir + f'/{tag}/'), exist_ok=True)
+    path = Path(result_dir + f'/{tag}/')
+    path.mkdir(exist_ok=True, parents=True)
     with open(f'{result_dir}/{tag}/v{version}-{tag}.json', 'w') as json_file:
         json.dump(methods, json_file, indent=4)
 

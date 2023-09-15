@@ -1,0 +1,9 @@
+original_data/
+preprocess_result/
+report_result/
+report_filter_result/
+compare_result/
+analysis_result/
+statistic_result/
+__pycache__/
+*.log

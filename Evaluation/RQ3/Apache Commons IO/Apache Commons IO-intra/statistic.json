@@ -1,0 +1,170 @@
+{
+    "start_version": "1.0",
+    "end_version": "2.13.0",
+    "api_amount": 1880,
+    "api_exist_in_first_version_amount": 215,
+    "api_exist_in_last_version_amount": 1844,
+    "alwasy_api_amout": 206,
+    "added_api_amount": 1665,
+    "added_api_per_version": 92.5,
+    "removed_api_amount": 36,
+    "removed_api_per_version": 2.0,
+    "api_level": {
+        "exception_amount": 399,
+        "added_exception_amount": 57,
+        "removed_exception_amount": 221,
+        "exception_message_changed_amount": 36,
+        "exception_type_changed_amount": 3,
+        "exception_pre_conditions_changed_amount": 89
+    },
+    "exception_level": {
+        "exception_amount": 399,
+        "added_exception_amount": 57,
+        "removed_exception_amount": 221,
+        "message_changed_exception_amount": 36,
+        "type_changed_exception_amount": 3,
+        "pre_conditions_changed_exception_amount": 89
+    },
+    "all_api_lifetime": {
+        "average_lifetime": 10.18,
+        "pre_condition_sensitive_api_lifetime": 9.12,
+        "changed_sensitive_api_lifetime": 8.98
+    },
+    "only_include_exception_api_lifetime": {
+        "average_lifetime": 11.78,
+        "pre_condition_sensitive_api_lifetime": 6.42,
+        "changed_sensitive_api_lifetime": 6.03
+    },
+    "all_api": {
+        "total_changed_counter": {
+            "not-changed": 1712,
+            "changed_total": 168,
+            "changed_statistic": {
+                "1": 94,
+                "2": 24,
+                "3": 25,
+                "4": 6,
+                "5": 7,
+                "6": 4,
+                "7": 1,
+                "10": 1,
+                "11": 1,
+                "12": 2,
+                "14": 1,
+                "16": 1,
+                "24": 1
+            }
+        },
+        "type_changed_counter": {
+            "not-changed": 1877,
+            "changed_total": 3,
+            "changed_statistic": {
+                "1": 3
+            }
+        },
+        "message_changed_counter": {
+            "not-changed": 1851,
+            "changed_total": 29,
+            "changed_statistic": {
+                "1": 23,
+                "2": 5,
+                "3": 1
+            }
+        },
+        "preCondition_changed_counter": {
+            "not-changed": 1844,
+            "changed_total": 36,
+            "changed_statistic": {
+                "1": 18,
+                "2": 5,
+                "3": 3,
+                "4": 7,
+                "6": 1,
+                "9": 2
+            }
+        },
+        "added_exception_counter": {
+            "not-changed": 1840,
+            "changed_total": 40,
+            "changed_statistic": {
+                "1": 34,
+                "2": 2,
+                "3": 1,
+                "4": 1,
+                "6": 2
+            }
+        },
+        "removed_exception_counter": {
+            "not-changed": 1747,
+            "changed_total": 133,
+            "changed_statistic": {
+                "1": 89,
+                "2": 26,
+                "3": 7,
+                "4": 3,
+                "5": 4,
+                "6": 2,
+                "7": 1,
+                "8": 1
+            }
+        }
+    },
+    "always_exist_api": {
+        "total_changed_counter": {
+            "not-changed": 171,
+            "changed_total": 35,
+            "changed_statistic": {
+                "1": 23,
+                "2": 5,
+                "3": 1,
+                "4": 1,
+                "5": 3,
+                "6": 1,
+                "24": 1
+            }
+        },
+        "type_changed_counter": {
+            "not-changed": 206,
+            "changed_total": 0,
+            "changed_statistic": {}
+        },
+        "message_changed_counter": {
+            "not-changed": 201,
+            "changed_total": 5,
+            "changed_statistic": {
+                "1": 4,
+                "3": 1
+            }
+        },
+        "preCondition_changed_counter": {
+            "not-changed": 199,
+            "changed_total": 7,
+            "changed_statistic": {
+                "1": 4,
+                "3": 1,
+                "4": 1,
+                "9": 1
+            }
+        },
+        "added_exception_counter": {
+            "not-changed": 198,
+            "changed_total": 8,
+            "changed_statistic": {
+                "1": 6,
+                "2": 1,
+                "4": 1
+            }
+        },
+        "removed_exception_counter": {
+            "not-changed": 177,
+            "changed_total": 29,
+            "changed_statistic": {
+                "1": 21,
+                "2": 5,
+                "3": 1,
+                "4": 1,
+                "8": 1
+            }
+        }
+    }
+}

@@ -1,0 +1,931 @@
+{
+	"classes":[
+		{
+			"className":"testcase.ExceptionCondition.MultipleCallwithCond",
+			"methods":[
+				{
+					"methodName":"<testcase.ExceptionCondition.MultipleCallwithCond: void caller(java.lang.String,java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.IllegalAccessException",
+							"message":"\\Qabc\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCallwithCond: void caller(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r3",
+							"callChain":"throw $r3",
+							"throwUnitOrder":1,
+							"conditions":"$z0 == 0, r0 == null, $i0 <= 3, r0 != null",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean startsWith(java.lang.String)>(\"xxx\") is not 0",
+								"parameter0 is not null",
+								"virtualinvoke parameter1.<java.lang.String: int length()>() smaller or equal 3",
+								"parameter1 is not null"
+							]
+						},
+						{
+							"exceptionName":"java.lang.NullPointerException",
+							"message":"",
+							"method":"<testcase.ExceptionCondition.MultipleCallwithCond: void caller(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0)",
+							"callChain":"staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0)",
+							"throwUnitOrder":0,
+							"preConditions":[
+								"parameter0 is null"
+							]
+						},
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_exception_in_callee_directly\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCallwithCond: void caller(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"invokeUnit":"virtualinvoke r1.<testcase.ExceptionCondition.MultipleCallwithCond: void calleeNull(java.lang.String)>(r2)",
+							"invokedMethod":"<testcase.ExceptionCondition.MultipleCallwithCond: void calleeNull(java.lang.String)>",
+							"throwUnit":"throw $r1",
+							"throwUnitInMethod":"<testcase.ExceptionCondition.MultipleCallwithCond: void calleeNull(java.lang.String)>",
+							"callChain":"virtualinvoke r1.<testcase.ExceptionCondition.MultipleCallwithCond: void calleeNull(java.lang.String)>(r2) -> throw $r1",
+							"throwUnitOrder":-1,
+							"conditions":"r0 != null",
+							"preConditions":[
+								"parameter1 is null",
+								"parameter0 is not null"
+							]
+						},
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_exception_in_callee_directly\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCallwithCond: void caller(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"invokeUnit":"virtualinvoke r1.<testcase.ExceptionCondition.MultipleCallwithCond: void calleeSize3(java.lang.String)>(r2)",
+							"invokedMethod":"<testcase.ExceptionCondition.MultipleCallwithCond: void calleeSize3(java.lang.String)>",
+							"throwUnit":"throw $r1",
+							"throwUnitInMethod":"<testcase.ExceptionCondition.MultipleCallwithCond: void calleeSize3(java.lang.String)>",
+							"callChain":"virtualinvoke r1.<testcase.ExceptionCondition.MultipleCallwithCond: void calleeSize3(java.lang.String)>(r2) -> throw $r1",
+							"throwUnitOrder":-1,
+							"conditions":"$i0 <= 3, r0 != null",
+							"preConditions":[
+								"virtualinvoke parameter1.<java.lang.String: int length()>() larger than 3",
+								"parameter0 is not null",
+								"parameter1 is not null"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.MultipleCallwithCond: void calleeNull(java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_exception_in_callee_directly\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCallwithCond: void calleeNull(java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"conditions":"r0 != null",
+							"preConditions":[
+								"parameter0 is null"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.MultipleCallwithCond: void calleeSize3(java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_exception_in_callee_directly\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCallwithCond: void calleeSize3(java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"conditions":"$i0 <= 3",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: int length()>() larger than 3"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"className":"testcase.ExceptionCondition.Basic",
+			"methods":[
+				{
+					"methodName":"<testcase.ExceptionCondition.Basic: void throw_without_condition(int)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_without_condition\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_without_condition(int)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"preConditions":[
+								"Direct Throw Without Any Condition"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Basic: void throw_with_null_condition(java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_null_condition\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_null_condition(java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"conditions":"r0 != null",
+							"preConditions":[
+								"parameter0 is null"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Basic: void throw_with_value_condition(java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_value_condition\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_value_condition(java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"conditions":"$z0 == 0",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean equals(java.lang.Object)>(\"value\") is not 0"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Basic: void throw_with_value_condition_not_equal(java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_value_condition_not_equal\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_value_condition_not_equal(java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"conditions":"$z0 != 0",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean equals(java.lang.Object)>(\"value\") is 0"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Basic: void throw_with_modified_var_condition(java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_modified_var_condition\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_modified_var_condition(java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"conditions":"$z0 == 0",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean equals(java.lang.Object)>(\"value\") is not 0"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Basic: void throw_with_modified_value_condition(java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_modified_value_condition\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_modified_value_condition(java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r3",
+							"callChain":"throw $r3",
+							"throwUnitOrder":0,
+							"conditions":"$z0 == 0",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke \"value123\".<java.lang.String: java.lang.String substring(int,int)>(0, 5)) is not 0"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Basic: void throw_with_modified_value_condition2(java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_modified_value_condition2\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_modified_value_condition2(java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r3",
+							"callChain":"throw $r3",
+							"throwUnitOrder":0,
+							"conditions":"$z0 == 0",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke \"value123\".<java.lang.String: java.lang.String substring(int,int)>(0, 5)) is not 0"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Basic: void throw_with_modified_value_condition3(java.lang.String,java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_modified_value_condition3\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_modified_value_condition3(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"conditions":"$z0 == 0",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean equals(java.lang.Object)>(parameter1) is not 0"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition(java.lang.String,java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_combined_condition\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r2",
+							"callChain":"throw $r2",
+							"throwUnitOrder":0,
+							"conditions":"r1 != null, r0 == null",
+							"preConditions":[
+								"parameter1 is null",
+								"parameter0 is not null"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition2(java.lang.String,java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_combined_condition2\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition2(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"conditions":"r0 != null",
+							"preConditions":[
+								"parameter0 is not null"
+							]
+						},
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_combined_condition2\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition2(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"conditions":"r2 == null, r0 != null",
+							"preConditions":[
+								"parameter1 is not null",
+								"parameter0 is null"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition3(java.lang.String,java.lang.String,java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_combined_condition3\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition3(java.lang.String,java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r4",
+							"callChain":"throw $r4",
+							"throwUnitOrder":0,
+							"conditions":"r0 == null",
+							"preConditions":[
+								"parameter0 is null"
+							]
+						},
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_combined_condition3\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition3(java.lang.String,java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r4",
+							"callChain":"throw $r4",
+							"throwUnitOrder":0,
+							"conditions":"r0 == null, r1 == null",
+							"preConditions":[
+								"parameter0 is not null",
+								"parameter1 is null"
+							]
+						},
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_combined_condition3\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition3(java.lang.String,java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r4",
+							"callChain":"throw $r4",
+							"throwUnitOrder":0,
+							"conditions":"r0 == null, r2 != null, r1 == null",
+							"preConditions":[
+								"parameter0 is not null",
+								"parameter2 is null",
+								"parameter1 is not null"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition4(java.lang.String,java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_combined_condition4\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition4(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r2",
+							"callChain":"throw $r2",
+							"throwUnitOrder":0,
+							"conditions":"r1 != null, r0 == null",
+							"preConditions":[
+								"parameter1 is null",
+								"parameter0 is not null"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition5(java.lang.String,java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_combined_condition5\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition5(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r2",
+							"callChain":"throw $r2",
+							"throwUnitOrder":0,
+							"conditions":"r1 != null, r0 != null",
+							"preConditions":[
+								"parameter1 is not null",
+								"parameter0 is null"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition6(java.lang.String,java.lang.String,int)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_combined_condition6\\E",
+							"method":"<testcase.ExceptionCondition.Basic: void throw_with_combined_condition6(java.lang.String,java.lang.String,int)>",
+							"modifier":"public",
+							"throwUnit":"throw $r2",
+							"callChain":"throw $r2",
+							"throwUnitOrder":0,
+							"conditions":"r1 != null, r0 != null",
+							"preConditions":[
+								"parameter1 is null",
+								"parameter0 is null"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"className":"testcase.ExceptionCondition.Motivation",
+			"methods":[
+				{
+					"methodName":"<testcase.ExceptionCondition.Motivation: void caller(java.lang.String,java.lang.String,int)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qbug!\\E",
+							"method":"<testcase.ExceptionCondition.Motivation: void caller(java.lang.String,java.lang.String,int)>",
+							"modifier":"public",
+							"invokeUnit":"virtualinvoke r0.<testcase.ExceptionCondition.Motivation: void callee(java.lang.String,java.lang.String,int)>(r1, r2, i0)",
+							"invokedMethod":"<testcase.ExceptionCondition.Motivation: void callee(java.lang.String,java.lang.String,int)>",
+							"throwUnit":"throw $r6",
+							"throwUnitInMethod":"<testcase.ExceptionCondition.Motivation: void callee(java.lang.String,java.lang.String,int)>",
+							"callChain":"virtualinvoke r0.<testcase.ExceptionCondition.Motivation: void callee(java.lang.String,java.lang.String,int)>(r1, r2, i0) -> throw $r6",
+							"throwUnitOrder":-1,
+							"conditions":"$z1 == 0, r0 != null",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean startsWith(java.lang.String)>(\"Error\") is not 0",
+								"parameter1 is null",
+								"parameter2 smaller than 3"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Motivation: void callee(java.lang.String,java.lang.String,int)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qbug!\\E",
+							"method":"<testcase.ExceptionCondition.Motivation: void callee(java.lang.String,java.lang.String,int)>",
+							"modifier":"public",
+							"throwUnit":"throw $r6",
+							"callChain":"throw $r6",
+							"throwUnitOrder":0,
+							"conditions":"$z1 == 0, r0 != null",
+							"preConditions":[
+								"virtualinvoke parameter1.<java.lang.String: boolean startsWith(java.lang.String)>(\"Error\") is not 0",
+								"parameter0 is null"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Motivation: void caller2(java.lang.String,java.lang.String,int)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qbug2!\\E",
+							"method":"<testcase.ExceptionCondition.Motivation: void caller2(java.lang.String,java.lang.String,int)>",
+							"modifier":"public",
+							"invokeUnit":"virtualinvoke r0.<testcase.ExceptionCondition.Motivation: void callee2(java.lang.String,java.lang.String,int)>(r1, r2, i0)",
+							"invokedMethod":"<testcase.ExceptionCondition.Motivation: void callee2(java.lang.String,java.lang.String,int)>",
+							"throwUnit":"throw $r5",
+							"throwUnitInMethod":"<testcase.ExceptionCondition.Motivation: void callee2(java.lang.String,java.lang.String,int)>",
+							"callChain":"virtualinvoke r0.<testcase.ExceptionCondition.Motivation: void callee2(java.lang.String,java.lang.String,int)>(r1, r2, i0) -> throw $r5",
+							"throwUnitOrder":-1,
+							"conditions":"$z0 == 0, r0 != null",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean startsWith(java.lang.String)>(\"Error\") is not 0",
+								"parameter1 is null",
+								"parameter2 smaller than 3"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Motivation: void callee2(java.lang.String,java.lang.String,int)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qbug2!\\E",
+							"method":"<testcase.ExceptionCondition.Motivation: void callee2(java.lang.String,java.lang.String,int)>",
+							"modifier":"public",
+							"throwUnit":"throw $r5",
+							"callChain":"throw $r5",
+							"throwUnitOrder":0,
+							"conditions":"$z0 == 0, r0 != null",
+							"preConditions":[
+								"virtualinvoke parameter1.<java.lang.String: boolean startsWith(java.lang.String)>(\"Error\") is not 0",
+								"parameter0 is null"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.Motivation: void detectInvalidKey(int)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.IllegalArgumentException",
+							"message":"[\\s\\S]*",
+							"method":"<testcase.ExceptionCondition.Motivation: void detectInvalidKey(int)>",
+							"modifier":"public",
+							"throwUnit":"throw $r2",
+							"callChain":"throw $r2",
+							"throwUnitOrder":0,
+							"conditions":"i0 <= $i2",
+							"preConditions":[
+								"parameter0 larger than -100"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"className":"testcase.ExceptionCondition.MultipleThrow",
+			"methods":[
+				{
+					"methodName":"<testcase.ExceptionCondition.MultipleThrow: void throw_two_exception(java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.NullPointerException",
+							"message":"\\Qthrow_two_exception\\E",
+							"method":"<testcase.ExceptionCondition.MultipleThrow: void throw_two_exception(java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":1,
+							"conditions":"$z0 == 0, r0 != null",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean startsWith(java.lang.String)>(\"123\") is not 0",
+								"parameter0 is not null"
+							]
+						},
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_two_exception\\E",
+							"method":"<testcase.ExceptionCondition.MultipleThrow: void throw_two_exception(java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r2",
+							"callChain":"throw $r2",
+							"throwUnitOrder":0,
+							"conditions":"r0 != null",
+							"preConditions":[
+								"parameter0 is null"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.MultipleThrow: void throw_two_exception2(java.lang.String,java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.NullPointerException",
+							"message":"\\Qthrow_two_exception2\\E",
+							"method":"<testcase.ExceptionCondition.MultipleThrow: void throw_two_exception2(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r2",
+							"callChain":"throw $r2",
+							"throwUnitOrder":1,
+							"conditions":"r0 != null, $z0 == 0",
+							"preConditions":[
+								"parameter0 is not null",
+								"virtualinvoke parameter0.<java.lang.String: boolean startsWith(java.lang.String)>(\"123\") is not 0"
+							]
+						},
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_two_exception2\\E",
+							"method":"<testcase.ExceptionCondition.MultipleThrow: void throw_two_exception2(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r4",
+							"callChain":"throw $r4",
+							"throwUnitOrder":0,
+							"conditions":"r0 != null",
+							"preConditions":[
+								"parameter0 is null"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"className":"testcase.ExceptionCondition.MultipleCall",
+			"methods":[
+				{
+					"methodName":"<testcase.ExceptionCondition.MultipleCall: void throw_exception_caller()>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_exception_in_callee_directly\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCall: void throw_exception_caller()>",
+							"modifier":"public",
+							"invokeUnit":"virtualinvoke r0.<testcase.ExceptionCondition.MultipleCall: void callee_without_arg()>()",
+							"invokedMethod":"<testcase.ExceptionCondition.MultipleCall: void callee_without_arg()>",
+							"throwUnit":"throw $r0",
+							"throwUnitInMethod":"<testcase.ExceptionCondition.MultipleCall: void callee_without_arg()>",
+							"callChain":"virtualinvoke r0.<testcase.ExceptionCondition.MultipleCall: void callee_without_arg()>() -> throw $r0",
+							"throwUnitOrder":-1,
+							"preConditions":[
+								"Direct Throw Without Any Condition"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.MultipleCall: void throw_exception_caller_with_arg(int)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_exception_in_callee\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCall: void throw_exception_caller_with_arg(int)>",
+							"modifier":"public",
+							"invokeUnit":"virtualinvoke r0.<testcase.ExceptionCondition.MultipleCall: void callee_with_arg(int)>(i0)",
+							"invokedMethod":"<testcase.ExceptionCondition.MultipleCall: void callee_with_arg(int)>",
+							"throwUnit":"throw $r0",
+							"throwUnitInMethod":"<testcase.ExceptionCondition.MultipleCall: void callee_with_arg(int)>",
+							"callChain":"virtualinvoke r0.<testcase.ExceptionCondition.MultipleCall: void callee_with_arg(int)>(i0) -> throw $r0",
+							"throwUnitOrder":-1,
+							"conditions":"i0 >= 1000",
+							"preConditions":[
+								"parameter0 smaller than 1000"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.MultipleCall: void callee_with_arg(int)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_exception_in_callee\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCall: void callee_with_arg(int)>",
+							"modifier":"public",
+							"throwUnit":"throw $r0",
+							"callChain":"throw $r0",
+							"throwUnitOrder":0,
+							"conditions":"i0 >= 1000",
+							"preConditions":[
+								"parameter0 smaller than 1000"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.MultipleCall: void callee_without_arg()>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_exception_in_callee_directly\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCall: void callee_without_arg()>",
+							"modifier":"public",
+							"throwUnit":"throw $r0",
+							"callChain":"throw $r0",
+							"throwUnitOrder":0,
+							"preConditions":[
+								"Direct Throw Without Any Condition"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.MultipleCall: void throw_message_callee_require(java.lang.String,java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.NullPointerException",
+							"message":"\\Q@parameter@1  is null\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCall: void throw_message_callee_require(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object,java.lang.String)>(r0, r1)",
+							"callChain":"staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object,java.lang.String)>(r0, r1)",
+							"throwUnitOrder":0,
+							"preConditions":[
+								"parameter0 is null"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.MultipleCall: void deepCall(java.lang.String,java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.IllegalAccessException",
+							"message":"\\Qthrow_exception_in_deepCall\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCall: void deepCall(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r3",
+							"callChain":"throw $r3",
+							"throwUnitOrder":1,
+							"conditions":"$z0 == 0, r0 == null, $i0 <= 3, r0 != null",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean startsWith(java.lang.String)>(\"deepCall\") is not 0",
+								"parameter0 is not null",
+								"virtualinvoke parameter1.<java.lang.String: int length()>() smaller or equal 3",
+								"parameter1 is not null"
+							]
+						},
+						{
+							"exceptionName":"java.lang.NullPointerException",
+							"message":"",
+							"method":"<testcase.ExceptionCondition.MultipleCall: void deepCall(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0)",
+							"callChain":"staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object)>(r0)",
+							"throwUnitOrder":0,
+							"preConditions":[
+								"parameter0 is null"
+							]
+						},
+						{
+							"exceptionName":"java.lang.IllegalArgumentException",
+							"message":"\\Qthrow_exception_in_deepCall1\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCall: void deepCall(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"invokeUnit":"virtualinvoke r1.<testcase.ExceptionCondition.MultipleCall: void calleeNullInDeepCall(java.lang.String)>(r2)",
+							"invokedMethod":"<testcase.ExceptionCondition.MultipleCall: void calleeNullInDeepCall(java.lang.String)>",
+							"throwUnit":"throw $r1",
+							"throwUnitInMethod":"<testcase.ExceptionCondition.MultipleCall: void calleeNullInDeepCall(java.lang.String)>",
+							"callChain":"virtualinvoke r1.<testcase.ExceptionCondition.MultipleCall: void calleeNullInDeepCall(java.lang.String)>(r2) -> throw $r1",
+							"throwUnitOrder":-1,
+							"conditions":"r0 != null",
+							"preConditions":[
+								"parameter1 is null",
+								"parameter0 is not null"
+							]
+						},
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_exception_in_deepCall2\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCall: void deepCall(java.lang.String,java.lang.String)>",
+							"modifier":"public",
+							"invokeUnit":"virtualinvoke r1.<testcase.ExceptionCondition.MultipleCall: void calleeSizeInDeepCall(java.lang.String)>(r2)",
+							"invokedMethod":"<testcase.ExceptionCondition.MultipleCall: void calleeSizeInDeepCall(java.lang.String)>",
+							"throwUnit":"throw $r1",
+							"throwUnitInMethod":"<testcase.ExceptionCondition.MultipleCall: void calleeSizeInDeepCall(java.lang.String)>",
+							"callChain":"virtualinvoke r1.<testcase.ExceptionCondition.MultipleCall: void calleeSizeInDeepCall(java.lang.String)>(r2) -> throw $r1",
+							"throwUnitOrder":-1,
+							"conditions":"$i0 <= 3, r0 != null",
+							"preConditions":[
+								"virtualinvoke parameter1.<java.lang.String: int length()>() larger than 3",
+								"parameter0 is not null",
+								"parameter1 is not null"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.MultipleCall: void calleeNullInDeepCall(java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.IllegalArgumentException",
+							"message":"\\Qthrow_exception_in_deepCall1\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCall: void calleeNullInDeepCall(java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"conditions":"r0 != null",
+							"preConditions":[
+								"parameter0 is null"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.MultipleCall: void calleeSizeInDeepCall(java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_exception_in_deepCall2\\E",
+							"method":"<testcase.ExceptionCondition.MultipleCall: void calleeSizeInDeepCall(java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"conditions":"$i0 <= 3",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: int length()>() larger than 3"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"className":"testcase.ExceptionCondition.FiledValue",
+			"methods":[
+				{
+					"methodName":"<testcase.ExceptionCondition.FiledValue: void throw_with_outVar_condition(java.lang.String)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.RuntimeException",
+							"message":"\\Qthrow_with_outVar_condition\\E",
+							"method":"<testcase.ExceptionCondition.FiledValue: void throw_with_outVar_condition(java.lang.String)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"conditions":"$i0 != 0",
+							"preConditions":[
+								"@this: testcase.ExceptionCondition.FiledValue.<testcase.ExceptionCondition.FiledValue: int outVar> is 0"
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"className":"testcase.ExceptionCondition.MultiplePath",
+			"methods":[
+				{
+					"methodName":"<testcase.ExceptionCondition.MultiplePath: void throw_with_multiple_paths(java.lang.String,int,java.util.List)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.NullPointerException",
+							"message":"\\Qthrow_with_multiple_paths1\\E",
+							"method":"<testcase.ExceptionCondition.MultiplePath: void throw_with_multiple_paths(java.lang.String,int,java.util.List)>",
+							"modifier":"public",
+							"throwUnit":"throw $r3",
+							"callChain":"throw $r3",
+							"throwUnitOrder":0,
+							"conditions":"$z1 == 0",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean startsWith(java.lang.String)>(\"123\") is not 0"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.MultiplePath: void throw_with_multiple_paths1(java.lang.String,int,java.util.List)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.NullPointerException",
+							"message":"\\Qthrow_with_multiple_paths1\\E",
+							"method":"<testcase.ExceptionCondition.MultiplePath: void throw_with_multiple_paths1(java.lang.String,int,java.util.List)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"conditions":"$z2 == 0",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean startsWith(java.lang.String)>(\"123\") is not 0"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.MultiplePath: void throw_with_multiple_paths2(java.lang.String,int,java.util.List)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.NullPointerException",
+							"message":"\\Qthrow_with_multiple_paths2\\E",
+							"method":"<testcase.ExceptionCondition.MultiplePath: void throw_with_multiple_paths2(java.lang.String,int,java.util.List)>",
+							"modifier":"public",
+							"throwUnit":"throw $r1",
+							"callChain":"throw $r1",
+							"throwUnitOrder":0,
+							"conditions":"$z1 == 0",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean startsWith(java.lang.String)>(\"123\") is not 0"
+							]
+						}
+					]
+				},
+				{
+					"methodName":"<testcase.ExceptionCondition.MultiplePath: void throw_with_multiple_paths3(java.lang.String,int,java.util.List)>",
+					"modifier":"public",
+					"exceptions":[
+						{
+							"exceptionName":"java.lang.NullPointerException",
+							"message":"\\Qthrow_with_multiple_paths3\\E",
+							"method":"<testcase.ExceptionCondition.MultiplePath: void throw_with_multiple_paths3(java.lang.String,int,java.util.List)>",
+							"modifier":"public",
+							"throwUnit":"throw $r2",
+							"callChain":"throw $r2",
+							"throwUnitOrder":0,
+							"conditions":"$z0 == 0",
+							"preConditions":[
+								"virtualinvoke parameter0.<java.lang.String: boolean startsWith(java.lang.String)>(\"123\") is not 0"
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

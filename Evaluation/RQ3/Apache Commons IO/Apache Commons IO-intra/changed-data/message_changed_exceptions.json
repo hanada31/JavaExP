@@ -1,0 +1,1604 @@
+[
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void copyFile(java.io.File,java.io.File,boolean)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "1.0",
+                "removed_version": "2.8.0",
+                "exceptionName_history": [],
+                "message": "\\QSource '\\E[\\s\\S]*\\Q' and destination '\\E[\\s\\S]*\\Q' are the same\\E",
+                "message_history": [
+                    {
+                        "version<1.1": "\\QUnable to write file \\E[\\s\\S]*\\Q on itself.\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                        "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is not 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<1.1": [
+                            [
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is 0",
+                                "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is not 0"
+                            ],
+                            [
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean canWrite()>() is not 0",
+                                "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is not 0"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                                "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r17",
+                "callChain_history": [
+                    {
+                        "version<2.1": "throw $r19"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r19",
+                "throwUnitOrder": 2
+            },
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "1.0",
+                "removed_version": "2.8.0",
+                "exceptionName_history": [],
+                "message": "\\QDestination '\\E[\\s\\S]*\\Q' exists but is read-only\\E",
+                "message_history": [
+                    {
+                        "version<1.1": "\\QUnable to open file \\E[\\s\\S]*\\Q for writing.\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                        "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is 0",
+                        "virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>() is null",
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean canWrite()>() is 0"
+                    ],
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                        "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is 0",
+                        "virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>() is not null",
+                        "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean mkdirs()>() is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean canWrite()>() is 0"
+                    ],
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                        "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is 0",
+                        "virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>() is not null",
+                        "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean mkdirs()>() is 0",
+                        "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean isDirectory()>() is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean canWrite()>() is 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<1.1": [
+                            [
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean canWrite()>() is 0"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.1": [
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                                "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is 0",
+                                "virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>() is null",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean canWrite()>() is 0"
+                            ],
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                                "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is 0",
+                                "virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>() is not null",
+                                "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean canWrite()>() is 0"
+                            ],
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                                "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is 0",
+                                "virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>() is not null",
+                                "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean exists()>() is 0",
+                                "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean mkdirs()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean canWrite()>() is 0"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                                "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is 0",
+                                "virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>() is null",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean canWrite()>() is 0"
+                            ],
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                                "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is 0",
+                                "virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>() is not null",
+                                "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean mkdirs()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean canWrite()>() is 0"
+                            ],
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                                "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is 0",
+                                "virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>() is not null",
+                                "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean mkdirs()>() is 0",
+                                "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean isDirectory()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean canWrite()>() is 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke parameter1.<java.io.File: boolean canWrite()>() is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r5",
+                "callChain_history": [
+                    {
+                        "version<1.1": "throw $r25"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r25",
+                "throwUnitOrder": 1
+            },
+            {
+                "exceptionName": "java.io.FileNotFoundException",
+                "modifier": "public",
+                "added_version": "1.0",
+                "removed_version": "2.5",
+                "exceptionName_history": [],
+                "message": "\\QSource '\\E[\\s\\S]*\\Q' does not exist\\E",
+                "message_history": [
+                    {
+                        "version<1.1": "\\QFile \\E[\\s\\S]*\\Q does not exist\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter0 is not null",
+                        "parameter1 is not null",
+                        "virtualinvoke parameter0.<java.io.File: boolean exists()>() is 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<1.1": [
+                            [
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke parameter0.<java.io.File: boolean exists()>() is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r31",
+                "callChain_history": [
+                    {
+                        "version<2.1": "throw $r33"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r33",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void copyFileToDirectory(java.io.File,java.io.File)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "1.0",
+                "removed_version": "1.3",
+                "exceptionName_history": [],
+                "message": "\\QDestination '\\E[\\s\\S]*\\Q' is not a directory\\E",
+                "message_history": [
+                    {
+                        "version<1.1": "\\QDestination is not a directory\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter1 is not null",
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean isDirectory()>() is 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<1.1": [
+                            [
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean isDirectory()>() is 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke parameter1.<java.io.File: boolean isDirectory()>() is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r4",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r4",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void forceDelete(java.io.File)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "1.0",
+                "exceptionName_history": [],
+                "message": "\\QCannot delete file: \\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QUnable to delete file: \\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught."
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.7": [
+                            [
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean delete()>() is 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [
+                    {
+                        "version<1.4": [
+                            "virtualinvoke parameter0.<java.io.File: boolean delete()>() is 0"
+                        ]
+                    },
+                    {
+                        "version<2.7": [
+                            "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0"
+                        ]
+                    }
+                ],
+                "callChain": "throw $r20",
+                "callChain_history": [
+                    {
+                        "version<2.7": "throw $r5"
+                    },
+                    {
+                        "version<2.9.0": "throw $r17"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r5",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: java.io.File getFile(java.io.File,java.lang.String[])>",
+        "modifier": "public",
+        "added_version": "v2.1",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.1",
+                "removed_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\Qdirectory must not be null\\E",
+                "message_history": [
+                    {
+                        "version<2.5": "\\Qdirectorydirectory must not be null\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter0 is null"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter0 is null"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r5",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r5",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void moveDirectoryToDirectory(java.io.File,java.io.File,boolean)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.FileNotFoundException",
+                "modifier": "public",
+                "added_version": "1.4",
+                "exceptionName_history": [],
+                "message": "\\QDestination directory '\\E[\\s\\S]*\\Q' does not exist [createDestDir=0]\\E",
+                "message_history": [
+                    {
+                        "version<2.11.0": "\\QDestination directory '\\E[\\s\\S]*\\Q' does not exist [createDestDir=\\E[\\s\\S]*\\Q]\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter1.<java.io.File: boolean isDirectory()>() is 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is 0",
+                        "parameter2 is 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.7": [
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is 0"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.8.0": [
+                            [
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is 0"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.9.0": [
+                            [
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is 0"
+                            ],
+                            [
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is 0",
+                                "parameter2 is 0"
+                            ],
+                            [
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is 0",
+                                "parameter2 is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean mkdirs()>() is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "parameter2 is 0"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.9.0": [
+                            "virtualinvoke parameter1.<java.io.File: boolean exists()>() is 0"
+                        ]
+                    }
+                ],
+                "callChain": "throw $r4",
+                "callChain_history": [
+                    {
+                        "version<2.9.0": "throw $r10"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r10",
+                "throwUnitOrder": 2
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.IOUtils",
+        "methodSignature": "<org.apache.commons.io.IOUtils: void skipFully(java.io.Reader,long)>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.EOFException",
+                "modifier": "public",
+                "added_version": "2.0",
+                "exceptionName_history": [],
+                "message": "\\QChars to skip: \\E[\\s\\S]*\\Q actual: \\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.2": "\\QBytes to skip: \\E[\\s\\S]*\\Q actual: \\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "staticinvoke <org.apache.commons.io.IOUtils: long skip(java.io.Reader,long)>(parameter0, parameter1) cmp parameter1 is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.IOUtils: long skip(java.io.Reader,long)>(parameter0, parameter1) cmp parameter1 is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r1",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r1",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.IOUtils",
+        "methodSignature": "<org.apache.commons.io.IOUtils: byte[] toByteArray(java.io.InputStream,int)>",
+        "modifier": "public",
+        "added_version": "v2.1",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.1",
+                "removed_version": "2.13.0",
+                "exceptionName_history": [],
+                "message": "\\QUnexpected read size, current: \\E[\\s\\S]*\\Q, expected: \\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.6": "\\QUnexpected readed size. current: \\E[\\s\\S]*\\Q, excepted: \\E[\\s\\S]*"
+                    },
+                    {
+                        "version<2.9.0": "\\QUnexpected read size. current: \\E[\\s\\S]*\\Q, expected: \\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter1 larger or equal 0",
+                        "parameter1 is not 0",
+                        "0 is not parameter1"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "0 is not parameter1"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r18",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r18",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.filefilter.MagicNumberFileFilter",
+        "methodSignature": "<org.apache.commons.io.filefilter.MagicNumberFileFilter: boolean accept(java.io.File)>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.11.0",
+                "removed_version": "2.13.0",
+                "exceptionName_history": [],
+                "message": "\\QThis statement would have triggered an Exception: virtualinvoke l3#2_1.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack32)\\E",
+                "message_history": [
+                    {
+                        "version<2.12.0": "\\QThis statement would have triggered an Exception: virtualinvoke l3#2_1.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack30)\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.Throwable is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw r15",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw r15",
+                "throwUnitOrder": 1
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.6",
+                "removed_version": "2.10.0",
+                "exceptionName_history": [],
+                "message": "\\QThis statement would have triggered an Exception: virtualinvoke l3#2_2.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack31)\\E",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QThis statement would have triggered an Exception: virtualinvoke l3#2_2.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack29)\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.Throwable is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw r14",
+                "callChain_history": [
+                    {
+                        "version<2.9.0": "throw r15"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw r15",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.buffer.CircularByteBuffer",
+        "methodSignature": "<org.apache.commons.io.input.buffer.CircularByteBuffer: void add(byte[],int,int)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QIllegal length: \\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.12.0": "\\QInvalid length: \\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter1 larger or equal 0",
+                        "parameter1 smaller than parameter0.length",
+                        "parameter2 smaller than 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter2 smaller than 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r11",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r11",
+                "throwUnitOrder": 2
+            },
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QIllegal offset: \\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.12.0": "\\QInvalid offset: \\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter1 smaller than 0"
+                    ],
+                    [
+                        "parameter1 larger or equal 0",
+                        "parameter1 larger or equal parameter0.length"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter1 smaller than 0",
+                    "parameter1 larger or equal parameter0.length"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r1",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r1",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.buffer.CircularByteBuffer",
+        "methodSignature": "<org.apache.commons.io.input.buffer.CircularByteBuffer: boolean peek(byte[],int,int)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QIllegal length: \\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.12.0": "\\QInvalid length: \\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter1 larger or equal 0",
+                        "parameter1 smaller than parameter0.length",
+                        "parameter2 smaller than 0"
+                    ],
+                    [
+                        "parameter1 larger or equal 0",
+                        "parameter1 smaller than parameter0.length",
+                        "parameter2 larger or equal 0",
+                        "parameter2 larger than @this: org.apache.commons.io.input.buffer.CircularByteBuffer.<org.apache.commons.io.input.buffer.CircularByteBuffer: byte[] buffer>.length"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter2 smaller than 0",
+                    "parameter2 larger than @this: org.apache.commons.io.input.buffer.CircularByteBuffer.<org.apache.commons.io.input.buffer.CircularByteBuffer: byte[] buffer>.length"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r18",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r18",
+                "throwUnitOrder": 2
+            },
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QIllegal offset: \\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.12.0": "\\QInvalid offset: \\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter1 smaller than 0"
+                    ],
+                    [
+                        "parameter1 larger or equal 0",
+                        "parameter1 larger or equal parameter0.length"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter1 smaller than 0",
+                    "parameter1 larger or equal parameter0.length"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r16",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r16",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.buffer.CircularByteBuffer",
+        "methodSignature": "<org.apache.commons.io.input.buffer.CircularByteBuffer: void read(byte[],int,int)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QIllegal length: \\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.12.0": "\\QInvalid length: \\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter1 larger or equal 0",
+                        "parameter1 smaller than parameter0.length",
+                        "parameter2 smaller than 0"
+                    ],
+                    [
+                        "parameter1 larger or equal 0",
+                        "parameter1 smaller than parameter0.length",
+                        "parameter2 larger or equal 0",
+                        "parameter2 larger than @this: org.apache.commons.io.input.buffer.CircularByteBuffer.<org.apache.commons.io.input.buffer.CircularByteBuffer: byte[] buffer>.length"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter2 smaller than 0",
+                    "parameter2 larger than @this: org.apache.commons.io.input.buffer.CircularByteBuffer.<org.apache.commons.io.input.buffer.CircularByteBuffer: byte[] buffer>.length"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r6",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r6",
+                "throwUnitOrder": 2
+            },
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QIllegal offset: \\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.12.0": "\\QInvalid offset: \\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter1 smaller than 0"
+                    ],
+                    [
+                        "parameter1 larger or equal 0",
+                        "parameter1 larger or equal parameter0.length"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter1 smaller than 0",
+                    "parameter1 larger or equal parameter0.length"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r1",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r1",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.NullReader",
+        "methodSignature": "<org.apache.commons.io.input.NullReader: void mark(int)>",
+        "modifier": "public",
+        "added_version": "v1.3",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.UnsupportedOperationException",
+                "modifier": "public",
+                "added_version": "1.3",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QMark not supported\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "@this: org.apache.commons.io.input.NullReader.<org.apache.commons.io.input.NullReader: boolean markSupported> is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "@this: org.apache.commons.io.input.NullReader.<org.apache.commons.io.input.NullReader: boolean markSupported> is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r1",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r1",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.NullReader",
+        "methodSignature": "<org.apache.commons.io.input.NullReader: void reset()>",
+        "modifier": "public",
+        "added_version": "v1.3",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.UnsupportedOperationException",
+                "modifier": "public",
+                "added_version": "1.3",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QMark not supported\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "@this: org.apache.commons.io.input.NullReader.<org.apache.commons.io.input.NullReader: boolean markSupported> is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "@this: org.apache.commons.io.input.NullReader.<org.apache.commons.io.input.NullReader: boolean markSupported> is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r10",
+                "callChain_history": [
+                    {
+                        "version<2.9.0": "throw $r11"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r11",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.NullInputStream",
+        "methodSignature": "<org.apache.commons.io.input.NullInputStream: void mark(int)>",
+        "modifier": "public",
+        "added_version": "v1.3",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.UnsupportedOperationException",
+                "modifier": "public",
+                "added_version": "1.3",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QMark not supported\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "@this: org.apache.commons.io.input.NullInputStream.<org.apache.commons.io.input.NullInputStream: boolean markSupported> is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "@this: org.apache.commons.io.input.NullInputStream.<org.apache.commons.io.input.NullInputStream: boolean markSupported> is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r1",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r1",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.NullInputStream",
+        "methodSignature": "<org.apache.commons.io.input.NullInputStream: void reset()>",
+        "modifier": "public",
+        "added_version": "v1.3",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.UnsupportedOperationException",
+                "modifier": "public",
+                "added_version": "1.3",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QMark not supported\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "@this: org.apache.commons.io.input.NullInputStream.<org.apache.commons.io.input.NullInputStream: boolean markSupported> is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "@this: org.apache.commons.io.input.NullInputStream.<org.apache.commons.io.input.NullInputStream: boolean markSupported> is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r10",
+                "callChain_history": [
+                    {
+                        "version<2.9.0": "throw $r11"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r11",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.CharSequenceInputStream",
+        "methodSignature": "<org.apache.commons.io.input.CharSequenceInputStream: void reset()>",
+        "modifier": "public",
+        "added_version": "v2.2",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalStateException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "\\QUnexpected CharBuffer position: actual=\\E[\\s\\S]*\\Q expected=\\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.8.0": "\\QUnexpected CharBuffer postion: actual=\\E[\\s\\S]*\\Q expected=\\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "@this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: int cBufMark> is not -1",
+                        "virtualinvoke @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: java.nio.CharBuffer cBuf>.<java.nio.CharBuffer: int position()>() is not @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: int cBufMark>"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.12.0": [
+                            [
+                                "@this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: int mark_cbuf> is not -1",
+                                "virtualinvoke @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: java.nio.CharBuffer cbuf>.<java.nio.CharBuffer: int position()>() is not @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: int mark_cbuf>"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: java.nio.CharBuffer cBuf>.<java.nio.CharBuffer: int position()>() is not @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: int cBufMark>"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.12.0": [
+                            "virtualinvoke @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: java.nio.CharBuffer cbuf>.<java.nio.CharBuffer: int position()>() is not @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: int mark_cbuf>"
+                        ]
+                    }
+                ],
+                "callChain": "throw $r20",
+                "callChain_history": [
+                    {
+                        "version<2.6": "throw $r21"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r21",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.LineIterator",
+        "methodSignature": "<org.apache.commons.io.LineIterator: void remove()>",
+        "modifier": "public",
+        "added_version": "v1.2",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.UnsupportedOperationException",
+                "modifier": "public",
+                "added_version": "1.2",
+                "exceptionName_history": [],
+                "message": "\\Qremove not supported\\E",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QRemove unsupported on LineIterator\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "Direct Throw Without Any Condition"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r0",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r0",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.filefilter.WildcardFilter",
+        "methodSignature": "<org.apache.commons.io.filefilter.WildcardFilter: void <init>(java.util.List)>",
+        "modifier": "public",
+        "added_version": "v1.1",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "1.1",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\QThe wildcard list must not be null\\E",
+                "message_history": [
+                    {
+                        "version<1.3": "[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter0 is null"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter0 is null"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r5",
+                "callChain_history": [
+                    {
+                        "version<1.4": "throw $r5"
+                    },
+                    {
+                        "version<2.0": "throw $r6"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r5",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.filefilter.WildcardFilter",
+        "methodSignature": "<org.apache.commons.io.filefilter.WildcardFilter: void <init>(java.lang.String)>",
+        "modifier": "public",
+        "added_version": "v1.1",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "1.1",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\QThe wildcard must not be null\\E",
+                "message_history": [
+                    {
+                        "version<1.3": "[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter0 is null"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter0 is null"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r3",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.filefilter.WildcardFilter",
+        "methodSignature": "<org.apache.commons.io.filefilter.WildcardFilter: void <init>(java.lang.String[])>",
+        "modifier": "public",
+        "added_version": "v1.1",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "1.1",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\QThe wildcard array must not be null\\E",
+                "message_history": [
+                    {
+                        "version<1.3": "[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter0 is null"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter0 is null"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r4",
+                "callChain_history": [
+                    {
+                        "version<2.0": "throw $r2"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r2",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.buffer.CircularBufferInputStream",
+        "methodSignature": "<org.apache.commons.io.input.buffer.CircularBufferInputStream: void <init>(java.io.InputStream,int)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QIllegal bufferSize: \\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.12.0": "\\QInvalid bufferSize: \\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter1 smaller or equal 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter1 smaller or equal 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r5",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r5",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.SwappedDataInputStream",
+        "methodSignature": "<org.apache.commons.io.input.SwappedDataInputStream: java.lang.String readLine()>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.UnsupportedOperationException",
+                "modifier": "public",
+                "added_version": "1.0",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*\\Q not supported\\E",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QOperation not supported: readLine()\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "Direct Throw Without Any Condition"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r0",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r0",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.SwappedDataInputStream",
+        "methodSignature": "<org.apache.commons.io.input.SwappedDataInputStream: java.lang.String readUTF()>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.UnsupportedOperationException",
+                "modifier": "public",
+                "added_version": "1.0",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*\\Q not supported\\E",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QOperation not supported: readUTF()\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "Direct Throw Without Any Condition"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r0",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r0",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.ReaderInputStream",
+        "methodSignature": "<org.apache.commons.io.input.ReaderInputStream: int read(byte[],int,int)>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IndexOutOfBoundsException",
+                "modifier": "public",
+                "added_version": "2.2",
+                "exceptionName_history": [],
+                "message": "\\QArray size=\\E[\\s\\S]*\\Q, offset=\\E[\\s\\S]*\\Q, length=\\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.12.0": "\\QArray Size=\\E[\\s\\S]*\\Q, offset=\\E[\\s\\S]*\\Q, length=\\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter2 smaller than 0"
+                    ],
+                    [
+                        "parameter2 larger or equal 0",
+                        "parameter1 smaller than 0"
+                    ],
+                    [
+                        "parameter2 larger or equal 0",
+                        "parameter1 larger or equal 0",
+                        "parameter1 + parameter2 larger than parameter0.length"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.7": [
+                            [
+                                "parameter0 is not null",
+                                "parameter2 smaller than 0"
+                            ],
+                            [
+                                "parameter0 is not null",
+                                "parameter2 larger or equal 0",
+                                "parameter1 smaller than 0"
+                            ],
+                            [
+                                "parameter0 is not null",
+                                "parameter2 larger or equal 0",
+                                "parameter1 larger or equal 0",
+                                "parameter1 + parameter2 larger than parameter0.length"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "parameter2 smaller than 0",
+                    "parameter1 smaller than 0",
+                    "parameter1 + parameter2 larger than parameter0.length"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r15",
+                "callChain_history": [
+                    {
+                        "version<2.7": "throw $r18"
+                    },
+                    {
+                        "version<2.12.0": "throw $r16"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r18",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.BOMInputStream",
+        "methodSignature": "<org.apache.commons.io.input.BOMInputStream: boolean hasBOM(org.apache.commons.io.ByteOrderMark)>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.0",
+                "exceptionName_history": [],
+                "message": "\\QStream not configured to detect \\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.12.0": "\\QStream not configure to detect \\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "interfaceinvoke @this: org.apache.commons.io.input.BOMInputStream.<org.apache.commons.io.input.BOMInputStream: java.util.List boms>.<java.util.List: boolean contains(java.lang.Object)>(parameter0) is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "interfaceinvoke @this: org.apache.commons.io.input.BOMInputStream.<org.apache.commons.io.input.BOMInputStream: java.util.List boms>.<java.util.List: boolean contains(java.lang.Object)>(parameter0) is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r4",
+                "callChain_history": [
+                    {
+                        "version<2.12.0": "throw $r5"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r5",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.UnixLineEndingInputStream",
+        "methodSignature": "<org.apache.commons.io.input.UnixLineEndingInputStream: void mark(int)>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.UnsupportedOperationException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QMark notsupported\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "Direct Throw Without Any Condition"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r0",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r0",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.WindowsLineEndingInputStream",
+        "methodSignature": "<org.apache.commons.io.input.WindowsLineEndingInputStream: void mark(int)>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.UnsupportedOperationException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QMark not supported\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "Direct Throw Without Any Condition"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r0",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r0",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.ByteOrderParser",
+        "methodSignature": "<org.apache.commons.io.ByteOrderParser: java.nio.ByteOrder parseByteOrder(java.lang.String)>",
+        "modifier": "public",
+        "added_version": "v2.6",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.6",
+                "exceptionName_history": [],
+                "message": "\\QUnsupported byte order setting: \\E[\\s\\S]*\\Q, expected one of \\E[\\s\\S]*\\Q, \\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.8.0": "\\QUnsupported byte order setting: \\E[\\s\\S]*\\Q, expeced one of \\E[\\s\\S]*\\Q, \\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "virtualinvoke virtualinvoke <java.nio.ByteOrder: java.nio.ByteOrder BIG_ENDIAN>.<java.nio.ByteOrder: java.lang.String toString()>().<java.lang.String: boolean equals(java.lang.Object)>(parameter0) is 0",
+                        "virtualinvoke virtualinvoke <java.nio.ByteOrder: java.nio.ByteOrder LITTLE_ENDIAN>.<java.nio.ByteOrder: java.lang.String toString()>().<java.lang.String: boolean equals(java.lang.Object)>(parameter0) is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke virtualinvoke <java.nio.ByteOrder: java.nio.ByteOrder LITTLE_ENDIAN>.<java.nio.ByteOrder: java.lang.String toString()>().<java.lang.String: boolean equals(java.lang.Object)>(parameter0) is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r5",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r5",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.output.ChunkedOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.ChunkedOutputStream: void <init>(java.io.OutputStream,int)>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "\\QchunkSize <= 0\\E",
+                "message_history": [
+                    {
+                        "version<2.13.0": "[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter1 smaller or equal 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter1 smaller or equal 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r2",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r2",
+                "throwUnitOrder": 0
+            }
+        ]
+    }
+]

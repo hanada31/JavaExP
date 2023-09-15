@@ -1,0 +1,495 @@
+[
+    {
+        "className": "org.apache.commons.io.Java7Support",
+        "methodSignature": "<org.apache.commons.io.Java7Support: boolean isSymLink(java.io.File)>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "removed_version": "v2.6",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.RuntimeException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.IllegalAccessException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r11",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r11",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.lang.RuntimeException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.reflect.InvocationTargetException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r9",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r9",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.Java7Support",
+        "methodSignature": "<org.apache.commons.io.Java7Support: java.io.File readSymbolicLink(java.io.File)>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "removed_version": "v2.6",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.RuntimeException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.IllegalAccessException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r14",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r14",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.lang.RuntimeException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.reflect.InvocationTargetException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r12",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r12",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.Java7Support",
+        "methodSignature": "<org.apache.commons.io.Java7Support: java.io.File createSymbolicLink(java.io.File,java.io.File)>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "removed_version": "v2.6",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.RuntimeException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.IllegalAccessException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r20",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r20",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.reflect.InvocationTargetException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r18",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r18",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.Java7Support",
+        "methodSignature": "<org.apache.commons.io.Java7Support: void delete(java.io.File)>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "removed_version": "v2.6",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.RuntimeException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.IllegalAccessException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r10",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r10",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.reflect.InvocationTargetException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r8",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r8",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.Java7Support",
+        "methodSignature": "<org.apache.commons.io.Java7Support: boolean isAtLeastJava7()>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "removed_version": "v2.6",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.ReadAheadInputStream",
+        "methodSignature": "<org.apache.commons.io.input.ReadAheadInputStream: java.lang.Thread newThread(java.lang.Runnable)>",
+        "modifier": "public",
+        "added_version": "v2.9.0",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.buffer.CircularBufferInputStream",
+        "methodSignature": "<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[])>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.CountingOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.CountingOutputStream: void write(byte[])>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.CountingOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.CountingOutputStream: void write(byte[],int,int)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.CountingOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.CountingOutputStream: void write(int)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.FileWriterWithEncoding",
+        "methodSignature": "<org.apache.commons.io.output.FileWriterWithEncoding: void write(int)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.FileWriterWithEncoding",
+        "methodSignature": "<org.apache.commons.io.output.FileWriterWithEncoding: void write(char[])>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.FileWriterWithEncoding",
+        "methodSignature": "<org.apache.commons.io.output.FileWriterWithEncoding: void write(char[],int,int)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.FileWriterWithEncoding",
+        "methodSignature": "<org.apache.commons.io.output.FileWriterWithEncoding: void write(java.lang.String)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.FileWriterWithEncoding",
+        "methodSignature": "<org.apache.commons.io.output.FileWriterWithEncoding: void write(java.lang.String,int,int)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.FileWriterWithEncoding",
+        "methodSignature": "<org.apache.commons.io.output.FileWriterWithEncoding: void flush()>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.FileWriterWithEncoding",
+        "methodSignature": "<org.apache.commons.io.output.FileWriterWithEncoding: void close()>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.ByteArrayOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.ByteArrayOutputStream: void close()>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.7",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.ByteArrayOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.ByteArrayOutputStream: java.lang.String toString()>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.7",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.ByteArrayOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.ByteArrayOutputStream: java.lang.String toString(java.lang.String)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.7",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.ByteArrayOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.ByteArrayOutputStream: java.lang.String toString(java.nio.charset.Charset)>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "removed_version": "v2.7",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.CountingInputStream",
+        "methodSignature": "<org.apache.commons.io.input.CountingInputStream: int read(byte[])>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.CountingInputStream",
+        "methodSignature": "<org.apache.commons.io.input.CountingInputStream: int read(byte[],int,int)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.CountingInputStream",
+        "methodSignature": "<org.apache.commons.io.input.CountingInputStream: int read()>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.comparator.ReverseComparator",
+        "methodSignature": "<org.apache.commons.io.comparator.ReverseComparator: void <init>(java.util.Comparator)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.8.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "1.4",
+                "exceptionName_history": [],
+                "message": "\\QDelegate comparator is missing\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter0 is null"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter0 is null"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r2",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r2",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.comparator.ReverseComparator",
+        "methodSignature": "<org.apache.commons.io.comparator.ReverseComparator: int compare(java.io.File,java.io.File)>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "removed_version": "v2.8.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.comparator.ReverseComparator",
+        "methodSignature": "<org.apache.commons.io.comparator.ReverseComparator: java.lang.String toString()>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "removed_version": "v2.8.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.comparator.ReverseComparator",
+        "methodSignature": "<org.apache.commons.io.comparator.ReverseComparator: int compare(java.lang.Object,java.lang.Object)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.8.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.InfiniteCircularInputStream",
+        "methodSignature": "<org.apache.commons.io.input.InfiniteCircularInputStream: int read()>",
+        "modifier": "public",
+        "added_version": "v2.6",
+        "removed_version": "v2.8.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.file.AccumulatorPathVisitor",
+        "methodSignature": "<org.apache.commons.io.file.AccumulatorPathVisitor: java.nio.file.FileVisitResult visitFile(java.nio.file.Path,java.nio.file.attribute.BasicFileAttributes)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "removed_version": "v2.9.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.file.AccumulatorPathVisitor",
+        "methodSignature": "<org.apache.commons.io.file.AccumulatorPathVisitor: java.nio.file.FileVisitResult visitFile(java.lang.Object,java.nio.file.attribute.BasicFileAttributes)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "removed_version": "v2.9.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.AutoCloseInputStream",
+        "methodSignature": "<org.apache.commons.io.input.AutoCloseInputStream: int read()>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.AutoCloseInputStream",
+        "methodSignature": "<org.apache.commons.io.input.AutoCloseInputStream: int read(byte[])>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.AutoCloseInputStream",
+        "methodSignature": "<org.apache.commons.io.input.AutoCloseInputStream: int read(byte[],int,int)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.ThreadMonitor",
+        "methodSignature": "<org.apache.commons.io.ThreadMonitor: java.lang.Thread start(long)>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "removed_version": "v2.9.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.ThreadMonitor",
+        "methodSignature": "<org.apache.commons.io.ThreadMonitor: java.lang.Thread start(java.lang.Thread,long)>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "removed_version": "v2.9.0",
+        "exceptions": []
+    }
+]

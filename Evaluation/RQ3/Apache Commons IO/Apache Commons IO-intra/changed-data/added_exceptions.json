@@ -1,0 +1,2062 @@
+[
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void cleanDirectory(java.io.File)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.IOExceptionList",
+                "modifier": "public",
+                "added_version": "2.8.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "interfaceinvoke new java.util.ArrayList.<java.util.List: boolean isEmpty()>() is 0"
+                    ],
+                    [
+                        "interfaceinvoke new java.util.ArrayList.<java.util.List: boolean isEmpty()>() is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "interfaceinvoke new java.util.ArrayList.<java.util.List: boolean isEmpty()>() is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r3",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "1.1",
+                "removed_version": "2.5",
+                "exceptionName_history": [],
+                "message": "\\QFailed to list contents of \\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is not 0",
+                        "virtualinvoke parameter0.<java.io.File: java.io.File[] listFiles()>() is null"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke parameter0.<java.io.File: java.io.File[] listFiles()>() is null"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r3",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitOrder": 2
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void copyFile(java.io.File,java.io.File,boolean)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "1.1",
+                "removed_version": "2.8.0",
+                "exceptionName_history": [],
+                "message": "\\QSource '\\E[\\s\\S]*\\Q' exists but is a directory\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is not 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r25",
+                "callChain_history": [
+                    {
+                        "version<2.1": "throw $r27"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r27",
+                "throwUnitOrder": 3
+            },
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "1.1",
+                "removed_version": "2.8.0",
+                "exceptionName_history": [],
+                "message": "\\QDestination '\\E[\\s\\S]*\\Q' directory cannot be created\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                        "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is 0",
+                        "virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>() is not null",
+                        "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean mkdirs()>() is 0",
+                        "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean isDirectory()>() is 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.1": [
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                                "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is 0",
+                                "virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>() is not null",
+                                "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean exists()>() is 0",
+                                "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean mkdirs()>() is 0"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is 0",
+                                "virtualinvoke virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean equals(java.lang.Object)>(virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>()) is 0",
+                                "virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>() is not null",
+                                "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean mkdirs()>() is 0",
+                                "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean isDirectory()>() is 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean isDirectory()>() is 0"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.1": [
+                            "virtualinvoke virtualinvoke parameter1.<java.io.File: java.io.File getParentFile()>().<java.io.File: boolean mkdirs()>() is 0"
+                        ]
+                    }
+                ],
+                "callChain": "throw $r11",
+                "callChain_history": [
+                    {
+                        "version<2.1": "throw $r13"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r13",
+                "throwUnitOrder": 5
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "1.1",
+                "removed_version": "2.5",
+                "exceptionName_history": [],
+                "message": "\\QSource must not be null\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter0 is null"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter0 is null"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r38",
+                "callChain_history": [
+                    {
+                        "version<2.1": "throw $r40"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r40",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "1.1",
+                "removed_version": "2.5",
+                "exceptionName_history": [],
+                "message": "\\QDestination must not be null\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter0 is not null",
+                        "parameter1 is null"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter1 is null"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r37",
+                "callChain_history": [
+                    {
+                        "version<2.1": "throw $r39"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r39",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void copyFile(java.io.File,java.io.File,boolean,java.nio.file.CopyOption[])>",
+        "modifier": "public",
+        "added_version": "v2.8.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\QCannot set the file time.\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter2 is not 0",
+                        "staticinvoke <org.apache.commons.io.FileUtils: boolean setTimes(java.io.File,java.io.File)>(parameter0, parameter1) is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.FileUtils: boolean setTimes(java.io.File,java.io.File)>(parameter0, parameter1) is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r5",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r5",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void copyFileToDirectory(java.io.File,java.io.File)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "1.1",
+                "removed_version": "1.3",
+                "exceptionName_history": [],
+                "message": "\\QDestination must not be null\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter1 is null"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter1 is null"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r10",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r10",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: java.util.Iterator iterateFiles(java.io.File,java.lang.String[],boolean)>",
+        "modifier": "public",
+        "added_version": "v1.2",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.UncheckedIOException",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r5",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r5",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: java.util.Collection listFiles(java.io.File,org.apache.commons.io.filefilter.IOFileFilter,org.apache.commons.io.filefilter.IOFileFilter)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.UncheckedIOException",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r12",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r12",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: java.util.Collection listFiles(java.io.File,java.lang.String[],boolean)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.UncheckedIOException",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r5",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r5",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: java.util.Collection listFilesAndDirs(java.io.File,org.apache.commons.io.filefilter.IOFileFilter,org.apache.commons.io.filefilter.IOFileFilter)>",
+        "modifier": "public",
+        "added_version": "v2.2",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.UncheckedIOException",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r13",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r13",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void moveDirectory(java.io.File,java.io.File)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.2",
+                "exceptionName_history": [],
+                "message": "\\QCannot move directory: \\E[\\s\\S]*\\Q to a subdirectory of itself: \\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean renameTo(java.io.File)>(parameter1) is 0",
+                        "virtualinvoke virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean startsWith(java.lang.String)>(virtualinvoke virtualinvoke virtualinvoke new java.lang.StringBuilder.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>()).<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(<java.io.File: java.lang.String separator>).<java.lang.StringBuilder: java.lang.String toString()>()) is not 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.5": [
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean renameTo(java.io.File)>(parameter1) is 0",
+                                "virtualinvoke virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean startsWith(java.lang.String)>(virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>()) is not 0"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.7": [
+                            [
+                                "parameter0 is not null",
+                                "parameter1 is not null",
+                                "virtualinvoke parameter0.<java.io.File: boolean exists()>() is not 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean renameTo(java.io.File)>(parameter1) is 0",
+                                "virtualinvoke virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean startsWith(java.lang.String)>(virtualinvoke virtualinvoke virtualinvoke new java.lang.StringBuilder.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>()).<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(<java.io.File: java.lang.String separator>).<java.lang.StringBuilder: java.lang.String toString()>()) is not 0"
+                            ]
+                        ]
+                    },
+                    {
+                        "version<2.9.0": [
+                            [
+                                "virtualinvoke parameter0.<java.io.File: boolean isDirectory()>() is not 0",
+                                "virtualinvoke parameter1.<java.io.File: boolean exists()>() is 0",
+                                "virtualinvoke parameter0.<java.io.File: boolean renameTo(java.io.File)>(parameter1) is 0",
+                                "virtualinvoke virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean startsWith(java.lang.String)>(virtualinvoke virtualinvoke virtualinvoke new java.lang.StringBuilder.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>()).<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(<java.io.File: java.lang.String separator>).<java.lang.StringBuilder: java.lang.String toString()>()) is not 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean startsWith(java.lang.String)>(virtualinvoke virtualinvoke virtualinvoke new java.lang.StringBuilder.<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>()).<java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)>(<java.io.File: java.lang.String separator>).<java.lang.StringBuilder: java.lang.String toString()>()) is not 0"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.5": [
+                            "virtualinvoke virtualinvoke parameter1.<java.io.File: java.lang.String getCanonicalPath()>().<java.lang.String: boolean startsWith(java.lang.String)>(virtualinvoke parameter0.<java.io.File: java.lang.String getCanonicalPath()>()) is not 0"
+                        ]
+                    }
+                ],
+                "callChain": "throw $r17",
+                "callChain_history": [
+                    {
+                        "version<2.5": "throw $r12"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r12",
+                "throwUnitOrder": 5
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void moveDirectoryToDirectory(java.io.File,java.io.File,boolean)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.8.0",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [],
+                "message": "\\QCould not create destination directories '\\E[\\s\\S]*\\Q'\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is 0",
+                        "parameter2 is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean mkdirs()>() is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke parameter1.<java.io.File: boolean mkdirs()>() is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r18",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r18",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void moveFileToDirectory(java.io.File,java.io.File,boolean)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.8.0",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [],
+                "message": "\\QCould not create destination directories '\\E[\\s\\S]*\\Q'\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter1.<java.io.File: boolean exists()>() is 0",
+                        "parameter2 is not 0",
+                        "virtualinvoke parameter1.<java.io.File: boolean mkdirs()>() is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke parameter1.<java.io.File: boolean mkdirs()>() is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r18",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r18",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: java.io.File[] toFiles(java.net.URL[])>",
+        "modifier": "public",
+        "added_version": "v1.1",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "exceptionName_history": [],
+                "message": "\\QCan only convert file URL to a File: \\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "staticinvoke <org.apache.commons.io.IOUtils: int length(java.lang.Object[])>(parameter0) is not 0",
+                        "0 smaller than parameter0.length",
+                        "parameter0[i3_1] is not null",
+                        "virtualinvoke \"file\".<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>(virtualinvoke parameter0[i3_1].<java.net.URL: java.lang.String getProtocol()>()) is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke \"file\".<java.lang.String: boolean equalsIgnoreCase(java.lang.String)>(virtualinvoke parameter0[i3_1].<java.net.URL: java.lang.String getProtocol()>()) is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r6",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r6",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FileUtils",
+        "methodSignature": "<org.apache.commons.io.FileUtils: void touch(java.io.File)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "1.3",
+                "removed_version": "2.9.0",
+                "exceptionName_history": [],
+                "message": "\\QUnable to set the last modification time for \\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke parameter0.<java.io.File: boolean setLastModified(long)>(staticinvoke <java.lang.System: long currentTimeMillis()>()) is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke parameter0.<java.io.File: boolean setLastModified(long)>(staticinvoke <java.lang.System: long currentTimeMillis()>()) is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r1",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r1",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.filefilter.MagicNumberFileFilter",
+        "methodSignature": "<org.apache.commons.io.filefilter.MagicNumberFileFilter: boolean accept(java.io.File)>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.11.0",
+                "removed_version": "2.13.0",
+                "exceptionName_history": [],
+                "message": "\\QThis statement would have triggered an Exception: virtualinvoke l3#2_2.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack31)\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.Throwable is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw r16",
+                "callChain_history": [
+                    {
+                        "version<2.12.0": "throw r14"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw r14",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.11.0",
+                "removed_version": "2.13.0",
+                "exceptionName_history": [],
+                "message": "\\QThis statement would have triggered an Exception: virtualinvoke l3#2_1.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack32)\\E",
+                "message_history": [
+                    {
+                        "version<2.12.0": "\\QThis statement would have triggered an Exception: virtualinvoke l3#2_1.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack30)\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.Throwable is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw r15",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw r15",
+                "throwUnitOrder": 1
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.10.0",
+                "removed_version": "2.11.0",
+                "exceptionName_history": [],
+                "message": "\\QThis statement would have triggered an Exception: virtualinvoke l3#2_1.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack31)\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.Throwable is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw r14",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw r14",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.10.0",
+                "removed_version": "2.11.0",
+                "exceptionName_history": [],
+                "message": "\\QThis statement would have triggered an Exception: virtualinvoke l3#2_2.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack30)\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.Throwable is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw r15",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw r15",
+                "throwUnitOrder": 1
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.6",
+                "removed_version": "2.10.0",
+                "exceptionName_history": [],
+                "message": "\\QThis statement would have triggered an Exception: virtualinvoke l3#2_1.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack30)\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.Throwable is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw r15",
+                "callChain_history": [
+                    {
+                        "version<2.9.0": "throw r14"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw r14",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.6",
+                "removed_version": "2.10.0",
+                "exceptionName_history": [],
+                "message": "\\QThis statement would have triggered an Exception: virtualinvoke l3#2_2.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack31)\\E",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QThis statement would have triggered an Exception: virtualinvoke l3#2_2.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack29)\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.Throwable is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw r14",
+                "callChain_history": [
+                    {
+                        "version<2.9.0": "throw r15"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw r15",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.filefilter.MagicNumberFileFilter",
+        "methodSignature": "<org.apache.commons.io.filefilter.MagicNumberFileFilter: java.nio.file.FileVisitResult accept(java.nio.file.Path,java.nio.file.attribute.BasicFileAttributes)>",
+        "modifier": "public",
+        "added_version": "v2.9.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\QThis statement would have triggered an Exception: virtualinvoke l4#2_1.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack35)\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.Throwable is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw r21",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw r21",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\QThis statement would have triggered an Exception: virtualinvoke l4#2_2.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack34)\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.Throwable is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw r22",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw r22",
+                "throwUnitOrder": 1
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.11.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\QThis statement would have triggered an Exception: virtualinvoke l4#2_2.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack35)\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.Throwable is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw r21",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw r21",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.11.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\QThis statement would have triggered an Exception: virtualinvoke l4#2_1.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack34)\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.Throwable is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw r22",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw r22",
+                "throwUnitOrder": 1
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.10.0",
+                "removed_version": "2.11.0",
+                "exceptionName_history": [],
+                "message": "\\QThis statement would have triggered an Exception: virtualinvoke l4#2_1.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack35)\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.Throwable is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw r21",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw r21",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.10.0",
+                "removed_version": "2.11.0",
+                "exceptionName_history": [],
+                "message": "\\QThis statement would have triggered an Exception: virtualinvoke l4#2_2.<java.lang.Throwable: void addSuppressed(java.lang.Throwable)>($stack34)\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.Throwable is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw r22",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw r22",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.output.FilterCollectionWriter",
+        "methodSignature": "<org.apache.commons.io.output.FilterCollectionWriter: java.io.Writer append(char)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.IOExceptionList",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\Qappend\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ],
+                    [
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r3",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.output.FilterCollectionWriter",
+        "methodSignature": "<org.apache.commons.io.output.FilterCollectionWriter: java.io.Writer append(java.lang.CharSequence)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.IOExceptionList",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\Qappend\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ],
+                    [
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r3",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.output.FilterCollectionWriter",
+        "methodSignature": "<org.apache.commons.io.output.FilterCollectionWriter: java.io.Writer append(java.lang.CharSequence,int,int)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.IOExceptionList",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\Qappend\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ],
+                    [
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r3",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.output.FilterCollectionWriter",
+        "methodSignature": "<org.apache.commons.io.output.FilterCollectionWriter: void close()>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.IOExceptionList",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\Qclose\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ],
+                    [
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r3",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.output.FilterCollectionWriter",
+        "methodSignature": "<org.apache.commons.io.output.FilterCollectionWriter: void flush()>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.IOExceptionList",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\Qflush\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ],
+                    [
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r3",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.output.FilterCollectionWriter",
+        "methodSignature": "<org.apache.commons.io.output.FilterCollectionWriter: void write(char[])>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.IOExceptionList",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\Qwrite\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ],
+                    [
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r3",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.output.FilterCollectionWriter",
+        "methodSignature": "<org.apache.commons.io.output.FilterCollectionWriter: void write(char[],int,int)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.IOExceptionList",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\Qwrite\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ],
+                    [
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r3",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.output.FilterCollectionWriter",
+        "methodSignature": "<org.apache.commons.io.output.FilterCollectionWriter: void write(int)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.IOExceptionList",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\Qwrite\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ],
+                    [
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r3",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.output.FilterCollectionWriter",
+        "methodSignature": "<org.apache.commons.io.output.FilterCollectionWriter: void write(java.lang.String)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.IOExceptionList",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\Qwrite\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ],
+                    [
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r3",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.output.FilterCollectionWriter",
+        "methodSignature": "<org.apache.commons.io.output.FilterCollectionWriter: void write(java.lang.String,int,int)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "org.apache.commons.io.IOExceptionList",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\Qwrite\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ],
+                    [
+                        "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "specialinvoke @this: org.apache.commons.io.output.FilterCollectionWriter.<org.apache.commons.io.output.FilterCollectionWriter: boolean notEmpty(java.util.List)>(null) is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r3",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.file.PathUtils",
+        "methodSignature": "<org.apache.commons.io.file.PathUtils: java.nio.file.Path setReadOnly(java.nio.file.Path,boolean,java.nio.file.LinkOption[])>",
+        "modifier": "public",
+        "added_version": "v2.8.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\QDOS or POSIX file operations not available for '%s' %s\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "staticinvoke <org.apache.commons.io.file.PathUtils: boolean isPosix(java.nio.file.Path,java.nio.file.LinkOption[])>(staticinvoke <org.apache.commons.io.file.PathUtils: java.nio.file.Path getParent(java.nio.file.Path)>(parameter0), parameter2) is 0"
+                    ],
+                    [
+                        "staticinvoke <org.apache.commons.io.file.PathUtils: boolean isPosix(java.nio.file.Path,java.nio.file.LinkOption[])>(staticinvoke <org.apache.commons.io.file.PathUtils: java.nio.file.Path getParent(java.nio.file.Path)>(parameter0), parameter2) is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.file.PathUtils: boolean isPosix(java.nio.file.Path,java.nio.file.LinkOption[])>(staticinvoke <org.apache.commons.io.file.PathUtils: java.nio.file.Path getParent(java.nio.file.Path)>(parameter0), parameter2) is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r3",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "org.apache.commons.io.IOExceptionList",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "interfaceinvoke new java.util.ArrayList.<java.util.List: boolean isEmpty()>() is 0"
+                    ],
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "staticinvoke <java.nio.file.Files: java.nio.file.attribute.FileAttributeView getFileAttributeView(java.nio.file.Path,java.lang.Class,java.nio.file.LinkOption[])>(parameter0, class \"Ljava/nio/file/attribute/PosixFileAttributeView;\", parameter2) is null",
+                        "interfaceinvoke new java.util.ArrayList.<java.util.List: boolean isEmpty()>() is 0"
+                    ],
+                    [
+                        "staticinvoke <java.nio.file.Files: java.nio.file.attribute.FileAttributeView getFileAttributeView(java.nio.file.Path,java.lang.Class,java.nio.file.LinkOption[])>(parameter0, class \"Ljava/nio/file/attribute/DosFileAttributeView;\", parameter2) is null",
+                        "staticinvoke <java.nio.file.Files: java.nio.file.attribute.FileAttributeView getFileAttributeView(java.nio.file.Path,java.lang.Class,java.nio.file.LinkOption[])>(parameter0, class \"Ljava/nio/file/attribute/PosixFileAttributeView;\", parameter2) is null",
+                        "interfaceinvoke new java.util.ArrayList.<java.util.List: boolean isEmpty()>() is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "interfaceinvoke new java.util.ArrayList.<java.util.List: boolean isEmpty()>() is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r10",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r10",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\QNo DosFileAttributeView or PosixFileAttributeView for '%s' (linkOptions=%s)\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "interfaceinvoke new java.util.ArrayList.<java.util.List: boolean isEmpty()>() is not 0"
+                    ],
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught.",
+                        "staticinvoke <java.nio.file.Files: java.nio.file.attribute.FileAttributeView getFileAttributeView(java.nio.file.Path,java.lang.Class,java.nio.file.LinkOption[])>(parameter0, class \"Ljava/nio/file/attribute/PosixFileAttributeView;\", parameter2) is null",
+                        "interfaceinvoke new java.util.ArrayList.<java.util.List: boolean isEmpty()>() is not 0"
+                    ],
+                    [
+                        "staticinvoke <java.nio.file.Files: java.nio.file.attribute.FileAttributeView getFileAttributeView(java.nio.file.Path,java.lang.Class,java.nio.file.LinkOption[])>(parameter0, class \"Ljava/nio/file/attribute/DosFileAttributeView;\", parameter2) is null",
+                        "staticinvoke <java.nio.file.Files: java.nio.file.attribute.FileAttributeView getFileAttributeView(java.nio.file.Path,java.lang.Class,java.nio.file.LinkOption[])>(parameter0, class \"Ljava/nio/file/attribute/PosixFileAttributeView;\", parameter2) is null",
+                        "interfaceinvoke new java.util.ArrayList.<java.util.List: boolean isEmpty()>() is not 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "interfaceinvoke new java.util.ArrayList.<java.util.List: boolean isEmpty()>() is not 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r6",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r6",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FilenameUtils",
+        "methodSignature": "<org.apache.commons.io.FilenameUtils: boolean equals(java.lang.String,java.lang.String,boolean,org.apache.commons.io.IOCase)>",
+        "modifier": "public",
+        "added_version": "v1.3",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "1.4",
+                "removed_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QError normalizing one or both of the file names\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter0 is not null",
+                        "parameter1 is not null",
+                        "parameter2 is not 0",
+                        "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String)>(parameter0) is null"
+                    ],
+                    [
+                        "parameter0 is not null",
+                        "parameter1 is not null",
+                        "parameter2 is not 0",
+                        "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String)>(parameter0) is not null",
+                        "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String)>(parameter1) is null"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String)>(parameter0) is null",
+                    "staticinvoke <org.apache.commons.io.FilenameUtils: java.lang.String normalize(java.lang.String)>(parameter1) is null"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r2",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r2",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.FilenameUtils",
+        "methodSignature": "<org.apache.commons.io.FilenameUtils: int indexOfExtension(java.lang.String)>",
+        "modifier": "public",
+        "added_version": "v1.1",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QNTFS ADS separator (':') in file name is forbidden.\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter0 is not null",
+                        "staticinvoke <org.apache.commons.io.FilenameUtils: boolean isSystemWindows()>() is not 0",
+                        "virtualinvoke parameter0.<java.lang.String: int indexOf(int,int)>(58, staticinvoke <org.apache.commons.io.FilenameUtils: int getAdsCriticalOffset(java.lang.String)>(parameter0)) is not -1"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke parameter0.<java.lang.String: int indexOf(int,int)>(58, staticinvoke <org.apache.commons.io.FilenameUtils: int getAdsCriticalOffset(java.lang.String)>(parameter0)) is not -1"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r2",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r2",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.ReversedLinesFileReader",
+        "methodSignature": "<org.apache.commons.io.input.ReversedLinesFileReader: void <init>(java.io.File,int,java.nio.charset.Charset)>",
+        "modifier": "public",
+        "added_version": "v2.3",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.UnsupportedEncodingException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "removed_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QEncoding \\E[\\s\\S]*\\Q is not supported yet (feel free to submit a patch)\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke virtualinvoke staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2).<java.nio.charset.Charset: java.nio.charset.CharsetEncoder newEncoder()>().<java.nio.charset.CharsetEncoder: float maxBytesPerChar()>() cmpl 1.0F is not 0",
+                        "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_8>",
+                        "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not staticinvoke <java.nio.charset.Charset: java.nio.charset.Charset forName(java.lang.String)>(\"Shift_JIS\")",
+                        "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not staticinvoke <java.nio.charset.Charset: java.nio.charset.Charset forName(java.lang.String)>(\"windows-31j\")",
+                        "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not staticinvoke <java.nio.charset.Charset: java.nio.charset.Charset forName(java.lang.String)>(\"x-windows-949\")",
+                        "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not staticinvoke <java.nio.charset.Charset: java.nio.charset.Charset forName(java.lang.String)>(\"gbk\")",
+                        "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not staticinvoke <java.nio.charset.Charset: java.nio.charset.Charset forName(java.lang.String)>(\"x-windows-950\")",
+                        "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_16BE>",
+                        "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_16LE>",
+                        "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_16>"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.6": [
+                            [
+                                "virtualinvoke virtualinvoke staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2).<java.nio.charset.Charset: java.nio.charset.CharsetEncoder newEncoder()>().<java.nio.charset.CharsetEncoder: float maxBytesPerChar()>() cmpl 1.0F is not 0",
+                                "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not <org.apache.commons.io.Charsets: java.nio.charset.Charset UTF_8>",
+                                "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not staticinvoke <java.nio.charset.Charset: java.nio.charset.Charset forName(java.lang.String)>(\"Shift_JIS\")",
+                                "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not staticinvoke <java.nio.charset.Charset: java.nio.charset.Charset forName(java.lang.String)>(\"windows-31j\")",
+                                "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not staticinvoke <java.nio.charset.Charset: java.nio.charset.Charset forName(java.lang.String)>(\"x-windows-949\")",
+                                "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not staticinvoke <java.nio.charset.Charset: java.nio.charset.Charset forName(java.lang.String)>(\"gbk\")",
+                                "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not staticinvoke <java.nio.charset.Charset: java.nio.charset.Charset forName(java.lang.String)>(\"x-windows-950\")",
+                                "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not <org.apache.commons.io.Charsets: java.nio.charset.Charset UTF_16BE>",
+                                "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not <org.apache.commons.io.Charsets: java.nio.charset.Charset UTF_16LE>",
+                                "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not <org.apache.commons.io.Charsets: java.nio.charset.Charset UTF_16>"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not <java.nio.charset.StandardCharsets: java.nio.charset.Charset UTF_16>"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.6": [
+                            "staticinvoke <org.apache.commons.io.Charsets: java.nio.charset.Charset toCharset(java.nio.charset.Charset)>(parameter2) is not <org.apache.commons.io.Charsets: java.nio.charset.Charset UTF_16>"
+                        ]
+                    }
+                ],
+                "callChain": "throw $r35",
+                "callChain_history": [
+                    {
+                        "version<2.6": "throw $r36"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r36",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.CharSequenceInputStream",
+        "methodSignature": "<org.apache.commons.io.input.CharSequenceInputStream: void <init>(java.lang.CharSequence,java.nio.charset.Charset,int)>",
+        "modifier": "public",
+        "added_version": "v2.2",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "removed_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\QBuffer size \\E[\\s\\S]*\\Q is less than maxBytesPerChar \\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter2 cmpg virtualinvoke @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: java.nio.charset.CharsetEncoder encoder>.<java.nio.charset.CharsetEncoder: float maxBytesPerChar()>() smaller than 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter2 cmpg virtualinvoke @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: java.nio.charset.CharsetEncoder encoder>.<java.nio.charset.CharsetEncoder: float maxBytesPerChar()>() smaller than 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r20",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r20",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.CharSequenceInputStream",
+        "methodSignature": "<org.apache.commons.io.input.CharSequenceInputStream: void reset()>",
+        "modifier": "public",
+        "added_version": "v2.2",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalStateException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "\\QUnexpected CharBuffer position: actual=\\E[\\s\\S]*\\Q expected=\\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.8.0": "\\QUnexpected CharBuffer postion: actual=\\E[\\s\\S]*\\Q expected=\\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "@this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: int cBufMark> is not -1",
+                        "virtualinvoke @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: java.nio.CharBuffer cBuf>.<java.nio.CharBuffer: int position()>() is not @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: int cBufMark>"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.12.0": [
+                            [
+                                "@this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: int mark_cbuf> is not -1",
+                                "virtualinvoke @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: java.nio.CharBuffer cbuf>.<java.nio.CharBuffer: int position()>() is not @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: int mark_cbuf>"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "virtualinvoke @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: java.nio.CharBuffer cBuf>.<java.nio.CharBuffer: int position()>() is not @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: int cBufMark>"
+                ],
+                "keyPreCondition_history": [
+                    {
+                        "version<2.12.0": [
+                            "virtualinvoke @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: java.nio.CharBuffer cbuf>.<java.nio.CharBuffer: int position()>() is not @this: org.apache.commons.io.input.CharSequenceInputStream.<org.apache.commons.io.input.CharSequenceInputStream: int mark_cbuf>"
+                        ]
+                    }
+                ],
+                "callChain": "throw $r20",
+                "callChain_history": [
+                    {
+                        "version<2.6": "throw $r21"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r21",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.ReaderInputStream",
+        "methodSignature": "<org.apache.commons.io.input.ReaderInputStream: int read(byte[],int,int)>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IndexOutOfBoundsException",
+                "modifier": "public",
+                "added_version": "2.2",
+                "exceptionName_history": [],
+                "message": "\\QArray size=\\E[\\s\\S]*\\Q, offset=\\E[\\s\\S]*\\Q, length=\\E[\\s\\S]*",
+                "message_history": [
+                    {
+                        "version<2.12.0": "\\QArray Size=\\E[\\s\\S]*\\Q, offset=\\E[\\s\\S]*\\Q, length=\\E[\\s\\S]*"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter2 smaller than 0"
+                    ],
+                    [
+                        "parameter2 larger or equal 0",
+                        "parameter1 smaller than 0"
+                    ],
+                    [
+                        "parameter2 larger or equal 0",
+                        "parameter1 larger or equal 0",
+                        "parameter1 + parameter2 larger than parameter0.length"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.7": [
+                            [
+                                "parameter0 is not null",
+                                "parameter2 smaller than 0"
+                            ],
+                            [
+                                "parameter0 is not null",
+                                "parameter2 larger or equal 0",
+                                "parameter1 smaller than 0"
+                            ],
+                            [
+                                "parameter0 is not null",
+                                "parameter2 larger or equal 0",
+                                "parameter1 larger or equal 0",
+                                "parameter1 + parameter2 larger than parameter0.length"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "parameter2 smaller than 0",
+                    "parameter1 smaller than 0",
+                    "parameter1 + parameter2 larger than parameter0.length"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r15",
+                "callChain_history": [
+                    {
+                        "version<2.7": "throw $r18"
+                    },
+                    {
+                        "version<2.12.0": "throw $r16"
+                    }
+                ],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r18",
+                "throwUnitOrder": 1
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.2",
+                "removed_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QByte array must not be null\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter0 is null"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter0 is null"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r16",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r16",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.MarkShieldInputStream",
+        "methodSignature": "<org.apache.commons.io.input.MarkShieldInputStream: void reset()>",
+        "modifier": "public",
+        "added_version": "v2.8.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.UnsupportedOperationException",
+                "modifier": "public",
+                "added_version": "2.9.0",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "Direct Throw Without Any Condition"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r0",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r0",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.SequenceReader",
+        "methodSignature": "<org.apache.commons.io.input.SequenceReader: void <init>(java.lang.Iterable)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.io.UncheckedIOException",
+                "modifier": "public",
+                "added_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.io.IOException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r7",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r7",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.output.CountingOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.CountingOutputStream: int getCount()>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.ArithmeticException",
+                "modifier": "public",
+                "added_version": "1.3",
+                "exceptionName_history": [],
+                "message": "\\QThe byte count \\E[\\s\\S]*\\Q is too large to be converted to an int\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke @this: org.apache.commons.io.output.CountingOutputStream.<org.apache.commons.io.output.CountingOutputStream: long getByteCount()>() cmp 2147483647L larger than 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke @this: org.apache.commons.io.output.CountingOutputStream.<org.apache.commons.io.output.CountingOutputStream: long getByteCount()>() cmp 2147483647L larger than 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r8",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r8",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.output.CountingOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.CountingOutputStream: int resetCount()>",
+        "modifier": "public",
+        "added_version": "v1.1",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.ArithmeticException",
+                "modifier": "public",
+                "added_version": "1.3",
+                "exceptionName_history": [],
+                "message": "\\QThe byte count \\E[\\s\\S]*\\Q is too large to be converted to an int\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke @this: org.apache.commons.io.output.CountingOutputStream.<org.apache.commons.io.output.CountingOutputStream: long resetByteCount()>() cmp 2147483647L larger than 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke @this: org.apache.commons.io.output.CountingOutputStream.<org.apache.commons.io.output.CountingOutputStream: long resetByteCount()>() cmp 2147483647L larger than 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r8",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r8",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.CountingInputStream",
+        "methodSignature": "<org.apache.commons.io.input.CountingInputStream: int getCount()>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.ArithmeticException",
+                "modifier": "public",
+                "added_version": "1.3",
+                "exceptionName_history": [],
+                "message": "\\QThe byte count \\E[\\s\\S]*\\Q is too large to be converted to an int\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke @this: org.apache.commons.io.input.CountingInputStream.<org.apache.commons.io.input.CountingInputStream: long getByteCount()>() cmp 2147483647L larger than 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke @this: org.apache.commons.io.input.CountingInputStream.<org.apache.commons.io.input.CountingInputStream: long getByteCount()>() cmp 2147483647L larger than 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r8",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r8",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.CountingInputStream",
+        "methodSignature": "<org.apache.commons.io.input.CountingInputStream: int resetCount()>",
+        "modifier": "public",
+        "added_version": "v1.1",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.ArithmeticException",
+                "modifier": "public",
+                "added_version": "1.3",
+                "exceptionName_history": [],
+                "message": "\\QThe byte count \\E[\\s\\S]*\\Q is too large to be converted to an int\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "virtualinvoke @this: org.apache.commons.io.input.CountingInputStream.<org.apache.commons.io.input.CountingInputStream: long resetByteCount()>() cmp 2147483647L larger than 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "virtualinvoke @this: org.apache.commons.io.input.CountingInputStream.<org.apache.commons.io.input.CountingInputStream: long resetByteCount()>() cmp 2147483647L larger than 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r8",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r8",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.Tailer",
+        "methodSignature": "<org.apache.commons.io.input.Tailer: java.io.File getFile()>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalStateException",
+                "modifier": "public",
+                "added_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "\\QCannot extract java.io.File from \\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "@this: org.apache.commons.io.input.Tailer.<org.apache.commons.io.input.Tailer: org.apache.commons.io.input.Tailer$Tailable tailable> instanceof org.apache.commons.io.input.Tailer$TailablePath is 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "@this: org.apache.commons.io.input.Tailer.<org.apache.commons.io.input.Tailer: org.apache.commons.io.input.Tailer$Tailable tailable> instanceof org.apache.commons.io.input.Tailer$TailablePath is 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r2",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r2",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.input.QueueInputStream",
+        "methodSignature": "<org.apache.commons.io.input.QueueInputStream: int read()>",
+        "modifier": "public",
+        "added_version": "v2.9.0",
+        "lifetime_label": "live in last version v2.13.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalStateException",
+                "modifier": "public",
+                "added_version": "2.12.0",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.InterruptedException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r8",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r8",
+                "throwUnitOrder": 0
+            }
+        ]
+    }
+]

@@ -1,0 +1,880 @@
+[
+    {
+        "className": "org.apache.commons.io.output.FileWriterWithEncoding",
+        "methodSignature": "<org.apache.commons.io.output.FileWriterWithEncoding: void write(int)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.FileWriterWithEncoding",
+        "methodSignature": "<org.apache.commons.io.output.FileWriterWithEncoding: void write(char[])>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.FileWriterWithEncoding",
+        "methodSignature": "<org.apache.commons.io.output.FileWriterWithEncoding: void write(char[],int,int)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.FileWriterWithEncoding",
+        "methodSignature": "<org.apache.commons.io.output.FileWriterWithEncoding: void write(java.lang.String)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.FileWriterWithEncoding",
+        "methodSignature": "<org.apache.commons.io.output.FileWriterWithEncoding: void write(java.lang.String,int,int)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.FileWriterWithEncoding",
+        "methodSignature": "<org.apache.commons.io.output.FileWriterWithEncoding: void flush()>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.FileWriterWithEncoding",
+        "methodSignature": "<org.apache.commons.io.output.FileWriterWithEncoding: void close()>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.ReadAheadInputStream",
+        "methodSignature": "<org.apache.commons.io.input.ReadAheadInputStream: java.lang.Thread newThread(java.lang.Runnable)>",
+        "modifier": "public",
+        "added_version": "v2.9.0",
+        "removed_version": "v2.12.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.buffer.CircularBufferInputStream",
+        "methodSignature": "<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[])>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "removed_version": "v2.12.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalStateException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QNo bytes available.\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter_1_in_method_read larger or equal 0",
+                        "parameter_2_in_method_read larger or equal 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean haveBytes(int)>(parameter_2_in_method_read) is not 0",
+                        "0 smaller than staticinvoke <java.lang.Math: int min(int,int)>(parameter_2_in_method_read, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getCurrentNumberOfBytes()>())",
+                        "parameter0 is not null",
+                        "parameter_1_in_method_add larger or equal 0",
+                        "@this: org.apache.commons.io.input.buffer.CircularByteBuffer.<org.apache.commons.io.input.buffer.CircularByteBuffer: int currentNumberOfBytes> + parameter_2_in_method_add smaller or equal @this: org.apache.commons.io.input.buffer.CircularByteBuffer.<org.apache.commons.io.input.buffer.CircularByteBuffer: byte[] buffer>.length",
+                        "parameter_2_in_method_add larger or equal 0",
+                        "parameter_1_in_method_add smaller than parameter_0_in_method_add.length",
+                        "parameter_0_in_method_add is not null",
+                        "@this: org.apache.commons.io.input.buffer.CircularByteBuffer.<org.apache.commons.io.input.buffer.CircularByteBuffer: int currentNumberOfBytes> smaller or equal 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "@this: org.apache.commons.io.input.buffer.CircularByteBuffer.<org.apache.commons.io.input.buffer.CircularByteBuffer: int currentNumberOfBytes> smaller or equal 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0) -> $b5 = virtualinvoke $r3.<org.apache.commons.io.input.buffer.CircularByteBuffer: byte read()>() -> throw $r3",
+                "callChain_history": [],
+                "invokeUnit": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r3",
+                "throwUnitInMethod": "<org.apache.commons.io.input.buffer.CircularByteBuffer: byte read()>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>"
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QBuffer is null\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "@this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean eof> is 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>() larger than 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(staticinvoke <org.apache.commons.io.IOUtils: byte[] byteArray(int)>(virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()), 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) is not -1",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(staticinvoke <org.apache.commons.io.IOUtils: byte[] byteArray(int)>(virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()), 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) larger than 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getCurrentNumberOfBytes()>() smaller than parameter_2_in_method_read",
+                        "parameter_1_in_method_read larger or equal 0",
+                        "parameter_2_in_method_read larger or equal 0",
+                        "parameter0 is not null",
+                        "parameter_0_in_method_add is null"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.9.0": [
+                            [
+                                "@this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean eofSeen> is 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>() larger than 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(newarray (byte)[virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()], 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) is not -1",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(newarray (byte)[virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()], 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) larger than 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getCurrentNumberOfBytes()>() smaller than parameter_2_in_method_read",
+                                "parameter_1_in_method_read larger or equal 0",
+                                "parameter_2_in_method_read larger or equal 0",
+                                "parameter0 is not null",
+                                "parameter_0_in_method_add is null"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "parameter_0_in_method_add is null"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0) -> $z0 = virtualinvoke r1.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean haveBytes(int)>(i1) -> virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: void fillBuffer()>() -> virtualinvoke $r4.<org.apache.commons.io.input.buffer.CircularByteBuffer: void add(byte[],int,int)>($r2, 0, $i1) -> staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object,java.lang.String)>(r0, \"Buffer\")",
+                "callChain_history": [
+                    {
+                        "version<2.9.0": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0) -> $z0 = virtualinvoke r1.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean haveBytes(int)>(i1) -> virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: void fillBuffer()>() -> virtualinvoke $r4.<org.apache.commons.io.input.buffer.CircularByteBuffer: void add(byte[],int,int)>(r2, 0, $i1) -> staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object,java.lang.String)>(r0, \"Buffer\")"
+                    }
+                ],
+                "invokeUnit": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0)",
+                "invokeUnit_history": [],
+                "throwUnit": "staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object,java.lang.String)>(r0, \"Buffer\")",
+                "throwUnitInMethod": "<org.apache.commons.io.input.buffer.CircularByteBuffer: void add(byte[],int,int)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>"
+            },
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QInvalid length: \\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter_1_in_method_add larger or equal 0",
+                        "parameter_1_in_method_add smaller than parameter_0_in_method_add.length",
+                        "parameter_0_in_method_add is not null",
+                        "@this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean eof> is 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>() larger than 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(staticinvoke <org.apache.commons.io.IOUtils: byte[] byteArray(int)>(virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()), 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) is not -1",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(staticinvoke <org.apache.commons.io.IOUtils: byte[] byteArray(int)>(virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()), 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) larger than 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getCurrentNumberOfBytes()>() smaller than parameter_2_in_method_read",
+                        "parameter_1_in_method_read larger or equal 0",
+                        "parameter_2_in_method_read larger or equal 0",
+                        "parameter0 is not null",
+                        "parameter_2_in_method_add smaller than 0"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.9.0": [
+                            [
+                                "parameter_1_in_method_add larger or equal 0",
+                                "parameter_1_in_method_add smaller than parameter_0_in_method_add.length",
+                                "parameter_0_in_method_add is not null",
+                                "@this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean eofSeen> is 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>() larger than 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(newarray (byte)[virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()], 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) is not -1",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(newarray (byte)[virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()], 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) larger than 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getCurrentNumberOfBytes()>() smaller than parameter_2_in_method_read",
+                                "parameter_1_in_method_read larger or equal 0",
+                                "parameter_2_in_method_read larger or equal 0",
+                                "parameter0 is not null",
+                                "parameter_2_in_method_add smaller than 0"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "parameter_2_in_method_add smaller than 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0) -> $z0 = virtualinvoke r1.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean haveBytes(int)>(i1) -> virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: void fillBuffer()>() -> virtualinvoke $r4.<org.apache.commons.io.input.buffer.CircularByteBuffer: void add(byte[],int,int)>($r2, 0, $i1) -> throw $r11",
+                "callChain_history": [
+                    {
+                        "version<2.9.0": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0) -> $z0 = virtualinvoke r1.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean haveBytes(int)>(i1) -> virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: void fillBuffer()>() -> virtualinvoke $r4.<org.apache.commons.io.input.buffer.CircularByteBuffer: void add(byte[],int,int)>(r2, 0, $i1) -> throw $r11"
+                    }
+                ],
+                "invokeUnit": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r11",
+                "throwUnitInMethod": "<org.apache.commons.io.input.buffer.CircularByteBuffer: void add(byte[],int,int)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>"
+            },
+            {
+                "exceptionName": "java.lang.IllegalStateException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QNo space available\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter_1_in_method_add larger or equal 0",
+                        "parameter_1_in_method_add smaller than parameter_0_in_method_add.length",
+                        "parameter_2_in_method_add larger or equal 0",
+                        "parameter_0_in_method_add is not null",
+                        "@this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean eof> is 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>() larger than 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(staticinvoke <org.apache.commons.io.IOUtils: byte[] byteArray(int)>(virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()), 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) is not -1",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(staticinvoke <org.apache.commons.io.IOUtils: byte[] byteArray(int)>(virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()), 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) larger than 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getCurrentNumberOfBytes()>() smaller than parameter_2_in_method_read",
+                        "parameter_1_in_method_read larger or equal 0",
+                        "parameter_2_in_method_read larger or equal 0",
+                        "parameter0 is not null",
+                        "@this: org.apache.commons.io.input.buffer.CircularByteBuffer.<org.apache.commons.io.input.buffer.CircularByteBuffer: int currentNumberOfBytes> + parameter_2_in_method_add larger than @this: org.apache.commons.io.input.buffer.CircularByteBuffer.<org.apache.commons.io.input.buffer.CircularByteBuffer: byte[] buffer>.length"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.9.0": [
+                            [
+                                "parameter_1_in_method_add larger or equal 0",
+                                "parameter_1_in_method_add smaller than parameter_0_in_method_add.length",
+                                "parameter_2_in_method_add larger or equal 0",
+                                "parameter_0_in_method_add is not null",
+                                "@this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean eofSeen> is 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>() larger than 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(newarray (byte)[virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()], 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) is not -1",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(newarray (byte)[virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()], 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) larger than 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getCurrentNumberOfBytes()>() smaller than parameter_2_in_method_read",
+                                "parameter_1_in_method_read larger or equal 0",
+                                "parameter_2_in_method_read larger or equal 0",
+                                "parameter0 is not null",
+                                "@this: org.apache.commons.io.input.buffer.CircularByteBuffer.<org.apache.commons.io.input.buffer.CircularByteBuffer: int currentNumberOfBytes> + parameter_2_in_method_add larger than @this: org.apache.commons.io.input.buffer.CircularByteBuffer.<org.apache.commons.io.input.buffer.CircularByteBuffer: byte[] buffer>.length"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "@this: org.apache.commons.io.input.buffer.CircularByteBuffer.<org.apache.commons.io.input.buffer.CircularByteBuffer: int currentNumberOfBytes> + parameter_2_in_method_add larger than @this: org.apache.commons.io.input.buffer.CircularByteBuffer.<org.apache.commons.io.input.buffer.CircularByteBuffer: byte[] buffer>.length"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0) -> $z0 = virtualinvoke r1.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean haveBytes(int)>(i1) -> virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: void fillBuffer()>() -> virtualinvoke $r4.<org.apache.commons.io.input.buffer.CircularByteBuffer: void add(byte[],int,int)>($r2, 0, $i1) -> throw $r10",
+                "callChain_history": [
+                    {
+                        "version<2.9.0": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0) -> $z0 = virtualinvoke r1.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean haveBytes(int)>(i1) -> virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: void fillBuffer()>() -> virtualinvoke $r4.<org.apache.commons.io.input.buffer.CircularByteBuffer: void add(byte[],int,int)>(r2, 0, $i1) -> throw $r10"
+                    }
+                ],
+                "invokeUnit": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r10",
+                "throwUnitInMethod": "<org.apache.commons.io.input.buffer.CircularByteBuffer: void add(byte[],int,int)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>"
+            },
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QInvalid offset: \\E[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter_0_in_method_add is not null",
+                        "@this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean eof> is 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>() larger than 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(staticinvoke <org.apache.commons.io.IOUtils: byte[] byteArray(int)>(virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()), 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) is not -1",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(staticinvoke <org.apache.commons.io.IOUtils: byte[] byteArray(int)>(virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()), 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) larger than 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getCurrentNumberOfBytes()>() smaller than parameter_2_in_method_read",
+                        "parameter_1_in_method_read larger or equal 0",
+                        "parameter_2_in_method_read larger or equal 0",
+                        "parameter0 is not null",
+                        "parameter_1_in_method_add smaller than 0"
+                    ],
+                    [
+                        "parameter_1_in_method_add larger or equal 0",
+                        "parameter_0_in_method_add is not null",
+                        "@this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean eof> is 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>() larger than 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(staticinvoke <org.apache.commons.io.IOUtils: byte[] byteArray(int)>(virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()), 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) is not -1",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(staticinvoke <org.apache.commons.io.IOUtils: byte[] byteArray(int)>(virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()), 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) larger than 0",
+                        "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getCurrentNumberOfBytes()>() smaller than parameter_2_in_method_read",
+                        "parameter_1_in_method_read larger or equal 0",
+                        "parameter_2_in_method_read larger or equal 0",
+                        "parameter0 is not null",
+                        "parameter_1_in_method_add larger or equal parameter_0_in_method_add.length"
+                    ]
+                ],
+                "preConditions_history": [
+                    {
+                        "version<2.9.0": [
+                            [
+                                "parameter_0_in_method_add is not null",
+                                "@this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean eofSeen> is 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>() larger than 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(newarray (byte)[virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()], 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) is not -1",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(newarray (byte)[virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()], 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) larger than 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getCurrentNumberOfBytes()>() smaller than parameter_2_in_method_read",
+                                "parameter_1_in_method_read larger or equal 0",
+                                "parameter_2_in_method_read larger or equal 0",
+                                "parameter0 is not null",
+                                "parameter_1_in_method_add smaller than 0"
+                            ],
+                            [
+                                "parameter_1_in_method_add larger or equal 0",
+                                "parameter_0_in_method_add is not null",
+                                "@this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean eofSeen> is 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>() larger than 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(newarray (byte)[virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()], 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) is not -1",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: java.io.InputStream in>.<java.io.InputStream: int read(byte[],int,int)>(newarray (byte)[virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()], 0, virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getSpace()>()) larger than 0",
+                                "virtualinvoke @this: org.apache.commons.io.input.buffer.CircularBufferInputStream.<org.apache.commons.io.input.buffer.CircularBufferInputStream: org.apache.commons.io.input.buffer.CircularByteBuffer buffer>.<org.apache.commons.io.input.buffer.CircularByteBuffer: int getCurrentNumberOfBytes()>() smaller than parameter_2_in_method_read",
+                                "parameter_1_in_method_read larger or equal 0",
+                                "parameter_2_in_method_read larger or equal 0",
+                                "parameter0 is not null",
+                                "parameter_1_in_method_add larger or equal parameter_0_in_method_add.length"
+                            ]
+                        ]
+                    }
+                ],
+                "keyPreCondition": [
+                    "parameter_1_in_method_add smaller than 0",
+                    "parameter_1_in_method_add larger or equal parameter_0_in_method_add.length"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0) -> $z0 = virtualinvoke r1.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean haveBytes(int)>(i1) -> virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: void fillBuffer()>() -> virtualinvoke $r4.<org.apache.commons.io.input.buffer.CircularByteBuffer: void add(byte[],int,int)>($r2, 0, $i1) -> throw $r1",
+                "callChain_history": [
+                    {
+                        "version<2.9.0": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0) -> $z0 = virtualinvoke r1.<org.apache.commons.io.input.buffer.CircularBufferInputStream: boolean haveBytes(int)>(i1) -> virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: void fillBuffer()>() -> virtualinvoke $r4.<org.apache.commons.io.input.buffer.CircularByteBuffer: void add(byte[],int,int)>(r2, 0, $i1) -> throw $r1"
+                    }
+                ],
+                "invokeUnit": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r1",
+                "throwUnitInMethod": "<org.apache.commons.io.input.buffer.CircularByteBuffer: void add(byte[],int,int)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>"
+            },
+            {
+                "exceptionName": "java.lang.NullPointerException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QtargetBuffer is null\\E",
+                "message_history": [
+                    {
+                        "version<2.9.0": "\\QBuffer is null\\E"
+                    }
+                ],
+                "preConditions": [
+                    [
+                        "parameter0 is null"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter0 is null"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0) -> staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object,java.lang.String)>(r0, \"targetBuffer\")",
+                "callChain_history": [
+                    {
+                        "version<2.9.0": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0) -> staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object,java.lang.String)>(r0, \"Buffer\")"
+                    }
+                ],
+                "invokeUnit": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0)",
+                "invokeUnit_history": [],
+                "throwUnit": "staticinvoke <java.util.Objects: java.lang.Object requireNonNull(java.lang.Object,java.lang.String)>(r0, \"Buffer\")",
+                "throwUnitInMethod": "<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>"
+            },
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QOffset must not be negative\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter0 is not null",
+                        "parameter_1_in_method_read smaller than 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter_1_in_method_read smaller than 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0) -> throw $r6",
+                "callChain_history": [],
+                "invokeUnit": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r6",
+                "throwUnitInMethod": "<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>"
+            },
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "2.7",
+                "exceptionName_history": [],
+                "message": "\\QLength must not be negative\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter_1_in_method_read larger or equal 0",
+                        "parameter0 is not null",
+                        "parameter_2_in_method_read smaller than 0"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter_2_in_method_read smaller than 0"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0) -> throw $r7",
+                "callChain_history": [],
+                "invokeUnit": "$i1 = virtualinvoke r0.<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>(r1, 0, $i0)",
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r7",
+                "throwUnitInMethod": "<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>",
+                "throwUnitOrder": -1,
+                "invokedMethod": "<org.apache.commons.io.input.buffer.CircularBufferInputStream: int read(byte[],int,int)>"
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.file.AccumulatorPathVisitor",
+        "methodSignature": "<org.apache.commons.io.file.AccumulatorPathVisitor: java.nio.file.FileVisitResult visitFile(java.nio.file.Path,java.nio.file.attribute.BasicFileAttributes)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "removed_version": "v2.9.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.file.AccumulatorPathVisitor",
+        "methodSignature": "<org.apache.commons.io.file.AccumulatorPathVisitor: java.nio.file.FileVisitResult visitFile(java.lang.Object,java.nio.file.attribute.BasicFileAttributes)>",
+        "modifier": "public",
+        "added_version": "v2.7",
+        "removed_version": "v2.9.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.Java7Support",
+        "methodSignature": "<org.apache.commons.io.Java7Support: boolean isSymLink(java.io.File)>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "removed_version": "v2.6",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.RuntimeException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.IllegalAccessException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r11",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r11",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.lang.RuntimeException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.reflect.InvocationTargetException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r9",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r9",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.Java7Support",
+        "methodSignature": "<org.apache.commons.io.Java7Support: java.io.File readSymbolicLink(java.io.File)>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "removed_version": "v2.6",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.RuntimeException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.IllegalAccessException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r14",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r14",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.lang.RuntimeException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.reflect.InvocationTargetException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r12",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r12",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.Java7Support",
+        "methodSignature": "<org.apache.commons.io.Java7Support: java.io.File createSymbolicLink(java.io.File,java.io.File)>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "removed_version": "v2.6",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.RuntimeException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.IllegalAccessException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r20",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r20",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.reflect.InvocationTargetException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r18",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r18",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.Java7Support",
+        "methodSignature": "<org.apache.commons.io.Java7Support: void delete(java.io.File)>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "removed_version": "v2.6",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.RuntimeException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.IllegalAccessException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r10",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r10",
+                "throwUnitOrder": 0
+            },
+            {
+                "exceptionName": "java.io.IOException",
+                "modifier": "public",
+                "added_version": "2.5",
+                "exceptionName_history": [],
+                "message": "[\\s\\S]*",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "This is a rethrow exception after an exception with type java.lang.reflect.InvocationTargetException is caught."
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r8",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r8",
+                "throwUnitOrder": 1
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.Java7Support",
+        "methodSignature": "<org.apache.commons.io.Java7Support: boolean isAtLeastJava7()>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "removed_version": "v2.6",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.ByteArrayOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.ByteArrayOutputStream: void close()>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.7",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.ByteArrayOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.ByteArrayOutputStream: java.lang.String toString()>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.7",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.ByteArrayOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.ByteArrayOutputStream: java.lang.String toString(java.lang.String)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.7",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.ByteArrayOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.ByteArrayOutputStream: java.lang.String toString(java.nio.charset.Charset)>",
+        "modifier": "public",
+        "added_version": "v2.5",
+        "removed_version": "v2.7",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.InfiniteCircularInputStream",
+        "methodSignature": "<org.apache.commons.io.input.InfiniteCircularInputStream: int read()>",
+        "modifier": "public",
+        "added_version": "v2.6",
+        "removed_version": "v2.8.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.CountingInputStream",
+        "methodSignature": "<org.apache.commons.io.input.CountingInputStream: int read(byte[])>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.CountingInputStream",
+        "methodSignature": "<org.apache.commons.io.input.CountingInputStream: int read(byte[],int,int)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.CountingInputStream",
+        "methodSignature": "<org.apache.commons.io.input.CountingInputStream: int read()>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.CountingOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.CountingOutputStream: void write(byte[])>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.CountingOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.CountingOutputStream: void write(byte[],int,int)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.output.CountingOutputStream",
+        "methodSignature": "<org.apache.commons.io.output.CountingOutputStream: void write(int)>",
+        "modifier": "public",
+        "added_version": "v1.0",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.comparator.ReverseComparator",
+        "methodSignature": "<org.apache.commons.io.comparator.ReverseComparator: void <init>(java.util.Comparator)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.8.0",
+        "exceptions": [
+            {
+                "exceptionName": "java.lang.IllegalArgumentException",
+                "modifier": "public",
+                "added_version": "1.4",
+                "exceptionName_history": [],
+                "message": "\\QDelegate comparator is missing\\E",
+                "message_history": [],
+                "preConditions": [
+                    [
+                        "parameter0 is null"
+                    ]
+                ],
+                "preConditions_history": [],
+                "keyPreCondition": [
+                    "parameter0 is null"
+                ],
+                "keyPreCondition_history": [],
+                "callChain": "throw $r2",
+                "callChain_history": [],
+                "invokeUnit": null,
+                "invokeUnit_history": [],
+                "throwUnit": "throw $r2",
+                "throwUnitOrder": 0
+            }
+        ]
+    },
+    {
+        "className": "org.apache.commons.io.comparator.ReverseComparator",
+        "methodSignature": "<org.apache.commons.io.comparator.ReverseComparator: int compare(java.io.File,java.io.File)>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "removed_version": "v2.8.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.comparator.ReverseComparator",
+        "methodSignature": "<org.apache.commons.io.comparator.ReverseComparator: java.lang.String toString()>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "removed_version": "v2.8.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.comparator.ReverseComparator",
+        "methodSignature": "<org.apache.commons.io.comparator.ReverseComparator: int compare(java.lang.Object,java.lang.Object)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.8.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.AutoCloseInputStream",
+        "methodSignature": "<org.apache.commons.io.input.AutoCloseInputStream: int read()>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.AutoCloseInputStream",
+        "methodSignature": "<org.apache.commons.io.input.AutoCloseInputStream: int read(byte[])>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.input.AutoCloseInputStream",
+        "methodSignature": "<org.apache.commons.io.input.AutoCloseInputStream: int read(byte[],int,int)>",
+        "modifier": "public",
+        "added_version": "v1.4",
+        "removed_version": "v2.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.ThreadMonitor",
+        "methodSignature": "<org.apache.commons.io.ThreadMonitor: java.lang.Thread start(long)>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "removed_version": "v2.9.0",
+        "exceptions": []
+    },
+    {
+        "className": "org.apache.commons.io.ThreadMonitor",
+        "methodSignature": "<org.apache.commons.io.ThreadMonitor: java.lang.Thread start(java.lang.Thread,long)>",
+        "modifier": "public",
+        "added_version": "v2.0",
+        "removed_version": "v2.9.0",
+        "exceptions": []
+    }
+]

@@ -26,6 +26,22 @@ removed_api_amount = 0
 first_version_exist_api_amount = 0
 # not removed api yet in last version
 last_version_exist_api_amount = 0
+# exist in first version and last version
+always_exist_api_amount = 0
+# always exist api exception changed counter
+always_exist_api_changed_counter = Counter()
+always_exist_api_type_changed_counter = Counter()
+always_exist_api_message_changed_counter = Counter()
+always_exist_api_preCondition_changed_counter = Counter()
+always_exist_api_added_exception_counter = Counter()
+always_exist_api_removed_exception_counter = Counter()
+# all api exception changed counter
+api_changed_counter = Counter()
+api_type_changed_counter = Counter()
+api_message_changed_counter = Counter()
+api_preCondition_changed_counter = Counter()
+api_added_exception_counter = Counter()
+api_removed_exception_counter = Counter()
 # sum of api
 api_count = 0
 # sum of exception
@@ -129,6 +145,11 @@ for method in methods:
     else:
         last_version_exist_api_amount += 1
         removed_version = VERSIONS.index(VERSIONS[-1]) + 1
+    
+    always_exist_api = False
+    if added_version == 0 and removed_version == VERSIONS.index(VERSIONS[-1]) + 1:
+        always_exist_api_amount += 1
+        always_exist_api = True
 
     api_count += 1
     lifetime = removed_version - added_version
@@ -142,11 +163,20 @@ for method in methods:
     max_exceptions = max(max_exceptions, len(exceptions))
     pre_conditions_sensitive_lifetime_node = [added_version, removed_version]
     changed_sensitive_lifetime_node = [added_version, removed_version]
+    len_api_type_changed_count = 0
+    len_api_message_changed_count = 0
+    len_api_preCondition_changed_count = 0
+    len_api_added_exception_count = 0
+    len_api_removed_exception_count = 0
+
     for exception in exceptions:
         exception_count += 1
         len_type_chagned = len(exception['exceptionName_history'])
         len_message_changed = len(exception['message_history'])
         len_pre_conditions_changed = len(exception['preConditions_history'])
+        len_api_type_changed_count += len_type_chagned
+        len_api_message_changed_count += len_message_changed
+        len_api_preCondition_changed_count += len_pre_conditions_changed
         type_changed_count += len_type_chagned
         message_changed_count += len_message_changed
         pre_conditions_changed_count += len_pre_conditions_changed
@@ -159,6 +189,7 @@ for method in methods:
         exception_added_version = VERSIONS.index(exception['added_version'])
         if exception_added_version != added_version:
             added_exception_amount += 1
+            len_api_added_exception_count += 1
             update_exception(method, exception, added_exceptions)
             pre_conditions_sensitive_lifetime_node.append(exception_added_version)
             changed_sensitive_lifetime_node.append(exception_added_version)
@@ -166,6 +197,7 @@ for method in methods:
         if 'removed_version' in exception:
             exception_removed_version = VERSIONS.index(exception['removed_version'])
             removed_exception_amount += 1
+            len_api_removed_exception_count += 1
             update_exception(method, exception, removed_exceptions)
             pre_conditions_sensitive_lifetime_node.append(exception_removed_version)
             changed_sensitive_lifetime_node.append(exception_removed_version)
@@ -188,6 +220,21 @@ for method in methods:
             changed_version_str = list(type_key.keys())[0][8:]
             changed_node = VERSIONS.index(changed_version_str)
             changed_sensitive_lifetime_node.append(changed_node)
+    
+    total_changed_count = len_api_type_changed_count + len_api_message_changed_count + len_api_preCondition_changed_count + len_api_added_exception_count + len_api_removed_exception_count
+    if always_exist_api is True:
+        always_exist_api_changed_counter[total_changed_count] += 1
+        always_exist_api_type_changed_counter[len_api_type_changed_count] += 1
+        always_exist_api_message_changed_counter[len_api_message_changed_count] += 1
+        always_exist_api_preCondition_changed_counter[len_api_preCondition_changed_count] += 1
+        always_exist_api_added_exception_counter[len_api_added_exception_count] += 1
+        always_exist_api_removed_exception_counter[len_api_removed_exception_count] += 1
+    api_changed_counter[total_changed_count] += 1
+    api_type_changed_counter[len_api_type_changed_count] += 1
+    api_message_changed_counter[len_api_message_changed_count] += 1
+    api_preCondition_changed_counter[len_api_preCondition_changed_count] += 1
+    api_added_exception_counter[len_api_added_exception_count] += 1
+    api_removed_exception_counter[len_api_removed_exception_count] += 1
         
     # remove duplicate
     pre_conditions_sensitive_lifetime_node = list(set(pre_conditions_sensitive_lifetime_node))
@@ -264,17 +311,27 @@ def statistic_counter(counter, name):
     plt.ylabel('Count')
 
     plt.savefig(f'{OUTPUT}/figures/{name}-lifetime.pdf')
-    #plt.show()
+    plt.show()
     plt.clf()
     return average_value
+
+def counter_statistic(counter: Counter):
+    zero = counter[0]
+    not_zero = sum(counter.values()) - counter[0]
+    del counter[0]
+    sorted_counter = {k: counter[k] for k in sorted(counter.keys())}
+    statistic = {'not-changed': zero, 'changed_total': not_zero, 'changed_statistic': sorted_counter}
+    return statistic
+
 
 os.makedirs(os.path.dirname(f'{OUTPUT}/figures/'), exist_ok=True)
 statistic = {
     "start_version": VERSIONS[0],
     "end_version": VERSIONS[-1],
-    "api_amount": len(methods),
+    "api_amount": api_count,
     "api_exist_in_first_version_amount": first_version_exist_api_amount,
     "api_exist_in_last_version_amount": last_version_exist_api_amount,
+    "alwasy_api_amout": always_exist_api_amount,
     "added_api_amount": added_api_amount,
     "added_api_per_version": round(added_api_amount / changed_version, 2),
     "removed_api_amount": removed_api_amount,
@@ -288,15 +345,31 @@ statistic = {
         "exception_pre_conditions_changed_amount": pre_conditions_changed_count,
     },
     "exception_level": exception_level_statistic,
-    "all_api": {
+    "all_api_lifetime": {
         "average_lifetime": statistic_counter(api_lifetime_count, "all-api"),
         "pre_condition_sensitive_api_lifetime": statistic_counter(pre_condition_sensitive_api_lifetime_count, "pre_condition_sensitive_all-api"),
         "changed_sensitive_api_lifetime": statistic_counter(changed_sensitive_api_lifetime_count, "changed_sensitive_all-api")
     },
-    "only_include_exception_api": {
+    "only_include_exception_api_lifetime": {
         "average_lifetime": statistic_counter(only_include_exception_api_lifetime['api_lifetime'], "exceptions-api"),
         "pre_condition_sensitive_api_lifetime": statistic_counter(only_include_exception_api_lifetime['pre_condition_sensitive_api_lifetime'], "pre_condition_sensitive_exceptions-api"),
         "changed_sensitive_api_lifetime": statistic_counter(only_include_exception_api_lifetime['changed_sensitive_api_lifetime'], "changed_sensitive_exceptions-api")
+    },
+    "all_api": {
+        "total_changed_counter": counter_statistic(api_changed_counter),
+        "type_changed_counter": counter_statistic(api_type_changed_counter),
+        "message_changed_counter": counter_statistic(api_message_changed_counter),
+        "preCondition_changed_counter": counter_statistic(api_preCondition_changed_counter),
+        "added_exception_counter": counter_statistic(api_added_exception_counter),
+        "removed_exception_counter": counter_statistic(api_removed_exception_counter)
+    },
+    "always_exist_api": {
+        "total_changed_counter": counter_statistic(always_exist_api_changed_counter),
+        "type_changed_counter": counter_statistic(always_exist_api_type_changed_counter),
+        "message_changed_counter": counter_statistic(always_exist_api_message_changed_counter),
+        "preCondition_changed_counter": counter_statistic(always_exist_api_preCondition_changed_counter),
+        "added_exception_counter": counter_statistic(always_exist_api_added_exception_counter),
+        "removed_exception_counter": counter_statistic(always_exist_api_removed_exception_counter)
     }
 }
 

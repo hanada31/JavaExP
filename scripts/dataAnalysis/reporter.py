@@ -6,8 +6,11 @@ from matcher.KeyPreConditionMatcher import KeyPreConditionMatcher
 from matcher.TypeMatcher import TypeMatcher
 from matcher.CompletePreConditionsMatcher import CompletePreConditionsMatcher
 import time
-start_time = time.time()
 from config import *
+from pathlib import Path
+
+
+start_time = time.time()
 
 FILE = lambda version: f'preprocess_result/{TAG}/v{version}-{TAG}.json'
 RESULT_DIR = 'report_result'
@@ -228,6 +231,8 @@ for v in VERSIONS:
 
 methods = sort_report_keys(report)
 methods = sort_report_class(methods)
+path = Path(RESULT_DIR)
+path.mkdir(exist_ok=True, parents=True)
 with open(f'{RESULT_DIR}/report-<{TAG}>-<{VERSIONS[0]}-{VERSIONS[-1]}>.json', 'w') as json_file:
     json.dump(methods, json_file, indent=4)
 
