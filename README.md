@@ -25,6 +25,10 @@ To achieve automatic exception summary extraction and API evolution analysis, th
 
 static analysis; program evolution; Java exception summary; API lifecycle
 
+## Evaluation
+
+Visit `Evaluation` directory to download evaluation data
+
 # Project Structure
 
 Project mainly divided into two part: ExceptionExtracter and dataAnalysis.
