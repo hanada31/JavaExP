@@ -53,15 +53,17 @@ To use JavaExP and dataAnalysis, follow the following document
 # Initialize soot-dev submodule
 git submodule update --init soot-dev
 
-# Use -DskipTests to skip tests of soot (make build faster)
-mvn -f pom.xml clean package -DskipTests
+# Build ExceptionExtracter
+python scripts/mvn.py
 
-# Copy jar to root directory
-cp target/JavaExP.jar JavaExP.jar 
-
-# run JavaExP.jar, result will be output in [output folder]
-python scripts/runJavaExP.py Benchmark [project under test in Benchmark folder] [output folder]
-
+# Run JavaExP.jar, result will be output in exception_summary/[output folder]
+# Also you can add some options:
+# - interProcedure: open inter-procedure analysis
+# - lightWeight: limit expanded path in api
+# - conflictCheck: delete preCondition which exists conflict
+python scripts/runJavaExP.py Benchmark [target library folder] all [output folder] [options]
+# example: 
+python scripts/runJavaExP.py M_framework/apache all apache-results-inter interProcedure  conflictCheck
 ```
 
 ### Result 
@@ -112,26 +114,28 @@ It gives the exception precondition for method caller in the of the following co
 
 ## Run dataAnalysis
 
-Before run dataAnalysis, ensure you have generated **multiple exception report for same library**
-
-dataAnalysis tool located in folder `script/dataAnalysis` and create directory named `original_data` here, copy exception reports to this directory
-
-**Change `id` variable** in `config.py` file according your exception report
+Before run dataAnalysis, ensure you have generated **multiple exception summary for same library**
 
 Then you can execute following command to build a exception-aware API lifecycle model
 
 ``` bash
+# copy exception summary to dataAnalysis
+mkdir scripts/dataAnalysis/original_data
+cp -r exception_summary/apache-results-inter scripts/dataAnalysis/original_data/
+
 # ensure change working directory to dataAnalysis folder
-cd script/dataAnalysis
+cd scripts/dataAnalysis
+
+#Change id variable in config.py file according your exception summary
 
 # run preprocess
-./preprocess.py
+python ./preprocess.py
 
 # run reporter
-./reporter.py
+python ./reporter.py
 
 # run report_analysis
-./report_analysis.py
+python ./report_analysis.py
 ```
 
 After that, you will see the result in `statistic_result`, this result structure like following:

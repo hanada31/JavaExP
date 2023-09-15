@@ -20,7 +20,7 @@ if __name__ == '__main__' :
     name = sys.argv[2] 
     output = sys.argv[3]
     
-    outputFolder = "0909-noConflict/"
+    outputFolder = "exception_summary/"
     if not os.path.exists("logs-"+outputFolder):
         shutil.os.mkdir("logs-"+outputFolder)
     extra = ""

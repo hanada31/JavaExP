@@ -47,3 +47,5 @@ dependency-reduced-pom.xml
 /src/
 *.jar
 /soot-dev/
+exception_summary/
+logs-exception_summary/
