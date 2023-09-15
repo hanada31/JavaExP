@@ -79,24 +79,6 @@ public class SootUtils {
 	}
 
 	/**
-	 * get Type of ClassName
-	 * 
-	 * @param sc
-	 * @return lamda: dev.ukanth.ufirewall.preferences.-
-	 *         $$Lambda$ExpPreferenceFragment$ZOS3OXrmCOVpoNyVtmIXEyWQLi0
-	 *         anonymous:
-	 *         dev.ukanth.ufirewall.preferences.ExpPreferenceFragment$1
-	 */
-	public static String getNameofClass(String sc) {
-		if (Global.v().getAppModel().getComponentMap().containsKey(sc))
-			return sc;
-		String className = sc.replace("-$$Lambda$", "").split("\\$")[0];
-		if (className.length() == 0)
-			className = sc.replace("-", "_").replace("$", "_");
-		return className;
-	}
-
-	/**
 	 * judge whether active body exist or not if not, retrieve it
 	 * 
 	 * @param sm

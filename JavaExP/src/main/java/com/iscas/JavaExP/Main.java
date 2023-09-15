@@ -4,7 +4,6 @@ import com.iscas.JavaExP.base.MyConfig;
 import com.iscas.JavaExP.client.BaseClient;
 import com.iscas.JavaExP.client.cg.cgJava.CallGraphofJavaClient;
 import com.iscas.JavaExP.client.exception.ExceptionInfoClient;
-import com.iscas.JavaExP.client.manifest.ManifestClient;
 import com.iscas.JavaExP.client.soot.IROutputClient;
 import com.iscas.JavaExP.utils.TimeUtilsofProject;
 import lombok.extern.slf4j.Slf4j;
@@ -85,9 +84,6 @@ public class Main {
 		switch (MyConfig.getInstance().getClient()) {
 			case "IROutputClient":
 				client = new IROutputClient();
-				break;
-			case "ManifestClient":
-				client = new ManifestClient();
 				break;
 			case "CallGraphClient":
 				client = new CallGraphofJavaClient();

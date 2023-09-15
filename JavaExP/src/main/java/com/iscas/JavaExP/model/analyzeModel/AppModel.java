@@ -1,9 +1,7 @@
 package com.iscas.JavaExP.model.analyzeModel;
 
 import com.iscas.JavaExP.base.MyConfig;
-import com.iscas.JavaExP.model.component.ComponentModel;
 import com.iscas.JavaExP.utils.ConstantUtils;
-import com.iscas.JavaExP.utils.PrintUtils;
 import com.iscas.JavaExP.utils.SootUtils;
 import soot.SootClass;
 import soot.SootMethod;
@@ -23,13 +21,8 @@ public class AppModel implements Serializable {
 	private final String appName;
 	private final String appPath;
     public DavaFlowSet<String> methodsToBeProcessed;
-	public Map<String, ConditionWithValueSet> unit2RFCondition;
-	private String mainActivity;
-	private String manifestString;
 	private String packageName;
 	private int versionCode;
-	private String permission;
-	private Set<String> usesPermissionSet;
 	private Set<String> applicationClassNames;
 
 
@@ -41,15 +34,6 @@ public class AppModel implements Serializable {
 	private final List<SootMethod> topoMethodQueue;
 	private Set<List<SootMethod>> topoMethodQueueSet;
 
-	// components
-	private final HashMap<String, ComponentModel> componentMap;
-	private final HashMap<String, ComponentModel> activityMap;
-	private final HashMap<String, ComponentModel> serviceMap;
-	private final HashMap<String, ComponentModel> providerMap;
-	private final HashMap<String, ComponentModel> receiverMap;
-	private final HashMap<String, ComponentModel> exportedComponentMap;
-	
-	private Set<String> FragmentClasses;
 	private Set<String> callbacks;
 	private Set<String> stubs;
 	private Set<String> extendedPkgss;
@@ -76,26 +60,14 @@ public class AppModel implements Serializable {
 			MyConfig.getInstance().setFileSuffixLength(0);
 		}
 		appName = name.substring(0, name.length() - MyConfig.getInstance().getFileSuffixLength());
-		manifestString = "";
 		packageName = "";
-		permission = "";
-		mainActivity = "";
 
 		allMethods = new HashSet<>();
 		entryMethods = new HashSet<>();
 		topoMethodQueue = new ArrayList<SootMethod>();
 		topoMethodQueueSet = new HashSet<List<SootMethod>>();
-
-		activityMap = new HashMap<String, ComponentModel>();
-		serviceMap = new HashMap<String, ComponentModel>();
-		providerMap = new HashMap<String, ComponentModel>();
-		receiverMap = new HashMap<String, ComponentModel>();
-		componentMap = new HashMap<String, ComponentModel>();
-		exportedComponentMap = new HashMap<String, ComponentModel>();
-		FragmentClasses = new HashSet<String>();
 		applicationClassNames = new HashSet<String>();
 
-		usesPermissionSet = new HashSet<String>();
 		StaticRefSignature2initAssignMap = new HashMap<String, String>();
 		StaticRefSignature2UnitMap = new HashMap<String, Set<StaticFiledInfo>>();
 
@@ -118,14 +90,6 @@ public class AppModel implements Serializable {
 		res += "appName: " + appName + "\n";
 		res += "appPath: " + appPath + "\n";
 		res += "packageName: " + packageName + "\n";
-		res += "permission: " + permission + "\n";
-		res += "usesPermissionSet: " + PrintUtils.printSet(usesPermissionSet) + "\n";
-		res += "activityMap: " + PrintUtils.printMap(activityMap) + "\n";
-		res += "serviceMap: " + PrintUtils.printMap(serviceMap) + "\n";
-		res += "providerMap: " + PrintUtils.printMap(providerMap) + "\n";
-		res += "receiverMap: " + PrintUtils.printMap(receiverMap) + "\n";
-		res += "eaMap: " + PrintUtils.printMap(exportedComponentMap) + "\n";
-
 		return res;
 	}
 
@@ -134,61 +98,8 @@ public class AppModel implements Serializable {
 		return appPath;
 	}
 
-	public void setUsesPermissionSet(Set<String> usesPermissionSet) {
-		this.usesPermissionSet = usesPermissionSet;
-	}
-
-	public String getPermission() {
-		return permission;
-	}
-
-	public void setPermission(String permission) {
-		this.permission = permission;
-	}
-
-	public String getManifestString() {
-		return manifestString;
-	}
-
-	public void setManifestString(String manifestString) {
-		this.manifestString = manifestString;
-	}
-
 	public String getPackageName() {
 		return packageName;
-	}
-
-	public void setPackageName(String packageName) {
-		this.packageName = packageName;
-	}
-
-	public HashMap<String, ComponentModel> getActivityMap() {
-		return activityMap;
-	}
-
-	public HashMap<String, ComponentModel> getServiceMap() {
-		return serviceMap;
-	}
-
-	public HashMap<String, ComponentModel> getProviderMap() {
-		return providerMap;
-	}
-
-	public HashMap<String, ComponentModel> getRecieverMap() {
-		return receiverMap;
-	}
-
-	public HashMap<String, ComponentModel> setComponentMap(HashMap<String, ComponentModel> map) {
-		componentMap.putAll(map);
-		return componentMap;
-	}
-
-	public HashMap<String, ComponentModel> getComponentMap() {
-		return componentMap;
-	}
-
-	public HashMap<String, ComponentModel> getExportedComponentMap() {
-		return exportedComponentMap;
 	}
 
 	public String getAppName() {
@@ -211,19 +122,6 @@ public class AppModel implements Serializable {
 	public void setCg(CallGraph callGraph) {
 		this.cg = callGraph;
 
-	}
-
-	public String getMainActivity() {
-		return mainActivity;
-	}
-
-	public void setMainActivity(String mainActivity) {
-		this.mainActivity = mainActivity;
-	}
-
-
-	public Set<String> getFragmentClasses() {
-		return FragmentClasses;
 	}
 
 	public Map<String, Set<SootMethod>> getUnit2TargetsMap() {
